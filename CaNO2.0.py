@@ -1,9 +1,9 @@
-from PyQt6.QtGui import QFont, QColor, QIcon, QTextCharFormat, QAction, QKeySequence
+from PyQt6.QtGui import QFont, QColor, QIcon, QTextCharFormat, QAction, QTextListFormat, QTextCursor
 from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QTextEdit, QToolBar,
-    QFileDialog, QMessageBox, QFontComboBox, QComboBox, QMenu, QLabel, QWidgetAction
+    QApplication, QMainWindow, QTextEdit, QToolBar, QComboBox, QFontComboBox, QMenu, QWidgetAction, QLabel
 )
-from PyQt6.QtCore import QEvent, QSize, Qt
+from PyQt6.QtCore import QEvent, Qt, QSize
+
 
 import os
 import sys
@@ -27,56 +27,36 @@ except Exception as e:
     print(f"Logging setup failed: {e}")
     sys.exit(1)
 
-# Logger instance
 logger = logging.getLogger(__name__)
 
-
-# Font settings
+# Font and theme settings
 DEFAULT_FONT_FAMILY = "Cambria"
 DEFAULT_FONT_SIZE = 14
 FONT_SIZES = [str(i) for i in range(8, 288, 2)]
 
-# Define themes with adjusted visibility for each theme
+# Theme definitions with background and font color
 THEMES = {
-    "Light Theme": """
-        QMainWindow { background-color: white; }
-        QTextEdit { background-color: white; color: black; selection-background-color: #d3d7df; }
-        QMenuBar, QMenu, QToolBar { background-color: #f0f0f0; color: black; }
-        QMenu::item:selected, QToolButton:hover { background-color: #e0e0e0; }
-    """,
-    "Dark Theme": """
-        QMainWindow { background-color: #2e2e2e; }
-        QTextEdit { background-color: #1e1e1e; color: #dcdcdc; selection-background-color: #505050; }
-        QMenuBar, QMenu, QToolBar { background-color: #3c3c3c; color: #dcdcdc; }
-        QMenu::item:selected, QToolButton:hover { background-color: #505050; }
-    """,
-    "Sepia Theme": """
-        QMainWindow { background-color: #f5e6d2; }
-        QTextEdit { background-color: #f5e6d2; color: #5b4636; selection-background-color: #d3c4b4; }
-        QMenuBar, QMenu, QToolBar { background-color: #f2d7b5; color: #5b4636; }
-        QMenu::item:selected, QToolButton:hover { background-color: #e6c7a0; }
-    """,
-    "Solarized Dark Theme": """
-        QMainWindow { background-color: #002b36; }
-        QTextEdit { background-color: #073642; color: #839496; selection-background-color: #586e75; }
-        QMenuBar, QMenu, QToolBar { background-color: #073642; color: #839496; }
-        QMenu::item:selected, QToolButton:hover { background-color: #586e75; }
-    """,
-    "Mint Green Theme": """
-        QMainWindow { background-color: #dfffe2; }
-        QTextEdit { background-color: #dfffe2; color: #005500; selection-background-color: #bfeac7; }
-        QMenuBar, QMenu, QToolBar { background-color: #b3d9b4; color: #005500; }
-        QMenu::item:selected, QToolButton:hover { background-color: #9dc89d; }
-    """,
-    "Night Blue Theme": """
-        QMainWindow { background-color: #00203f; }
-        QTextEdit { background-color: #00172b; color: #a3e4db; selection-background-color: #1b3a4b; }
-        QMenuBar, QMenu, QToolBar { background-color: #00172b; color: #a3e4db; }
-        QMenu::item:selected, QToolButton:hover { background-color: #1b3a4b; }
-    """
+    "Light Theme": {
+        "background": QColor(255, 255, 255), "font_color": QColor(0, 0, 0), "font": QFont("Cambria", 14)
+    },
+    "Dark Theme": {
+        "background": QColor(46, 46, 46), "font_color": QColor(220, 220, 220), "font": QFont("Cambria", 14)
+    },
+    "Sepia Theme": {
+        "background": QColor(245, 230, 210), "font_color": QColor(91, 70, 54), "font": QFont("Cambria", 14)
+    },
+    "Solarized Dark Theme": {
+        "background": QColor(0, 43, 54), "font_color": QColor(131, 148, 150), "font": QFont("Cambria", 14)
+    },
+    "Mint Green Theme": {
+        "background": QColor(223, 255, 226), "font_color": QColor(0, 85, 0), "font": QFont("Cambria", 14)
+    },
+    "Night Blue Theme": {
+        "background": QColor(0, 32, 63), "font_color": QColor(163, 228, 219), "font": QFont("Cambria", 14)
+    }
 }
 
-# Define highlight styles
+# Highlight styles
 HIGHLIGHT_STYLES = {
     "Light Yellow / Dark Gray": {"highlight": QColor(255, 255, 204), "font": QColor(64, 64, 64)},
     "Light Blue / Dark Navy": {"highlight": QColor(204, 229, 255), "font": QColor(0, 0, 51)},
@@ -95,28 +75,32 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowTitle("Case and Note Organizer 2.0")
-
+        
+        # Set up font and theme defaults
         self.path = None
         self.current_font_family = DEFAULT_FONT_FAMILY
         self.current_font_size = DEFAULT_FONT_SIZE
-        self.images_dir = os.path.join(os.path.dirname(__file__), 'images')  # Adjust image path as needed
+        self.current_theme_font = THEMES["Light Theme"]["font"]
+        self.current_theme_font_color = THEMES["Light Theme"]["font_color"]
+        self.images_dir = os.path.join(os.path.dirname(__file__), 'images')  # Path to icons
 
-        # Set up editor and UI components
+        # Setup main editor and UI
         self.editor = QTextEdit()
         self.setCentralWidget(self.editor)
         self.apply_default_font_settings()
         self.init_ui()
-        logger.info("User interface initialized.")
+
+        self.editor.setFocus()
+        self.editor.installEventFilter(self)
+        logger.info("User interface initialized and event filter installed on editor.")
 
     def init_ui(self):
-        """Initialize main UI components and add a theme settings menu."""
-        # Menus from left to right
+        """Initialize menus, toolbars, and theme settings."""
         menubar = self.menuBar()
         self.file_menu = menubar.addMenu("File")
         self.edit_menu = menubar.addMenu("Edit")
         self.format_menu = menubar.addMenu("Format")
         self.settings_menu = menubar.addMenu("Settings")
-        self.help_menu = menubar.addMenu("Help")
 
         # Settings -> Themes submenu
         theme_menu = QMenu("Themes", self)
@@ -132,35 +116,35 @@ class MainWindow(QMainWindow):
         self.init_font_toolbar()
         self.init_format_toolbar()
         self.init_align_toolbar()
+        self.init_list_toolbar()
 
     def init_file_toolbar(self):
-        file_toolbar = QToolBar("File")
-        file_toolbar.setIconSize(QSize(20, 20))
-        self.addToolBar(file_toolbar)
+        toolbar = QToolBar("File")
+        toolbar.setIconSize(QSize(20, 20))
+        self.addToolBar(toolbar)
 
-        # Add file actions with icons
-        new_instance_action = QAction(QIcon(os.path.join(self.images_dir, 'new.png')), "New", self)
-        new_instance_action.setShortcut("Ctrl+N")
-        new_instance_action.triggered.connect(self.run_new_instance)
-        file_toolbar.addAction(new_instance_action)
-        self.file_menu.addAction(new_instance_action)
+        new_action = QAction(QIcon(os.path.join(self.images_dir, 'new_file.png')), "New", self)
+        new_action.setShortcut("Ctrl+N")
+        new_action.triggered.connect(self.run_new_instance)
+        toolbar.addAction(new_action)
+        self.file_menu.addAction(new_action)
 
-        open_file_action = QAction(QIcon(os.path.join(self.images_dir, 'open_file.png')), "Open file...", self)
-        open_file_action.setShortcut("Ctrl+O")
-        open_file_action.triggered.connect(self.file_open)
-        file_toolbar.addAction(open_file_action)
-        self.file_menu.addAction(open_file_action)
+        open_action = QAction(QIcon(os.path.join(self.images_dir, 'open_file.png')), "Open", self)
+        open_action.setShortcut("Ctrl+O")
+        open_action.triggered.connect(self.file_open)
+        toolbar.addAction(open_action)
+        self.file_menu.addAction(open_action)
 
-        save_file_action = QAction(QIcon(os.path.join(self.images_dir, 'save.png')), "Save", self)
-        save_file_action.setShortcut("Ctrl+S")
-        save_file_action.triggered.connect(self.file_save)
-        file_toolbar.addAction(save_file_action)
-        self.file_menu.addAction(save_file_action)
+        save_action = QAction(QIcon(os.path.join(self.images_dir, 'save.png')), "Save", self)
+        save_action.setShortcut("Ctrl+S")
+        save_action.triggered.connect(self.file_save)
+        toolbar.addAction(save_action)
+        self.file_menu.addAction(save_action)
 
         saveas_file_action = QAction(QIcon(os.path.join(self.images_dir, 'save_as.png')), "Save As...", self)
         saveas_file_action.setShortcut("Ctrl+Shift+S")
         saveas_file_action.triggered.connect(self.file_saveas)
-        file_toolbar.addAction(saveas_file_action)
+        toolbar.addAction(saveas_file_action)  # Corrected from file_toolbar
         self.file_menu.addAction(saveas_file_action)
 
     def init_edit_toolbar(self):
@@ -204,54 +188,55 @@ class MainWindow(QMainWindow):
         self.edit_menu.addAction(paste_action)
 
     def init_font_toolbar(self):
-        font_toolbar = QToolBar("Font")
-        font_toolbar.setIconSize(QSize(10, 10))
-        self.addToolBar(font_toolbar)
+        toolbar = QToolBar("Font")
+        toolbar.setIconSize(QSize(10, 10))
+        self.addToolBar(toolbar)
 
-        # Font family and size
-        self.fonts = QFontComboBox()
-        self.fonts.setCurrentFont(QFont(self.current_font_family))
-        self.fonts.currentFontChanged.connect(self.on_font_change)
-        font_toolbar.addWidget(self.fonts)
+        font_box = QFontComboBox()
+        font_box.setCurrentFont(QFont(self.current_font_family))
+        font_box.currentFontChanged.connect(self.on_font_change)
+        toolbar.addWidget(font_box)
 
-        self.fontsize = QComboBox()
-        self.fontsize.addItems(FONT_SIZES)
-        self.fontsize.setCurrentText(str(self.current_font_size))
-        self.fontsize.currentTextChanged.connect(self.on_fontsize_change)
-        font_toolbar.addWidget(self.fontsize)
+        size_box = QComboBox()
+        size_box.addItems(FONT_SIZES)
+        size_box.setCurrentText(str(self.current_font_size))
+        size_box.currentTextChanged.connect(self.on_fontsize_change)
+        toolbar.addWidget(size_box)
 
     def init_format_toolbar(self):
-        format_toolbar = QToolBar("Format")
-        format_toolbar.setIconSize(QSize(20, 20))
-        self.addToolBar(format_toolbar)
+        toolbar = QToolBar("Format")
+        toolbar.setIconSize(QSize(20, 20))
+        self.addToolBar(toolbar)
 
-        # Bold, Italic, Underline, Strikethrough actions
-        format_actions = [
-            ("Bold", "bold.png", QKeySequence.StandardKey.Bold, self.toggle_bold),
-            ("Italic", "italic.png", QKeySequence.StandardKey.Italic, self.toggle_italic),
-            ("Underline", "underline.png", QKeySequence.StandardKey.Underline, self.toggle_underline),
-            ("Strikethrough", "strikethrough.png", None, self.toggle_strikethrough)
-        ]
-        for name, icon, shortcut, handler in format_actions:
-            action = QAction(QIcon(os.path.join(self.images_dir, icon)), name, self)
-            if shortcut:
-                action.setShortcut(QKeySequence(shortcut))
-            action.setCheckable(True)
-            action.triggered.connect(handler)
-            format_toolbar.addAction(action)
-            self.format_menu.addAction(action)
-            
+        bold_action = QAction(QIcon(os.path.join(self.images_dir, 'bold.png')), "Bold", self)
+        bold_action.setShortcut("Ctrl+B")
+        bold_action.setCheckable(True)
+        bold_action.triggered.connect(self.toggle_bold)
+        toolbar.addAction(bold_action)
+
+        italic_action = QAction(QIcon(os.path.join(self.images_dir, 'italic.png')), "Italic", self)
+        italic_action.setShortcut("Ctrl+I")
+        italic_action.setCheckable(True)
+        italic_action.triggered.connect(self.toggle_italic)
+        toolbar.addAction(italic_action)
+
+        underline_action = QAction(QIcon(os.path.join(self.images_dir, 'underline.png')), "Underline", self)
+        underline_action.setShortcut("Ctrl+U")
+        underline_action.setCheckable(True)
+        underline_action.triggered.connect(self.toggle_underline)
+        toolbar.addAction(underline_action)
+
         # Highlighter Action
         highlighter_action = QAction(QIcon(os.path.join(self.images_dir, 'highlighter.png')), "Highlighter", self)
         highlighter_action.triggered.connect(self.open_highlight_menu)
-        format_toolbar.addAction(highlighter_action)
+        toolbar.addAction(highlighter_action)
 
         # Clear Formatting Action
         clear_format_action = QAction(QIcon(os.path.join(self.images_dir, 'clear-formatting.png')), "Clear Formatting", self)
         clear_format_action.setShortcut("Esc")
         clear_format_action.triggered.connect(self.clear_formatting)
-        format_toolbar.addAction(clear_format_action)
-        self.format_menu.addAction(clear_format_action)         
+        toolbar.addAction(clear_format_action)
+        self.format_menu.addAction(clear_format_action)
 
     def init_align_toolbar(self):
         align_toolbar = QToolBar("Align")
@@ -269,31 +254,48 @@ class MainWindow(QMainWindow):
             action.triggered.connect(lambda _, a=alignment: self.editor.setAlignment(a))
             align_toolbar.addAction(action)
             self.format_menu.addAction(action)
-            
+
     def init_list_toolbar(self):
-        """Initialize toolbar for adding bullet and numbered lists."""
         list_toolbar = QToolBar("Lists")
         list_toolbar.setIconSize(QSize(20, 20))
         self.addToolBar(list_toolbar)
 
-        # Bullet List Action
-        bullet_list_action = QAction(QIcon(os.path.join(self.images_dir, 'bullet_list.png')), "Bullet List", self)
+        # Bullet list action
+        bullet_list_action = QAction(QIcon(os.path.join(self.images_dir, 'bullet.png')), "Bullet List", self)
+        bullet_list_action.setShortcut("Ctrl+Shift+L")
         bullet_list_action.triggered.connect(self.add_bullet_list)
         list_toolbar.addAction(bullet_list_action)
         self.format_menu.addAction(bullet_list_action)
 
-        # Numbered List Action
-        numbered_list_action = QAction(QIcon(os.path.join(self.images_dir, 'numbered_list.png')), "Numbered List", self)
+        # Numbered list action
+        numbered_list_action = QAction(QIcon(os.path.join(self.images_dir, 'numbered-list .png')), "Numbered List", self)
+        numbered_list_action.setShortcut("Ctrl+Shift+N")
         numbered_list_action.triggered.connect(self.add_numbered_list)
         list_toolbar.addAction(numbered_list_action)
-        self.format_menu.addAction(numbered_list_action)            
+        self.format_menu.addAction(numbered_list_action)
+
+        # Indent actions
+        increase_indent_action = QAction(QIcon(os.path.join(self.images_dir, 'indent.png')), "Increase Indent", self)
+        increase_indent_action.setShortcut("Ctrl+Tab")
+        increase_indent_action.triggered.connect(self.increase_indent)
+        list_toolbar.addAction(increase_indent_action)
+
+        decrease_indent_action = QAction(QIcon(os.path.join(self.images_dir, 'outdent.png')), "Decrease Indent", self)
+        decrease_indent_action.setShortcut("Ctrl+Shift+Tab")
+        decrease_indent_action.triggered.connect(self.decrease_indent)
+        list_toolbar.addAction(decrease_indent_action)
 
     def apply_theme(self, theme_name):
-        """Apply the selected theme stylesheet."""
-        self.setStyleSheet(THEMES.get(theme_name, THEMES["Light Theme"]))
+        theme = THEMES[theme_name]
+        self.editor.setStyleSheet(
+            f"background-color: rgb({theme['background'].red()}, {theme['background'].green()}, {theme['background'].blue()}); "
+            f"color: rgb({theme['font_color'].red()}, {theme['font_color'].green()}, {theme['font_color'].blue()});"
+        )
+        self.current_theme_font = theme["font"]
+        self.current_theme_font_color = theme["font_color"]
+        logger.info(f"Theme applied: {theme_name}")
 
     def apply_default_font_settings(self):
-        """Set the editor to use default font settings."""
         self.editor.setFont(QFont(self.current_font_family, self.current_font_size))
 
     def on_font_change(self, font):
@@ -333,54 +335,81 @@ class MainWindow(QMainWindow):
         format.setFontUnderline(checked)
         self.merge_format(format)
 
-    def toggle_strikethrough(self, checked):
-        format = QTextCharFormat()
-        format.setFontStrikeOut(checked)
-        self.merge_format(format)
-
     def merge_format(self, format):
         cursor = self.editor.textCursor()
-        if cursor.hasSelection():
-            cursor.mergeCharFormat(format)
-        else:
-            self.editor.setCurrentCharFormat(format)
-            
+        cursor.mergeCharFormat(format)
+
     def add_bullet_list(self):
-        """Apply bullet list formatting to selected text."""
+        """Toggle bullet list or convert selection to bullet list."""
         cursor = self.editor.textCursor()
         cursor.beginEditBlock()
-        list_format = QTextListFormat()
-        list_format.setStyle(QTextListFormat.Style.ListDisc)
-        cursor.createList(list_format)
+
+        current_list = cursor.currentList()
+        if current_list and current_list.format().style() == QTextListFormat.Style.ListDisc:
+            # Remove bullet list by resetting block format
+            block_format = cursor.blockFormat()
+            block_format.setIndent(0)
+            cursor.setBlockFormat(block_format)
+        else:
+            # Apply bullet list style
+            list_format = QTextListFormat()
+            list_format.setStyle(QTextListFormat.Style.ListDisc)
+            cursor.createList(list_format)
+
         cursor.endEditBlock()
 
     def add_numbered_list(self):
-        """Apply numbered list formatting to selected text."""
+        """Toggle numbered list or convert selection to numbered list."""
         cursor = self.editor.textCursor()
         cursor.beginEditBlock()
-        list_format = QTextListFormat()
-        list_format.setStyle(QTextListFormat.Style.ListDecimal)
-        cursor.createList(list_format)
-        cursor.endEditBlock()    
+
+        current_list = cursor.currentList()
+        if current_list and current_list.format().style() == QTextListFormat.Style.ListDecimal:
+            # Remove numbered list by resetting block format
+            block_format = cursor.blockFormat()
+            block_format.setIndent(0)
+            cursor.setBlockFormat(block_format)
+        else:
+            # Apply numbered list style
+            list_format = QTextListFormat()
+            list_format.setStyle(QTextListFormat.Style.ListDecimal)
+            cursor.createList(list_format)
+
+        cursor.endEditBlock()
+
+    def increase_indent(self):
+        """Increase indent level for current paragraph."""
+        cursor = self.editor.textCursor()
+        cursor.beginEditBlock()
+
+        block_format = cursor.blockFormat()
+        block_format.setIndent(block_format.indent() + 1)
+        cursor.setBlockFormat(block_format)
+
+        cursor.endEditBlock()
+
+    def decrease_indent(self):
+        """Decrease indent level for current paragraph."""
+        cursor = self.editor.textCursor()
+        cursor.beginEditBlock()
+
+        block_format = cursor.blockFormat()
+        block_format.setIndent(max(block_format.indent() - 1, 0))
+        cursor.setBlockFormat(block_format)
+
+        cursor.endEditBlock()
 
     def open_highlight_menu(self):
-        """Display highlighter options in a menu near the cursor position in the editor."""
         highlight_menu = QMenu("Highlight Styles", self)
-
-        # Loop through each style to create a customized menu action
         for name, colors in HIGHLIGHT_STYLES.items():
             action = self.create_highlight_action(name, colors)
             highlight_menu.addAction(action)
 
-        # Show the menu near the cursor position in the editor
         cursor_position = self.editor.cursorRect().bottomRight()
         highlight_menu.popup(self.editor.mapToGlobal(cursor_position))
 
     def create_highlight_action(self, name, colors):
-        """Create a menu action for applying a highlight style with color preview."""
         action = QWidgetAction(self)
-        
-        # Set up label to display color example
         label = QLabel(name)
         label.setFont(QFont(DEFAULT_FONT_FAMILY, 12))
         label.setStyleSheet(
@@ -389,13 +418,10 @@ class MainWindow(QMainWindow):
             "padding: 5px; margin: 1px;"
         )
         action.setDefaultWidget(label)
-        
-        # Connect the action to apply the selected highlight style
         action.triggered.connect(lambda: self.apply_highlight_style(colors))
         return action
 
     def apply_highlight_style(self, colors):
-        """Apply the selected highlight color and font color to the current selection."""
         cursor = self.editor.textCursor()
         if cursor.hasSelection():
             format = QTextCharFormat()
@@ -404,17 +430,28 @@ class MainWindow(QMainWindow):
             cursor.mergeCharFormat(format)
 
     def clear_formatting(self):
-        """Reset formatting to default settings, clearing all applied styles including highlight."""
         cursor = self.editor.textCursor()
         if cursor.hasSelection():
             format = QTextCharFormat()
-            format.setBackground(QColor(Qt.GlobalColor.transparent))  # Clears highlighting
-            format.setForeground(QColor(Qt.GlobalColor.black))  # Resets font color to default
-            cursor.mergeCharFormat(format)       
+            format.setFont(self.current_theme_font)
+            format.setForeground(self.current_theme_font_color)
+            format.setBackground(Qt.GlobalColor.transparent)
+            cursor.mergeCharFormat(format)
+            logger.info("Cleared formatting to theme default")
 
-    def run_new_instance(self):
-        """Launch a new instance of the application."""
-        subprocess.Popen([sys.executable, os.path.abspath(__file__)])
+    def eventFilter(self, source, event):
+        if source == self.editor and event.type() == QEvent.Type.KeyPress and event.key() == Qt.Key.Key_Escape:
+            logger.info("ESC key detected in eventFilter, clearing formatting.")
+            self.clear_formatting()
+            return True
+        return super(MainWindow, self).eventFilter(source, event)
+
+    def keyPressEvent(self, event):
+        if event.key() == Qt.Key.Key_Escape:
+            logger.info("ESC key detected in keyPressEvent, clearing formatting.")
+            self.clear_formatting()
+        else:
+            super(MainWindow, self).keyPressEvent(event)
 
     def file_open(self):
         path, _ = QFileDialog.getOpenFileName(self, "Open file", "", "Text documents (*.txt);All files (*.*)")
@@ -460,6 +497,9 @@ class MainWindow(QMainWindow):
 
     def update_title(self):
         self.setWindowTitle(f"Simple File Organizer - {os.path.basename(self.path) if self.path else 'Untitled'}")
+
+    def run_new_instance(self):
+        subprocess.Popen([sys.executable, os.path.abspath(__file__)])
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
