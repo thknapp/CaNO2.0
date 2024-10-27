@@ -490,24 +490,31 @@ class MainWindow(QMainWindow):
 
         # New Tab
         new_tab_action = QAction(QIcon(os.path.join(self.images_dir, 'new_file.png')), "New Tab", self)
+        new_tab_action.setShortcut("Ctrl+T")
         new_tab_action.triggered.connect(self.add_new_tab)
         toolbar.addAction(new_tab_action)
-
+        self.file_menu.addAction(new_tab_action)
+        
         # Open File
         open_action = QAction(QIcon(os.path.join(self.images_dir, 'open_file.png')), "Open", self)
+        open__action.setShortcut("Ctrl+O")
         open_action.triggered.connect(self.file_open)
         toolbar.addAction(open_action)
-
+        self.file_menu.addAction(open_action)
+        
         # Save File
         save_action = QAction(QIcon(os.path.join(self.images_dir, 'save.png')), "Save", self)
+        save_action.setShortcut("Ctrl+S")
         save_action.triggered.connect(lambda: self.file_save(self.tab_widget.currentIndex()))
         toolbar.addAction(save_action)
+        self.file_menu.addAction(save_action)
 
         # Save As
         saveas_action = QAction(QIcon(os.path.join(self.images_dir, 'save_as.png')), "Save As...", self)
+        saveas_action.setShortcut("Ctrl+Alt+S")
         saveas_action.triggered.connect(lambda: self.file_saveas(self.tab_widget.currentIndex()))
         toolbar.addAction(saveas_action)
-        
+        self.file_menu.addAction(saveas_action)
     """----------Edit Toolbar----------"""
     def init_edit_toolbar(self):
         edit_toolbar = QToolBar("Edit")
@@ -559,6 +566,7 @@ class MainWindow(QMainWindow):
         size_box.addItems(FONT_SIZES)
         size_box.setCurrentText(str(self.current_font_size))
         size_box.currentTextChanged.connect(self.on_fontsize_change)
+        size_box.setMinimumWidth(50)  # Set minimum width        
         toolbar.addWidget(size_box)
 
     """----------Format Toolbar----------"""
