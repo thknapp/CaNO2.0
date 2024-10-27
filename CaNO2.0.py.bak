@@ -1,5 +1,6 @@
 import sys
 import os
+import json
 import logging
 import subprocess
 
@@ -33,11 +34,39 @@ except Exception as e:
 
 logger = logging.getLogger(__name__)
 
+# Define the path for the settings file in AppData
+settings_dir = os.path.join(os.getenv('APPDATA'), script_name)
+os.makedirs(settings_dir, exist_ok=True)
+settings_file = os.path.join(settings_dir, f"{script_name}-settings.json")
+
+# Load settings from JSON
+def load_settings():
+    if os.path.exists(settings_file):
+        try:
+            with open(settings_file, 'r') as f:
+                return json.load(f) or {}  # Return empty dict if the file is empty
+        except json.JSONDecodeError:
+            logger.warning("Settings file is empty or invalid. Using default settings.")
+            return {}  # Return default settings if JSON is invalid
+    return {}  # Return default settings if the file does not exist
+
+# Save settings to JSON
+def save_settings(settings):
+    with open(settings_file, 'w') as f:
+        json.dump(settings, f, indent=4)
+
+# Load existing settings
+app_settings = load_settings()
+
 """----------Constants and Theme Definitions----------"""
-# Font and theme settings
-DEFAULT_FONT_FAMILY = "Cambria"
-DEFAULT_FONT_SIZE = 14
-FONT_SIZES = [str(i) for i in range(8, 98, 2)]
+# Set default font and theme if not set in settings
+DEFAULT_FONT_FAMILY = app_settings.get("font_family", "Cambria")
+DEFAULT_FONT_SIZE = app_settings.get("font_size", 14)
+DEFAULT_THEME = app_settings.get("theme", "Light Theme")
+DEFAULT_WINDOW_SIZE = app_settings.get("window_size", [800, 600])  # [width, height]
+DEFAULT_WINDOW_POSITION = app_settings.get("window_position", [100, 100])  # [x, y]
+
+FONT_SIZES = [str(i) for i in range(8, 98, 2)]  # Font sizes from 8 to 96 in increments of 2
 
 # Theme definitions with background and font color
 THEMES = {
@@ -60,6 +89,259 @@ THEMES = {
             QMenu::item:selected, QToolButton:hover { background-color: #505050; }
         """,
         "text_color": QColor("#dcdcdc"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Sepia Theme": {
+        "style": """
+            QMainWindow { background-color: #f5e6d2; }
+            QTextEdit { background-color: #f5e6d2; color: #5b4636; selection-background-color: #d3c4b4; }
+            QMenuBar, QMenu, QToolBar { background-color: #f2d7b5; color: #5b4636; }
+            QMenu::item:selected, QToolButton:hover { background-color: #e6c7a0; }
+        """,
+        "text_color": QColor("#5b4636"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Monokai Theme": {
+        "style": """
+            QMainWindow { background-color: #272822; }
+            QTextEdit { background-color: #272822; color: #f8f8f2; selection-background-color: #49483e; }
+            QMenuBar, QMenu, QToolBar { background-color: #3e3d32; color: #f8f8f2; }
+            QMenu::item:selected, QToolButton:hover { background-color: #49483e; }
+        """,
+        "text_color": QColor("#f8f8f2"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Ocean Blue Theme": {
+        "style": """
+            QMainWindow { background-color: #1a1f3b; }
+            QTextEdit { background-color: #1a1f3b; color: #aaccff; selection-background-color: #3b5998; }
+            QMenuBar, QMenu, QToolBar { background-color: #162447; color: #aaccff; }
+            QMenu::item:selected, QToolButton:hover { background-color: #3b5998; }
+        """,
+        "text_color": QColor("#aaccff"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Forest Green Theme": {
+        "style": """
+            QMainWindow { background-color: #2b472e; }
+            QTextEdit { background-color: #2b472e; color: #d3e2c2; selection-background-color: #4a6356; }
+            QMenuBar, QMenu, QToolBar { background-color: #3c5c46; color: #d3e2c2; }
+            QMenu::item:selected, QToolButton:hover { background-color: #4a6356; }
+        """,
+        "text_color": QColor("#d3e2c2"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Desert Sand Theme": {
+        "style": """
+            QMainWindow { background-color: #edc9af; }
+            QTextEdit { background-color: #edc9af; color: #5f4632; selection-background-color: #cdb79e; }
+            QMenuBar, QMenu, QToolBar { background-color: #e3b89b; color: #5f4632; }
+            QMenu::item:selected, QToolButton:hover { background-color: #c7a693; }
+        """,
+        "text_color": QColor("#5f4632"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Lavender Theme": {
+        "style": """
+            QMainWindow { background-color: #e6e6fa; }
+            QTextEdit { background-color: #e6e6fa; color: #4b0082; selection-background-color: #d8bfd8; }
+            QMenuBar, QMenu, QToolBar { background-color: #dcdcdc; color: #4b0082; }
+            QMenu::item:selected, QToolButton:hover { background-color: #c0c0c0; }
+        """,
+        "text_color": QColor("#4b0082"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Rose Gold Theme": {
+        "style": """
+            QMainWindow { background-color: #b76e79; }
+            QTextEdit { background-color: #f7cac9; color: #6d1d3e; selection-background-color: #e6a6b0; }
+            QMenuBar, QMenu, QToolBar { background-color: #d4a5a5; color: #6d1d3e; }
+            QMenu::item:selected, QToolButton:hover { background-color: #e6a6b0; }
+        """,
+        "text_color": QColor("#6d1d3e"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Midnight Purple Theme": {
+        "style": """
+            QMainWindow { background-color: #2e1a47; }
+            QTextEdit { background-color: #2e1a47; color: #d1c4e9; selection-background-color: #4a306d; }
+            QMenuBar, QMenu, QToolBar { background-color: #3a245e; color: #d1c4e9; }
+            QMenu::item:selected, QToolButton:hover { background-color: #4a306d; }
+        """,
+        "text_color": QColor("#d1c4e9"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Vintage Paper Theme": {
+        "style": """
+            QMainWindow { background-color: #fefbf3; }
+            QTextEdit { background-color: #fefbf3; color: #3e3b32; selection-background-color: #eae0c8; }
+            QMenuBar, QMenu, QToolBar { background-color: #ece3d1; color: #3e3b32; }
+            QMenu::item:selected, QToolButton:hover { background-color: #e0d3c3; }
+        """,
+        "text_color": QColor("#3e3b32"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Cool Gray Theme": {
+        "style": """
+            QMainWindow { background-color: #e0e6ed; }
+            QTextEdit { background-color: #d3dae0; color: #4f5b66; selection-background-color: #b0bec5; }
+            QMenuBar, QMenu, QToolBar { background-color: #c5cfd6; color: #4f5b66; }
+            QMenu::item:selected, QToolButton:hover { background-color: #a9b7bf; }
+        """,
+        "text_color": QColor("#4f5b66"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Autumn Maple Theme": {
+        "style": """
+            QMainWindow { background-color: #d2691e; }
+            QTextEdit { background-color: #f4a460; color: #4b2e2e; selection-background-color: #e3735e; }
+            QMenuBar, QMenu, QToolBar { background-color: #cc774f; color: #4b2e2e; }
+            QMenu::item:selected, QToolButton:hover { background-color: #d98258; }
+        """,
+        "text_color": QColor("#4b2e2e"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Emerald Theme": {
+        "style": """
+            QMainWindow { background-color: #0a3d3e; }
+            QTextEdit { background-color: #0f4d4f; color: #cde0c9; selection-background-color: #39796b; }
+            QMenuBar, QMenu, QToolBar { background-color: #0f4d4f; color: #cde0c9; }
+            QMenu::item:selected, QToolButton:hover { background-color: #39796b; }
+        """,
+        "text_color": QColor("#cde0c9"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Sunset Orange Theme": {
+        "style": """
+            QMainWindow { background-color: #ff6f61; }
+            QTextEdit { background-color: #ff867f; color: #4d1e18; selection-background-color: #ffab91; }
+            QMenuBar, QMenu, QToolBar { background-color: #ff867f; color: #4d1e18; }
+            QMenu::item:selected, QToolButton:hover { background-color: #ffab91; }
+        """,
+        "text_color": QColor("#4d1e18"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Ice Blue Theme": {
+        "style": """
+            QMainWindow { background-color: #e1f5fe; }
+            QTextEdit { background-color: #b3e5fc; color: #01579b; selection-background-color: #81d4fa; }
+            QMenuBar, QMenu, QToolBar { background-color: #b3e5fc; color: #01579b; }
+            QMenu::item:selected, QToolButton:hover { background-color: #81d4fa; }
+        """,
+        "text_color": QColor("#01579b"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Bronze Theme": {
+        "style": """
+            QMainWindow { background-color: #cd7f32; }
+            QTextEdit { background-color: #d89b5e; color: #3b1e06; selection-background-color: #b87333; }
+            QMenuBar, QMenu, QToolBar { background-color: #b87333; color: #3b1e06; }
+            QMenu::item:selected, QToolButton:hover { background-color: #d89b5e; }
+        """,
+        "text_color": QColor("#3b1e06"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Berry Purple Theme": {
+        "style": """
+            QMainWindow { background-color: #4b0082; }
+            QTextEdit { background-color: #6a0dad; color: #e6e6fa; selection-background-color: #9932cc; }
+            QMenuBar, QMenu, QToolBar { background-color: #6a0dad; color: #e6e6fa; }
+            QMenu::item:selected, QToolButton:hover { background-color: #9932cc; }
+        """,
+        "text_color": QColor("#e6e6fa"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Aqua Marine Theme": {
+        "style": """
+            QMainWindow { background-color: #7fdbff; }
+            QTextEdit { background-color: #0074d9; color: #001f3f; selection-background-color: #39c0ed; }
+            QMenuBar, QMenu, QToolBar { background-color: #0074d9; color: #ffffff; }
+            QMenu::item:selected, QToolButton:hover { background-color: #39c0ed; }
+        """,
+        "text_color": QColor("#001f3f"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Rustic Red Theme": {
+        "style": """
+            QMainWindow { background-color: #8b0000; }
+            QTextEdit { background-color: #b22222; color: #f5f5f5; selection-background-color: #cd5c5c; }
+            QMenuBar, QMenu, QToolBar { background-color: #a52a2a; color: #f5f5f5; }
+            QMenu::item:selected, QToolButton:hover { background-color: #cd5c5c; }
+        """,
+        "text_color": QColor("#f5f5f5"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Peach Blossom Theme": {
+        "style": """
+            QMainWindow { background-color: #ffe5b4; }
+            QTextEdit { background-color: #ffdab9; color: #8b4513; selection-background-color: #ffdead; }
+            QMenuBar, QMenu, QToolBar { background-color: #ffdead; color: #8b4513; }
+            QMenu::item:selected, QToolButton:hover { background-color: #ffe4c4; }
+        """,
+        "text_color": QColor("#8b4513"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Deep Space Theme": {
+        "style": """
+            QMainWindow { background-color: #0d0d0d; }
+            QTextEdit { background-color: #1a1a1a; color: #b0b0b0; selection-background-color: #333333; }
+            QMenuBar, QMenu, QToolBar { background-color: #1a1a1a; color: #b0b0b0; }
+            QMenu::item:selected, QToolButton:hover { background-color: #333333; }
+        """,
+        "text_color": QColor("#b0b0b0"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Olive Green Theme": {
+        "style": """
+            QMainWindow { background-color: #556b2f; }
+            QTextEdit { background-color: #6b8e23; color: #f0e68c; selection-background-color: #bdb76b; }
+            QMenuBar, QMenu, QToolBar { background-color: #808000; color: #f0e68c; }
+            QMenu::item:selected, QToolButton:hover { background-color: #bdb76b; }
+        """,
+        "text_color": QColor("#f0e68c"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Amber Glow Theme": {
+        "style": """
+            QMainWindow { background-color: #ffbf00; }
+            QTextEdit { background-color: #ffdd44; color: #4a3c00; selection-background-color: #ffe680; }
+            QMenuBar, QMenu, QToolBar { background-color: #ffdd44; color: #4a3c00; }
+            QMenu::item:selected, QToolButton:hover { background-color: #ffe680; }
+        """,
+        "text_color": QColor("#4a3c00"),
+        "font_family": DEFAULT_FONT_FAMILY,
+        "font_size": DEFAULT_FONT_SIZE
+    },
+    "Golden Yellow Theme": {
+        "style": """
+            QMainWindow { background-color: #ffd700; }
+            QTextEdit { background-color: #ffec8b; color: #6b4226; selection-background-color: #ffd662; }
+            QMenuBar, QMenu, QToolBar { background-color: #ffec8b; color: #6b4226; }
+            QMenu::item:selected, QToolButton:hover { background-color: #ffd662; }
+        """,
+        "text_color": QColor("#6b4226"),
         "font_family": DEFAULT_FONT_FAMILY,
         "font_size": DEFAULT_FONT_SIZE
     }
@@ -85,10 +367,17 @@ class MainWindow(QMainWindow):
 
         self.images_dir = os.path.join(os.path.dirname(__file__), 'images')  # Path to icons
 
-        # Default theme settings
-        self.current_theme_settings = THEMES["Light Theme"]
-        self.current_font_family = DEFAULT_FONT_FAMILY
-        self.current_font_size = DEFAULT_FONT_SIZE
+        # Load settings for font and theme
+        self.current_theme = app_settings.get("theme", DEFAULT_THEME)
+        self.current_theme_settings = THEMES.get(self.current_theme, THEMES["Light Theme"])
+        self.current_font_family = app_settings.get("font_family", DEFAULT_FONT_FAMILY)
+        self.current_font_size = app_settings.get("font_size", DEFAULT_FONT_SIZE)
+
+        # Set window size and position from settings
+        window_size = app_settings.get("window_size", DEFAULT_WINDOW_SIZE)
+        window_position = app_settings.get("window_position", DEFAULT_WINDOW_POSITION)
+        self.resize(window_size[0], window_size[1])
+        self.move(window_position[0], window_position[1])
 
         # Initialize path tracking
         self.paths = {}  # Stores file paths for each tab
@@ -107,7 +396,10 @@ class MainWindow(QMainWindow):
         # Initialize UI components
         self.apply_default_font_settings()
         self.init_ui()
-
+        
+        # Apply the loaded theme
+        self.apply_theme(self.current_theme)
+ 
         logger.info("User interface initialized with tab support.")
 
     def init_ui(self):
@@ -355,9 +647,10 @@ class MainWindow(QMainWindow):
         list_toolbar.addAction(decrease_indent_action)
 
     """----------Formatting and Theme Methods----------"""
-    #Theme Application
+    # Theme application with current theme tracking
     def apply_theme(self, theme_name):
-        theme = THEMES.get(theme_name, THEMES["Light Theme"])  # Default to Light Theme if not found
+        theme = THEMES.get(theme_name, THEMES["Light Theme"])
+        self.current_theme = theme_name
         self.setStyleSheet(theme["style"])
         self.current_theme_settings.update({
             "text_color": theme["text_color"],
@@ -367,6 +660,7 @@ class MainWindow(QMainWindow):
         self.apply_default_font_settings()
         logger.info(f"Theme applied: {theme_name}")
 
+    # Apply default font settings to current editor
     def apply_default_font_settings(self):
         editor = self.get_current_editor()
         if editor:
@@ -578,6 +872,19 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Error", f"Failed to save file: {str(e)}")
 
     #Event Handling
+ 
+    def closeEvent(self, event):
+        """Save settings on close."""
+        settings = {
+            "window_size": [self.width(), self.height()],
+            "window_position": [self.x(), self.y()],
+            "theme": self.current_theme,
+            "font_family": self.current_font_family,
+            "font_size": self.current_font_size
+        }
+        save_settings(settings)
+        event.accept() 
+    
     def eventFilter(self, source, event):
         # Process ESC key for clearing formatting, if needed
         return super(MainWindow, self).eventFilter(source, event)

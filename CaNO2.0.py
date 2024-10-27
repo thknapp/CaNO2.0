@@ -1,5 +1,6 @@
 import sys
 import os
+import json
 import logging
 import subprocess
 
@@ -33,11 +34,39 @@ except Exception as e:
 
 logger = logging.getLogger(__name__)
 
+# Define the path for the settings file in AppData
+settings_dir = os.path.join(os.getenv('APPDATA'), script_name)
+os.makedirs(settings_dir, exist_ok=True)
+settings_file = os.path.join(settings_dir, f"{script_name}-settings.json")
+
+# Load settings from JSON
+def load_settings():
+    if os.path.exists(settings_file):
+        try:
+            with open(settings_file, 'r') as f:
+                return json.load(f) or {}  # Return empty dict if the file is empty
+        except json.JSONDecodeError:
+            logger.warning("Settings file is empty or invalid. Using default settings.")
+            return {}  # Return default settings if JSON is invalid
+    return {}  # Return default settings if the file does not exist
+
+# Save settings to JSON
+def save_settings(settings):
+    with open(settings_file, 'w') as f:
+        json.dump(settings, f, indent=4)
+
+# Load existing settings
+app_settings = load_settings()
+
 """----------Constants and Theme Definitions----------"""
-# Font and theme settings
-DEFAULT_FONT_FAMILY = "Cambria"
-DEFAULT_FONT_SIZE = 14
-FONT_SIZES = [str(i) for i in range(8, 98, 2)]
+# Set default font and theme if not set in settings
+DEFAULT_FONT_FAMILY = app_settings.get("font_family", "Cambria")
+DEFAULT_FONT_SIZE = app_settings.get("font_size", 14)
+DEFAULT_THEME = app_settings.get("theme", "Light Theme")
+DEFAULT_WINDOW_SIZE = app_settings.get("window_size", [800, 600])  # [width, height]
+DEFAULT_WINDOW_POSITION = app_settings.get("window_position", [100, 100])  # [x, y]
+
+FONT_SIZES = [str(i) for i in range(8, 98, 2)]  # Font sizes from 8 to 96 in increments of 2
 
 # Theme definitions with background and font color
 THEMES = {
@@ -338,10 +367,17 @@ class MainWindow(QMainWindow):
 
         self.images_dir = os.path.join(os.path.dirname(__file__), 'images')  # Path to icons
 
-        # Default theme settings
-        self.current_theme_settings = THEMES["Light Theme"]
-        self.current_font_family = DEFAULT_FONT_FAMILY
-        self.current_font_size = DEFAULT_FONT_SIZE
+        # Load settings for font and theme
+        self.current_theme = app_settings.get("theme", DEFAULT_THEME)
+        self.current_theme_settings = THEMES.get(self.current_theme, THEMES["Light Theme"])
+        self.current_font_family = app_settings.get("font_family", DEFAULT_FONT_FAMILY)
+        self.current_font_size = app_settings.get("font_size", DEFAULT_FONT_SIZE)
+
+        # Set window size and position from settings
+        window_size = app_settings.get("window_size", DEFAULT_WINDOW_SIZE)
+        window_position = app_settings.get("window_position", DEFAULT_WINDOW_POSITION)
+        self.resize(window_size[0], window_size[1])
+        self.move(window_position[0], window_position[1])
 
         # Initialize path tracking
         self.paths = {}  # Stores file paths for each tab
@@ -360,7 +396,10 @@ class MainWindow(QMainWindow):
         # Initialize UI components
         self.apply_default_font_settings()
         self.init_ui()
-
+        
+        # Apply the loaded theme
+        self.apply_theme(self.current_theme)
+ 
         logger.info("User interface initialized with tab support.")
 
     def init_ui(self):
@@ -520,6 +559,7 @@ class MainWindow(QMainWindow):
         size_box.addItems(FONT_SIZES)
         size_box.setCurrentText(str(self.current_font_size))
         size_box.currentTextChanged.connect(self.on_fontsize_change)
+        size_box.setMinimumWidth(50)  # Set minimum width        
         toolbar.addWidget(size_box)
 
     """----------Format Toolbar----------"""
@@ -608,9 +648,10 @@ class MainWindow(QMainWindow):
         list_toolbar.addAction(decrease_indent_action)
 
     """----------Formatting and Theme Methods----------"""
-    #Theme Application
+    # Theme application with current theme tracking
     def apply_theme(self, theme_name):
-        theme = THEMES.get(theme_name, THEMES["Light Theme"])  # Default to Light Theme if not found
+        theme = THEMES.get(theme_name, THEMES["Light Theme"])
+        self.current_theme = theme_name
         self.setStyleSheet(theme["style"])
         self.current_theme_settings.update({
             "text_color": theme["text_color"],
@@ -620,6 +661,7 @@ class MainWindow(QMainWindow):
         self.apply_default_font_settings()
         logger.info(f"Theme applied: {theme_name}")
 
+    # Apply default font settings to current editor
     def apply_default_font_settings(self):
         editor = self.get_current_editor()
         if editor:
@@ -831,6 +873,19 @@ class MainWindow(QMainWindow):
             QMessageBox.critical(self, "Error", f"Failed to save file: {str(e)}")
 
     #Event Handling
+ 
+    def closeEvent(self, event):
+        """Save settings on close."""
+        settings = {
+            "window_size": [self.width(), self.height()],
+            "window_position": [self.x(), self.y()],
+            "theme": self.current_theme,
+            "font_family": self.current_font_family,
+            "font_size": self.current_font_size
+        }
+        save_settings(settings)
+        event.accept() 
+    
     def eventFilter(self, source, event):
         # Process ESC key for clearing formatting, if needed
         return super(MainWindow, self).eventFilter(source, event)
