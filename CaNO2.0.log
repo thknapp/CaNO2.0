@@ -488,3 +488,406 @@
 2024-10-28 14:21:02,493 - INFO - Captured area image inserted into document.
 2024-10-28 14:21:02,661 - INFO - Captured area image inserted into document.
 2024-10-28 14:21:02,860 - INFO - Captured area image inserted into document.
+2024-10-28 14:23:18,647 - INFO - Theme applied: Ice Blue Theme
+2024-10-28 14:23:26,334 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:27:27,335 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:27:27,336 - INFO - User interface initialized with tab support.
+2024-10-28 14:27:27,506 - INFO - Application started.
+2024-10-28 14:27:30,310 - INFO - Snipping tool initialized on all screens.
+2024-10-28 14:27:32,106 - INFO - Capture area set to: PyQt6.QtCore.QRect(4229, 216, 786, 471)
+2024-10-28 14:27:37,941 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:27:37,941 - INFO - User interface initialized with tab support.
+2024-10-28 14:27:38,131 - INFO - Application started.
+2024-10-28 14:27:40,789 - INFO - Snipping tool initialized on all screens.
+2024-10-28 14:27:42,282 - INFO - Capture area set to: PyQt6.QtCore.QRect(4404, 146, 687, 505)
+2024-10-28 14:29:49,988 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:29:49,988 - INFO - User interface initialized with tab support.
+2024-10-28 14:29:50,152 - INFO - Application started.
+2024-10-28 14:29:52,537 - INFO - Snipping tool initialized on all screens.
+2024-10-28 14:29:53,944 - INFO - Capture area set to: PyQt6.QtCore.QRect(4378, 281, 556, 414)
+2024-10-28 14:29:54,017 - INFO - Thumbnail inserted into document.
+2024-10-28 14:32:11,076 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:32:11,076 - INFO - User interface initialized with tab support.
+2024-10-28 14:32:11,372 - INFO - Application started.
+2024-10-28 15:19:10,300 - INFO - Real-time spell check enabled.
+2024-10-28 15:24:48,969 - INFO - OCR overlay initialized.
+2024-10-28 15:24:51,482 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 15:24:51,482 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 15:24:51,483 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 15:24:51,517 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_z_pz3y9h_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_z_pz3y9h', 'txt']
+2024-10-28 15:24:56,613 - INFO - OCR text inserted into document.
+2024-10-28 15:25:12,563 - INFO - Real-time spell check disabled.
+2024-10-28 15:25:13,713 - INFO - Real-time spell check enabled.
+2024-10-28 15:33:18,763 - INFO - OCR overlay initialized.
+2024-10-28 15:33:23,063 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 15:33:23,063 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 15:33:23,063 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 15:33:23,072 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_3i7qg0z5_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_3i7qg0z5', 'txt']
+2024-10-28 15:33:23,307 - INFO - OCR text inserted into document.
+2024-10-28 15:33:44,614 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:33:49,365 - INFO - Capture area set to: PyQt6.QtCore.QRect(1528, 420, 651, 521)
+2024-10-28 15:33:49,472 - INFO - Thumbnail inserted into document.
+2024-10-28 15:33:53,851 - INFO - Thumbnail inserted into document.
+2024-10-28 15:36:20,241 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:36:20,242 - INFO - User interface initialized with tab support.
+2024-10-28 15:36:20,407 - INFO - Application started.
+2024-10-28 15:36:23,536 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:36:25,107 - INFO - Capture area set to: PyQt6.QtCore.QRect(3939, 372, 721, 600)
+2024-10-28 15:36:30,675 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:36:30,675 - INFO - User interface initialized with tab support.
+2024-10-28 15:36:30,847 - INFO - Application started.
+2024-10-28 15:36:33,330 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:36:34,477 - INFO - Capture area set to: PyQt6.QtCore.QRect(3803, 303, 427, 466)
+2024-10-28 15:39:40,335 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:39:40,336 - INFO - User interface initialized with tab support.
+2024-10-28 15:39:40,497 - INFO - Application started.
+2024-10-28 15:39:44,596 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:39:45,793 - INFO - Capture area set to: PyQt6.QtCore.QRect(3788, 313, 517, 304)
+2024-10-28 15:41:15,855 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:41:15,856 - INFO - User interface initialized with tab support.
+2024-10-28 15:41:16,018 - INFO - Application started.
+2024-10-28 15:41:18,090 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:41:19,907 - INFO - Capture area set to: PyQt6.QtCore.QRect(3812, 893, 446, 281)
+2024-10-28 15:41:19,974 - INFO - Thumbnail inserted into document.
+2024-10-28 15:41:28,169 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:41:28,170 - INFO - User interface initialized with tab support.
+2024-10-28 15:41:28,355 - INFO - Application started.
+2024-10-28 15:41:30,690 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:41:32,038 - INFO - Capture area set to: PyQt6.QtCore.QRect(3858, 901, 427, 327)
+2024-10-28 15:42:58,379 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:42:58,380 - INFO - User interface initialized with tab support.
+2024-10-28 15:42:58,541 - INFO - Application started.
+2024-10-28 15:43:27,782 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:43:29,195 - INFO - Capture area set to: PyQt6.QtCore.QRect(3778, 882, 484, 303)
+2024-10-28 15:43:31,079 - INFO - Thumbnail inserted into document.
+2024-10-28 15:44:44,495 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:44:44,496 - INFO - User interface initialized with tab support.
+2024-10-28 15:44:44,677 - INFO - Application started.
+2024-10-28 15:44:46,924 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:44:48,089 - INFO - Capture area set to: PyQt6.QtCore.QRect(3802, 451, 483, 323)
+2024-10-28 15:44:48,146 - INFO - Thumbnail inserted into document.
+2024-10-28 15:45:32,716 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:45:32,716 - INFO - User interface initialized with tab support.
+2024-10-28 15:45:32,892 - INFO - Application started.
+2024-10-28 15:45:36,295 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:45:40,237 - INFO - Capture area set to: PyQt6.QtCore.QRect(3755, 118, 1359, 1274)
+2024-10-28 15:45:40,365 - INFO - Thumbnail inserted into document.
+2024-10-28 15:45:58,601 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:45:58,602 - INFO - User interface initialized with tab support.
+2024-10-28 15:45:58,792 - INFO - Application started.
+2024-10-28 15:46:01,023 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:46:05,925 - INFO - Capture area set to: PyQt6.QtCore.QRect(5122, 138, 2045, 1087)
+2024-10-28 15:46:06,059 - INFO - Thumbnail inserted into document.
+2024-10-28 15:49:49,861 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:49:49,861 - INFO - User interface initialized with tab support.
+2024-10-28 15:49:50,011 - INFO - Application started.
+2024-10-28 15:49:56,509 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:49:59,306 - INFO - Capture area set to: PyQt6.QtCore.QRect(5222, 175, 1833, 1046)
+2024-10-28 15:49:59,418 - INFO - Thumbnail inserted into document.
+2024-10-28 15:52:11,785 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:52:11,786 - INFO - User interface initialized with tab support.
+2024-10-28 15:52:12,001 - INFO - Application started.
+2024-10-28 15:52:19,842 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:52:25,508 - INFO - Capture area set to: PyQt6.QtCore.QRect(5131, 146, 2007, 1083)
+2024-10-28 15:52:25,596 - INFO - Thumbnail inserted into document.
+2024-10-28 15:54:48,145 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:54:48,145 - INFO - User interface initialized with tab support.
+2024-10-28 15:54:48,308 - INFO - Application started.
+2024-10-28 15:54:53,657 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:54:56,282 - INFO - Capture area set to: PyQt6.QtCore.QRect(3228, 93, 1841, 1286)
+2024-10-28 15:54:56,403 - INFO - Thumbnail inserted into document.
+2024-10-28 15:56:09,007 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:56:09,008 - INFO - User interface initialized with tab support.
+2024-10-28 15:56:09,179 - INFO - Application started.
+2024-10-28 15:56:12,568 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:56:13,706 - INFO - Capture area set to: PyQt6.QtCore.QRect(3288, 251, 934, 622)
+2024-10-28 15:56:17,060 - INFO - Thumbnail inserted into document.
+2024-10-28 15:59:30,572 - INFO - Theme applied: Forest Green Theme
+2024-10-28 15:59:30,572 - INFO - User interface initialized with tab support.
+2024-10-28 15:59:30,745 - INFO - Application started.
+2024-10-28 15:59:32,546 - INFO - Snipping tool initialized on all screens.
+2024-10-28 15:59:34,878 - INFO - Capture area set to: PyQt6.QtCore.QRect(5394, 185, 1497, 921)
+2024-10-28 15:59:34,978 - INFO - Thumbnail inserted into document.
+2024-10-28 16:01:54,924 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:01:54,924 - INFO - User interface initialized with tab support.
+2024-10-28 16:01:55,084 - INFO - Application started.
+2024-10-28 16:01:58,253 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:02:00,453 - INFO - Capture area set to: PyQt6.QtCore.QRect(3329, 262, 1623, 1062)
+2024-10-28 16:02:00,579 - INFO - Thumbnail inserted into document.
+2024-10-28 16:04:42,229 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:04:42,231 - INFO - User interface initialized with tab support.
+2024-10-28 16:04:42,394 - INFO - Application started.
+2024-10-28 16:04:45,156 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:04:47,950 - INFO - Capture area set to: PyQt6.QtCore.QRect(-987, -86, 723, 562)
+2024-10-28 16:04:48,035 - INFO - Thumbnail inserted into document.
+2024-10-28 16:07:18,373 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:07:18,373 - INFO - User interface initialized with tab support.
+2024-10-28 16:07:18,590 - INFO - Application started.
+2024-10-28 16:07:20,758 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:07:23,309 - INFO - Capture area set to: PyQt6.QtCore.QRect(3223, 53, 1823, 1339)
+2024-10-28 16:07:23,438 - INFO - Thumbnail inserted into document.
+2024-10-28 16:07:33,302 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:07:33,304 - INFO - User interface initialized with tab support.
+2024-10-28 16:07:33,467 - INFO - Application started.
+2024-10-28 16:07:35,712 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:07:38,185 - INFO - Capture area set to: PyQt6.QtCore.QRect(3200, 146, 1792, 1206)
+2024-10-28 16:07:38,283 - INFO - Thumbnail inserted into document.
+2024-10-28 16:09:01,183 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:09:01,183 - INFO - User interface initialized with tab support.
+2024-10-28 16:09:01,367 - INFO - Application started.
+2024-10-28 16:09:03,627 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:09:05,786 - INFO - Capture area set to: PyQt6.QtCore.QRect(3221, 159, 1717, 1228)
+2024-10-28 16:09:05,871 - INFO - Thumbnail inserted into document.
+2024-10-28 16:11:55,424 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:11:55,425 - INFO - User interface initialized with tab support.
+2024-10-28 16:11:55,590 - INFO - Application started.
+2024-10-28 16:11:59,015 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:12:01,663 - INFO - Capture area set to: PyQt6.QtCore.QRect(3182, 155, 1877, 1240)
+2024-10-28 16:12:01,787 - INFO - Thumbnail inserted into document.
+2024-10-28 16:13:20,919 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:13:20,919 - INFO - User interface initialized with tab support.
+2024-10-28 16:13:21,091 - INFO - Application started.
+2024-10-28 16:13:26,538 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:13:27,768 - INFO - Capture area set to: PyQt6.QtCore.QRect(3272, 213, 1466, 1102)
+2024-10-28 16:13:27,860 - INFO - Thumbnail inserted into document.
+2024-10-28 16:15:33,803 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:15:33,804 - INFO - User interface initialized with tab support.
+2024-10-28 16:15:33,963 - INFO - Application started.
+2024-10-28 16:15:37,103 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:15:38,883 - INFO - Capture area set to: PyQt6.QtCore.QRect(3308, 274, 1544, 1103)
+2024-10-28 16:15:38,996 - INFO - Thumbnail inserted into document.
+2024-10-28 16:15:41,154 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(118, 71)
+2024-10-28 16:15:41,155 - DEBUG - Image detected with URL image_20241028161538991.png at rect: PyQt6.QtCore.QRect(204, 4, 1, 142)
+2024-10-28 16:15:50,635 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(74, 84)
+2024-10-28 16:15:50,636 - DEBUG - Image detected with URL image_20241028161538991.png at rect: PyQt6.QtCore.QRect(204, 4, 1, 142)
+2024-10-28 16:17:42,433 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:17:42,434 - INFO - User interface initialized with tab support.
+2024-10-28 16:17:42,598 - INFO - Application started.
+2024-10-28 16:17:46,361 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:17:47,593 - INFO - Capture area set to: PyQt6.QtCore.QRect(3384, 300, 1042, 805)
+2024-10-28 16:17:47,665 - INFO - Thumbnail inserted into document.
+2024-10-28 16:17:50,476 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(129, 97)
+2024-10-28 16:17:50,477 - DEBUG - Adjusted image rect: PyQt6.QtCore.QRect(199, -1, 11, 164)
+2024-10-28 16:17:54,311 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(119, 101)
+2024-10-28 16:17:54,313 - DEBUG - Adjusted image rect: PyQt6.QtCore.QRect(199, -1, 11, 164)
+2024-10-28 16:18:53,489 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:18:53,489 - INFO - User interface initialized with tab support.
+2024-10-28 16:18:53,651 - INFO - Application started.
+2024-10-28 16:18:58,397 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:18:59,590 - INFO - Capture area set to: PyQt6.QtCore.QRect(3355, 319, 921, 615)
+2024-10-28 16:18:59,644 - INFO - Thumbnail inserted into document.
+2024-10-28 16:19:01,472 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(100, 81)
+2024-10-28 16:19:08,086 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:19:08,086 - INFO - User interface initialized with tab support.
+2024-10-28 16:19:08,252 - INFO - Application started.
+2024-10-28 16:19:11,135 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:19:12,002 - INFO - Capture area set to: PyQt6.QtCore.QRect(3402, 256, 1286, 1093)
+2024-10-28 16:19:12,064 - INFO - Thumbnail inserted into document.
+2024-10-28 16:19:12,959 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(45, 122)
+2024-10-28 16:20:04,445 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:20:04,446 - INFO - User interface initialized with tab support.
+2024-10-28 16:20:04,613 - INFO - Application started.
+2024-10-28 16:20:09,941 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:20:10,998 - INFO - Capture area set to: PyQt6.QtCore.QRect(3334, 343, 1041, 697)
+2024-10-28 16:20:11,075 - INFO - Thumbnail inserted into document.
+2024-10-28 16:20:12,224 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(136, 74)
+2024-10-28 16:20:12,225 - DEBUG - Calculated thumbnail rect: PyQt6.QtCore.QRect(-384, -274, 1041, 697)
+2024-10-28 16:20:17,737 - INFO - Thumbnail clicked; full image displayed for URL image_20241028162011067.png
+2024-10-28 16:20:18,476 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(628, 82)
+2024-10-28 16:20:18,478 - DEBUG - Calculated thumbnail rect: PyQt6.QtCore.QRect(108, -266, 1041, 697)
+2024-10-28 16:20:20,111 - INFO - Thumbnail clicked; full image displayed for URL image_20241028162011067.png
+2024-10-28 16:20:20,716 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(1220, 55)
+2024-10-28 16:20:20,717 - DEBUG - Calculated thumbnail rect: PyQt6.QtCore.QRect(700, -293, 1041, 697)
+2024-10-28 16:20:21,974 - INFO - Thumbnail clicked; full image displayed for URL image_20241028162011067.png
+2024-10-28 16:20:22,436 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(1219, 46)
+2024-10-28 16:20:22,438 - DEBUG - Calculated thumbnail rect: PyQt6.QtCore.QRect(699, -302, 1041, 697)
+2024-10-28 16:20:28,222 - INFO - Thumbnail clicked; full image displayed for URL image_20241028162011067.png
+2024-10-28 16:21:43,220 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:21:43,221 - INFO - User interface initialized with tab support.
+2024-10-28 16:21:43,382 - INFO - Application started.
+2024-10-28 16:21:45,662 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:21:46,822 - INFO - Capture area set to: PyQt6.QtCore.QRect(3420, 304, 1079, 811)
+2024-10-28 16:21:46,897 - INFO - Thumbnail inserted into document.
+2024-10-28 16:21:48,463 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(125, 80)
+2024-10-28 16:22:13,726 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:22:13,727 - INFO - User interface initialized with tab support.
+2024-10-28 16:22:13,913 - INFO - Application started.
+2024-10-28 16:22:15,250 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:22:16,152 - INFO - Capture area set to: PyQt6.QtCore.QRect(3294, 272, 1029, 700)
+2024-10-28 16:22:16,232 - INFO - Thumbnail inserted into document.
+2024-10-28 16:22:17,405 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(137, 100)
+2024-10-28 16:22:17,406 - DEBUG - Calculated thumbnail rect: PyQt6.QtCore.QRect(-377, -250, 1029, 700)
+2024-10-28 16:22:19,431 - INFO - Thumbnail clicked; full image displayed for URL image_20241028162216224.png
+2024-10-28 16:22:46,233 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:22:46,233 - INFO - User interface initialized with tab support.
+2024-10-28 16:22:46,400 - INFO - Application started.
+2024-10-28 16:22:49,509 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:22:50,688 - INFO - Capture area set to: PyQt6.QtCore.QRect(3278, 224, 1497, 945)
+2024-10-28 16:22:50,769 - INFO - Thumbnail inserted into document.
+2024-10-28 16:27:15,694 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:27:15,695 - INFO - User interface initialized with tab support.
+2024-10-28 16:27:15,871 - INFO - Application started.
+2024-10-28 16:27:17,600 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:27:18,651 - INFO - Capture area set to: PyQt6.QtCore.QRect(3464, 402, 867, 528)
+2024-10-28 16:27:18,720 - INFO - Thumbnail inserted into document.
+2024-10-28 16:27:20,079 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(103, 49)
+2024-10-28 16:27:28,488 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:27:28,490 - INFO - User interface initialized with tab support.
+2024-10-28 16:27:28,660 - INFO - Application started.
+2024-10-28 16:27:30,959 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:27:31,736 - INFO - Capture area set to: PyQt6.QtCore.QRect(3350, 310, 702, 455)
+2024-10-28 16:27:31,794 - INFO - Thumbnail inserted into document.
+2024-10-28 16:27:32,656 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(75, 32)
+2024-10-28 16:28:19,083 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:28:19,084 - INFO - User interface initialized with tab support.
+2024-10-28 16:28:19,285 - INFO - Application started.
+2024-10-28 16:28:20,658 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:28:21,570 - INFO - Capture area set to: PyQt6.QtCore.QRect(3429, 429, 971, 476)
+2024-10-28 16:28:21,623 - INFO - Thumbnail inserted into document.
+2024-10-28 16:28:23,131 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(96, 72)
+2024-10-28 16:28:25,072 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(96, 70)
+2024-10-28 16:28:26,073 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(249, 50)
+2024-10-28 16:28:26,785 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(374, 50)
+2024-10-28 16:28:27,320 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(809, 51)
+2024-10-28 16:28:27,805 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(1139, 27)
+2024-10-28 16:28:28,377 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(1225, 27)
+2024-10-28 16:28:29,631 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(1349, 92)
+2024-10-28 16:28:30,094 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(1108, 339)
+2024-10-28 16:28:30,624 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(701, 473)
+2024-10-28 16:28:31,048 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(458, 482)
+2024-10-28 16:29:45,528 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:29:45,528 - INFO - User interface initialized with tab support.
+2024-10-28 16:29:45,730 - INFO - Application started.
+2024-10-28 16:30:04,572 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:30:06,572 - INFO - Capture area set to: PyQt6.QtCore.QRect(3264, 236, 1098, 868)
+2024-10-28 16:30:06,654 - INFO - Thumbnail inserted into document.
+2024-10-28 16:30:07,964 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(74, 75)
+2024-10-28 16:30:09,263 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(98, 72)
+2024-10-28 16:30:09,922 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(151, 76)
+2024-10-28 16:30:10,544 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(151, 76)
+2024-10-28 16:32:58,301 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:32:58,302 - INFO - User interface initialized with tab support.
+2024-10-28 16:32:58,494 - INFO - Application started.
+2024-10-28 16:33:01,518 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:33:02,803 - INFO - Capture area set to: PyQt6.QtCore.QRect(3294, 294, 919, 631)
+2024-10-28 16:33:02,870 - INFO - Thumbnail inserted into document.
+2024-10-28 16:33:04,280 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(143, 76)
+2024-10-28 16:33:12,742 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:33:12,743 - INFO - User interface initialized with tab support.
+2024-10-28 16:33:12,917 - INFO - Application started.
+2024-10-28 16:33:14,784 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:33:15,811 - INFO - Capture area set to: PyQt6.QtCore.QRect(3229, 224, 657, 511)
+2024-10-28 16:33:15,877 - INFO - Thumbnail inserted into document.
+2024-10-28 16:33:17,270 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(105, 74)
+2024-10-28 16:34:41,627 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:34:41,629 - INFO - User interface initialized with tab support.
+2024-10-28 16:34:41,795 - INFO - Application started.
+2024-10-28 16:34:43,665 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:34:44,581 - INFO - Capture area set to: PyQt6.QtCore.QRect(3316, 281, 945, 645)
+2024-10-28 16:34:44,648 - INFO - Thumbnail inserted into document.
+2024-10-28 16:34:45,732 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(593, 71)
+2024-10-28 16:34:45,732 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:34:47,245 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(132, 57)
+2024-10-28 16:34:47,247 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:34:48,341 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(63, 59)
+2024-10-28 16:34:48,341 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(4, 4, 200, 136)
+2024-10-28 16:34:51,419 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163444640.png
+2024-10-28 16:34:52,971 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(41, 72)
+2024-10-28 16:34:52,972 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(4, 4, 200, 136)
+2024-10-28 16:34:54,767 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163444640.png
+2024-10-28 16:34:55,648 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(164, 74)
+2024-10-28 16:34:55,648 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:34:56,944 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(39, 55)
+2024-10-28 16:34:56,944 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(4, 4, 200, 136)
+2024-10-28 16:34:59,762 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163444640.png
+2024-10-28 16:35:00,856 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(170, 84)
+2024-10-28 16:35:00,856 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:35:02,360 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(80, 79)
+2024-10-28 16:35:02,361 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(4, 4, 200, 136)
+2024-10-28 16:35:06,434 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163444640.png
+2024-10-28 16:35:08,187 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(20, 89)
+2024-10-28 16:35:08,188 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(4, 4, 200, 136)
+2024-10-28 16:35:11,846 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163444640.png
+2024-10-28 16:35:13,297 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(187, 106)
+2024-10-28 16:35:13,298 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:35:14,711 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(187, 106)
+2024-10-28 16:35:14,714 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:35:16,098 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(173, 113)
+2024-10-28 16:35:16,099 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:35:16,768 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(160, 110)
+2024-10-28 16:35:16,768 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:35:17,499 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(146, 110)
+2024-10-28 16:35:17,500 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:35:18,239 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(134, 110)
+2024-10-28 16:35:18,241 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:35:18,920 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(126, 110)
+2024-10-28 16:35:18,921 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:35:19,733 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(116, 110)
+2024-10-28 16:35:19,734 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(204, 4, 200, 136)
+2024-10-28 16:35:20,541 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(100, 111)
+2024-10-28 16:35:20,541 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(4, 4, 200, 136)
+2024-10-28 16:35:40,887 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163444640.png
+2024-10-28 16:36:43,901 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:36:43,902 - INFO - User interface initialized with tab support.
+2024-10-28 16:36:44,083 - INFO - Application started.
+2024-10-28 16:36:45,667 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:36:47,106 - INFO - Capture area set to: PyQt6.QtCore.QRect(3392, 325, 987, 662)
+2024-10-28 16:36:47,173 - INFO - Thumbnail inserted into document.
+2024-10-28 16:36:48,829 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(198, 74)
+2024-10-28 16:36:55,289 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:36:55,290 - INFO - User interface initialized with tab support.
+2024-10-28 16:36:55,464 - INFO - Application started.
+2024-10-28 16:36:57,436 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:36:58,280 - INFO - Capture area set to: PyQt6.QtCore.QRect(3338, 304, 869, 612)
+2024-10-28 16:36:58,357 - INFO - Thumbnail inserted into document.
+2024-10-28 16:36:59,380 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(75, 116)
+2024-10-28 16:37:44,570 - INFO - Theme applied: Forest Green Theme
+2024-10-28 16:37:44,570 - INFO - User interface initialized with tab support.
+2024-10-28 16:37:44,740 - INFO - Application started.
+2024-10-28 16:37:46,652 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:37:47,761 - INFO - Capture area set to: PyQt6.QtCore.QRect(3289, 296, 1425, 773)
+2024-10-28 16:37:47,827 - INFO - Thumbnail inserted into document.
+2024-10-28 16:37:49,674 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(171, 55)
+2024-10-28 16:37:49,675 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(104, 4, 200, 108)
+2024-10-28 16:37:52,049 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163747819.png
+2024-10-28 16:37:53,152 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(42, 61)
+2024-10-28 16:37:53,152 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(-96, 4, 200, 108)
+2024-10-28 16:37:55,152 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163747819.png
+2024-10-28 16:38:00,503 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:38:01,901 - INFO - Capture area set to: PyQt6.QtCore.QRect(5295, 243, 643, 616)
+2024-10-28 16:38:04,159 - INFO - Thumbnail inserted into document.
+2024-10-28 16:38:05,976 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(149, 70)
+2024-10-28 16:38:05,977 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(104, 4, 200, 108)
+2024-10-28 16:38:08,066 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163747819.png
+2024-10-28 16:38:08,990 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(110, 269)
+2024-10-28 16:38:08,993 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(104, 187, 200, 191)
+2024-10-28 16:38:11,537 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163804158.png
+2024-10-28 16:38:12,514 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(144, 65)
+2024-10-28 16:38:12,515 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(104, 4, 200, 108)
+2024-10-28 16:38:14,822 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163747819.png
+2024-10-28 16:38:15,776 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(124, 278)
+2024-10-28 16:38:15,777 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(104, 187, 200, 191)
+2024-10-28 16:38:17,607 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163804158.png
+2024-10-28 16:38:23,344 - INFO - Snipping tool initialized on all screens.
+2024-10-28 16:38:26,269 - INFO - Capture area set to: PyQt6.QtCore.QRect(-1100, 13, 1077, 1283)
+2024-10-28 16:38:28,460 - INFO - Thumbnail inserted into document.
+2024-10-28 16:38:30,009 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(53, 537)
+2024-10-28 16:38:30,009 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(-58, 453, 125, 150)
+2024-10-28 16:38:36,527 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163828459.png
+2024-10-28 16:38:37,640 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(84, 299)
+2024-10-28 16:38:37,641 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(-96, 187, 200, 191)
+2024-10-28 16:38:39,434 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163804158.png
+2024-10-28 16:39:09,489 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(99, 81)
+2024-10-28 16:39:09,490 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(-96, 4, 200, 108)
+2024-10-28 16:39:11,679 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163747819.png
+2024-10-28 16:39:13,130 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(161, 237)
+2024-10-28 16:39:13,131 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(104, 187, 200, 191)
+2024-10-28 16:39:16,230 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163804158.png
+2024-10-28 16:39:17,030 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(43, 565)
+2024-10-28 16:39:17,031 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(-58, 453, 125, 150)
+2024-10-28 16:39:18,549 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163828459.png
+2024-10-28 16:39:42,874 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(333, 312)
+2024-10-28 16:39:42,875 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(104, 187, 200, 191)
+2024-10-28 16:39:44,522 - DEBUG - Mouse click detected at position: PyQt6.QtCore.QPoint(108, 305)
+2024-10-28 16:39:44,523 - DEBUG - Thumbnail rectangle calculated at: PyQt6.QtCore.QRect(104, 187, 200, 191)
+2024-10-28 16:39:46,367 - INFO - Thumbnail clicked; full image displayed for URL image_20241028163804158.png

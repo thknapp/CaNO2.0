@@ -9,12 +9,12 @@ import ctypes
 from PyQt6.QtGui import (
     QGuiApplication, QBitmap, QFont, QColor, QIcon, QTextCharFormat, QAction, QActionGroup, QTextListFormat,
     QTextCursor, QPixmap, QPainter, QPen, QTextDocument,
-    QTextImageFormat
+    QTextImageFormat, QTextFormat
 )
 from PyQt6.QtWidgets import (
     QApplication, QMainWindow, QTextEdit, QToolBar, QComboBox, QFontComboBox, QSizePolicy,
     QMenu, QWidgetAction, QLabel, QVBoxLayout, QHBoxLayout, QWidget,
-    QPushButton, QTabWidget, QFileDialog, QMessageBox, QInputDialog
+    QPushButton, QTabWidget, QFileDialog, QMessageBox, QInputDialog, QDialog, QVBoxLayout
 )
 from PyQt6.QtCore import (
     QEvent, Qt, QSize, QBuffer, QByteArray, QPoint, QRect, pyqtSignal, QDateTime, QUrl, QTimer
@@ -405,6 +405,18 @@ TOGGLED_BUTTON_STYLE = """
 """
 
 """===========Snipping Overlay Class=========="""
+class ClickableImageDialog(QDialog):
+    def __init__(self, full_pixmap, parent=None):
+        super().__init__(parent)
+        self.setWindowTitle("Full Image")
+        layout = QVBoxLayout(self)
+        
+        full_image_label = QLabel()
+        full_image_label.setPixmap(full_pixmap)
+        layout.addWidget(full_image_label)
+        
+        self.setLayout(layout)
+"""===========Snipping Overlay Class=========="""
 class SnippingOverlay(QWidget):
     snipCompleteGlobal = pyqtSignal(QRect)
 
@@ -478,6 +490,10 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super(MainWindow, self).__init__()
         self.setWindowTitle("Case and Note Organizer 2.0")
+        
+        # Initialize capture_in_progress and full_image_map attributes
+        self.capture_in_progress = False  # Tracks if a capture is in progress
+        self.full_image_map = {}  # Stores full-size images by URL
         
         # Flag to track if capture area has been set
         self.capture_area_set = False
@@ -1416,12 +1432,7 @@ class MainWindow(QMainWindow):
 
     def capture(self):
         """Capture the screen area if set; otherwise prompt user to set the area first."""
-        if not hasattr(self, 'capture_in_progress'):
-            self.capture_in_progress = False
-
-        # If the capture area isn't set, prompt the user to set it
         if not self.capture_area_set:
-            QMessageBox.information(self, "Set Capture Area", "Please define the capture area first.")
             self.capture_in_progress = True  # Set flag to capture after area is set
             self.set_capture_area()
             return
@@ -1450,19 +1461,48 @@ class MainWindow(QMainWindow):
                 image_url = QUrl(image_name)
                 editor.document().addResource(QTextDocument.ResourceType.ImageResource, image_url, pixmap)
 
-                # Define the image format for insertion
+                # Define maximum thumbnail dimensions
+                MAX_THUMBNAIL_WIDTH = 200  # Set your desired max width
+                MAX_THUMBNAIL_HEIGHT = 150  # Set your desired max height
+
+                # Calculate aspect ratio and determine thumbnail size
+                original_width = pixmap.width()
+                original_height = pixmap.height()
+                aspect_ratio = original_width / original_height
+
+                if original_width > MAX_THUMBNAIL_WIDTH or original_height > MAX_THUMBNAIL_HEIGHT:
+                    if aspect_ratio > 1:
+                        thumbnail_width = MAX_THUMBNAIL_WIDTH
+                        thumbnail_height = int(thumbnail_width / aspect_ratio)
+                    else:
+                        thumbnail_height = MAX_THUMBNAIL_HEIGHT
+                        thumbnail_width = int(thumbnail_height * aspect_ratio)
+                else:
+                    thumbnail_width = original_width
+                    thumbnail_height = original_height
+
+                # Scale the pixmap to thumbnail dimensions
+                thumbnail_pixmap = pixmap.scaled(thumbnail_width, thumbnail_height, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+
+                # Define the image format for thumbnail insertion
                 image_format = QTextImageFormat()
                 image_format.setName(image_url.toString())
-                image_format.setWidth(self.capture_area.width())
-                image_format.setHeight(self.capture_area.height())
+                image_format.setWidth(thumbnail_width)
+                image_format.setHeight(thumbnail_height)
 
-                # Insert the image at the cursor position
+                # Insert the thumbnail image at the cursor position
                 cursor = editor.textCursor()
                 cursor.insertImage(image_format)
-                logger.info("Captured area image inserted into document.")
+
+                # Save the full-size image in the full_image_map for viewing
+                self.full_image_map[image_url.toString()] = pixmap  # Store full-size image by URL
+
+                # Install event filter to enable click-to-enlarge functionality
+                editor.viewport().installEventFilter(self)
+                logger.info("Thumbnail inserted into document.")
         else:
             QMessageBox.warning(self, "Capture Failed", "Failed to capture the pre-set area.")
-            
+
     """----------OCR Methods----------"""
     def perform_ocr(self):
         """Perform OCR with an overlay for user selection."""
@@ -1580,7 +1620,69 @@ class MainWindow(QMainWindow):
 
             editor.setTextCursor(cursor)
             logger.info("Text formatting applied to selection or cursor position.")
+            
+            
+    """----------Helper Methods-----------"""            
+    def eventFilter(self, source, event):
+        """Capture click events on inserted thumbnails to display full-size images."""
+        if event.type() == QEvent.Type.MouseButtonPress and event.button() == Qt.MouseButton.LeftButton:
+            editor = self.get_current_editor()
+            if editor and source == editor.viewport():
+                logger.debug(f"Mouse click detected at position: {event.pos()}")
 
+                # Obtain the cursor based on the mouse position
+                cursor = editor.cursorForPosition(event.pos())
+                # Get the character format at the cursor position
+                char_format = cursor.charFormat()
+                # Check if the format is an image format
+                if char_format.isImageFormat():
+                    # Access image properties directly from char_format
+                    image_url = char_format.property(QTextFormat.Property.ImageName)
+                    if image_url and image_url in self.full_image_map:
+                        # Retrieve thumbnail width and height from the image format
+                        thumbnail_width = char_format.property(QTextFormat.Property.ImageWidth)
+                        thumbnail_height = char_format.property(QTextFormat.Property.ImageHeight)
+
+                        # Ensure dimensions are valid numbers
+                        if thumbnail_width is None or thumbnail_height is None:
+                            logger.error("Thumbnail dimensions are missing.")
+                            return False
+
+                        # Calculate the exact thumbnail rectangle based on cursor position
+                        image_rect = editor.cursorRect(cursor)
+                        image_rect.setX(image_rect.x() - (thumbnail_width // 2))  # Adjust x to center horizontally
+                        image_rect.setWidth(int(thumbnail_width))
+                        image_rect.setHeight(int(thumbnail_height))
+                        logger.debug(f"Thumbnail rectangle calculated at: {image_rect}")
+
+                        # Check if the click is within the bounds of the thumbnail
+                        if image_rect.contains(event.pos()):
+                            self.show_full_image(self.full_image_map[image_url])
+                            logger.info(f"Thumbnail clicked; full image displayed for URL {image_url}")
+                            return True  # Event handled, stop further propagation
+
+        return super(MainWindow, self).eventFilter(source, event)
+
+    # Method to display the full-size image in a dialog
+    def show_full_image(self, pixmap):
+        """Display the full-size image in a new dialog when the thumbnail is clicked."""
+        dialog = ClickableImageDialog(pixmap, self)
+        dialog.exec()
+    
+    def display_full_image(self, full_image):
+        """Display the full-size image in a separate window."""
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Full-Size Image")
+        dialog_layout = QVBoxLayout()
+        
+        label = QLabel()
+        label.setPixmap(full_image)
+        dialog_layout.addWidget(label)
+        
+        dialog.setLayout(dialog_layout)
+        dialog.setFixedSize(full_image.size())  # Set dialog size to match image
+        dialog.exec()
+    
 # Main Application Execution
 if __name__ == "__main__":
     app = QApplication(sys.argv)
