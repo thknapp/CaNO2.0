@@ -3,7 +3,7 @@ import os
 import json
 import logging
 from PyQt6.QtGui import (
-    QGuiApplication, QFont, QColor, QIcon, QTextCharFormat, QAction, QActionGroup, QTextListFormat,
+    QGuiApplication, QBitmap, QFont, QColor, QIcon, QTextCharFormat, QAction, QActionGroup, QTextListFormat,
     QTextCursor, QPixmap, QPainter, QColor, QPen, QTextDocument,
     QTextImageFormat
 )
@@ -360,13 +360,13 @@ HIGHLIGHT_STYLES = {
 }
 
 """===========Snipping Class=========="""
-"""===========Snipping Class=========="""
 class SnippingOverlay(QWidget):
     snipCompleteGlobal = pyqtSignal(QRect)
 
     def __init__(self, screen_rect, close_all_callback):
         super().__init__()
-        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.FramelessWindowHint)
+        # Set flags and attributes for overlay behavior
+        self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.FramelessWindowHint | Qt.WindowType.Tool)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setGeometry(screen_rect)
         self.setCursor(Qt.CursorShape.CrossCursor)
@@ -374,31 +374,53 @@ class SnippingOverlay(QWidget):
         self.end = QPoint()
         self.close_all_callback = close_all_callback
 
-    def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setBrush(QColor(0, 0, 0, 100))
-        painter.setPen(Qt.PenStyle.NoPen)
-        painter.drawRect(self.rect())
+    def updateMask(self):
+        # Create a mask with the entire area filled
+        mask = QBitmap(self.size())
+        mask.fill(Qt.GlobalColor.black)
+        
+        # Define the selection rectangle
+        selection_rect = QRect(self.begin, self.end).normalized()
 
+        # Use QPainter to clear the selected area in the mask
+        painter = QPainter(mask)
+        painter.setBrush(Qt.GlobalColor.white)
+        painter.setPen(Qt.PenStyle.NoPen)
+        painter.drawRect(selection_rect)
+        painter.end()
+
+        # Apply the mask to make the selection area transparent
+        self.setMask(mask)
+
+    def paintEvent(self, event):
+        qp = QPainter(self)
+        screen_rect = self.rect()
+
+        # Draw a semi-transparent overlay over the entire screen
+        qp.setBrush(QColor(0, 0, 0, 100))  # Semi-transparent dark overlay
+        qp.setPen(Qt.PenStyle.NoPen)
+        qp.drawRect(screen_rect)
+
+        # Draw a clear border around the selection rectangle
         selection_rect = QRect(self.begin, self.end).normalized()
         if not selection_rect.isNull():
-            painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_Clear)
-            painter.fillRect(selection_rect, Qt.GlobalColor.transparent)
-            painter.setCompositionMode(QPainter.CompositionMode.CompositionMode_SourceOver)
-            painter.setPen(QPen(Qt.GlobalColor.red, 3))
-            painter.drawRect(selection_rect)
+            qp.setPen(QPen(Qt.GlobalColor.red, 3))  # Red outline for selection
+            qp.drawRect(selection_rect)
 
     def mousePressEvent(self, event):
         self.begin = event.pos()
         self.end = self.begin
+        self.updateMask()
         self.update()
 
     def mouseMoveEvent(self, event):
         self.end = event.pos()
+        self.updateMask()
         self.update()
 
     def mouseReleaseEvent(self, event):
         self.end = event.pos()
+        self.updateMask()
         self.update()
         # Adjust the coordinates to global
         snip_rect = QRect(self.mapToGlobal(self.begin), self.mapToGlobal(self.end)).normalized()
