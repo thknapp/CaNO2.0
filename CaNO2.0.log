@@ -78,3 +78,413 @@
 2024-10-28 08:55:15,574 - DEBUG - STREAM b'IDAT' 62 8192
 2024-10-28 08:55:15,585 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_e4qhtfbu_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_e4qhtfbu', 'txt']
 2024-10-28 08:55:15,889 - INFO - OCR text inserted into document.
+2024-10-28 08:57:06,487 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:57:06,488 - INFO - User interface initialized with tab support.
+2024-10-28 08:57:06,628 - INFO - Application started.
+2024-10-28 08:57:12,563 - INFO - OCR overlay initialized.
+2024-10-28 08:57:15,899 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 08:57:15,900 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 08:57:15,900 - DEBUG - STREAM b'IDAT' 62 8073
+2024-10-28 08:57:15,905 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_vko68a9g_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_vko68a9g', 'txt']
+2024-10-28 08:57:16,115 - INFO - OCR text inserted into document.
+2024-10-28 08:57:31,963 - INFO - OCR overlay initialized.
+2024-10-28 08:57:35,760 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 08:57:35,761 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 08:57:35,761 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 08:57:35,772 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_3gfk76no_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_3gfk76no', 'txt']
+2024-10-28 08:57:36,143 - INFO - OCR text inserted into document.
+2024-10-28 09:00:35,577 - INFO - OCR overlay initialized.
+2024-10-28 09:00:39,152 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:00:39,152 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:00:39,152 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 09:00:39,165 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_7qk1y02e_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_7qk1y02e', 'txt']
+2024-10-28 09:00:39,525 - INFO - OCR text inserted into document.
+2024-10-28 09:01:11,250 - INFO - Snipping tool initialized on all screens.
+2024-10-28 09:01:12,495 - INFO - Capture area set to: PyQt6.QtCore.QRect(4005, 402, 524, 437)
+2024-10-28 09:01:13,848 - INFO - Captured area image inserted into document.
+2024-10-28 09:01:16,784 - INFO - Snipping tool initialized on all screens.
+2024-10-28 09:01:18,951 - INFO - Capture area set to: PyQt6.QtCore.QRect(2430, 169, 535, 46)
+2024-10-28 09:01:26,020 - INFO - OCR overlay initialized.
+2024-10-28 09:01:28,415 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:01:28,416 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:01:28,416 - DEBUG - STREAM b'IDAT' 62 8063
+2024-10-28 09:01:28,420 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_8bbrlo8e_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_8bbrlo8e', 'txt']
+2024-10-28 09:01:28,626 - INFO - OCR text inserted into document.
+2024-10-28 09:01:31,345 - INFO - Captured area image inserted into document.
+2024-10-28 09:01:33,384 - INFO - Captured area image inserted into document.
+2024-10-28 09:09:56,073 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:09:56,075 - INFO - User interface initialized with tab support.
+2024-10-28 09:09:56,238 - INFO - Application started.
+2024-10-28 09:10:01,766 - INFO - Snipping tool initialized on all screens.
+2024-10-28 09:10:03,719 - INFO - Capture area set to: PyQt6.QtCore.QRect(1299, 381, 722, 478)
+2024-10-28 09:10:06,308 - INFO - Captured area image inserted into document.
+2024-10-28 09:10:10,928 - INFO - OCR overlay initialized.
+2024-10-28 09:10:13,688 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:10:13,688 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:10:13,689 - DEBUG - STREAM b'IDAT' 62 7034
+2024-10-28 09:10:13,693 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_81dkqzde_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_81dkqzde', 'txt']
+2024-10-28 09:10:13,900 - INFO - OCR text inserted into document.
+2024-10-28 09:10:17,712 - INFO - Captured area image inserted into document.
+2024-10-28 09:10:22,855 - INFO - OCR overlay initialized.
+2024-10-28 09:10:26,421 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:10:26,421 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:10:26,422 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 09:10:26,427 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_nkgtsy8l_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_nkgtsy8l', 'txt']
+2024-10-28 09:10:26,673 - INFO - OCR text inserted into document.
+2024-10-28 09:10:32,423 - INFO - Captured area image inserted into document.
+2024-10-28 09:14:41,376 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:14:41,377 - INFO - User interface initialized with tab support.
+2024-10-28 09:14:41,575 - INFO - Application started.
+2024-10-28 09:14:46,687 - INFO - Theme applied: Midnight Purple Theme
+2024-10-28 09:14:52,127 - INFO - Theme applied: Bronze Theme
+2024-10-28 09:14:57,221 - INFO - Theme applied: Golden Yellow Theme
+2024-10-28 09:15:04,235 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:15:11,420 - INFO - OCR overlay initialized.
+2024-10-28 09:15:14,318 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:15:14,319 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:15:14,319 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 09:15:14,328 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_mhnmuz0a_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_mhnmuz0a', 'txt']
+2024-10-28 09:15:14,675 - INFO - OCR text inserted into document.
+2024-10-28 09:18:41,384 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:18:41,385 - INFO - User interface initialized with tab support.
+2024-10-28 09:18:41,525 - INFO - Application started.
+2024-10-28 09:18:46,679 - INFO - OCR overlay initialized.
+2024-10-28 09:18:48,265 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:18:48,265 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:18:48,265 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 09:18:48,278 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_5oe4_qh1_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_5oe4_qh1', 'txt']
+2024-10-28 09:18:48,696 - INFO - OCR text inserted into document.
+2024-10-28 09:19:41,980 - INFO - Snipping tool initialized on all screens.
+2024-10-28 09:19:43,177 - INFO - Capture area set to: PyQt6.QtCore.QRect(3223, 274, 393, 152)
+2024-10-28 09:19:44,466 - INFO - Captured area image inserted into document.
+2024-10-28 09:19:58,731 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:19:58,732 - INFO - User interface initialized with tab support.
+2024-10-28 09:19:58,928 - INFO - Application started.
+2024-10-28 09:47:20,771 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:47:20,771 - INFO - User interface initialized with tab support.
+2024-10-28 09:47:20,939 - INFO - Application started.
+2024-10-28 09:48:13,370 - INFO - OCR overlay initialized.
+2024-10-28 09:48:15,330 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:48:15,331 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:48:15,331 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 09:48:15,341 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_pdulas31_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_pdulas31', 'txt']
+2024-10-28 09:48:15,616 - INFO - OCR text inserted into document.
+2024-10-28 09:54:14,133 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:54:14,134 - INFO - User interface initialized with tab support.
+2024-10-28 09:54:14,307 - INFO - Application started.
+2024-10-28 09:54:23,890 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:54:23,891 - INFO - User interface initialized with tab support.
+2024-10-28 09:54:24,131 - INFO - Application started.
+2024-10-28 09:55:54,183 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:55:54,183 - INFO - User interface initialized with tab support.
+2024-10-28 09:55:54,357 - INFO - Application started.
+2024-10-28 09:55:57,588 - INFO - Real-time spell check enabled.
+2024-10-28 09:56:07,420 - INFO - Real-time spell check disabled.
+2024-10-28 09:56:09,909 - INFO - Real-time spell check enabled.
+2024-10-28 09:56:14,059 - INFO - Real-time spell check disabled.
+2024-10-28 09:57:26,948 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:57:26,948 - INFO - User interface initialized with tab support.
+2024-10-28 09:57:27,129 - INFO - Application started.
+2024-10-28 09:57:31,831 - INFO - Snipping tool initialized on all screens.
+2024-10-28 09:57:33,125 - INFO - Capture area set to: PyQt6.QtCore.QRect(3075, 300, 762, 438)
+2024-10-28 09:57:34,331 - INFO - Captured area image inserted into document.
+2024-10-28 09:57:43,733 - INFO - Theme applied: Forest Green Theme
+2024-10-28 09:57:43,734 - INFO - User interface initialized with tab support.
+2024-10-28 09:57:43,933 - INFO - Application started.
+2024-10-28 09:57:50,299 - INFO - Snipping tool initialized on all screens.
+2024-10-28 09:57:51,344 - INFO - Capture area set to: PyQt6.QtCore.QRect(2962, 370, 999, 405)
+2024-10-28 09:57:52,813 - INFO - Captured area image inserted into document.
+2024-10-28 09:57:54,828 - INFO - OCR overlay initialized.
+2024-10-28 09:57:56,196 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:57:56,196 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:57:56,197 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 09:57:56,217 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_qx8r8s_b_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_qx8r8s_b', 'txt']
+2024-10-28 09:57:56,743 - INFO - OCR text inserted into document.
+2024-10-28 09:58:16,126 - INFO - Snipping tool initialized on all screens.
+2024-10-28 09:58:18,766 - INFO - Capture area set to: PyQt6.QtCore.QRect(3229, 539, 432, 104)
+2024-10-28 09:58:23,108 - INFO - OCR overlay initialized.
+2024-10-28 09:58:25,925 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:58:25,926 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:58:25,927 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 09:58:25,931 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_i3xqusna_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_i3xqusna', 'txt']
+2024-10-28 09:58:26,181 - INFO - OCR text inserted into document.
+2024-10-28 09:58:44,885 - INFO - OCR overlay initialized.
+2024-10-28 09:58:49,283 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 09:58:49,284 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 09:58:49,285 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 09:58:49,308 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_oyn9w8ae_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_oyn9w8ae', 'txt']
+2024-10-28 09:58:49,685 - INFO - OCR text inserted into document.
+2024-10-28 10:00:18,361 - INFO - Theme applied: Forest Green Theme
+2024-10-28 10:00:18,362 - INFO - User interface initialized with tab support.
+2024-10-28 10:00:18,556 - INFO - Application started.
+2024-10-28 10:34:58,745 - INFO - OCR overlay initialized.
+2024-10-28 10:35:01,405 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 10:35:01,405 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 10:35:01,405 - DEBUG - STREAM b'IDAT' 62 4757
+2024-10-28 10:35:01,414 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_3y8gb8j3_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_3y8gb8j3', 'txt']
+2024-10-28 10:35:06,052 - INFO - OCR text inserted into document.
+2024-10-28 10:35:06,268 - INFO - OCR overlay initialized.
+2024-10-28 10:35:06,749 - INFO - OCR overlay initialized.
+2024-10-28 10:35:16,110 - INFO - Theme applied: Forest Green Theme
+2024-10-28 10:35:16,110 - INFO - User interface initialized with tab support.
+2024-10-28 10:35:16,300 - INFO - Application started.
+2024-10-28 10:35:19,365 - INFO - OCR overlay initialized.
+2024-10-28 10:35:22,890 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 10:35:22,892 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 10:35:22,892 - DEBUG - STREAM b'IDAT' 62 1089
+2024-10-28 10:35:22,897 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_h4zbxm75_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_h4zbxm75', 'txt']
+2024-10-28 10:35:23,148 - INFO - OCR text inserted into document.
+2024-10-28 10:35:27,261 - INFO - Snipping tool initialized on all screens.
+2024-10-28 10:35:28,573 - INFO - Capture area set to: PyQt6.QtCore.QRect(5987, 286, 740, 491)
+2024-10-28 10:35:29,597 - INFO - Captured area image inserted into document.
+2024-10-28 10:36:18,482 - INFO - Theme applied: Ice Blue Theme
+2024-10-28 10:36:24,047 - INFO - Theme applied: Deep Space Theme
+2024-10-28 10:36:30,894 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:34:50,928 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:34:50,939 - INFO - User interface initialized with tab support.
+2024-10-28 11:34:51,116 - INFO - Application started.
+2024-10-28 11:34:59,493 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:35:47,048 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:35:47,062 - INFO - User interface initialized with tab support.
+2024-10-28 11:35:47,242 - INFO - Application started.
+2024-10-28 11:36:00,346 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:37:43,420 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:37:43,438 - INFO - User interface initialized with tab support.
+2024-10-28 11:37:43,604 - INFO - Application started.
+2024-10-28 11:41:45,204 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:41:45,219 - INFO - User interface initialized with tab support.
+2024-10-28 11:41:45,411 - INFO - Application started.
+2024-10-28 11:41:58,740 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:41:58,749 - INFO - User interface initialized with tab support.
+2024-10-28 11:41:58,893 - INFO - Application started.
+2024-10-28 11:42:06,887 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:42:06,911 - INFO - User interface initialized with tab support.
+2024-10-28 11:42:07,123 - INFO - Application started.
+2024-10-28 11:43:27,523 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:43:27,541 - INFO - User interface initialized with tab support.
+2024-10-28 11:43:27,758 - INFO - Application started.
+2024-10-28 11:46:34,145 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:46:34,164 - INFO - User interface initialized with tab support.
+2024-10-28 11:46:34,357 - INFO - Application started.
+2024-10-28 11:46:40,400 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:47:09,413 - INFO - Real-time spell check enabled.
+2024-10-28 11:47:27,275 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:47:27,289 - INFO - User interface initialized with tab support.
+2024-10-28 11:47:27,489 - INFO - Application started.
+2024-10-28 11:51:58,907 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:51:58,923 - INFO - User interface initialized with tab support.
+2024-10-28 11:51:59,053 - INFO - Application started.
+2024-10-28 11:52:53,402 - INFO - Cleared formatting to current theme defaults.
+2024-10-28 11:57:16,376 - INFO - Theme applied: Forest Green Theme
+2024-10-28 11:57:16,377 - INFO - User interface initialized with tab support.
+2024-10-28 11:57:16,585 - INFO - Application started.
+2024-10-28 11:57:23,072 - INFO - Theme applied: Monokai Theme
+2024-10-28 11:57:27,780 - INFO - Theme applied: Ice Blue Theme
+2024-10-28 11:57:36,807 - INFO - Theme applied: Ice Blue Theme
+2024-10-28 11:57:36,809 - INFO - User interface initialized with tab support.
+2024-10-28 11:57:36,981 - INFO - Application started.
+2024-10-28 11:57:57,522 - INFO - Theme applied: Forest Green Theme
+2024-10-28 12:00:52,200 - INFO - Theme applied: Ice Blue Theme
+2024-10-28 12:00:52,200 - INFO - User interface initialized with tab support.
+2024-10-28 12:00:52,413 - INFO - Application started.
+2024-10-28 12:01:08,144 - INFO - Real-time spell check enabled.
+2024-10-28 12:01:10,057 - INFO - Real-time spell check disabled.
+2024-10-28 12:01:12,388 - INFO - OCR overlay initialized.
+2024-10-28 12:01:15,031 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 12:01:15,032 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 12:01:15,032 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 12:01:15,038 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_c5359549_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_c5359549', 'txt']
+2024-10-28 12:01:19,069 - INFO - OCR text inserted into document.
+2024-10-28 12:01:19,197 - INFO - OCR overlay initialized.
+2024-10-28 12:01:24,005 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 12:01:24,006 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 12:01:24,006 - DEBUG - STREAM b'IDAT' 62 12
+2024-10-28 12:01:24,008 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_nucqcoo5_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_nucqcoo5', 'txt']
+2024-10-28 12:01:24,197 - INFO - OCR text inserted into document.
+2024-10-28 12:01:27,058 - INFO - OCR overlay initialized.
+2024-10-28 12:01:29,476 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 12:01:29,477 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 12:01:29,477 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 12:01:29,482 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_m9sbeh7c_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_m9sbeh7c', 'txt']
+2024-10-28 12:01:29,737 - INFO - OCR text inserted into document.
+2024-10-28 12:01:48,684 - INFO - Theme applied: Sepia Theme
+2024-10-28 12:02:07,185 - INFO - Theme applied: Sepia Theme
+2024-10-28 12:02:07,186 - INFO - User interface initialized with tab support.
+2024-10-28 12:02:07,347 - INFO - Application started.
+2024-10-28 12:02:34,491 - INFO - Theme applied: Autumn Maple Theme
+2024-10-28 12:02:45,924 - INFO - Theme applied: Autumn Maple Theme
+2024-10-28 12:02:45,925 - INFO - User interface initialized with tab support.
+2024-10-28 12:02:46,089 - INFO - Application started.
+2024-10-28 12:02:54,698 - INFO - Real-time spell check enabled.
+2024-10-28 12:02:56,598 - INFO - Real-time spell check disabled.
+2024-10-28 12:03:02,584 - INFO - Numbered list applied.
+2024-10-28 12:03:18,869 - INFO - Real-time spell check enabled.
+2024-10-28 12:04:06,333 - INFO - OCR overlay initialized.
+2024-10-28 12:04:09,717 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 12:04:09,717 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 12:04:09,718 - DEBUG - STREAM b'IDAT' 62 4393
+2024-10-28 12:04:09,724 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_e88vkwzi_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_e88vkwzi', 'txt']
+2024-10-28 12:04:09,928 - INFO - OCR text inserted into document.
+2024-10-28 12:47:37,536 - INFO - Theme applied: Autumn Maple Theme
+2024-10-28 12:47:37,537 - INFO - User interface initialized with tab support.
+2024-10-28 12:47:37,697 - INFO - Application started.
+2024-10-28 12:48:39,999 - INFO - Theme applied: Forest Green Theme
+2024-10-28 12:48:48,278 - INFO - Theme applied: Forest Green Theme
+2024-10-28 12:48:48,279 - INFO - User interface initialized with tab support.
+2024-10-28 12:48:48,475 - INFO - Application started.
+2024-10-28 12:49:58,216 - INFO - Theme applied: Forest Green Theme
+2024-10-28 12:49:58,216 - INFO - User interface initialized with tab support.
+2024-10-28 12:49:58,395 - INFO - Application started.
+2024-10-28 12:50:19,900 - INFO - OCR overlay initialized.
+2024-10-28 12:50:22,954 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 12:50:22,955 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 12:50:22,955 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 12:50:22,987 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_bv9qu6kq_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_bv9qu6kq', 'txt']
+2024-10-28 12:50:27,845 - INFO - OCR text inserted into document.
+2024-10-28 12:50:56,896 - INFO - Theme applied: Forest Green Theme
+2024-10-28 12:50:56,897 - INFO - User interface initialized with tab support.
+2024-10-28 12:50:57,065 - INFO - Application started.
+2024-10-28 12:51:08,858 - INFO - Snipping tool initialized on all screens.
+2024-10-28 12:51:10,649 - INFO - Capture area set to: PyQt6.QtCore.QRect(5280, 304, 419, 306)
+2024-10-28 12:51:12,111 - INFO - Captured area image inserted into document.
+2024-10-28 12:51:15,981 - INFO - OCR overlay initialized.
+2024-10-28 12:51:21,032 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 12:51:21,033 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 12:51:21,033 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 12:51:21,045 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_qvgmlw07_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_qvgmlw07', 'txt']
+2024-10-28 12:51:21,552 - INFO - OCR text inserted into document.
+2024-10-28 12:51:26,230 - INFO - Captured area image inserted into document.
+2024-10-28 12:53:11,157 - INFO - Theme applied: Forest Green Theme
+2024-10-28 12:53:11,157 - INFO - User interface initialized with tab support.
+2024-10-28 12:53:11,348 - INFO - Application started.
+2024-10-28 13:03:39,153 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:03:39,153 - INFO - User interface initialized with tab support.
+2024-10-28 13:03:39,323 - INFO - Application started.
+2024-10-28 13:04:00,538 - INFO - OCR overlay initialized.
+2024-10-28 13:04:04,251 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 13:04:04,251 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 13:04:04,251 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 13:04:04,262 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_n443lu13_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_n443lu13', 'txt']
+2024-10-28 13:04:04,619 - INFO - OCR text inserted into document.
+2024-10-28 13:04:20,822 - INFO - Real-time spell check enabled.
+2024-10-28 13:04:30,867 - INFO - Real-time spell check disabled.
+2024-10-28 13:09:52,907 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:09:52,907 - INFO - User interface initialized with tab support.
+2024-10-28 13:09:53,083 - INFO - Application started.
+2024-10-28 13:10:02,396 - INFO - Real-time spell check enabled.
+2024-10-28 13:15:01,526 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:15:01,527 - INFO - User interface initialized with tab support.
+2024-10-28 13:15:01,693 - INFO - Application started.
+2024-10-28 13:15:30,259 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:15:30,260 - INFO - User interface initialized with tab support.
+2024-10-28 13:15:30,474 - INFO - Application started.
+2024-10-28 13:17:20,648 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:17:20,649 - INFO - User interface initialized with tab support.
+2024-10-28 13:17:20,845 - INFO - Application started.
+2024-10-28 13:17:22,613 - INFO - Real-time spell check enabled.
+2024-10-28 13:24:14,277 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:24:14,278 - INFO - User interface initialized with tab support.
+2024-10-28 13:24:14,482 - INFO - Application started.
+2024-10-28 13:24:16,968 - INFO - Real-time spell check enabled.
+2024-10-28 13:36:36,604 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:36:36,605 - INFO - User interface initialized with tab support.
+2024-10-28 13:36:36,760 - INFO - Application started.
+2024-10-28 13:36:53,625 - INFO - Real-time spell check enabled.
+2024-10-28 13:42:30,396 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:42:30,397 - INFO - User interface initialized with tab support.
+2024-10-28 13:42:30,563 - INFO - Application started.
+2024-10-28 13:42:33,948 - INFO - Snipping tool initialized on all screens.
+2024-10-28 13:42:35,815 - INFO - Capture area set to: PyQt6.QtCore.QRect(4030, 242, 765, 485)
+2024-10-28 13:42:37,092 - INFO - Captured area image inserted into document.
+2024-10-28 13:42:39,256 - INFO - OCR overlay initialized.
+2024-10-28 13:42:42,085 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 13:42:42,085 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 13:42:42,085 - DEBUG - STREAM b'IDAT' 62 6839
+2024-10-28 13:42:42,090 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_ml96czni_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_ml96czni', 'txt']
+2024-10-28 13:42:46,418 - INFO - OCR text inserted into document.
+2024-10-28 13:45:41,058 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:45:41,059 - INFO - User interface initialized with tab support.
+2024-10-28 13:45:41,223 - INFO - Application started.
+2024-10-28 13:45:49,320 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:45:49,320 - INFO - User interface initialized with tab support.
+2024-10-28 13:45:49,495 - INFO - Application started.
+2024-10-28 13:45:55,210 - INFO - Real-time spell check enabled.
+2024-10-28 13:49:06,843 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:49:06,843 - INFO - User interface initialized with tab support.
+2024-10-28 13:49:07,018 - INFO - Application started.
+2024-10-28 13:49:15,869 - INFO - Real-time spell check enabled.
+2024-10-28 13:50:35,605 - INFO - Real-time spell check disabled.
+2024-10-28 13:50:38,171 - INFO - Real-time spell check enabled.
+2024-10-28 13:51:07,929 - INFO - Snipping tool initialized on all screens.
+2024-10-28 13:51:09,175 - INFO - Capture area set to: PyQt6.QtCore.QRect(4255, 288, 506, 502)
+2024-10-28 13:51:16,456 - INFO - Captured area image inserted into document.
+2024-10-28 13:51:18,802 - INFO - Captured area image inserted into document.
+2024-10-28 13:51:20,437 - INFO - Captured area image inserted into document.
+2024-10-28 13:51:22,138 - INFO - Captured area image inserted into document.
+2024-10-28 13:51:25,610 - INFO - Captured area image inserted into document.
+2024-10-28 13:51:29,081 - INFO - Captured area image inserted into document.
+2024-10-28 13:51:31,601 - INFO - OCR overlay initialized.
+2024-10-28 13:51:34,302 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 13:51:34,303 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 13:51:34,303 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 13:51:34,321 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_1u_r5se1_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_1u_r5se1', 'txt']
+2024-10-28 13:51:34,817 - INFO - OCR text inserted into document.
+2024-10-28 13:51:45,738 - INFO - Snipping tool initialized on all screens.
+2024-10-28 13:51:47,454 - INFO - Capture area set to: PyQt6.QtCore.QRect(5279, 195, 622, 597)
+2024-10-28 13:51:50,069 - INFO - Captured area image inserted into document.
+2024-10-28 13:54:45,939 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:54:45,940 - INFO - User interface initialized with tab support.
+2024-10-28 13:54:46,101 - INFO - Application started.
+2024-10-28 13:54:50,660 - INFO - Snipping tool initialized on all screens.
+2024-10-28 13:54:52,017 - INFO - Capture area set to: PyQt6.QtCore.QRect(4189, 286, 537, 379)
+2024-10-28 13:54:53,449 - INFO - Captured area image inserted into document.
+2024-10-28 13:54:59,142 - INFO - OCR overlay initialized.
+2024-10-28 13:55:01,522 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 13:55:01,522 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 13:55:01,522 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 13:55:01,531 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_hihsxf3s_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_hihsxf3s', 'txt']
+2024-10-28 13:55:01,826 - INFO - OCR text inserted into document.
+2024-10-28 13:59:22,076 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:59:22,077 - INFO - User interface initialized with tab support.
+2024-10-28 13:59:22,241 - INFO - Application started.
+2024-10-28 13:59:45,807 - INFO - Theme applied: Forest Green Theme
+2024-10-28 13:59:45,807 - INFO - User interface initialized with tab support.
+2024-10-28 13:59:45,963 - INFO - Application started.
+2024-10-28 14:00:07,765 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:00:07,767 - INFO - User interface initialized with tab support.
+2024-10-28 14:00:07,927 - INFO - Application started.
+2024-10-28 14:00:36,561 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:00:36,561 - INFO - User interface initialized with tab support.
+2024-10-28 14:00:36,728 - INFO - Application started.
+2024-10-28 14:03:26,666 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:03:26,666 - INFO - User interface initialized with tab support.
+2024-10-28 14:03:26,835 - INFO - Application started.
+2024-10-28 14:09:28,871 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:09:28,872 - INFO - User interface initialized with tab support.
+2024-10-28 14:09:29,048 - INFO - Application started.
+2024-10-28 14:11:36,748 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:11:36,748 - INFO - User interface initialized with tab support.
+2024-10-28 14:11:36,896 - INFO - Application started.
+2024-10-28 14:20:06,118 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:20:06,120 - INFO - User interface initialized with tab support.
+2024-10-28 14:20:06,265 - INFO - Application started.
+2024-10-28 14:20:11,429 - INFO - Snipping tool initialized on all screens.
+2024-10-28 14:20:16,319 - INFO - Capture area set to: PyQt6.QtCore.QRect(3176, 191, 1014, 536)
+2024-10-28 14:20:16,419 - INFO - Captured area image inserted into document.
+2024-10-28 14:20:38,522 - INFO - Theme applied: Forest Green Theme
+2024-10-28 14:20:38,522 - INFO - User interface initialized with tab support.
+2024-10-28 14:20:38,698 - INFO - Application started.
+2024-10-28 14:20:40,355 - INFO - Snipping tool initialized on all screens.
+2024-10-28 14:20:42,038 - INFO - Capture area set to: PyQt6.QtCore.QRect(3082, 217, 1170, 579)
+2024-10-28 14:20:42,110 - INFO - Captured area image inserted into document.
+2024-10-28 14:20:46,689 - INFO - Captured area image inserted into document.
+2024-10-28 14:20:47,960 - INFO - Captured area image inserted into document.
+2024-10-28 14:20:50,724 - INFO - Captured area image inserted into document.
+2024-10-28 14:20:56,783 - INFO - Snipping tool initialized on all screens.
+2024-10-28 14:20:57,915 - INFO - Capture area set to: PyQt6.QtCore.QRect(4480, 269, 375, 289)
+2024-10-28 14:20:59,261 - INFO - Captured area image inserted into document.
+2024-10-28 14:21:01,927 - INFO - Captured area image inserted into document.
+2024-10-28 14:21:02,295 - INFO - Captured area image inserted into document.
+2024-10-28 14:21:02,493 - INFO - Captured area image inserted into document.
+2024-10-28 14:21:02,661 - INFO - Captured area image inserted into document.
+2024-10-28 14:21:02,860 - INFO - Captured area image inserted into document.
