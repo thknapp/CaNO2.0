@@ -1,286 +1,80 @@
-2024-10-27 12:43:38,138 - INFO - Theme applied: Forest Green Theme
-2024-10-27 12:43:38,140 - INFO - User interface initialized with tab support.
-2024-10-27 12:47:18,404 - INFO - Theme applied: Forest Green Theme
-2024-10-27 12:47:18,405 - INFO - User interface initialized with tab support.
-2024-10-27 12:51:12,473 - INFO - Theme applied: Forest Green Theme
-2024-10-27 12:51:12,475 - INFO - User interface initialized with tab support.
-2024-10-27 12:55:25,583 - INFO - Theme applied: Forest Green Theme
-2024-10-27 12:55:25,585 - INFO - User interface initialized with tab support.
-2024-10-27 12:56:46,956 - INFO - Theme applied: Forest Green Theme
-2024-10-27 12:56:46,957 - INFO - User interface initialized with tab support.
-2024-10-27 13:00:11,093 - INFO - Theme applied: Forest Green Theme
-2024-10-27 13:00:11,094 - INFO - User interface initialized with tab support.
-2024-10-27 13:03:20,891 - INFO - Theme applied: Forest Green Theme
-2024-10-27 13:03:20,891 - INFO - User interface initialized with tab support.
-2024-10-27 13:03:31,410 - INFO - Theme applied: Forest Green Theme
-2024-10-27 13:03:31,411 - INFO - User interface initialized with tab support.
-2024-10-27 13:03:37,605 - INFO - Theme applied: Forest Green Theme
-2024-10-27 13:03:37,606 - INFO - User interface initialized with tab support.
-2024-10-27 13:04:54,068 - INFO - Theme applied: Forest Green Theme
-2024-10-27 13:04:54,069 - INFO - User interface initialized with tab support.
-2024-10-27 13:06:30,649 - INFO - Theme applied: Forest Green Theme
-2024-10-27 13:06:30,649 - INFO - User interface initialized with tab support.
-2024-10-27 13:08:34,786 - INFO - Theme applied: Forest Green Theme
-2024-10-27 13:08:34,787 - INFO - User interface initialized with tab support.
-2024-10-27 13:11:02,915 - INFO - Theme applied: Forest Green Theme
-2024-10-27 13:11:02,915 - INFO - User interface initialized with tab support.
-2024-10-27 16:06:37,356 - INFO - Theme applied: Forest Green Theme
-2024-10-27 16:06:37,356 - INFO - User interface initialized with tab support.
-2024-10-27 16:09:30,170 - INFO - Theme applied: Forest Green Theme
-2024-10-27 16:09:30,171 - INFO - User interface initialized with tab support.
-2024-10-27 16:20:16,670 - INFO - Theme applied: Forest Green Theme
-2024-10-27 16:20:16,671 - INFO - User interface initialized with tab support.
-2024-10-27 16:20:37,235 - INFO - Cleared formatting to current theme defaults.
-2024-10-27 16:20:38,850 - INFO - Cleared formatting to current theme defaults.
-2024-10-27 16:20:39,031 - INFO - Cleared formatting to current theme defaults.
-2024-10-27 16:20:39,161 - INFO - Cleared formatting to current theme defaults.
-2024-10-27 17:46:32,590 - INFO - Theme applied: Forest Green Theme
-2024-10-27 17:46:32,591 - INFO - User interface initialized with tab support.
-2024-10-27 17:46:41,831 - INFO - Cleared formatting to current theme defaults.
-2024-10-27 17:48:20,137 - INFO - Theme applied: Forest Green Theme
-2024-10-27 17:48:20,138 - INFO - User interface initialized with tab support.
-2024-10-27 21:10:03,159 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:10:03,160 - INFO - User interface initialized with tab support.
-2024-10-27 21:16:42,086 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:16:42,086 - INFO - User interface initialized with tab support.
-2024-10-27 21:20:40,875 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:20:40,875 - INFO - User interface initialized with tab support.
-2024-10-27 21:22:36,238 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:22:36,239 - INFO - User interface initialized with tab support.
-2024-10-27 21:24:37,797 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:24:37,798 - INFO - User interface initialized with tab support.
-2024-10-27 21:25:58,922 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:25:58,923 - INFO - User interface initialized with tab support.
-2024-10-27 21:27:08,469 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:27:08,470 - INFO - User interface initialized with tab support.
-2024-10-27 21:43:34,260 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:43:34,260 - INFO - User interface initialized with tab support.
-2024-10-27 21:53:38,537 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:53:38,538 - INFO - User interface initialized with tab support.
-2024-10-27 21:53:45,523 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:53:45,523 - INFO - User interface initialized with tab support.
-2024-10-27 21:54:29,042 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:54:29,043 - INFO - User interface initialized with tab support.
-2024-10-27 21:54:35,925 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:54:35,926 - INFO - User interface initialized with tab support.
-2024-10-27 21:55:17,297 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:55:17,297 - INFO - User interface initialized with tab support.
-2024-10-27 21:55:25,091 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:55:25,091 - INFO - User interface initialized with tab support.
-2024-10-27 21:56:42,271 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:56:42,271 - INFO - User interface initialized with tab support.
-2024-10-27 21:58:43,124 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:58:43,125 - INFO - User interface initialized with tab support.
-2024-10-27 21:59:37,691 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:59:37,691 - INFO - User interface initialized with tab support.
-2024-10-27 21:59:51,658 - INFO - Theme applied: Forest Green Theme
-2024-10-27 21:59:51,658 - INFO - User interface initialized with tab support.
-2024-10-27 22:00:52,024 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:00:52,025 - INFO - User interface initialized with tab support.
-2024-10-27 22:06:13,070 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:06:13,070 - INFO - User interface initialized with tab support.
-2024-10-27 22:07:57,294 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:07:57,295 - INFO - User interface initialized with tab support.
-2024-10-27 22:08:00,048 - INFO - Image inserted into document.
-2024-10-27 22:08:18,468 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:08:18,469 - INFO - User interface initialized with tab support.
-2024-10-27 22:08:24,397 - INFO - Image inserted into document.
-2024-10-27 22:10:53,505 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:10:53,506 - INFO - User interface initialized with tab support.
-2024-10-27 22:11:00,647 - INFO - Selected area image inserted into document.
-2024-10-27 22:11:02,634 - INFO - Selected area image inserted into document.
-2024-10-27 22:11:03,241 - INFO - Selected area image inserted into document.
-2024-10-27 22:11:12,677 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:11:12,678 - INFO - User interface initialized with tab support.
-2024-10-27 22:11:20,475 - INFO - Selected area image inserted into document.
-2024-10-27 22:11:40,543 - INFO - Selected area image inserted into document.
-2024-10-27 22:11:47,283 - INFO - Selected area image inserted into document.
-2024-10-27 22:13:56,235 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:13:56,236 - INFO - User interface initialized with tab support.
-2024-10-27 22:14:09,505 - INFO - Capture area set to: PyQt6.QtCore.QRect(966, 859, 1, 0)
-2024-10-27 22:14:24,020 - INFO - Capture area set to: PyQt6.QtCore.QRect(366, 82, 680, 486)
-2024-10-27 22:14:25,541 - INFO - Selected area image inserted into document.
-2024-10-27 22:16:09,768 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:16:09,769 - INFO - User interface initialized with tab support.
-2024-10-27 22:16:19,065 - INFO - Capture area set to: PyQt6.QtCore.QRect(959, 848, 1, 0)
-2024-10-27 22:16:25,166 - INFO - Capture area set to: PyQt6.QtCore.QRect(985, 141, 528, 449)
-2024-10-27 22:16:26,805 - INFO - Selected area image inserted into document.
-2024-10-27 22:16:33,999 - INFO - Capture area set to: PyQt6.QtCore.QRect(14, 131, 158, 200)
-2024-10-27 22:16:35,408 - INFO - Selected area image inserted into document.
-2024-10-27 22:21:01,542 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:21:01,543 - INFO - User interface initialized with tab support.
-2024-10-27 22:21:09,629 - INFO - Capture area set to: PyQt6.QtCore.QRect(2884, 337, 504, 362)
-2024-10-27 22:21:12,107 - INFO - Selected area image inserted into document.
-2024-10-27 22:21:54,042 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:21:54,043 - INFO - User interface initialized with tab support.
-2024-10-27 22:22:00,379 - INFO - Capture area set to: PyQt6.QtCore.QRect(2476, 243, 823, 498)
-2024-10-27 22:22:01,868 - INFO - Selected area image inserted into document.
-2024-10-27 22:22:07,790 - INFO - Capture area set to: PyQt6.QtCore.QRect(1950, 105, 173, 102)
-2024-10-27 22:22:09,290 - INFO - Selected area image inserted into document.
-2024-10-27 22:32:24,117 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:32:24,118 - INFO - User interface initialized with tab support.
-2024-10-27 22:32:29,621 - INFO - Capture area set to: PyQt6.QtCore.QRect(3181, 176, 230, 252)
-2024-10-27 22:32:30,599 - INFO - Captured area image inserted into document.
-2024-10-27 22:43:38,346 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:43:38,346 - INFO - User interface initialized with tab support.
-2024-10-27 22:43:46,112 - INFO - Captured area image inserted into document.
-2024-10-27 22:46:51,564 - INFO - Theme applied: Forest Green Theme
-2024-10-27 22:46:51,564 - INFO - User interface initialized with tab support.
-2024-10-27 22:46:58,108 - INFO - Captured area image inserted into document.
-2024-10-27 23:04:05,618 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:04:05,619 - INFO - User interface initialized with tab support.
-2024-10-27 23:04:05,755 - INFO - Application started.
-2024-10-27 23:04:15,054 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:04:17,960 - INFO - Capture area set to: PyQt6.QtCore.QRect(72, 95, 922, 554)
-2024-10-27 23:04:20,191 - INFO - Captured area image inserted into document.
-2024-10-27 23:04:25,533 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:04:27,302 - INFO - Capture area set to: PyQt6.QtCore.QRect(50, 192, 181, 162)
-2024-10-27 23:04:28,624 - INFO - Captured area image inserted into document.
-2024-10-27 23:04:31,631 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:04:33,629 - INFO - Capture area set to: PyQt6.QtCore.QRect(682, 177, 735, 467)
-2024-10-27 23:04:36,074 - INFO - Captured area image inserted into document.
-2024-10-27 23:11:39,484 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:11:39,485 - INFO - User interface initialized with tab support.
-2024-10-27 23:11:39,614 - INFO - Application started.
-2024-10-27 23:11:42,261 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:11:44,222 - INFO - Capture area set to: PyQt6.QtCore.QRect(49, 76, 421, 303)
-2024-10-27 23:11:45,941 - INFO - Captured area image inserted into document.
-2024-10-27 23:11:49,334 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:11:50,830 - INFO - Capture area set to: PyQt6.QtCore.QRect(772, 266, 535, 332)
-2024-10-27 23:11:51,990 - INFO - Captured area image inserted into document.
-2024-10-27 23:11:55,046 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:11:56,855 - INFO - Capture area set to: PyQt6.QtCore.QRect(1393, 33, 118, 96)
-2024-10-27 23:11:57,883 - INFO - Captured area image inserted into document.
-2024-10-27 23:12:45,187 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:12:45,187 - INFO - User interface initialized with tab support.
-2024-10-27 23:12:45,345 - INFO - Application started.
-2024-10-27 23:12:47,163 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:12:50,080 - INFO - Capture area set to: PyQt6.QtCore.QRect(113, 118, 593, 274)
-2024-10-27 23:12:56,512 - INFO - Captured area image inserted into document.
-2024-10-27 23:19:14,762 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:19:14,762 - INFO - User interface initialized with tab support.
-2024-10-27 23:19:14,892 - INFO - Application started.
-2024-10-27 23:20:12,291 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:20:12,292 - INFO - User interface initialized with tab support.
-2024-10-27 23:20:12,432 - INFO - Application started.
-2024-10-27 23:20:15,616 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:20:17,662 - INFO - Capture area set to: PyQt6.QtCore.QRect(1956, 108, 428, 331)
-2024-10-27 23:20:19,594 - INFO - Captured area image inserted into document.
-2024-10-27 23:20:26,087 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:20:27,195 - INFO - Capture area set to: PyQt6.QtCore.QRect(1142, 78, 257, 145)
-2024-10-27 23:20:28,413 - INFO - Captured area image inserted into document.
-2024-10-27 23:20:31,070 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:20:33,211 - INFO - Capture area set to: PyQt6.QtCore.QRect(-1198, 199, 619, 431)
-2024-10-27 23:20:41,918 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:20:44,513 - INFO - Capture area set to: PyQt6.QtCore.QRect(-830, 79, 429, 226)
-2024-10-27 23:20:46,291 - INFO - Captured area image inserted into document.
-2024-10-27 23:20:51,063 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:20:54,172 - INFO - Capture area set to: PyQt6.QtCore.QRect(-1083, 82, 615, 486)
-2024-10-27 23:20:56,129 - INFO - Captured area image inserted into document.
-2024-10-27 23:22:56,334 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:22:56,334 - INFO - User interface initialized with tab support.
-2024-10-27 23:22:56,489 - INFO - Application started.
-2024-10-27 23:22:58,688 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:23:02,221 - INFO - Capture area set to: PyQt6.QtCore.QRect(-702, 112, 297, 133)
-2024-10-27 23:23:03,642 - INFO - Captured area image inserted into document.
-2024-10-27 23:23:05,913 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:23:08,227 - INFO - Capture area set to: PyQt6.QtCore.QRect(460, 114, 367, 78)
-2024-10-27 23:23:09,250 - INFO - Captured area image inserted into document.
-2024-10-27 23:23:11,601 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:23:13,229 - INFO - Capture area set to: PyQt6.QtCore.QRect(2064, 84, 734, 399)
-2024-10-27 23:23:14,520 - INFO - Captured area image inserted into document.
-2024-10-27 23:23:17,248 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:23:19,068 - INFO - Capture area set to: PyQt6.QtCore.QRect(3238, 10, 197, 98)
-2024-10-27 23:23:20,572 - INFO - Captured area image inserted into document.
-2024-10-27 23:23:33,074 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:23:33,074 - INFO - User interface initialized with tab support.
-2024-10-27 23:23:33,201 - INFO - Application started.
-2024-10-27 23:23:54,426 - INFO - Cleared formatting to current theme defaults.
-2024-10-27 23:25:06,935 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:25:06,935 - INFO - User interface initialized with tab support.
-2024-10-27 23:25:07,086 - INFO - Application started.
-2024-10-27 23:25:21,611 - INFO - Theme applied: Aqua Marine Theme
-2024-10-27 23:25:25,382 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:25:28,872 - INFO - Bullet list applied.
-2024-10-27 23:25:47,455 - INFO - Numbered list applied.
-2024-10-27 23:26:11,455 - INFO - Cleared formatting to current theme defaults.
-2024-10-27 23:26:15,458 - INFO - Cleared formatting to current theme defaults.
-2024-10-27 23:27:53,772 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:27:53,772 - INFO - User interface initialized with tab support.
-2024-10-27 23:27:53,926 - INFO - Application started.
-2024-10-27 23:29:22,298 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:29:22,298 - INFO - User interface initialized with tab support.
-2024-10-27 23:29:22,446 - INFO - Application started.
-2024-10-27 23:29:24,244 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:29:25,893 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:29:26,720 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:29:42,969 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:29:42,969 - INFO - User interface initialized with tab support.
-2024-10-27 23:29:43,097 - INFO - Application started.
-2024-10-27 23:29:45,271 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:29:49,790 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:31:28,907 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:31:28,908 - INFO - User interface initialized with tab support.
-2024-10-27 23:31:29,063 - INFO - Application started.
-2024-10-27 23:31:30,658 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:31:51,381 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:31:51,382 - INFO - User interface initialized with tab support.
-2024-10-27 23:31:51,506 - INFO - Application started.
-2024-10-27 23:31:53,236 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:31:54,931 - INFO - Capture area set to: PyQt6.QtCore.QRect(1978, 126, 555, 353)
-2024-10-27 23:31:56,851 - INFO - Captured area image inserted into document.
-2024-10-27 23:31:58,331 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:31:59,629 - INFO - Capture area set to: PyQt6.QtCore.QRect(839, 70, 579, 410)
-2024-10-27 23:32:01,299 - INFO - Captured area image inserted into document.
-2024-10-27 23:32:03,458 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:32:04,833 - INFO - Capture area set to: PyQt6.QtCore.QRect(-1103, 233, 330, 253)
-2024-10-27 23:32:06,090 - INFO - Captured area image inserted into document.
-2024-10-27 23:34:49,452 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:34:49,453 - INFO - User interface initialized with tab support.
-2024-10-27 23:34:49,606 - INFO - Application started.
-2024-10-27 23:34:52,400 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:34:59,144 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:34:59,144 - INFO - User interface initialized with tab support.
-2024-10-27 23:34:59,270 - INFO - Application started.
-2024-10-27 23:35:02,997 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:35:45,438 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:35:45,439 - INFO - User interface initialized with tab support.
-2024-10-27 23:35:45,565 - INFO - Application started.
-2024-10-27 23:35:47,979 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:35:51,268 - INFO - Capture area set to: PyQt6.QtCore.QRect(1121, 82, 348, 300)
-2024-10-27 23:35:53,561 - INFO - Captured area image inserted into document.
-2024-10-27 23:35:55,697 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:36:00,021 - INFO - Capture area set to: PyQt6.QtCore.QRect(193, 102, 1187, 619)
-2024-10-27 23:36:01,642 - INFO - Captured area image inserted into document.
-2024-10-27 23:36:03,035 - INFO - Captured area image inserted into document.
-2024-10-27 23:36:04,961 - INFO - Captured area image inserted into document.
-2024-10-27 23:36:22,336 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:36:22,337 - INFO - User interface initialized with tab support.
-2024-10-27 23:36:22,465 - INFO - Application started.
-2024-10-27 23:36:25,005 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:36:26,582 - INFO - Capture area set to: PyQt6.QtCore.QRect(2, 73, 173, 149)
-2024-10-27 23:36:27,590 - INFO - Captured area image inserted into document.
-2024-10-27 23:38:23,227 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:38:23,227 - INFO - User interface initialized with tab support.
-2024-10-27 23:38:23,361 - INFO - Application started.
-2024-10-27 23:38:25,879 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:38:28,364 - INFO - Capture area set to: PyQt6.QtCore.QRect(2029, 90, 850, 508)
-2024-10-27 23:38:30,258 - INFO - Captured area image inserted into document.
-2024-10-27 23:38:33,324 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:38:36,021 - INFO - Capture area set to: PyQt6.QtCore.QRect(3256, 2, 167, 110)
-2024-10-27 23:38:37,198 - INFO - Captured area image inserted into document.
-2024-10-27 23:38:38,895 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:38:41,466 - INFO - Capture area set to: PyQt6.QtCore.QRect(-1435, 201, 871, 536)
-2024-10-27 23:38:42,739 - INFO - Captured area image inserted into document.
-2024-10-27 23:38:49,153 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:38:52,699 - INFO - Capture area set to: PyQt6.QtCore.QRect(227, 234, 838, 338)
-2024-10-27 23:38:53,693 - INFO - Captured area image inserted into document.
-2024-10-27 23:39:02,448 - INFO - Theme applied: Forest Green Theme
-2024-10-27 23:39:02,449 - INFO - User interface initialized with tab support.
-2024-10-27 23:39:02,607 - INFO - Application started.
-2024-10-27 23:39:05,712 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:39:08,210 - INFO - Capture area set to: PyQt6.QtCore.QRect(56, 71, 317, 170)
-2024-10-27 23:39:09,177 - INFO - Captured area image inserted into document.
-2024-10-27 23:39:10,954 - INFO - Snipping tool initialized on all screens.
-2024-10-27 23:39:14,533 - INFO - Capture area set to: PyQt6.QtCore.QRect(1242, 674, 282, 190)
-2024-10-27 23:39:15,534 - INFO - Captured area image inserted into document.
+2024-10-28 08:16:39,033 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:16:39,033 - INFO - User interface initialized with tab support.
+2024-10-28 08:16:39,235 - INFO - Application started.
+2024-10-28 08:18:04,629 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:18:04,630 - INFO - User interface initialized with tab support.
+2024-10-28 08:18:04,799 - INFO - Application started.
+2024-10-28 08:20:19,344 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:20:19,345 - INFO - User interface initialized with tab support.
+2024-10-28 08:20:19,501 - INFO - Application started.
+2024-10-28 08:22:08,791 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:22:08,792 - INFO - User interface initialized with tab support.
+2024-10-28 08:22:09,016 - INFO - Application started.
+2024-10-28 08:25:55,625 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:25:55,625 - INFO - User interface initialized with tab support.
+2024-10-28 08:25:55,793 - INFO - Application started.
+2024-10-28 08:26:02,315 - INFO - Snipping tool initialized on all screens.
+2024-10-28 08:26:04,987 - INFO - Capture area set to: PyQt6.QtCore.QRect(2261, 289, 868, 670)
+2024-10-28 08:26:07,900 - INFO - Captured area image inserted into document.
+2024-10-28 08:33:27,061 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:33:27,062 - INFO - User interface initialized with tab support.
+2024-10-28 08:33:27,223 - INFO - Application started.
+2024-10-28 08:33:33,778 - INFO - Snipping tool initialized on all screens.
+2024-10-28 08:33:38,753 - INFO - Capture area set to: PyQt6.QtCore.QRect(3120, 314, 1049, 121)
+2024-10-28 08:33:48,997 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:33:48,997 - INFO - User interface initialized with tab support.
+2024-10-28 08:33:49,199 - INFO - Application started.
+2024-10-28 08:33:52,184 - INFO - Snipping tool initialized on all screens.
+2024-10-28 08:33:56,892 - INFO - Capture area set to: PyQt6.QtCore.QRect(3146, 778, 512, 158)
+2024-10-28 08:35:51,693 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:35:51,693 - INFO - User interface initialized with tab support.
+2024-10-28 08:35:51,850 - INFO - Application started.
+2024-10-28 08:35:54,782 - INFO - Snipping tool initialized on all screens.
+2024-10-28 08:35:58,388 - INFO - Capture area set to: PyQt6.QtCore.QRect(3151, 570, 364, 22)
+2024-10-28 08:35:59,962 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 08:35:59,963 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 08:35:59,963 - DEBUG - STREAM b'IDAT' 62 6670
+2024-10-28 08:35:59,968 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_0x00mpnq_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_0x00mpnq', 'txt']
+2024-10-28 08:36:08,716 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:36:08,717 - INFO - User interface initialized with tab support.
+2024-10-28 08:36:08,957 - INFO - Application started.
+2024-10-28 08:36:11,176 - INFO - Snipping tool initialized on all screens.
+2024-10-28 08:36:13,839 - INFO - Capture area set to: PyQt6.QtCore.QRect(3141, 256, 653, 143)
+2024-10-28 08:36:15,632 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 08:36:15,633 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 08:36:15,633 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 08:36:15,641 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_46n8793l_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_46n8793l', 'txt']
+2024-10-28 08:44:11,158 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:44:11,159 - INFO - User interface initialized with tab support.
+2024-10-28 08:44:11,303 - INFO - Application started.
+2024-10-28 08:44:16,537 - INFO - OCR overlay initialized.
+2024-10-28 08:44:22,329 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 08:44:22,329 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 08:44:22,329 - DEBUG - STREAM b'IDAT' 62 1608
+2024-10-28 08:44:22,332 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_5umgs4p1_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_5umgs4p1', 'txt']
+2024-10-28 08:44:31,519 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:44:31,520 - INFO - User interface initialized with tab support.
+2024-10-28 08:44:31,723 - INFO - Application started.
+2024-10-28 08:44:37,342 - INFO - OCR overlay initialized.
+2024-10-28 08:44:39,847 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 08:44:39,848 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 08:44:39,848 - DEBUG - STREAM b'IDAT' 62 7073
+2024-10-28 08:44:39,851 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_pp_bo36h_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_pp_bo36h', 'txt']
+2024-10-28 08:54:42,551 - INFO - Theme applied: Forest Green Theme
+2024-10-28 08:54:42,552 - INFO - User interface initialized with tab support.
+2024-10-28 08:54:42,694 - INFO - Application started.
+2024-10-28 08:54:46,139 - INFO - OCR overlay initialized.
+2024-10-28 08:54:49,893 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 08:54:49,893 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 08:54:49,894 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 08:54:49,906 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_ghxa47d__input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_ghxa47d_', 'txt']
+2024-10-28 08:54:50,399 - INFO - OCR text inserted into document.
+2024-10-28 08:54:58,117 - INFO - Snipping tool initialized on all screens.
+2024-10-28 08:55:01,718 - INFO - Capture area set to: PyQt6.QtCore.QRect(3111, 307, 902, 484)
+2024-10-28 08:55:06,330 - INFO - Captured area image inserted into document.
+2024-10-28 08:55:12,653 - INFO - OCR overlay initialized.
+2024-10-28 08:55:15,573 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-28 08:55:15,574 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-28 08:55:15,574 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-28 08:55:15,585 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_e4qhtfbu_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_e4qhtfbu', 'txt']
+2024-10-28 08:55:15,889 - INFO - OCR text inserted into document.

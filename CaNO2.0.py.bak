@@ -2,6 +2,10 @@ import sys
 import os
 import json
 import logging
+import subprocess
+import win32con 
+import win32gui 
+import ctypes
 from PyQt6.QtGui import (
     QGuiApplication, QBitmap, QFont, QColor, QIcon, QTextCharFormat, QAction, QActionGroup, QTextListFormat,
     QTextCursor, QPixmap, QPainter, QColor, QPen, QTextDocument,
@@ -15,6 +19,31 @@ from PyQt6.QtWidgets import (
 from PyQt6.QtCore import (
     QEvent, Qt, QSize, QBuffer, QByteArray, QPoint, QRect, pyqtSignal, QDateTime, QUrl
 )
+
+import pytesseract
+from PIL import Image
+from io import BytesIO 
+
+# Function to minimize the console
+def minimize_console():
+    hwnd = ctypes.windll.kernel32.GetConsoleWindow()
+    if hwnd != 0:
+        win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
+
+# Relaunch script minimized if not already minimized
+def relaunch_minimized():
+    if sys.platform == "win32" and "--minimized" not in sys.argv:
+        subprocess.Popen(["python", __file__, "--minimized"], creationflags=win32con.SW_HIDE)
+        sys.exit()
+
+# Relaunch if not minimized
+if "--minimized" not in sys.argv:
+    relaunch_minimized()
+else:
+    sys.argv.remove("--minimized")
+    minimize_console()  # Minimize console window after relaunch
+
+# Continue with the rest of your script here...
 
 # Set up logging
 script_name = "CaNO2.0"
@@ -365,7 +394,7 @@ class SnippingOverlay(QWidget):
 
     def __init__(self, screen_rect, close_all_callback):
         super().__init__()
-        # Set window flags and translucent background for the overlay
+        # Set flags and attributes for overlay behavior
         self.setWindowFlags(Qt.WindowType.WindowStaysOnTopHint | Qt.WindowType.FramelessWindowHint | Qt.WindowType.Tool)
         self.setAttribute(Qt.WidgetAttribute.WA_TranslucentBackground)
         self.setGeometry(screen_rect)
@@ -408,27 +437,25 @@ class SnippingOverlay(QWidget):
             qp.drawRect(selection_rect)
 
     def mousePressEvent(self, event):
-        self.begin = event.position().toPoint()
+        self.begin = event.pos()
         self.end = self.begin
         self.updateMask()
         self.update()
 
     def mouseMoveEvent(self, event):
-        self.end = event.position().toPoint()
+        self.end = event.pos()
         self.updateMask()
         self.update()
 
     def mouseReleaseEvent(self, event):
-        self.end = event.position().toPoint()
+        self.end = event.pos()
         self.updateMask()
         self.update()
-        snip_rect = QRect(self.begin, self.end).normalized()
+        # Adjust the coordinates to global
+        snip_rect = QRect(self.mapToGlobal(self.begin), self.mapToGlobal(self.end)).normalized()
         self.snipCompleteGlobal.emit(snip_rect)
         self.close_all_callback(snip_rect)
         self.close()
-
-    def close_overlay(self):
-        self.close()  # Close the overlay window
 
 """===========Main Application Class=========="""
 # Initialization and UI Setup
@@ -775,6 +802,11 @@ class MainWindow(QMainWindow):
         set_capture_area_action = QAction(QIcon(os.path.join(self.images_dir, 'set_capture.png')), "Set Capture Area", self)
         set_capture_area_action.triggered.connect(self.set_capture_area)
         self.capture_toolbar.addAction(set_capture_area_action)
+        
+        # OCR Button
+        ocr_action = QAction(QIcon(os.path.join(self.images_dir, 'ocr.png')), "Optical Character Recognition", self)
+        ocr_action.triggered.connect(self.perform_ocr)  # Set perform_ocr as the triggered function
+        self.capture_toolbar.addAction(ocr_action)       
 
         # Capture Button with larger icon
         capture_button = QPushButton(QIcon(os.path.join(self.images_dir, 'capture.png')), "Capture", self)
@@ -1145,38 +1177,29 @@ class MainWindow(QMainWindow):
         logger.info(f"Capture area set to: {self.capture_area}")
 
     def capture(self):
+        """Capture the screen area defined by the pre-set capture area."""
         if not hasattr(self, 'capture_area') or not self.capture_area:
             QMessageBox.warning(self, "Capture Area Not Set", "Please set a capture area before capturing.")
             return
 
         screens = QGuiApplication.screens()
-        
-        # Find the screen where the center of the capture area lies
         selected_screen = None
         for screen in screens:
             if screen.geometry().contains(self.capture_area.center()):
                 selected_screen = screen
                 break
-
         if not selected_screen:
-            selected_screen = QGuiApplication.primaryScreen()  # Default to primary if no specific screen matches
+            selected_screen = QGuiApplication.primaryScreen()
 
-        # Adjust capture area coordinates relative to the screen's top-left corner
+        # Adjust capture area to screen coordinates
         screen_rect = selected_screen.geometry()
         adjusted_x = self.capture_area.x() - screen_rect.x()
         adjusted_y = self.capture_area.y() - screen_rect.y()
-        
-        # Capture the adjusted region on the selected screen
-        pixmap = selected_screen.grabWindow(
-            0,
-            adjusted_x,
-            adjusted_y,
-            self.capture_area.width(),
-            self.capture_area.height()
-        )
+
+        pixmap = selected_screen.grabWindow(0, adjusted_x, adjusted_y, self.capture_area.width(), self.capture_area.height())
 
         if not pixmap.isNull():
-            editor = self.tab_widget.currentWidget()
+            editor = self.get_current_editor()
             if editor and isinstance(editor, QTextEdit):
                 cursor = editor.textCursor()
                 image_name = QUrl(f"image_{QDateTime.currentDateTime().toString('yyyyMMddhhmmsszzz')}.png")
@@ -1188,7 +1211,7 @@ class MainWindow(QMainWindow):
                 cursor.insertImage(image_format)
                 logger.info("Captured area image inserted into document.")
         else:
-            QMessageBox.warning(self, "Capture Failed", "Failed to capture the selected area.")
+            QMessageBox.warning(self, "Capture Failed", "Failed to capture the pre-set area.")
 
     def perform_capture(self):
         screen = QApplication.primaryScreen()
@@ -1226,6 +1249,70 @@ class MainWindow(QMainWindow):
                 logger.info("Image inserted into document.")
         else:
             QMessageBox.warning(self, "Capture Failed", "Failed to capture the screen area.")
+            
+def perform_ocr(self):
+    """Perform OCR with an overlay for user selection."""
+    # Trigger overlay for OCR area selection
+    screens = QGuiApplication.screens()
+    self.overlays = []
+
+    def close_all_overlays(rect):
+        for overlay in self.overlays:
+            overlay.close()
+        self.ocr_from_selected_area(rect)
+
+    # Create overlay on each screen
+    for screen in screens:
+        screen_rect = screen.geometry()
+        overlay = SnippingOverlay(screen_rect, close_all_callback=close_all_overlays)
+        overlay.showFullScreen()
+        overlay.activateWindow()
+        overlay.raise_()
+        self.overlays.append(overlay)
+
+    logger.info("OCR overlay initialized.")
+
+def ocr_from_selected_area(self, snip_rect):
+    """Capture selected area and perform OCR on it."""
+    screens = QGuiApplication.screens()
+    selected_screen = None
+    for screen in screens:
+        if screen.geometry().contains(snip_rect.center()):
+            selected_screen = screen
+            break
+    if not selected_screen:
+        selected_screen = QGuiApplication.primaryScreen()
+
+    # Adjust capture area to screen coordinates
+    screen_rect = selected_screen.geometry()
+    adjusted_x = snip_rect.x() - screen_rect.x()
+    adjusted_y = snip_rect.y() - screen_rect.y()
+
+    pixmap = selected_screen.grabWindow(0, adjusted_x, adjusted_y, snip_rect.width(), snip_rect.height())
+
+    if not pixmap.isNull():
+        buffer = QBuffer()
+        buffer.open(QBuffer.OpenModeFlag.ReadWrite)
+        pixmap.save(buffer, "PNG")
+        buffer.seek(0)
+
+        # Convert QBuffer to BytesIO for Pillow compatibility
+        image_data = BytesIO(buffer.data())
+        pil_image = Image.open(image_data)
+
+        # Perform OCR
+        ocr_text = pytesseract.image_to_string(pil_image)
+
+        # Insert OCR text into the editor
+        editor = self.get_current_editor()
+        if editor and isinstance(editor, QTextEdit):
+            cursor = editor.textCursor()
+            cursor.insertText(ocr_text)
+            logger.info("OCR text inserted into document.")
+    else:
+        QMessageBox.warning(self, "OCR Failed", "Failed to capture the selected area for OCR.")
+
+                
 
     """----------Helper Methods----------"""
     def apply_format_to_selection_or_cursor(self, format):
