@@ -1,111 +1,98 @@
-import sys
-import os
+"""--------Import Section---------""" 
+# Standard library imports
+import base64
+import ctypes
 import json
 import logging
+import os
 import subprocess
-import win32con 
-import win32gui 
-import ctypes
-from PyQt6.QtGui import (
-    QGuiApplication, QBitmap, QFont, QColor, QIcon, QTextCharFormat, QAction, QActionGroup, QTextListFormat,
-    QTextCursor, QPixmap, QPainter, QPen, QTextDocument,
-    QTextImageFormat, QTextFormat
-)
-from PyQt6.QtWidgets import (
-    QApplication, QMainWindow, QTextEdit, QToolBar, QComboBox, QFontComboBox, QSizePolicy,
-    QMenu, QWidgetAction, QLabel, QVBoxLayout, QHBoxLayout, QWidget,
-    QPushButton, QTabWidget, QFileDialog, QMessageBox, QInputDialog, QDialog, QVBoxLayout
-)
-from PyQt6.QtCore import (
-    QEvent, Qt, QSize, QBuffer, QByteArray, QPoint, QRect, pyqtSignal, QDateTime, QUrl, QTimer
-)
+import sys
+from io import BytesIO
+from uuid import uuid4
 
+# Third-party packages
 import pytesseract
+import win32con
+import win32gui
+from bs4 import BeautifulSoup
 from PIL import Image
-from io import BytesIO 
 from spellchecker import SpellChecker
 
-# Constants for application configuration
-script_name = "CaNO2.0"
-settings_dir = os.path.join(os.getenv('APPDATA'), script_name)
-os.makedirs(settings_dir, exist_ok=True)
-settings_file = os.path.join(settings_dir, f"{script_name}-settings.json")
-custom_dict_path = os.path.join(settings_dir, "custom_dictionary.json")
+# PyQt6 imports
+from PyQt6.QtCore import (
+    QBuffer, QByteArray, QDateTime, QEvent, QPoint, QRect, QTimer, QUrl, Qt, QSize, pyqtSignal
+)
+from PyQt6.QtGui import (
+    QAction, QActionGroup, QColor, QFont, QGuiApplication, QIcon, QPainter, QPen, QPixmap,
+    QBitmap, QTextCharFormat, QTextCursor, QTextDocument, QTextFormat, QTextImageFormat, QTextListFormat
+)
+from PyQt6.QtWidgets import (
+    QApplication, QComboBox, QDialog, QFileDialog, QFontComboBox, QHBoxLayout, QLabel, QInputDialog,
+    QMainWindow, QMessageBox, QPushButton, QSizePolicy, QTabWidget, QTextEdit, QToolBar, QVBoxLayout,
+    QWidget, QWidgetAction, QMenu
+)
 
-# Set up logging
-log_file = os.path.join(os.path.dirname(__file__), f"{script_name}.log")
+"""----------Constants for Application Configuration----------"""
+APP_NAME = "Case and Note Organizer 2.0"
+SCRIPT_NAME = "CaNO2.0"
+SETTINGS_DIR = os.path.join(os.getenv('APPDATA'), SCRIPT_NAME)
+os.makedirs(SETTINGS_DIR, exist_ok=True)
+SETTINGS_FILE = os.path.join(SETTINGS_DIR, f"{SCRIPT_NAME}-settings.json")
+CUSTOM_DICT_PATH = os.path.join(SETTINGS_DIR, "custom_dictionary.json")
+
+# Paths for logging and images
+LOG_FILE = os.path.join(os.path.dirname(__file__), f"{SCRIPT_NAME}.log")
+IMAGES_DIR = os.path.join(os.path.dirname(__file__), 'images')
+
+# Default Application Settings
+DEFAULT_FONT_FAMILY = "Cambria"
+DEFAULT_FONT_SIZE = 14
+DEFAULT_THEME = "Light Theme"
+DEFAULT_WINDOW_SIZE = [800, 600]  # [width, height]
+DEFAULT_WINDOW_POSITION = [100, 100]  # [x, y]
+FONT_SIZES = [str(i) for i in range(8, 98, 2)]  # Font sizes from 8 to 96 in increments of 2
+
+"""----------Logging Setup----------"""
 logging.basicConfig(
     level=logging.DEBUG,
     format='%(asctime)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler(log_file),
+        logging.FileHandler(LOG_FILE),
         logging.StreamHandler(sys.stdout)
     ]
 )
 logger = logging.getLogger(__name__)
 
-# Spell Checker initialization
-spell = SpellChecker()
-# Load custom dictionary
-if os.path.exists(custom_dict_path):
-    with open(custom_dict_path, 'r') as f:
-        custom_words = json.load(f)
-else:
-    custom_words = []
-
-# Add custom words to spell checker
-spell.word_frequency.load_words(custom_words)
-
-# Function to minimize the console
-#def minimize_console():
-#    hwnd = ctypes.windll.kernel32.GetConsoleWindow()
-#    if hwnd != 0:
-#        win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
-
-# Relaunch script minimized if not already minimized
-#def relaunch_minimized():
-#    if sys.platform == "win32" and "--minimized" not in sys.argv:
-#        subprocess.Popen(["python", __file__, "--minimized"], creationflags=win32con.SW_HIDE)
-#        sys.exit()
-
-# Relaunch if not minimized
-#if "--minimized" not in sys.argv:
-#    relaunch_minimized()
-#else:
-#    sys.argv.remove("--minimized")
-#    minimize_console()  # Minimize console window after relaunch
-
-# Load settings from JSON
+"""----------Load JSON Settings----------"""   
 def load_settings():
-    if os.path.exists(settings_file):
+    """Load settings from a JSON file, creating an empty one if it doesn't exist."""
+    if os.path.exists(SETTINGS_FILE):
         try:
-            with open(settings_file, 'r') as f:
+            with open(SETTINGS_FILE, 'r') as f:
                 return json.load(f) or {}  # Return empty dict if the file is empty
         except json.JSONDecodeError:
             logger.warning("Settings file is empty or invalid. Using default settings.")
             return {}  # Return default settings if JSON is invalid
     return {}  # Return default settings if the file does not exist
 
-# Save settings to JSON
+"""----------Save Settings----------"""
 def save_settings(settings):
-    with open(settings_file, 'w') as f:
+    """Save settings to a JSON file."""
+    with open(SETTINGS_FILE, 'w') as f:
         json.dump(settings, f, indent=4)
 
-# Load existing settings
-app_settings = load_settings()
+# Load existing settings into a global variable
+app_settings = load_settings()  # This should work without issues now
 
-"""----------Constants and Theme Definitions----------"""
-# Set default font and theme if not set in settings
-DEFAULT_FONT_FAMILY = app_settings.get("font_family", "Cambria")
-DEFAULT_FONT_SIZE = app_settings.get("font_size", 14)
-DEFAULT_THEME = app_settings.get("theme", "Light Theme")
-DEFAULT_WINDOW_SIZE = app_settings.get("window_size", [800, 600])  # [width, height]
-DEFAULT_WINDOW_POSITION = app_settings.get("window_position", [100, 100])  # [x, y]
+"""----------Defined UI Themes and Higlighter Values----------""" 
+TOGGLED_BUTTON_STYLE = """
+    QToolButton:checked {
+        background-color: #4CAF50;
+        border: 2px solid #3E8E41;
+        color: white;
+    }
+"""
 
-FONT_SIZES = [str(i) for i in range(8, 98, 2)]  # Font sizes from 8 to 96 in increments of 2
-
-
-# Theme definitions with background and font color
 THEMES = {
     "Light Theme": {
         "style": """
@@ -384,26 +371,1333 @@ THEMES = {
     }
 }
 
-# Highlight styles
+# Highlight Colors
 HIGHLIGHT_STYLES = {
     "Light Yellow / Dark Gray": {"highlight": QColor(255, 255, 204), "font": QColor(64, 64, 64)},
     "Light Blue / Dark Navy": {"highlight": QColor(204, 229, 255), "font": QColor(0, 0, 51)},
-    "Light Green / Dark Green": {"highlight": QColor(204, 255, 204), "font": QColor(0, 51, 0)},
-    "Light Pink / Dark Purple": {"highlight": QColor(255, 204, 229), "font": QColor(51, 0, 51)},
-    "Light Orange / Dark Brown": {"highlight": QColor(255, 229, 204), "font": QColor(102, 51, 0)},
-    "Light Gray / Black": {"highlight": QColor(224, 224, 224), "font": QColor(0, 0, 0)},
-    "Light Purple / Dark Purple": {"highlight": QColor(229, 204, 255), "font": QColor(51, 0, 51)}
+    # Add more highlight styles as needed
 }
+"""----------Spell Checker Intialization----------""" 
+# Spell Checker Initialization
+spell = SpellChecker()
+if os.path.exists(CUSTOM_DICT_PATH):
+    with open(CUSTOM_DICT_PATH, 'r') as f:
+        custom_words = json.load(f)
+else:
+    custom_words = []
+spell.word_frequency.load_words(custom_words)
 
-# Define a style for toggled (active) buttons
-TOGGLED_BUTTON_STYLE = """
-    QToolButton:checked {
-        background-color: #4CAF50;  /* Change to a green color or your preferred active color */
-        border: 2px solid #3E8E41;  /* Optional: Darker border */
-        color: white;  /* Change text color for better visibility */
-    }
-"""
+# Add custom words to spell checker
+spell.word_frequency.load_words(custom_words)
 
+"""----------Function to Minimize the Console Window----------""" 
+"""def minimize_console():
+    hwnd = ctypes.windll.kernel32.GetConsoleWindow()
+    if hwnd != 0:
+        win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
+
+# Relaunch script minimized if not already minimized
+def relaunch_minimized():
+    if sys.platform == "win32" and "--minimized" not in sys.argv:
+        subprocess.Popen(["python", __file__, "--minimized"], creationflags=win32con.SW_HIDE)
+        sys.exit()
+
+# Relaunch if not minimized
+if "--minimized" not in sys.argv:
+    relaunch_minimized()
+else:
+    sys.argv.remove("--minimized")
+    minimize_console()  # Minimize console window after relaunch"""
+    
+"""==========Main Window Class=========="""
+# Main window class initialization and UI setup
+class MainWindow(QMainWindow):
+    def __init__(self):
+        super(MainWindow, self).__init__()
+        self.setWindowTitle("Case and Note Organizer 2.0")
+        
+        # Initialize essential attributes
+        self.capture_in_progress = False  # Tracks if a capture is in progress
+        self.full_image_map = {}  # Stores full-size images by URL
+        self.capture_area_set = False  # Flag to track if capture area has been set
+        self.current_highlight_color = list(HIGHLIGHT_STYLES.values())[0]  # Default to the first color
+        self.images_dir = os.path.join(os.path.dirname(__file__), 'images')  # Path to icons
+
+        # Load settings for theme and font
+        self.current_theme = app_settings.get("theme", DEFAULT_THEME)
+        self.current_theme_settings = THEMES.get(self.current_theme, THEMES["Light Theme"])
+        self.current_font_family = app_settings.get("font_family", DEFAULT_FONT_FAMILY)
+        self.current_font_size = app_settings.get("font_size", DEFAULT_FONT_SIZE)
+        
+        # Set window size and position from settings
+        window_size = app_settings.get("window_size", DEFAULT_WINDOW_SIZE)
+        window_position = app_settings.get("window_position", DEFAULT_WINDOW_POSITION)
+        self.resize(window_size[0], window_size[1])
+        self.move(window_position[0], window_position[1])
+        
+        # Initialize path tracking
+        self.paths = {}  # Stores file paths for each tab
+
+        # Set up main tab widget and set it as the central widget
+        self.setup_tab_widget()
+
+        # Add the initial tab
+        self.add_new_tab()
+
+        # Initialize UI components
+        self.init_ui()  # Setup UI elements like toolbars, menus, etc.
+        
+        # Apply global style for toggled buttons and the selected theme
+        self.setStyleSheet(TOGGLED_BUTTON_STYLE)    
+        self.apply_theme(self.current_theme)
+
+        # Apply default font settings to the editor
+        self.apply_default_font_settings()
+
+        # Force a repaint and update to apply all theme and layout settings
+        self.repaint()
+        self.update()
+        
+        logger.info("User interface initialized with tab support.")
+
+    def apply_theme(self, theme_name):
+        """Apply the specified theme to the application and save the setting."""
+        theme = THEMES.get(theme_name, THEMES["Light Theme"])
+        self.setStyleSheet(theme["style"])  # Apply main theme style
+        self.current_theme = theme_name
+        self.current_theme_settings = theme  # Update current theme settings in memory
+
+        # Apply to individual elements if needed
+        self.tab_widget.setStyleSheet(theme["style"])  
+        app_settings["theme"] = theme_name  # Save theme to settings
+        save_settings(app_settings)  # Persist change
+        self.repaint()  # Force a repaint to apply changes
+        logger.info(f"Applied and saved theme: {theme_name}")
+
+    def closeEvent(self, event):
+        """Override close event to save window position and size."""
+        app_settings["window_size"] = [self.size().width(), self.size().height()]
+        app_settings["window_position"] = [self.pos().x(), self.pos().y()]
+        save_settings(app_settings)
+        super().closeEvent(event)
+
+    def setup_tab_widget(self):
+        """Set up the main tab widget and assign it as the central widget."""
+        self.tab_widget = QTabWidget()
+        self.tab_widget.setTabsClosable(True)
+        self.tab_widget.tabCloseRequested.connect(self.close_tab)
+        self.tab_widget.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.tab_widget.customContextMenuRequested.connect(self.show_tab_context_menu)
+        self.setCentralWidget(self.tab_widget)  # Set the tab widget as the central widget
+       
+    def close_tab(self, index):
+        """Close the tab at the specified index, checking for unsaved changes."""
+        editor = self.tab_widget.widget(index)
+        
+        if editor.document().isModified():
+            # Prompt the user to save unsaved changes
+            response = QMessageBox.question(
+                self,
+                "Unsaved Changes",
+                f"The document '{self.tab_widget.tabText(index)}' has unsaved changes. Would you like to save them?",
+                QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel,
+            )
+
+            if response == QMessageBox.StandardButton.Save:
+                self.file_save(index)
+            elif response == QMessageBox.StandardButton.Cancel:
+                return  # Do not close the tab if canceled
+
+        # Close the tab if no unsaved changes or after saving/discarding
+        self.tab_widget.removeTab(index)
+        if index in self.paths:
+            del self.paths[index]
+        logger.info(f"Tab at index {index} closed.")
+
+    def close_all_tabs(self):
+        """Close all tabs, prompting for unsaved changes if necessary."""
+        for index in reversed(range(self.tab_widget.count())):
+            self.tab_widget.setCurrentIndex(index)
+            self.close_tab(index)     
+
+    def init_ui(self):
+        """Initialize menus, toolbars, and theme settings."""
+        menubar = self.menuBar()
+        self.file_menu = menubar.addMenu("File")
+        self.edit_menu = menubar.addMenu("Edit")
+        self.format_menu = menubar.addMenu("Format")
+        self.font_menu = menubar.addMenu("Font")
+        self.settings_menu = menubar.addMenu("Settings")
+
+        # Add Themes menu under Settings
+        self.themes_menu = QMenu("Themes", self)
+        self.settings_menu.addMenu(self.themes_menu)
+        for theme_name in THEMES.keys():
+            theme_action = QAction(theme_name, self)
+            theme_action.triggered.connect(lambda checked, name=theme_name: self.apply_theme(name))
+            self.themes_menu.addAction(theme_action)
+
+        # Initialize toolbars in the correct order
+        self.init_file_toolbar()
+        self.init_edit_toolbar()
+        self.init_font_toolbar()
+        self.init_format_toolbar()
+        self.init_spell_check_toolbar()  # Spell check toolbar uses format toolbar
+        self.init_align_toolbar()
+        self.init_list_toolbar()
+        self.init_capture_toolbar()
+
+    """----------------------------------------------------------Toolbars-------------------------------------------------""" 
+
+    """----------Alignment Toolbar----------"""
+    def init_align_toolbar(self):
+        align_toolbar = QToolBar("Align")
+        self.addToolBar(align_toolbar)
+
+        align_actions = [
+            ("<- Align Left", "align-left.png", Qt.AlignmentFlag.AlignLeft),
+            ("Align Center", "align-center.png", Qt.AlignmentFlag.AlignCenter),
+            ("Align Right ->", "align-right.png", Qt.AlignmentFlag.AlignRight),
+            ("<--> Justify", "align-justify.png", Qt.AlignmentFlag.AlignJustify)
+        ]
+        for name, icon, alignment in align_actions:
+            action = QAction(QIcon(os.path.join(self.images_dir, icon)), name, self)
+            action.setCheckable(True)
+            action.triggered.connect(lambda _, a=alignment: self.get_current_editor().setAlignment(a))
+            align_toolbar.addAction(action)
+            self.format_menu.addAction(action)
+
+    """----------Capture Toolbar----------"""  
+    def init_capture_toolbar(self):
+        """Initialize Capture toolbar."""
+        self.capture_toolbar = QToolBar("Capture")
+        self.capture_toolbar.setIconSize(QSize(25, 25))
+        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.capture_toolbar)
+
+        # Set Capture Area Button
+        set_capture_area_action = QAction(QIcon(os.path.join(self.images_dir, 'set_capture.png')), "Set Capture Area", self)
+        set_capture_area_action.triggered.connect(self.set_capture_area)
+        self.capture_toolbar.addAction(set_capture_area_action)
+        
+        # Spacer Widget
+        spacer = QWidget()
+        spacer.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
+        self.capture_toolbar.addWidget(spacer)
+
+        screen_grab_button = QPushButton(QIcon(os.path.join(self.images_dir, 'screen_grab.png')), "", self)
+        screen_grab_button.setIconSize(QSize(45, 45))
+        screen_grab_button.clicked.connect(self.screen_grab)
+        self.capture_toolbar.addWidget(screen_grab_button)
+        
+        # OCR Button
+        ocr_button = QPushButton(QIcon(os.path.join(self.images_dir, 'ocr.png')), "", self)
+        ocr_button.setIconSize(QSize(45, 45))
+        ocr_button.clicked.connect(self.perform_ocr)
+        self.capture_toolbar.addWidget(ocr_button)  
+
+        capture_button = QPushButton(QIcon(os.path.join(self.images_dir, 'capture.png')), "", self)
+        capture_button.setIconSize(QSize(45, 45))
+        capture_button.clicked.connect(self.capture)
+        self.capture_toolbar.addWidget(capture_button)
+
+    """----------Edit Toolbar----------"""
+    def init_edit_toolbar(self):
+        edit_toolbar = QToolBar("Edit")
+        edit_toolbar.setIconSize(QSize(20, 20))
+        self.addToolBar(edit_toolbar)
+
+        # Undo and Redo
+        undo_action = QAction(QIcon(os.path.join(self.images_dir, 'arrow-curve_left.png')), "Undo", self)
+        undo_action.setShortcut("Ctrl+Z")
+        undo_action.triggered.connect(lambda: self.get_current_editor().undo())
+        edit_toolbar.addAction(undo_action)
+        self.edit_menu.addAction(undo_action)
+
+        redo_action = QAction(QIcon(os.path.join(self.images_dir, 'arrow-curve_right.png')), "Redo", self)
+        redo_action.setShortcut("Ctrl+Y")
+        redo_action.triggered.connect(lambda: self.get_current_editor().redo())
+        edit_toolbar.addAction(redo_action)
+        self.edit_menu.addAction(redo_action)
+
+        # Cut, Copy, Paste
+        cut_action = QAction(QIcon(os.path.join(self.images_dir, 'scissors.png')), "Cut", self)
+        cut_action.setShortcut("Ctrl+X")
+        cut_action.triggered.connect(lambda: self.get_current_editor().cut())
+        edit_toolbar.addAction(cut_action)
+        self.edit_menu.addAction(cut_action)
+
+        copy_action = QAction(QIcon(os.path.join(self.images_dir, 'document-copy.png')), "Copy", self)
+        copy_action.setShortcut("Ctrl+C")
+        copy_action.triggered.connect(lambda: self.get_current_editor().copy())
+        edit_toolbar.addAction(copy_action)
+        self.edit_menu.addAction(copy_action)
+
+        paste_action = QAction(QIcon(os.path.join(self.images_dir, 'clipboard-paste-document-text.png')), "Paste", self)
+        paste_action.setShortcut("Ctrl+V")
+        paste_action.triggered.connect(lambda: self.get_current_editor().paste())
+        edit_toolbar.addAction(paste_action)
+        self.edit_menu.addAction(paste_action)
+
+    """----------File Toolbar----------"""
+    def init_file_toolbar(self):
+        """Initialize the file toolbar with Close All Tabs option."""
+        toolbar = QToolBar("File")
+        toolbar.setIconSize(QSize(20, 20))
+        self.addToolBar(toolbar)
+
+        new_window_action = QAction("New Window", self)
+        new_window_action.setShortcut("Ctrl+N")
+        new_window_action.triggered.connect(self.open_new_instance)
+        toolbar.addAction(new_window_action)
+        self.file_menu.addAction(new_window_action)
+
+        # New Tab
+        new_tab_action = QAction(QIcon(os.path.join(self.images_dir, 'new_file.png')), "New Tab", self)
+        new_tab_action.setShortcut("Ctrl+T")
+        new_tab_action.triggered.connect(self.add_new_tab)
+        toolbar.addAction(new_tab_action)
+        self.file_menu.addAction(new_tab_action)
+
+        # Open File
+        open_action = QAction(QIcon(os.path.join(self.images_dir, 'open_file.png')), "Open", self)
+        open_action.setShortcut("Ctrl+O")
+        open_action.triggered.connect(self.file_open)
+        toolbar.addAction(open_action)
+        self.file_menu.addAction(open_action)
+
+        # Save File
+        save_action = QAction(QIcon(os.path.join(self.images_dir, 'save.png')), "Save", self)
+        save_action.setShortcut("Ctrl+S")
+        save_action.triggered.connect(lambda: self.file_save(self.tab_widget.currentIndex()))
+        toolbar.addAction(save_action)
+        self.file_menu.addAction(save_action)
+
+        # Save As
+        saveas_action = QAction(QIcon(os.path.join(self.images_dir, 'save_as.png')), "Save As...", self)
+        saveas_action.setShortcut("Ctrl+Alt+S")
+        saveas_action.triggered.connect(lambda: self.file_save_as(self.tab_widget.currentIndex()))
+        toolbar.addAction(saveas_action)
+        self.file_menu.addAction(saveas_action)
+
+        # Close All Tabs
+        close_all_action = QAction("Close All Tabs", self)
+        close_all_action.triggered.connect(self.close_all_tabs)
+        toolbar.addAction(close_all_action)
+        self.file_menu.addAction(close_all_action)
+
+    """----------Font Toolbar----------"""
+    def init_font_toolbar(self):
+        toolbar = QToolBar("Font")
+        toolbar.setIconSize(QSize(10, 10))
+        self.addToolBar(toolbar)
+
+        # Font ComboBox
+        font_box = QFontComboBox()
+        font_box.setCurrentFont(QFont(self.current_font_family))
+        font_box.currentFontChanged.connect(self.on_font_change)
+        toolbar.addWidget(font_box)
+
+        # Font Size ComboBox
+        size_box = QComboBox()
+        size_box.addItems(FONT_SIZES)
+        size_box.setCurrentText(str(self.current_font_size))
+        size_box.currentTextChanged.connect(self.on_fontsize_change)
+        size_box.setMinimumWidth(50)
+        toolbar.addWidget(size_box)
+
+    """----------Format Toolbar----------"""
+    def init_format_toolbar(self):
+        """Initialize the format toolbar and assign it to self.format_toolbar."""
+        self.format_toolbar = QToolBar("Format")
+        self.format_toolbar.setIconSize(QSize(20, 20))
+        self.addToolBar(self.format_toolbar)
+
+        # Bold Button
+        self.bold_action = QAction(QIcon(os.path.join(self.images_dir, 'bold.png')), "Bold", self)
+        self.bold_action.setCheckable(True)
+        self.bold_action.setShortcut("Ctrl+B")
+        self.bold_action.toggled.connect(lambda checked: self.toggle_text_format("bold", checked))
+        self.format_toolbar.addAction(self.bold_action)
+
+        # Italic Button
+        self.italic_action = QAction(QIcon(os.path.join(self.images_dir, 'italic.png')), "Italic", self)
+        self.italic_action.setCheckable(True)
+        self.italic_action.setShortcut("Ctrl+I")
+        self.italic_action.toggled.connect(lambda checked: self.toggle_text_format("italic", checked))
+        self.format_toolbar.addAction(self.italic_action)
+
+        # Underline Button
+        self.underline_action = QAction(QIcon(os.path.join(self.images_dir, 'underline.png')), "Underline", self)
+        self.underline_action.setCheckable(True)
+        self.underline_action.setShortcut("Ctrl+U")
+        self.underline_action.toggled.connect(lambda checked: self.toggle_text_format("underline", checked))
+        self.format_toolbar.addAction(self.underline_action)
+
+        # Strikethrough Button
+        self.strikethrough_action = QAction(QIcon(os.path.join(self.images_dir, 'strikethrough.png')), "Strikethrough", self)
+        self.strikethrough_action.setCheckable(True)
+        self.strikethrough_action.toggled.connect(lambda checked: self.toggle_text_format("strikethrough", checked))
+        self.format_toolbar.addAction(self.strikethrough_action)
+
+        # Highlight Button with Dropdown
+        self.highlight_action = QAction(QIcon(os.path.join(self.images_dir, 'highlighter.png')), "Highlight", self)
+        self.highlight_action.setCheckable(True)
+        self.highlight_action.toggled.connect(lambda checked: self.toggle_highlighting(checked))
+        self.format_toolbar.addAction(self.highlight_action)
+
+        # Create a dropdown menu for highlight color selection
+        highlight_menu = QMenu("Highlight Colors", self)
+        highlight_group = QActionGroup(self)
+        highlight_group.setExclusive(True)
+
+        for name, colors in HIGHLIGHT_STYLES.items():
+            action = self.create_highlight_action(name, colors)
+            action.setCheckable(True)
+            action.setData(colors)
+            action.triggered.connect(self.on_highlight_color_selected)
+            highlight_group.addAction(action)
+            highlight_menu.addAction(action)
+
+        # Attach menu to highlight action
+        self.highlight_action.setMenu(highlight_menu)
+        self.current_highlight_color = list(HIGHLIGHT_STYLES.values())[0]  # Default color
+
+        # Clear Formatting Button
+        clear_format_action = QAction(QIcon(os.path.join(self.images_dir, 'clear_format.png')), "Clear Formatting", self)
+        clear_format_action.setShortcut("Ctrl+Space")
+        clear_format_action.triggered.connect(self.clear_formatting)
+        self.format_toolbar.addAction(clear_format_action)
+
+    """----------List Toolbar----------"""
+    def init_list_toolbar(self):
+        list_toolbar = QToolBar("Lists")
+        list_toolbar.setIconSize(QSize(25, 25))
+        self.addToolBar(list_toolbar)
+
+        bullet_list_action = QAction(QIcon(os.path.join(self.images_dir, 'bullet.png')), "Bullet List", self)
+        bullet_list_action.setShortcut("Ctrl+Shift+L")
+        bullet_list_action.triggered.connect(self.add_bullet_list)
+        list_toolbar.addAction(bullet_list_action)
+        self.format_menu.addAction(bullet_list_action)
+
+        numbered_list_action = QAction(QIcon(os.path.join(self.images_dir, 'numbered-list.png')), "Numbered List", self)
+        numbered_list_action.setShortcut("Ctrl+Shift+N")
+        numbered_list_action.triggered.connect(self.add_numbered_list)
+        list_toolbar.addAction(numbered_list_action)
+        self.format_menu.addAction(numbered_list_action)
+
+        increase_indent_action = QAction(QIcon(os.path.join(self.images_dir, 'indent.png')), "Increase Indent", self)
+        increase_indent_action.setShortcut("Ctrl+Tab")
+        increase_indent_action.triggered.connect(self.increase_indent)
+        list_toolbar.addAction(increase_indent_action)
+
+        decrease_indent_action = QAction(QIcon(os.path.join(self.images_dir, 'outdent.png')), "Decrease Indent", self)
+        decrease_indent_action.setShortcut("Ctrl+Shift+Tab")
+        decrease_indent_action.triggered.connect(self.decrease_indent)
+        list_toolbar.addAction(decrease_indent_action)
+        
+    """----------Spell Check Toolbar-----------"""
+    def init_spell_check_toolbar(self):
+        """Initialize Spell Check toolbar."""
+        spell_check_action = QAction(QIcon(os.path.join(self.images_dir, 'spellcheck.png')), "Spell Check", self)
+        spell_check_action.setCheckable(True)
+        spell_check_action.toggled.connect(self.toggle_real_time_spell_check)
+        self.format_toolbar.addAction(spell_check_action)
+        self.spell_check_action = spell_check_action
+
+    """--------------------------------------------------------Alightment Methods-------------------------------------------""" 
+    """----------Alignment Action Methods----------"""
+    def set_alignment(self, alignment):
+        """Set the alignment for the current text in the editor."""
+        editor = self.get_current_editor()
+        if editor:
+            editor.setAlignment(alignment)
+            logger.info(f"Text alignment set to {alignment}.")
+
+    """----------Helper Methods for Alignment----------"""
+    def get_current_editor(self):
+        """Retrieve the current editor widget."""
+        return self.tab_widget.currentWidget()
+
+    def get_current_tab_index(self):
+        """Get the current index of the active tab."""
+        return self.tab_widget.currentIndex()
+
+    """---------------------------------------------------------Capture Methods----------------------------------------------""" 
+    """----------Capture and OCR Action Methods----------"""
+    def set_capture_area(self):
+        """Launch overlay for setting the capture area, and trigger capture if set."""
+        screens = QGuiApplication.screens()
+        self.overlays = []
+
+        def close_all_overlays(rect):
+            for overlay in self.overlays:
+                overlay.close()
+            self.on_capture_area_set(rect)
+
+        for screen in screens:
+            screen_rect = screen.geometry()
+            overlay = SnippingOverlay(screen_rect, close_all_callback=close_all_overlays)
+            overlay.showFullScreen()
+            overlay.activateWindow()
+            overlay.raise_()
+            self.overlays.append(overlay)
+
+        logger.info("Snipping tool initialized on all screens.")
+
+    def capture(self):
+        """Capture the screen area if set; otherwise prompt user to set the area first."""
+        if not self.capture_area_set:
+            self.capture_in_progress = True  # Set flag to capture after area is set
+            self.set_capture_area()
+            return
+
+        pixmap = self.capture_pixmap(self.capture_area)
+        if pixmap:
+            self.insert_image_with_thumbnail(pixmap)
+        else:
+            QMessageBox.warning(self, "Capture Failed", "Failed to capture the pre-set area.")
+
+    def perform_ocr(self):
+        """Launch OCR overlay for selecting screen area and extracting text from the selected region."""
+        screens = QGuiApplication.screens()
+        self.overlays = []
+
+        def close_all_overlays(rect):
+            for overlay in self.overlays:
+                overlay.close()
+            self.ocr_from_selected_area(rect)
+
+        for screen in screens:
+            screen_rect = screen.geometry()
+            overlay = SnippingOverlay(screen_rect, close_all_callback=close_all_overlays)
+            overlay.showFullScreen()
+            overlay.activateWindow()
+            overlay.raise_()
+            self.overlays.append(overlay)
+
+        logger.info("OCR overlay initialized.")
+
+    def screen_grab(self):
+        """Capture a quick screenshot of a selected screen area and insert it as a thumbnail."""
+        screens = QGuiApplication.screens()
+        self.overlays = []  # Reset overlays
+
+        def close_all_overlays(rect):
+            for overlay in self.overlays:
+                overlay.close()
+            pixmap = self.capture_pixmap(rect)
+            if pixmap:
+                self.insert_image_with_thumbnail(pixmap)
+
+        for screen in screens:
+            screen_rect = screen.geometry()
+            overlay = SnippingOverlay(screen_rect, close_all_callback=close_all_overlays)
+            overlay.showFullScreen()
+            overlay.activateWindow()
+            overlay.raise_()
+            self.overlays.append(overlay)
+
+        logger.info("Screen grab overlay initialized.")
+
+    """----------Helper Methods for Capture and OCR----------"""
+    def capture_pixmap(self, snip_rect):
+        """Capture a pixmap of the specified area within the given screen rectangle."""
+        screens = QGuiApplication.screens()
+        selected_screen = None
+        for screen in screens:
+            if screen.geometry().contains(snip_rect.center()):
+                selected_screen = screen
+                break
+        if not selected_screen:
+            selected_screen = QGuiApplication.primaryScreen()
+
+        # Adjust capture area coordinates relative to screen
+        screen_rect = selected_screen.geometry()
+        adjusted_x = snip_rect.x() - screen_rect.x()
+        adjusted_y = snip_rect.y() - screen_rect.y()
+
+        # Capture the screenshot within the selected area
+        pixmap = selected_screen.grabWindow(0, adjusted_x, adjusted_y, snip_rect.width(), snip_rect.height())
+        return pixmap if not pixmap.isNull() else None
+
+    def eventFilter(self, obj, event):
+        """Detect clicks on thumbnails in the editor and open full-size images."""
+        if event.type() == QEvent.Type.MouseButtonPress:
+            cursor = self.get_current_editor().cursorForPosition(event.pos())
+            image_format = cursor.charFormat().toImageFormat()
+            image_id = image_format.name()
+            if image_id and image_id in self.full_image_map:
+                self.show_full_image(self.full_image_map[image_id])
+                return True
+        return super(MainWindow, self).eventFilter(obj, event)
+
+    def insert_image_with_thumbnail(self, pixmap):
+        """Inserts a thumbnail image into the document and saves the full image."""
+        unique_id = str(uuid4())
+        thumbnail_pixmap = pixmap.scaled(200, 150, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+        editor = self.get_current_editor()
+        if editor:
+            image_format = QTextImageFormat()
+            image_format.setName(unique_id)
+            image_format.setWidth(200)
+            image_format.setHeight(150)
+            
+            editor.document().addResource(QTextDocument.ResourceType.ImageResource, QUrl(unique_id), thumbnail_pixmap)
+            cursor = editor.textCursor()
+            cursor.insertImage(image_format)
+
+            # Store the full-size image for viewing
+            self.full_image_map[unique_id] = pixmap
+            editor.viewport().installEventFilter(self)  # Add event filter to detect clicks on thumbnails
+
+
+    def ocr_from_selected_area(self, snip_rect):
+        """Capture selected area and perform OCR on it, inserting text into the document."""
+        pixmap = self.capture_pixmap(snip_rect)
+        if pixmap:
+            buffer = QBuffer()
+            buffer.open(QBuffer.OpenModeFlag.ReadWrite)
+            pixmap.save(buffer, "PNG")
+            buffer.seek(0)
+
+            # Perform OCR with Tesseract
+            image_data = BytesIO(buffer.data())
+            pil_image = Image.open(image_data)
+            ocr_text = pytesseract.image_to_string(pil_image)
+
+            editor = self.get_current_editor()
+            if editor and isinstance(editor, QTextEdit):
+                cursor = editor.textCursor()
+                cursor.insertText(ocr_text)
+                logger.info("OCR text inserted into document.")
+
+    def on_capture_area_set(self, snip_rect):
+        """Set the capture area and update the capture_area_set flag."""
+        self.capture_area = snip_rect
+        self.capture_area_set = True
+        logger.info(f"Capture area set to: {self.capture_area}")
+        
+        if self.capture_in_progress:
+            self.capture()
+            self.capture_in_progress = False
+
+    def show_full_image(self, pixmap):
+        """Display the full-size image in a dialog."""
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Full Image")
+        layout = QVBoxLayout(dialog)
+        
+        full_image_label = QLabel()
+        full_image_label.setPixmap(pixmap)
+        layout.addWidget(full_image_label)
+        
+        dialog.setLayout(layout)
+        dialog.exec()
+
+    """------------------------------------------------------------Edit Methods------------------------------------------""" 
+    """----------Edit Action Methods----------"""
+    def undo(self):
+        """Undo the last action in the current editor."""
+        editor = self.get_current_editor()
+        if editor:
+            editor.undo()
+            logger.info("Undo action performed.")
+
+    def redo(self):
+        """Redo the last undone action in the current editor."""
+        editor = self.get_current_editor()
+        if editor:
+            editor.redo()
+            logger.info("Redo action performed.")
+
+    def cut(self):
+        """Cut the selected text in the current editor."""
+        editor = self.get_current_editor()
+        if editor:
+            editor.cut()
+            logger.info("Cut action performed.")
+
+    def copy(self):
+        """Copy the selected text in the current editor."""
+        editor = self.get_current_editor()
+        if editor:
+            editor.copy()
+            logger.info("Copy action performed.")
+
+    def paste(self):
+        """Paste text from the clipboard into the current editor."""
+        editor = self.get_current_editor()
+        if editor:
+            editor.paste()
+            logger.info("Paste action performed.")
+
+    """----------Helper Methods for Edit Actions----------"""
+    def get_current_editor(self):
+        """Retrieve the currently active editor widget in the tab."""
+        return self.tab_widget.currentWidget()
+
+    def get_current_tab_index(self):
+        """Get the current index of the active tab."""
+        return self.tab_widget.currentIndex()
+        
+    """------------------------------------------------------File Methods-------------------------------------------------"""     
+    """----------File Action Methods----------"""
+    def add_new_tab(self, checked=False, text=""):
+        # Ensure 'text' is a string
+        if not isinstance(text, str):
+            text = ""
+
+        new_tab = QTextEdit()
+        new_tab.setFont(QFont(self.current_font_family, self.current_font_size))
+        new_tab.setPlainText(text)
+        new_tab.installEventFilter(self)
+        
+        # Ensure custom context menu is set up
+        self.setup_custom_context_menu()
+        
+        index = self.tab_widget.addTab(new_tab, "Untitled")
+        self.paths[index] = None
+        self.tab_widget.setCurrentIndex(index)
+
+    def show_tab_context_menu(self, position):
+        """Show context menu for tabs with options to rename or close the current tab."""
+        menu = QMenu(self)
+        
+        # Close Tab action
+        close_action = QAction("Close Tab", self)
+        close_action.triggered.connect(lambda: self.close_tab(self.tab_widget.tabBar().tabAt(position)))
+        menu.addAction(close_action)
+        
+        # Rename Tab action
+        rename_action = QAction("Rename Tab", self)
+        rename_action.triggered.connect(lambda: self.rename_tab(self.tab_widget.tabBar().tabAt(position)))
+        menu.addAction(rename_action)
+        
+        menu.exec(self.tab_widget.mapToGlobal(position))
+
+    def rename_tab(self, index):
+        """Prompt the user to rename the specified tab."""
+        current_name = self.tab_widget.tabText(index)
+        new_name, ok = QInputDialog.getText(self, "Rename Tab", "Enter new name:", text=current_name)
+        
+        if ok and new_name:
+            self.tab_widget.setTabText(index, new_name)
+            logger.info(f"Tab at index {index} renamed to '{new_name}'.")
+
+    def is_tab_empty(self, editor):
+        """Check if the editor tab is empty (no text and no images)."""
+        if editor:
+            return not editor.toPlainText().strip() and not self.has_images(editor)
+        return False
+
+    def has_images(self, editor):
+        """Check if the editor contains any images."""
+        cursor = editor.textCursor()
+        cursor.movePosition(QTextCursor.MoveOperation.Start)
+        while not cursor.atEnd():
+            if cursor.charFormat().isImageFormat():
+                return True
+            cursor.movePosition(QTextCursor.MoveOperation.NextCharacter)
+        return False
+
+    def add_html_tab_from_text(self, text, title="HTML View"):
+        """Convert plain text to basic HTML and add it to a new HTML tab."""
+        html_tab = QTextEdit()
+        html_tab.setFont(QFont(self.current_font_family, self.current_font_size))
+        # Convert text to HTML by replacing newlines with <br> tags
+        html_tab.setHtml("<html><body>" + text.replace("\n", "<br>") + "</body></html>")
+        index = self.tab_widget.addTab(html_tab, title)
+        self.tab_widget.setCurrentIndex(index)
+        
+    def open_new_instance(self):
+        """Open a new instance of the application with a cascaded window position."""
+        try:
+            # Get the current window position
+            current_x = self.x()
+            current_y = self.y()
+
+            # Offset for the cascade effect (e.g., 30 pixels down and right)
+            offset = 30
+            new_x = current_x + offset
+            new_y = current_y + offset
+
+            # Start a new instance of the script with position arguments
+            subprocess.Popen(["python", __file__, str(new_x), str(new_y)])
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to open a new instance: {str(e)}")   
+
+    def file_open(self):
+        """Open a file, loading its content based on its format (TXT or HTML)."""
+        path, _ = QFileDialog.getOpenFileName(
+            self, "Open file", "", "Text documents (*.txt), HTML documents (*.html);;All files (*.*)"
+        )
+        if path:
+            try:
+                index = self.get_current_tab_index()
+                current_editor = self.tab_widget.widget(index)
+
+                # Check if the current tab is an empty "Untitled" tab and replace it if empty
+                if self.is_tab_empty(current_editor):
+                    self.paths[index] = path
+                    filename = os.path.basename(path)
+                    self.load_file_content(path, current_editor)
+                    self.tab_widget.setTabText(index, filename)
+                    self.tab_widget.setTabToolTip(index, path)
+                else:
+                    # Otherwise, open as a new tab
+                    editor = QTextEdit()
+                    self.load_file_content(path, editor)
+                    new_index = self.tab_widget.addTab(editor, os.path.basename(path))
+                    self.paths[new_index] = path
+                    self.tab_widget.setCurrentIndex(new_index)
+                    self.tab_widget.setTabToolTip(new_index, path)
+
+                logger.info(f"File opened: {path}")
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Failed to open file: {str(e)}")
+
+    def load_file_content(self, path, editor):
+        """Load the content of a file into the provided editor, handling TXT and HTML formats."""
+        if path.endswith(".txt"):
+            with open(path, 'r', encoding='utf-8') as f:
+                text_content = f.read()
+            editor.setPlainText(text_content)
+        elif path.endswith(".html"):
+            self.load_html_content(path, editor)
+
+    def load_html_content(self, path, editor):
+        """Parse and load HTML content, displaying images as thumbnails with links to full-size images."""
+        with open(path, 'r', encoding='utf-8') as f:
+            html_content = f.read()
+
+        soup = BeautifulSoup(html_content, 'html.parser')
+        editor.clear()
+        
+        for element in soup.body.children:
+            if element.name == "a" and element.find("img"):
+                # Extract base64 data for both the full-size and thumbnail images
+                full_image_data = element["href"].split("base64,")[1]
+                thumbnail_data = element.find("img")["src"].split("base64,")[1]
+
+                # Create QPixmap objects from the base64 data
+                full_image = QPixmap()
+                thumbnail_image = QPixmap()
+                full_image.loadFromData(base64.b64decode(full_image_data))
+                thumbnail_image.loadFromData(base64.b64decode(thumbnail_data))
+
+                # Create a unique ID for the full image and store it in full_image_map
+                image_id = str(uuid4())
+                self.full_image_map[image_id] = full_image
+
+                # Insert the thumbnail into the editor
+                image_format = QTextImageFormat()
+                image_format.setName(image_id)
+                image_format.setWidth(200)
+                image_format.setHeight(150)
+                editor.document().addResource(QTextDocument.ResourceType.ImageResource, QUrl(image_id), thumbnail_image)
+                cursor = editor.textCursor()
+                cursor.insertImage(image_format)
+            elif element.name is None:
+                # For text content, append the text directly
+                editor.append(element)
+
+    def load_html_file(self, path):
+        """Load an HTML file with images and text into the editor, displaying thumbnails with clickable full-size images."""
+        try:
+            with open(path, 'r', encoding='utf-8') as f:
+                html_content = f.read()
+
+            # Parse HTML content
+            soup = BeautifulSoup(html_content, 'html.parser')
+            editor = QTextEdit()
+            editor.setFont(QFont(self.current_font_family, self.current_font_size))
+            
+            for element in soup.body.children:
+                if element.name == "a" and element.find("img"):
+                    # Extract base64 image and thumbnail link
+                    full_image_data = element["href"].split("base64,")[1]
+                    thumbnail_data = element.find("img")["src"].split("base64,")[1]
+
+                    # Decode the base64 data and create a pixmap
+                    full_image = QPixmap()
+                    thumbnail_image = QPixmap()
+                    full_image.loadFromData(base64.b64decode(full_image_data))
+                    thumbnail_image.loadFromData(base64.b64decode(thumbnail_data))
+
+                    # Create a unique ID for the full image and store it in full_image_map
+                    image_id = str(uuid4())
+                    self.full_image_map[image_id] = full_image
+
+                    # Insert the thumbnail into the editor as a clickable image
+                    image_format = QTextImageFormat()
+                    image_format.setName(image_id)
+                    image_format.setWidth(200)
+                    image_format.setHeight(150)
+                    editor.document().addResource(QTextDocument.ResourceType.ImageResource, QUrl(image_id), thumbnail_image)
+                    cursor = editor.textCursor()
+                    cursor.insertImage(image_format)
+                
+                elif element.name is None:
+                    # For text, simply add the content
+                    editor.append(element)
+
+            # Add the HTML-loaded content as a new tab
+            index = self.tab_widget.addTab(editor, os.path.basename(path))
+            self.paths[index] = path
+            self.tab_widget.setCurrentIndex(index)
+
+            logger.info(f"HTML file loaded into editor with images as thumbnails.")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to load HTML file: {str(e)}")
+
+    def file_save(self, index=None):
+        """Save the document, using the existing format if saved, or prompting if unsaved."""
+        if index is None:
+            index = self.get_current_tab_index()
+        
+        path = self.paths.get(index)
+        if path:
+            # Determine save method based on file extension
+            if path.endswith('.txt'):
+                self.save_as_text(path, index)
+            elif path.endswith('.html'):
+                self.save_as_html(path, index)
+        else:
+            # Prompt for save format and location if unsaved
+            self.file_save_as(index)
+
+    def file_save_as(self, index=None):
+        """Prompt user to select a save location and format (TXT or HTML), saving and converting as needed."""
+        if index is None:
+            index = self.get_current_tab_index()
+        
+        # Open the Save File dialog with options for Text and HTML
+        path, _ = QFileDialog.getSaveFileName(
+            self, "Save As", "", "HTML documents (*.html);;Text documents (*.txt)"
+        )
+        if path:
+            # Save based on the selected extension
+            if path.endswith(".txt"):
+                self.save_as_text(path, index)
+            elif path.endswith(".html"):
+                self.save_as_html(path, index)
+
+    def save_as_text(self, path, index):
+        """Save the content of the current editor as a plain text file."""
+        try:
+            editor = self.tab_widget.widget(index)
+            text_content = editor.toPlainText()
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(text_content)
+
+            # Update tab path and title
+            self.paths[index] = path
+            filename = os.path.basename(path)
+            self.tab_widget.setTabText(index, filename)
+            self.tab_widget.setTabToolTip(index, path)
+            logger.info(f"Text file saved as: {path}")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to save text file: {str(e)}")
+
+    def save_as_html(self, path, index):
+        """Save the content of the current editor as an HTML file, embedding images as thumbnails."""
+        try:
+            editor = self.tab_widget.widget(index)
+            html_content = self.convert_document_to_html(editor.document())
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(html_content)
+
+            # Update tab path and title
+            self.paths[index] = path
+            filename = os.path.basename(path)
+            self.tab_widget.setTabText(index, filename)
+            self.tab_widget.setTabToolTip(index, path)
+            logger.info(f"HTML file saved as: {path}")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to save HTML file: {str(e)}")
+
+    def convert_document_to_html(self, document):
+        """Convert a QTextDocument to HTML with embedded images as clickable thumbnails."""
+        cursor = QTextCursor(document)
+        cursor.movePosition(QTextCursor.MoveOperation.Start)
+        
+        html_output = "<html><body>"
+        
+        # Iterate over each block in the document
+        while not cursor.atEnd():
+            block = cursor.block()
+            for fragment in block:
+                format = fragment.charFormat()
+                
+                if format.isImageFormat():
+                    image_id = format.toImageFormat().name()
+                    if image_id in self.full_image_map:
+                        pixmap = self.full_image_map[image_id]
+                        
+                        buffer = QBuffer()
+                        buffer.open(QBuffer.OpenModeFlag.ReadWrite)
+                        pixmap.save(buffer, "PNG")
+                        base64_data = base64.b64encode(buffer.data()).decode('utf-8')
+                        buffer.close()
+                        
+                        thumbnail_html = (
+                            f'<a href="data:image/png;base64,{base64_data}" target="_blank">'
+                            f'<img src="data:image/png;base64,{base64_data}" width="200"></a>'
+                        )
+                        html_output += thumbnail_html
+                else:
+                    html_output += fragment.text().replace('\n', '<br>')
+            
+            cursor.movePosition(QTextCursor.MoveOperation.NextBlock)
+            html_output += "<br>"
+        
+        html_output += "</body></html>"
+        return html_output
+
+    """----------Helper Methods for File Actions----------"""
+    def get_current_tab_index(self):
+        """Retrieve the current index of the active tab."""
+        return self.tab_widget.currentIndex()        
+        
+    """-----------------------------------------------------------Font Methods-------------------------------------------------"""        
+    """----------Font Change Methods----------"""
+    def on_font_change(self, font):
+        """Update the current font family based on the user's selection and save the setting."""
+        self.current_font_family = font.family()
+        app_settings["font_family"] = self.current_font_family  # Update settings with new font family
+        save_settings(app_settings)  # Persist change to settings
+        self.apply_current_font_settings()
+        logger.info(f"Font family changed to {self.current_font_family} and saved to settings.")
+
+
+    def on_fontsize_change(self, size):
+        """Update the current font size based on the user's selection and save the setting."""
+        try:
+            self.current_font_size = int(size)
+            app_settings["font_size"] = self.current_font_size  # Update settings with new font size
+            save_settings(app_settings)  # Persist change to settings
+            self.apply_current_font_settings()
+            logger.info(f"Font size changed to {self.current_font_size} and saved to settings.")
+        except ValueError:
+            logger.error(f"Invalid font size: {size}")
+
+    def clear_formatting(self):
+        """Clear all text formatting in the current editor, resetting to theme defaults."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+            format = QTextCharFormat()
+            format.setFont(QFont(self.current_theme_settings["font_family"], self.current_theme_settings["font_size"]))
+            format.setForeground(self.current_theme_settings["text_color"])
+            format.setBackground(Qt.GlobalColor.transparent)
+
+            # Apply formatting to selection if there's a selection, otherwise to the cursor position
+            if cursor.hasSelection():
+                cursor.mergeCharFormat(format)
+            else:
+                editor.setCurrentFont(QFont(self.current_theme_settings["font_family"], self.current_theme_settings["font_size"]))
+                editor.mergeCurrentCharFormat(format)
+            
+            logger.info("Cleared formatting to current theme defaults.")
+
+    """----------Helper Methods for Font Application----------"""
+    def apply_current_font_settings(self):
+        """Apply the current font settings (family and size) to the text at the cursor or selected text and save in settings."""
+        editor = self.get_current_editor()
+        if editor:
+            # Get the current text cursor and define the text format with font family and size
+            cursor = editor.textCursor()
+            format = QTextCharFormat()
+            format.setFontFamily(self.current_font_family)
+            format.setFontPointSize(self.current_font_size)
+
+            # Apply format only to selected text, or at cursor position if no text is selected
+            if cursor.hasSelection():
+                cursor.setCharFormat(format)
+            else:
+                editor.setCurrentFont(QFont(self.current_font_family, self.current_font_size))
+                cursor.mergeCharFormat(format)
+
+            # Save the font settings to app settings for persistence
+            app_settings["font_family"] = self.current_font_family
+            app_settings["font_size"] = self.current_font_size
+            save_settings(app_settings)  # Save settings to JSON file
+
+            logger.info(f"Applied and saved font family '{self.current_font_family}' and size '{self.current_font_size}' at cursor position or selection.")
+
+    def apply_default_font_settings(self):
+            """Apply the default font settings to the active editor based on current settings."""
+            editor = self.get_current_editor()
+            if editor:
+                # Use the current font family and size from app_settings for default settings
+                editor.setFont(QFont(self.current_font_family, self.current_font_size))
+                # Update the cursor format to reflect font settings if typing in the document
+                cursor = editor.textCursor()
+                format = QTextCharFormat()
+                format.setFontFamily(self.current_font_family)
+                format.setFontPointSize(self.current_font_size)
+                cursor.mergeCharFormat(format)
+                editor.setTextCursor(cursor)
+                logger.info(f"Applied font settings: {self.current_font_family}, {self.current_font_size}pt") 
+ 
+    """--------------------------------------------------------------Formatting Methods------------------------------------------"""
+    """----------Text Formatting Toggle Methods----------"""
+    def toggle_text_format(self, format_type, checked):
+        """Toggle text formatting (bold, italic, underline, strikethrough) based on the checked state."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+            format = QTextCharFormat()
+
+            if format_type == "bold":
+                format.setFontWeight(QFont.Weight.Bold if checked else QFont.Weight.Normal)
+            elif format_type == "italic":
+                format.setFontItalic(checked)
+            elif format_type == "underline":
+                format.setFontUnderline(checked)
+            elif format_type == "strikethrough":
+                format.setFontStrikeOut(checked)
+
+            cursor.mergeCharFormat(format)
+            editor.setTextCursor(cursor)
+
+    def toggle_highlighting(self, checked):
+        """Toggle highlighting on/off with the current highlight color if checked."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+            format = cursor.charFormat()
+            if checked:
+                format.setBackground(self.current_highlight_color["highlight"])
+                format.setForeground(self.current_highlight_color["font"])
+            else:
+                format.setBackground(Qt.GlobalColor.transparent)
+                format.setForeground(self.current_theme_settings["text_color"])
+
+            cursor.mergeCharFormat(format)
+            editor.setTextCursor(cursor)
+
+    """----------Highlight Color Selection Methods----------"""
+    def on_highlight_color_selected(self):
+        """Update the current highlight color and apply it immediately if highlighting is active."""
+        action = self.sender()
+        color = action.data()  # Retrieve color data from the QAction
+        self.current_highlight_color = color  # Update the active highlight color
+        if self.highlight_action.isChecked():
+            self.apply_highlight_style(color)
+
+    def create_highlight_action(self, name, colors):
+        """Create a QAction with a preview label for the dropdown highlight color menu."""
+        action = QWidgetAction(self)
+        label = QLabel(name)
+        label.setFont(QFont(DEFAULT_FONT_FAMILY, 12))
+        label.setStyleSheet(
+            f"background-color: rgb({colors['highlight'].red()}, {colors['highlight'].green()}, {colors['highlight'].blue()}); "
+            f"color: rgb({colors['font'].red()}, {colors['font'].green()}, {colors['font'].blue()}); "
+            "padding: 5px; margin: 1px;"
+        )
+        action.setDefaultWidget(label)
+        return action
+
+    def apply_highlight_style(self, color):
+        """Apply the selected highlight color to the text cursor or selection, merging with other styles."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+            format = cursor.charFormat()
+            format.setBackground(color["highlight"])
+            format.setForeground(color["font"])
+
+            if cursor.hasSelection():
+                cursor.setCharFormat(format)
+            else:
+                cursor.mergeCharFormat(format)
+
+            editor.setTextCursor(cursor)
+            editor.setFocus()
+ 
+    """-------------------------------------------------------------List Methods--------------------------------------"""
+    """----------List Action Methods----------"""
+    def add_bullet_list(self):
+        """Apply a bullet list format to the selected text or current line."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+            cursor.beginEditBlock()
+            
+            # Toggle bullet list
+            current_list = cursor.currentList()
+            if current_list and current_list.format().style() == QTextListFormat.Style.ListDisc:
+                block_format = cursor.blockFormat()
+                block_format.setIndent(0)
+                cursor.setBlockFormat(block_format)
+            else:
+                list_format = QTextListFormat()
+                list_format.setStyle(QTextListFormat.Style.ListDisc)
+                cursor.createList(list_format)
+            
+            cursor.endEditBlock()
+            logger.info("Bullet list applied.")
+
+    def add_numbered_list(self):
+        """Apply a numbered list format to the selected text or current line."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+            cursor.beginEditBlock()
+
+            # Toggle numbered list
+            current_list = cursor.currentList()
+            if current_list and current_list.format().style() == QTextListFormat.Style.ListDecimal:
+                block_format = cursor.blockFormat()
+                block_format.setIndent(0)
+                cursor.setBlockFormat(block_format)
+            else:
+                list_format = QTextListFormat()
+                list_format.setStyle(QTextListFormat.Style.ListDecimal)
+                cursor.createList(list_format)
+            
+            cursor.endEditBlock()
+            logger.info("Numbered list applied.")
+
+    def increase_indent(self):
+        """Increase the indent level of the selected text or current line."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+            cursor.beginEditBlock()
+
+            # Increase indent level
+            block_format = cursor.blockFormat()
+            block_format.setIndent(block_format.indent() + 1)
+            cursor.setBlockFormat(block_format)
+            
+            cursor.endEditBlock()
+            logger.info("Increased indent level.")
+
+    def decrease_indent(self):
+        """Decrease the indent level of the selected text or current line."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+            cursor.beginEditBlock()
+
+            # Decrease indent level with a minimum of 0
+            block_format = cursor.blockFormat()
+            block_format.setIndent(max(block_format.indent() - 1, 0))
+            cursor.setBlockFormat(block_format)
+            
+            cursor.endEditBlock()
+            logger.info("Decreased indent level.")
+ 
+    """------------------------------------------------------------Spell Check Methods-----------------------------------""" 
+    """----------Spell Check Toggle Method----------"""
+    def toggle_real_time_spell_check(self, checked):
+        """Enable or disable real-time spell check based on the toggle state."""
+        editor = self.get_current_editor()
+        if checked:
+            self.spell_check_timer = QTimer()
+            self.spell_check_timer.setSingleShot(True)
+            self.spell_check_timer.timeout.connect(self.perform_real_time_spell_check)
+            if editor:
+                editor.textChanged.connect(lambda: self.spell_check_timer.start(500))
+            logger.info("Real-time spell check enabled.")
+        else:
+            if editor:
+                try:
+                    editor.textChanged.disconnect()
+                except TypeError:
+                    pass  # If already disconnected
+            logger.info("Real-time spell check disabled.")
+
+    """----------Real-Time Spell Check Method----------"""
+    def perform_real_time_spell_check(self):
+        """Underline misspelled words in real-time using a spell check underline."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+            cursor.select(QTextCursor.SelectionType.Document)
+            cursor.setCharFormat(QTextCharFormat())  # Clear previous formatting
+
+            text = editor.toPlainText()
+            words = text.split()
+            position = 0
+            for word in words:
+                if word not in spell:
+                    cursor.setPosition(position)
+                    cursor.movePosition(QTextCursor.MoveOperation.NextWord, QTextCursor.MoveMode.KeepAnchor)
+                    format = QTextCharFormat()
+                    format.setUnderlineStyle(QTextCharFormat.UnderlineStyle.SpellCheckUnderline)
+                    format.setUnderlineColor(Qt.GlobalColor.red)
+                    cursor.mergeCharFormat(format)
+                position += len(word) + 1
+
+    """----------Custom Context Menu for Spell Check Suggestions----------"""
+    def setup_custom_context_menu(self):
+        """Set up a custom context menu for the text editor with spell check options."""
+        editor = self.get_current_editor()
+        if editor:
+            editor.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+            editor.customContextMenuRequested.connect(self.show_custom_context_menu)
+
+
+
+    def show_custom_context_menu(self, pos):
+        """Display a custom context menu with spell check suggestions if a misspelled word is detected."""
+        editor = self.get_current_editor()
+        if editor:
+            menu = QMenu(self)
+            cursor = editor.cursorForPosition(pos)
+            cursor.select(QTextCursor.SelectionType.WordUnderCursor)
+            word = cursor.selectedText()
+
+            if word and word not in spell:
+                spell_check_menu = QMenu("Spell Check", menu)
+                self.populate_spell_check_menu(word, cursor, spell_check_menu)
+                menu.addMenu(spell_check_menu)
+
+            menu.addSeparator()
+            menu.addAction("Cut", editor.cut)
+            menu.addAction("Copy", editor.copy)
+            menu.addAction("Paste", editor.paste)
+            menu.addAction("Select All", editor.selectAll)
+            menu.exec(editor.mapToGlobal(pos))
+
+    def populate_spell_check_menu(self, word, cursor, spell_check_menu):
+        """Populate the spell check submenu with suggestions and an option to add to the dictionary."""
+        suggestions = spell.candidates(word)
+        for suggestion in suggestions:
+            action = QAction(suggestion, self)
+            action.triggered.connect(lambda _, sug=suggestion: self.replace_word(cursor, sug))
+            spell_check_menu.addAction(action)
+        
+        add_to_dict_action = QAction("Add to Dictionary", self)
+        add_to_dict_action.triggered.connect(lambda _, w=word: self.add_word_to_dictionary(w))
+        spell_check_menu.addAction(add_to_dict_action)
+
+    """----------Dictionary Management Methods----------"""
+    def replace_word(self, cursor, replacement):
+        """Replace the misspelled word at the cursor position with the selected suggestion."""
+        cursor.beginEditBlock()
+        cursor.removeSelectedText()
+        cursor.insertText(replacement)
+        cursor.endEditBlock()
+        logger.info(f"Replaced word with '{replacement}'.")
+
+    def add_word_to_dictionary(self, word):
+        """Add a word to the custom dictionary and persist it in the dictionary file."""
+        spell.word_frequency.add(word)
+        self.save_custom_dictionary()
+        QMessageBox.information(self, "Word Added", f"'{word}' has been added to the dictionary.")
+        logger.info(f"Added '{word}' to custom dictionary.")
+
+    def save_custom_dictionary(self):
+        """Save the custom dictionary to a JSON file for persistent storage."""
+        with open(custom_dict_path, 'w') as f:
+            json.dump(list(spell.word_frequency.dictionary.keys()), f, indent=4)
+        logger.info("Custom dictionary saved.")
+ 
 """===========Snipping Overlay Class=========="""
 class ClickableImageDialog(QDialog):
     def __init__(self, full_pixmap, parent=None):
@@ -416,6 +1710,8 @@ class ClickableImageDialog(QDialog):
         layout.addWidget(full_image_label)
         
         self.setLayout(layout)
+        
+        
 """===========Snipping Overlay Class=========="""
 class SnippingOverlay(QWidget):
     snipCompleteGlobal = pyqtSignal(QRect)
@@ -482,1207 +1778,9 @@ class SnippingOverlay(QWidget):
         snip_rect = QRect(self.mapToGlobal(self.begin), self.mapToGlobal(self.end)).normalized()
         self.snipCompleteGlobal.emit(snip_rect)
         self.close_all_callback(snip_rect)
-        self.close()
+        self.close()  
 
-"""===========Main Application Class=========="""
-# Initialization and UI Setup
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super(MainWindow, self).__init__()
-        self.setWindowTitle("Case and Note Organizer 2.0")
-        
-        # Initialize capture_in_progress and full_image_map attributes
-        self.capture_in_progress = False  # Tracks if a capture is in progress
-        self.full_image_map = {}  # Stores full-size images by URL
-        
-        # Flag to track if capture area has been set
-        self.capture_area_set = False
-
-        # Ensure current highlight color is set before initializing UI
-        self.current_highlight_color = list(HIGHLIGHT_STYLES.values())[0]  # Default to the first color
-
-        self.images_dir = os.path.join(os.path.dirname(__file__), 'images')  # Path to icons
-
-        # Load settings for font and theme
-        self.current_theme = app_settings.get("theme", DEFAULT_THEME)
-        self.current_theme_settings = THEMES.get(self.current_theme, THEMES["Light Theme"])
-        self.current_font_family = app_settings.get("font_family", DEFAULT_FONT_FAMILY)
-        self.current_font_size = app_settings.get("font_size", DEFAULT_FONT_SIZE)
-        
-                # Set window size and position from settings
-        window_size = app_settings.get("window_size", DEFAULT_WINDOW_SIZE)
-        window_position = app_settings.get("window_position", DEFAULT_WINDOW_POSITION)
-        self.resize(window_size[0], window_size[1])
-        self.move(window_position[0], window_position[1])
-        
-        # Initialize path tracking
-        self.paths = {}  # Stores file paths for each tab
-
-        # Set up main tab widget
-        self.tab_widget = QTabWidget()
-        self.tab_widget.setTabsClosable(True)
-        self.tab_widget.tabCloseRequested.connect(self.close_tab)
-        self.tab_widget.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-        self.tab_widget.customContextMenuRequested.connect(self.show_tab_context_menu)
-        self.setCentralWidget(self.tab_widget)
-
-        # Add the initial tab
-        self.add_new_tab()
-        
-        # Set up the context menu
-        self.setup_custom_context_menu()
-        
-        # Initialize UI components
-        self.apply_default_font_settings()
-        self.init_ui()
-
-      
-        # Apply global style for toggled buttons
-        self.setStyleSheet(TOGGLED_BUTTON_STYLE)    
-        
-        # Apply the loaded theme
-        self.apply_theme(self.current_theme)
-
-        logger.info("User interface initialized with tab support.")
-
-    def init_ui(self):
-        """Initialize menus, toolbars, and theme settings."""
-        menubar = self.menuBar()
-        self.file_menu = menubar.addMenu("File")
-        self.edit_menu = menubar.addMenu("Edit")
-        self.format_menu = menubar.addMenu("Format")
-        self.font_menu = menubar.addMenu("Font")
-        self.settings_menu = menubar.addMenu("Settings")
-
-        # Add Themes menu under Settings
-        self.themes_menu = QMenu("Themes", self)
-        self.settings_menu.addMenu(self.themes_menu)
-        for theme_name in THEMES.keys():
-            theme_action = QAction(theme_name, self)
-            theme_action.triggered.connect(lambda checked, name=theme_name: self.apply_theme(name))
-            self.themes_menu.addAction(theme_action)
-
-        # Initialize toolbars in the correct order
-        self.init_file_toolbar()
-        self.init_edit_toolbar()
-        self.init_font_toolbar()
-        self.init_format_toolbar()  # Initialize format toolbar here
-        self.init_spell_check_toolbar()  # Spell check toolbar uses format toolbar
-        self.init_align_toolbar()
-        self.init_list_toolbar()
-        self.init_capture_toolbar()
-        
-    """----------Tab Management Methods----------"""
-    def add_new_tab(self, checked=False, text=""):
-        # Ensure 'text' is a string
-        if not isinstance(text, str):
-            text = ""
-
-        new_tab = QTextEdit()
-        new_tab.setFont(QFont(self.current_font_family, self.current_font_size))
-        new_tab.setPlainText(text)
-        new_tab.installEventFilter(self)
-        
-        # Ensure custom context menu is set up
-        self.setup_custom_context_menu()
-        
-        index = self.tab_widget.addTab(new_tab, "Untitled")
-        self.paths[index] = None
-        self.tab_widget.setCurrentIndex(index)
-
-    def close_tab(self, index):
-        editor = self.tab_widget.widget(index)
-        if editor is not None and editor.document().isModified():
-            reply = QMessageBox.question(
-                self, "Unsaved Changes",
-                "This tab has unsaved changes. Do you want to save before closing?",
-                QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel
-            )
-            if reply == QMessageBox.StandardButton.Save:
-                self.file_save(index)
-            elif reply == QMessageBox.StandardButton.Cancel:
-                return  # Cancel close
-
-        # Remove the tab
-        self.tab_widget.removeTab(index)
-        self.paths.pop(index, None)
-
-    def show_tab_context_menu(self, position):
-        tab_index = self.tab_widget.tabBar().tabAt(position)
-        if tab_index >= 0:
-            menu = QMenu()
-            rename_action = QAction('Rename Tab', self)
-            rename_action.triggered.connect(lambda: self.rename_tab(tab_index))
-            menu.addAction(rename_action)
-            menu.exec(self.tab_widget.tabBar().mapToGlobal(position))
-
-    def rename_tab(self, index):
-        current_title = self.tab_widget.tabText(index)
-        text, ok = QInputDialog.getText(self, 'Rename Tab', 'Enter new tab name:', text=current_title)
-        if ok and text:
-            self.tab_widget.setTabText(index, text)
-            self.tab_widget.setTabToolTip(index, text)
-            
-    """----------Editor Access Methods----------"""
-    def get_current_editor(self):
-        return self.tab_widget.currentWidget()
-
-    def get_current_tab_index(self):
-        return self.tab_widget.currentIndex()
-        
-    """----------File Toolbar----------"""
-    def init_file_toolbar(self):
-        toolbar = QToolBar("File")
-        toolbar.setIconSize(QSize(20, 20))
-        self.addToolBar(toolbar)
-
-        # New Tab
-        new_tab_action = QAction(QIcon(os.path.join(self.images_dir, 'new_file.png')), "New Tab", self)
-        new_tab_action.setShortcut("Ctrl+T")
-        new_tab_action.triggered.connect(self.add_new_tab)
-        toolbar.addAction(new_tab_action)
-        self.file_menu.addAction(new_tab_action)
-        
-        # Open File
-        open_action = QAction(QIcon(os.path.join(self.images_dir, 'open_file.png')), "Open", self)
-        open_action.setShortcut("Ctrl+O")
-        open_action.triggered.connect(self.file_open)
-        toolbar.addAction(open_action)
-        self.file_menu.addAction(open_action)
-        
-        # Save File
-        save_action = QAction(QIcon(os.path.join(self.images_dir, 'save.png')), "Save", self)
-        save_action.setShortcut("Ctrl+S")
-        save_action.triggered.connect(lambda: self.file_save(self.tab_widget.currentIndex()))
-        toolbar.addAction(save_action)
-        self.file_menu.addAction(save_action)
-
-        # Save As
-        saveas_action = QAction(QIcon(os.path.join(self.images_dir, 'save_as.png')), "Save As...", self)
-        saveas_action.setShortcut("Ctrl+Alt+S")
-        saveas_action.triggered.connect(lambda: self.file_saveas(self.tab_widget.currentIndex()))
-        toolbar.addAction(saveas_action)
-        self.file_menu.addAction(saveas_action)
-
-    """----------Edit Toolbar----------"""
-    def init_edit_toolbar(self):
-        edit_toolbar = QToolBar("Edit")
-        edit_toolbar.setIconSize(QSize(20, 20))
-        self.addToolBar(edit_toolbar)
-
-        undo_action = QAction(QIcon(os.path.join(self.images_dir, 'arrow-curve_left.png')), "Undo", self)
-        undo_action.setShortcut("Ctrl+Z")
-        undo_action.triggered.connect(lambda: self.get_current_editor().undo())
-        edit_toolbar.addAction(undo_action)
-        self.edit_menu.addAction(undo_action)
-
-        redo_action = QAction(QIcon(os.path.join(self.images_dir, 'arrow-curve_right.png')), "Redo", self)
-        redo_action.setShortcut("Ctrl+Y")
-        redo_action.triggered.connect(lambda: self.get_current_editor().redo())
-        edit_toolbar.addAction(redo_action)
-        self.edit_menu.addAction(redo_action)
-
-        cut_action = QAction(QIcon(os.path.join(self.images_dir, 'scissors.png')), "Cut", self)
-        cut_action.setShortcut("Ctrl+X")
-        cut_action.triggered.connect(lambda: self.get_current_editor().cut())
-        edit_toolbar.addAction(cut_action)
-        self.edit_menu.addAction(cut_action)
-
-        copy_action = QAction(QIcon(os.path.join(self.images_dir, 'document-copy.png')), "Copy", self)
-        copy_action.setShortcut("Ctrl+C")
-        copy_action.triggered.connect(lambda: self.get_current_editor().copy())
-        edit_toolbar.addAction(copy_action)
-        self.edit_menu.addAction(copy_action)
-
-        paste_action = QAction(QIcon(os.path.join(self.images_dir, 'clipboard-paste-document-text.png')), "Paste", self)
-        paste_action.setShortcut("Ctrl+V")
-        paste_action.triggered.connect(lambda: self.get_current_editor().paste())
-        edit_toolbar.addAction(paste_action)
-        self.edit_menu.addAction(paste_action)
-
-    """----------Font Toolbar----------"""
-    def init_font_toolbar(self):
-        toolbar = QToolBar("Font")
-        toolbar.setIconSize(QSize(10, 10))
-        self.addToolBar(toolbar)
-
-        # Font ComboBox
-        font_box = QFontComboBox()
-        font_box.setCurrentFont(QFont(self.current_font_family))
-        font_box.currentFontChanged.connect(self.on_font_change)
-        toolbar.addWidget(font_box)
-
-        # Font Size ComboBox
-        size_box = QComboBox()
-        size_box.addItems(FONT_SIZES)
-        size_box.setCurrentText(str(self.current_font_size))
-        size_box.currentTextChanged.connect(self.on_fontsize_change)
-        size_box.setMinimumWidth(50)
-        toolbar.addWidget(size_box)
-
-        # Clear Formatting Button
-        clear_format_action = QAction(QIcon(os.path.join(self.images_dir, 'clear_format.png')), "Clear Formatting", self)
-        clear_format_action.setShortcut("Ctrl+Space")
-        clear_format_action.triggered.connect(self.clear_formatting)
-        toolbar.addAction(clear_format_action)
-        
-    """----------Spell Check Toolbar-----------"""
-    def init_spell_check_toolbar(self):
-        # Initialize spell check action with toggle behavior
-        spell_check_action = QAction(QIcon(os.path.join(self.images_dir, 'spellcheck.png')), "Spell Check", self)
-        spell_check_action.setCheckable(True)
-        spell_check_action.toggled.connect(self.toggle_real_time_spell_check)  # Connect toggling
-        self.format_toolbar.addAction(spell_check_action)
-        self.spell_check_action = spell_check_action  # Store action reference
-
-    """----------Format Toolbar----------"""
-    def init_format_toolbar(self):
-        """Initialize the format toolbar and assign it to self.format_toolbar."""
-        self.format_toolbar = QToolBar("Format")
-        self.format_toolbar.setIconSize(QSize(20, 20))
-        self.addToolBar(self.format_toolbar)
-
-        # Bold Button
-        self.bold_action = QAction(QIcon(os.path.join(self.images_dir, 'bold.png')), "Bold", self)
-        self.bold_action.setCheckable(True)
-        self.bold_action.setShortcut("Ctrl+B")
-        self.bold_action.toggled.connect(lambda checked: self.toggle_text_format("bold", checked))
-        self.format_toolbar.addAction(self.bold_action)
-
-        # Italic Button
-        self.italic_action = QAction(QIcon(os.path.join(self.images_dir, 'italic.png')), "Italic", self)
-        self.italic_action.setCheckable(True)
-        self.italic_action.setShortcut("Ctrl+I")
-        self.italic_action.toggled.connect(lambda checked: self.toggle_text_format("italic", checked))
-        self.format_toolbar.addAction(self.italic_action)
-
-        # Underline Button
-        self.underline_action = QAction(QIcon(os.path.join(self.images_dir, 'underline.png')), "Underline", self)
-        self.underline_action.setCheckable(True)
-        self.underline_action.setShortcut("Ctrl+U")
-        self.underline_action.toggled.connect(lambda checked: self.toggle_text_format("underline", checked))
-        self.format_toolbar.addAction(self.underline_action)
-
-        # Strikethrough Button
-        self.strikethrough_action = QAction(QIcon(os.path.join(self.images_dir, 'strikethrough.png')), "Strikethrough", self)
-        self.strikethrough_action.setCheckable(True)
-        self.strikethrough_action.toggled.connect(lambda checked: self.toggle_text_format("strikethrough", checked))
-        self.format_toolbar.addAction(self.strikethrough_action)
-
-        # Highlight Button with Dropdown
-        self.highlight_action = QAction(QIcon(os.path.join(self.images_dir, 'highlighter.png')), "Highlight", self)
-        self.highlight_action.setCheckable(True)
-        self.highlight_action.toggled.connect(lambda checked: self.toggle_highlighting(checked))
-        self.format_toolbar.addAction(self.highlight_action)
-
-        # Create a dropdown menu for highlight color selection
-        highlight_menu = QMenu("Highlight Colors", self)
-        highlight_group = QActionGroup(self)  # Make actions exclusive in the menu
-        highlight_group.setExclusive(True)
-
-        for name, colors in HIGHLIGHT_STYLES.items():
-            action = self.create_highlight_action(name, colors)
-            action.setCheckable(True)
-            action.setData(colors)
-            action.triggered.connect(self.on_highlight_color_selected)
-            highlight_group.addAction(action)
-            highlight_menu.addAction(action)
-
-        # Attach menu to highlight action
-        self.highlight_action.setMenu(highlight_menu)
-        self.current_highlight_color = list(HIGHLIGHT_STYLES.values())[0]  # Default color
-
-        # Clear Formatting Button
-        clear_format_action = QAction(QIcon(os.path.join(self.images_dir, 'clear_format.png')), "Clear Formatting", self)
-        clear_format_action.setShortcut("Ctrl+Space")
-        clear_format_action.triggered.connect(self.clear_formatting)
-        self.format_toolbar.addAction(clear_format_action)
-
-    """----------Alignment Toolbar----------"""
-    def init_align_toolbar(self):
-        align_toolbar = QToolBar("Align")
-        self.addToolBar(align_toolbar)
-
-        align_actions = [
-            ("<- Align Left", "align-left.png", Qt.AlignmentFlag.AlignLeft),
-            ("Align Center", "align-center.png", Qt.AlignmentFlag.AlignCenter),
-            ("Align Right ->", "align-right.png", Qt.AlignmentFlag.AlignRight),
-            ("<--> Justify", "align-justify.png", Qt.AlignmentFlag.AlignJustify)
-        ]
-        for name, icon, alignment in align_actions:
-            action = QAction(QIcon(os.path.join(self.images_dir, icon)), name, self)
-            action.setCheckable(True)
-            action.triggered.connect(lambda _, a=alignment: self.get_current_editor().setAlignment(a))
-            align_toolbar.addAction(action)
-            self.format_menu.addAction(action)
-
-    """----------List Toolbar----------"""
-    def init_list_toolbar(self):
-        list_toolbar = QToolBar("Lists")
-        list_toolbar.setIconSize(QSize(25, 25))
-        self.addToolBar(list_toolbar)
-
-        bullet_list_action = QAction(QIcon(os.path.join(self.images_dir, 'bullet.png')), "Bullet List", self)
-        bullet_list_action.setShortcut("Ctrl+Shift+L")
-        bullet_list_action.triggered.connect(self.add_bullet_list)
-        list_toolbar.addAction(bullet_list_action)
-        self.format_menu.addAction(bullet_list_action)
-
-        numbered_list_action = QAction(QIcon(os.path.join(self.images_dir, 'numbered-list.png')), "Numbered List", self)
-        numbered_list_action.setShortcut("Ctrl+Shift+N")
-        numbered_list_action.triggered.connect(self.add_numbered_list)
-        list_toolbar.addAction(numbered_list_action)
-        self.format_menu.addAction(numbered_list_action)
-
-        increase_indent_action = QAction(QIcon(os.path.join(self.images_dir, 'indent.png')), "Increase Indent", self)
-        increase_indent_action.setShortcut("Ctrl+Tab")
-        increase_indent_action.triggered.connect(self.increase_indent)
-        list_toolbar.addAction(increase_indent_action)
-
-        decrease_indent_action = QAction(QIcon(os.path.join(self.images_dir, 'outdent.png')), "Decrease Indent", self)
-        decrease_indent_action.setShortcut("Ctrl+Shift+Tab")
-        decrease_indent_action.triggered.connect(self.decrease_indent)
-        list_toolbar.addAction(decrease_indent_action)
-        
-    """----------Capture Toolbar----------"""  
-    def init_capture_toolbar(self):
-        """Initialize Capture toolbar."""
-        self.capture_toolbar = QToolBar("Capture")
-        self.capture_toolbar.setIconSize(QSize(25, 25))  # Set the icon size for this toolbar
-        self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.capture_toolbar)
-
-        # Set Capture Area Button
-        set_capture_area_action = QAction(QIcon(os.path.join(self.images_dir, 'set_capture.png')), "Set Capture Area", self)
-        set_capture_area_action.triggered.connect(self.set_capture_area)
-        self.capture_toolbar.addAction(set_capture_area_action)
-        
-        # Spacer Widget
-        spacer = QWidget()
-        spacer.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
-        self.capture_toolbar.addWidget(spacer)  # Adds the spacer between buttons        
-        
-        # OCR Button
-        ocr_button = QPushButton(QIcon(os.path.join(self.images_dir, 'ocr.png')), "", self)
-        ocr_button.setIconSize(QSize(45, 45))  
-        ocr_button.clicked.connect(self.perform_ocr)
-        self.capture_toolbar.addWidget(ocr_button)  
-    
-        # Capture Button with larger icon
-        capture_button = QPushButton(QIcon(os.path.join(self.images_dir, 'capture.png')), "", self)
-        capture_button.setIconSize(QSize(45, 45))
-        capture_button.clicked.connect(self.capture)
-        self.capture_toolbar.addWidget(capture_button)
-
-    """----------Formatting and Theme Methods----------"""
-    def get_combined_stylesheet(self, theme_style):
-        return theme_style + TOGGLED_BUTTON_STYLE
-
-    # Adjust apply_theme to use the combined stylesheet
-    def apply_theme(self, theme_name):
-        theme = THEMES.get(theme_name, THEMES["Light Theme"])
-        self.current_theme = theme_name
-        
-        # Combine the theme style with the toggled button style
-        combined_style = self.get_combined_stylesheet(theme["style"])
-        self.setStyleSheet(combined_style)
-        
-        # Update other theme-specific settings
-        self.current_theme_settings.update({
-            "text_color": theme["text_color"],
-            "font_family": theme["font_family"],
-            "font_size": theme["font_size"]
-        })
-        self.apply_default_font_settings()
-        logger.info(f"Theme applied: {theme_name}")
-
-    # Apply default font settings to current editor
-    def apply_default_font_settings(self):
-        editor = self.get_current_editor()
-        if editor:
-            editor.setFont(QFont(self.current_theme_settings["font_family"], self.current_theme_settings["font_size"]))
-
-    # Font Change Handlers
-    def on_font_change(self, font):
-        self.current_font_family = font.family()
-        self.apply_current_font_settings()
-
-    def on_fontsize_change(self, size):
-        try:
-            self.current_font_size = int(size)
-            self.apply_current_font_settings()
-        except ValueError:
-            logger.error(f"Invalid font size: {size}")
-
-    def apply_current_font_settings(self):
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            format = QTextCharFormat()
-            format.setFontFamily(self.current_font_family)
-            format.setFontPointSize(self.current_font_size)
-            if cursor.hasSelection():
-                cursor.setCharFormat(format)
-            else:
-                editor.setCurrentFont(QFont(self.current_font_family, self.current_font_size))
-                cursor.mergeCharFormat(format)
-
-    """----------Text Formatting Methods----------"""
-    def toggle_text_format(self, format_type, checked):
-        """Toggle text formatting (bold, italic, underline, strikethrough) based on the checked state."""
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            format = QTextCharFormat()
-
-            if format_type == "bold":
-                format.setFontWeight(QFont.Weight.Bold if checked else QFont.Weight.Normal)
-            elif format_type == "italic":
-                format.setFontItalic(checked)
-            elif format_type == "underline":
-                format.setFontUnderline(checked)
-            elif format_type == "strikethrough":
-                format.setFontStrikeOut(checked)
-
-            cursor.mergeCharFormat(format)
-            editor.setTextCursor(cursor)
-
-    def toggle_bold(self, checked):
-        format = QTextCharFormat()
-        format.setFontWeight(QFont.Weight.Bold if checked else QFont.Weight.Normal)
-        self.apply_format_to_selection_or_cursor(format)
-
-    def toggle_italic(self, checked):
-        format = QTextCharFormat()
-        format.setFontItalic(checked)
-        self.apply_format_to_selection_or_cursor(format)
-
-    def toggle_underline(self, checked):
-        format = QTextCharFormat()
-        format.setFontUnderline(checked)
-        self.apply_format_to_selection_or_cursor(format)
-
-    def toggle_strikethrough(self, checked):
-        format = QTextCharFormat()
-        format.setFontStrikeOut(checked)
-        self.apply_format_to_selection_or_cursor(format)
-
-    def merge_format(self, format):
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            if cursor.hasSelection():
-                cursor.mergeCharFormat(format)
-            else:
-                editor.mergeCurrentCharFormat(format)
-
-    """----------Highlighting Methods----------"""
-    def open_highlight_menu(self):
-        editor = self.get_current_editor()
-        if editor:
-            highlight_menu = QMenu("Highlight Styles", self)
-            for name, colors in HIGHLIGHT_STYLES.items():
-                action = self.create_highlight_action(name, colors)
-                highlight_menu.addAction(action)
-
-            cursor_position = editor.cursorRect().bottomRight()
-            highlight_menu.popup(editor.mapToGlobal(cursor_position))
-
-    def create_highlight_action(self, name, colors):
-        """Create an action with a color preview label for the dropdown."""
-        action = QWidgetAction(self)
-        label = QLabel(name)
-        label.setFont(QFont(DEFAULT_FONT_FAMILY, 12))
-        label.setStyleSheet(
-            f"background-color: rgb({colors['highlight'].red()}, {colors['highlight'].green()}, {colors['highlight'].blue()}); "
-            f"color: rgb({colors['font'].red()}, {colors['font'].green()}, {colors['font'].blue()}); "
-            "padding: 5px; margin: 1px;"
-        )
-        action.setDefaultWidget(label)
-        return action
-
-    def toggle_highlighting(self, checked):
-        """Toggle highlighting on/off with current highlight color if checked."""
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            format = cursor.charFormat()
-
-            if checked:
-                format.setBackground(self.current_highlight_color["highlight"])
-                format.setForeground(self.current_highlight_color["font"])
-            else:
-                format.setBackground(Qt.GlobalColor.transparent)
-                format.setForeground(self.current_theme_settings["text_color"])
-
-            cursor.mergeCharFormat(format)
-            editor.setTextCursor(cursor)
-
-    def set_highlight_color(self, color):
-        """Set the selected highlight color and update current_highlight_color correctly."""
-        if isinstance(color, dict):
-            self.current_highlight_color = color  # Ensure it's always a dictionary
-        else:
-            self.current_highlight_color = HIGHLIGHT_STYLES.get(color, list(HIGHLIGHT_STYLES.values())[0]) # Fallback if needed
-        if self.highlight_action.isChecked():
-            # If highlight toggle is on, apply the new color immediately
-            self.apply_highlight_style(self.current_highlight_color)
-
-    def on_highlight_color_selected(self):
-        """Update the current highlight color and apply it immediately if the highlighter is active."""
-        action = self.sender()
-        color = action.data()  # Retrieve stored color data from QAction
-        self.current_highlight_color = color  # Update the active color
-        if self.highlight_action.isChecked():
-            self.apply_highlight_style(color)  # Apply the selected color immediately
-
-    def apply_highlight_style(self, color):
-        """Apply the selected highlight color to the current text cursor or selection,
-           merging with existing formatting like bold, italic, underline, and strikethrough."""
-        editor = self.get_current_editor()
-        if editor and isinstance(color, dict):  # Ensure color is a valid dictionary
-            cursor = editor.textCursor()
-            format = cursor.charFormat()
-
-            # Update background and foreground for highlight
-            format.setBackground(color["highlight"])
-            format.setForeground(color["font"])
-
-            # Merge the updated format with the current selection
-            if cursor.hasSelection():
-                cursor.setCharFormat(format)
-            else:
-                cursor.mergeCharFormat(format)
-
-            editor.setTextCursor(cursor)  # Ensure cursor updates after applying format
-            editor.setFocus()  # Return focus to editor
-
-    """----------Clear Formatting Method----------"""
-    def clear_formatting(self):
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            format = QTextCharFormat()
-            format.setFont(QFont(self.current_theme_settings["font_family"], self.current_theme_settings["font_size"]))
-            format.setForeground(self.current_theme_settings["text_color"])
-            format.setBackground(Qt.GlobalColor.transparent)
-            
-            # Apply formatting to selection if there's a selection, or to the cursor if there's no selection
-            if cursor.hasSelection():
-                cursor.mergeCharFormat(format)
-            else:
-                editor.setCurrentFont(QFont(self.current_theme_settings["font_family"], self.current_theme_settings["font_size"]))
-                editor.mergeCurrentCharFormat(format)
-            
-            logger.info("Cleared formatting to current theme defaults.")
-            
-    """----------Spell Check Methods-----------"""
-    def setup_custom_context_menu(self):
-        """Sets up the custom context menu for the current editor in the active tab."""
-        editor = self.get_current_editor()
-        if editor:
-            # Set the custom context menu policy and connect to the custom menu slot
-            editor.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-            editor.customContextMenuRequested.connect(self.show_custom_context_menu)
-
-    def show_custom_context_menu(self, pos):
-        """Display a custom context menu with spell check suggestions."""
-        editor = self.get_current_editor()
-        if editor:
-            menu = QMenu(self)  # Start with a fresh custom menu
-
-            # Check if the cursor is on a misspelled word
-            cursor = editor.cursorForPosition(pos)
-            cursor.select(QTextCursor.SelectionType.WordUnderCursor)
-            word = cursor.selectedText()
-
-            if word and word not in spell:
-                # Create a spell-check submenu for suggestions
-                spell_check_menu = QMenu("Spell Check", menu)
-                self.populate_spell_check_menu(word, cursor, spell_check_menu)
-                menu.addMenu(spell_check_menu)
-            
-            # Add standard actions like Cut, Copy, Paste, etc.
-            menu.addSeparator()
-            menu.addAction("Cut", editor.cut)
-            menu.addAction("Copy", editor.copy)
-            menu.addAction("Paste", editor.paste)
-            menu.addAction("Select All", editor.selectAll)
-
-            # Show the custom menu at the specified position
-            menu.exec(editor.mapToGlobal(pos))
-
-    def populate_spell_check_menu(self, word, cursor, spell_check_menu):
-        """Populates the spell check submenu with suggestions and add-to-dictionary options."""
-        suggestions = spell.candidates(word)
-        for suggestion in suggestions:
-            action = QAction(suggestion, self)
-            action.triggered.connect(lambda _, sug=suggestion: self.replace_word(cursor, sug))
-            spell_check_menu.addAction(action)
-        
-        # Add an option to add the word to the custom dictionary
-        add_to_dict_action = QAction("Add to Dictionary", self)
-        add_to_dict_action.triggered.connect(lambda _, w=word: self.add_word_to_dictionary(w))
-        spell_check_menu.addAction(add_to_dict_action)        
-    
-    # Spell Check Timer and Real-Time Spell Check Toggle
-    def toggle_real_time_spell_check(self, checked):
-        editor = self.get_current_editor()
-        if checked:
-            # Activate real-time spell check
-            self.spell_check_timer = QTimer()
-            self.spell_check_timer.setSingleShot(True)
-            self.spell_check_timer.timeout.connect(self.perform_real_time_spell_check)
-            if editor:
-                editor.textChanged.connect(lambda: self.spell_check_timer.start(500))
-            logger.info("Real-time spell check enabled.")
-        else:
-            # Deactivate real-time spell check
-            if editor:
-                try:
-                    editor.textChanged.disconnect()
-                except TypeError:
-                    pass  # If already disconnected
-            logger.info("Real-time spell check disabled.")         
- 
-    def setup_custom_context_menu(self):
-        """Sets up a custom context menu for the text editor, adding spell check options."""
-        editor = self.get_current_editor()
-        if editor:
-            # Set the custom context menu policy and connect the custom menu slot
-            editor.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
-            editor.customContextMenuRequested.connect(self.show_custom_context_menu)
-
-    def show_custom_context_menu(self, pos):
-        """Display a custom context menu with spell check suggestions if a misspelled word is detected."""
-        editor = self.get_current_editor()
-        if editor:
-            # Custom context menu setup without default items
-            menu = QMenu(self)
-
-            # Detect and select the word under cursor for spell checking
-            cursor = editor.cursorForPosition(pos)
-            cursor.select(QTextCursor.SelectionType.WordUnderCursor)
-            word = cursor.selectedText()
-
-            if word and word not in spell:
-                # Create spell-check submenu if the word is misspelled
-                spell_check_menu = QMenu("Spell Check", menu)
-                self.populate_spell_check_menu(word, cursor, spell_check_menu)
-                menu.addMenu(spell_check_menu)
-
-            # Add standard text edit options
-            menu.addSeparator()
-            menu.addAction("Cut", editor.cut)
-            menu.addAction("Copy", editor.copy)
-            menu.addAction("Paste", editor.paste)
-            menu.addAction("Select All", editor.selectAll)
-
-            # Show custom menu at the specified position
-            menu.exec(editor.mapToGlobal(pos))
-
-    def populate_spell_check_menu(self, word, cursor, spell_check_menu):
-        """Adds spell check suggestions and dictionary options to the custom menu."""
-        suggestions = spell.candidates(word)
-        for suggestion in suggestions:
-            action = QAction(suggestion, self)
-            action.triggered.connect(lambda _, sug=suggestion: self.replace_word(cursor, sug))
-            spell_check_menu.addAction(action)
-        
-        # Add "Add to Dictionary" option for custom dictionary
-        add_to_dict_action = QAction("Add to Dictionary", self)
-        add_to_dict_action.triggered.connect(lambda _, w=word: self.add_word_to_dictionary(w))
-        spell_check_menu.addAction(add_to_dict_action)
-
-    def show_spell_check_context_menu(self, misspelled_words, cursor, menu):
-        """Adds spell check suggestions to the context menu."""
-        for word in misspelled_words:
-            suggestions = spell.candidates(word)
-            
-            # Add each suggestion to the menu
-            for suggestion in suggestions:
-                action = QAction(suggestion, self)
-                action.triggered.connect(lambda _, sug=suggestion: self.replace_word(cursor, sug))
-                menu.addAction(action)
-
-            # Option to add the word to the custom dictionary
-            add_word_action = QAction("Add to Dictionary", self)
-            add_word_action.triggered.connect(lambda _, w=word: self.add_word_to_dictionary(w))
-            menu.addAction(add_word_action)
- 
-        # Manual Spell Check for Selected Text
-        def perform_spell_check(self):
-            editor = self.get_current_editor()
-            if editor:
-                cursor = editor.textCursor()
-                text = cursor.selectedText() or editor.toPlainText()  # Check selected text or whole document
-                misspelled = spell.unknown(text.split())
-                
-                if misspelled:
-                    self.show_spell_check_context_menu(misspelled, cursor)
-                    
-    def perform_real_time_spell_check(self):
-        """Underline misspelled words in real time."""
-        editor = self.get_current_editor()
-        if editor:
-            # Remove previous spell-check underlines
-            cursor = editor.textCursor()
-            cursor.select(QTextCursor.SelectionType.Document)
-            cursor.setCharFormat(QTextCharFormat())  # Clear all formatting
-
-            # Iterate through each word in the document
-            text = editor.toPlainText()
-            words = text.split()
-            position = 0
-            for word in words:
-                # Check if word is misspelled
-                if word not in spell:
-                    # Highlight misspelled word with an underline
-                    cursor.setPosition(position)
-                    cursor.movePosition(QTextCursor.MoveOperation.NextWord, QTextCursor.MoveMode.KeepAnchor)
-                    format = QTextCharFormat()
-                    format.setUnderlineStyle(QTextCharFormat.UnderlineStyle.SpellCheckUnderline)
-                    format.setUnderlineColor(Qt.GlobalColor.red)
-                    cursor.mergeCharFormat(format)
-                position += len(word) + 1  # Move position after each word                    
-
-    def replace_word(self, cursor, replacement):
-        """Replaces the misspelled word with the selected suggestion."""
-        cursor.beginEditBlock()
-        cursor.removeSelectedText()
-        cursor.insertText(replacement)
-        cursor.endEditBlock()
-
-    def add_word_to_dictionary(self, word):
-        """Adds a word to the custom dictionary and saves persistently."""
-        spell.word_frequency.add(word)
-        self.save_custom_dictionary()
-        QMessageBox.information(self, "Word Added", f"'{word}' has been added to the dictionary.")
-        logger.info(f"Added '{word}' to custom dictionary.")
-
-    def save_custom_dictionary(self):
-        """Save the custom dictionary to the JSON file for persistence."""
-        with open(custom_dict_path, 'w') as f:
-            json.dump(list(spell.word_frequency.dictionary.keys()), f, indent=4)     
-            
-    """----------List Methods----------"""
-    # List and Indentation Methods
-    def add_bullet_list(self):
-        """Applies a bullet list format to the selected text or the current line."""
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            cursor.beginEditBlock()
-
-            # Check if the current cursor position is in a list; if so, remove it.
-            current_list = cursor.currentList()
-            if current_list and current_list.format().style() == QTextListFormat.Style.ListDisc:
-                block_format = cursor.blockFormat()
-                block_format.setIndent(0)
-                cursor.setBlockFormat(block_format)
-            else:
-                # Apply bullet list format
-                list_format = QTextListFormat()
-                list_format.setStyle(QTextListFormat.Style.ListDisc)
-                cursor.createList(list_format)
-
-            cursor.endEditBlock()
-            logging.info("Bullet list applied.")
-
-    def add_numbered_list(self):
-        """Applies a numbered list format to the selected text or the current line."""
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            cursor.beginEditBlock()
-
-            # Check if the current cursor position is in a list; if so, remove it.
-            current_list = cursor.currentList()
-            if current_list and current_list.format().style() == QTextListFormat.Style.ListDecimal:
-                block_format = cursor.blockFormat()
-                block_format.setIndent(0)
-                cursor.setBlockFormat(block_format)
-            else:
-                # Apply numbered list format
-                list_format = QTextListFormat()
-                list_format.setStyle(QTextListFormat.Style.ListDecimal)
-                cursor.createList(list_format)
-
-            cursor.endEditBlock()
-            logging.info("Numbered list applied.")
-            
-    def increase_indent(self):
-        """Increases the indent level of the current line or selected text."""
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            cursor.beginEditBlock()
-
-            # Get the current block format and increase its indent level by 1
-            block_format = cursor.blockFormat()
-            block_format.setIndent(block_format.indent() + 1)
-            cursor.setBlockFormat(block_format)
-
-            cursor.endEditBlock()
-            logging.info("Increased indent level.")
-
-    def decrease_indent(self):
-        """Decreases the indent level of the current line or selected text."""
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            cursor.beginEditBlock()
-
-            # Get the current block format and decrease its indent level by 1, to a minimum of 0
-            block_format = cursor.blockFormat()
-            block_format.setIndent(max(block_format.indent() - 1, 0))
-            cursor.setBlockFormat(block_format)
-
-            cursor.endEditBlock()
-            logging.info("Decreased indent level.")
-             
-    """----------File Operations----------"""
-    def file_open(self):
-        path, _ = QFileDialog.getOpenFileName(self, "Open file", "", "Text documents (*.txt);;All files (*.*)")
-        if path:
-            with open(path, 'r', encoding='utf-8') as f:
-                text = f.read()
-            self.add_new_tab(text=text)  # Specify 'text' as a keyword argument
-            index = self.tab_widget.currentIndex()
-            self.paths[index] = path  # Track the path for the new tab
-            filename = os.path.basename(path)
-            self.tab_widget.setTabText(index, filename)
-            self.tab_widget.setTabToolTip(index, path)
-
-    def file_save(self, index=None):
-        if index is None:
-            index = self.tab_widget.currentIndex()
-
-        path = self.paths.get(index)
-        if path:
-            self.save_file(path, index)
-        else:
-            self.file_saveas(index)
-
-    def file_saveas(self, index=None):
-        if index is None:
-            index = self.tab_widget.currentIndex()
-
-        path, _ = QFileDialog.getSaveFileName(self, "Save file", "", "Text documents (*.txt)")
-        if path:
-            self.save_file(path, index)
-
-    def save_file(self, path, index):
-        editor = self.tab_widget.widget(index)
-        try:
-            with open(path, 'w', encoding='utf-8') as f:
-                f.write(editor.toPlainText())
-            self.paths[index] = path
-            editor.document().setModified(False)
-            filename = os.path.basename(path)
-            self.tab_widget.setTabText(index, filename)
-            self.tab_widget.setTabToolTip(index, path)
-            logger.info(f"File saved: {path}")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Failed to save file: {str(e)}")
-
-    """----------Event Handling----------"""
-    def closeEvent(self, event):
-        """Save settings on close."""
-        settings = {
-            "window_size": [self.width(), self.height()],
-            "window_position": [self.x(), self.y()],
-            "theme": self.current_theme,
-            "font_family": self.current_font_family,
-            "font_size": self.current_font_size
-        }
-        save_settings(settings)
-        event.accept() 
-
-    """----------Capture Area Methods----------"""
-    def set_capture_area(self):
-        """Launch overlay for setting the capture area."""
-        screens = QGuiApplication.screens()
-        self.overlays = []
-
-        def close_all_overlays(rect):
-            for overlay in self.overlays:
-                overlay.close()
-            self.on_capture_area_set(rect)
-
-        for screen in screens:
-            screen_rect = screen.geometry()
-            overlay = SnippingOverlay(screen_rect, close_all_callback=close_all_overlays)
-            overlay.showFullScreen()
-            overlay.activateWindow()
-            overlay.raise_()
-            self.overlays.append(overlay)
-
-        logger.info("Snipping tool initialized on all screens.")
-
-    def on_capture_area_set(self, snip_rect):
-        """Set the capture area and update the flag."""
-        self.capture_area = snip_rect
-        self.capture_area_set = True  # Mark capture area as set
-        logger.info(f"Capture area set to: {self.capture_area}")
-        
-        # If capturing was triggered by the capture button, proceed to capture the screen
-        if self.capture_in_progress:
-            self.capture()
-            self.capture_in_progress = False  # Reset flag after capture
-
-    def capture(self):
-        """Capture the screen area if set; otherwise prompt user to set the area first."""
-        if not self.capture_area_set:
-            self.capture_in_progress = True  # Set flag to capture after area is set
-            self.set_capture_area()
-            return
-
-        screens = QGuiApplication.screens()
-        selected_screen = None
-        for screen in screens:
-            if screen.geometry().contains(self.capture_area.center()):
-                selected_screen = screen
-                break
-        if not selected_screen:
-            selected_screen = QGuiApplication.primaryScreen()
-
-        # Adjust capture area to screen coordinates
-        screen_rect = selected_screen.geometry()
-        adjusted_x = self.capture_area.x() - screen_rect.x()
-        adjusted_y = self.capture_area.y() - screen_rect.y()
-
-        pixmap = selected_screen.grabWindow(0, adjusted_x, adjusted_y, self.capture_area.width(), self.capture_area.height())
-
-        if not pixmap.isNull():
-            editor = self.get_current_editor()
-            if editor and isinstance(editor, QTextEdit):
-                # Store image as a resource in the document to ensure persistence
-                image_name = f"image_{QDateTime.currentDateTime().toString('yyyyMMddhhmmsszzz')}.png"
-                image_url = QUrl(image_name)
-                editor.document().addResource(QTextDocument.ResourceType.ImageResource, image_url, pixmap)
-
-                # Define maximum thumbnail dimensions
-                MAX_THUMBNAIL_WIDTH = 200  # Set your desired max width
-                MAX_THUMBNAIL_HEIGHT = 150  # Set your desired max height
-
-                # Calculate aspect ratio and determine thumbnail size
-                original_width = pixmap.width()
-                original_height = pixmap.height()
-                aspect_ratio = original_width / original_height
-
-                if original_width > MAX_THUMBNAIL_WIDTH or original_height > MAX_THUMBNAIL_HEIGHT:
-                    if aspect_ratio > 1:
-                        thumbnail_width = MAX_THUMBNAIL_WIDTH
-                        thumbnail_height = int(thumbnail_width / aspect_ratio)
-                    else:
-                        thumbnail_height = MAX_THUMBNAIL_HEIGHT
-                        thumbnail_width = int(thumbnail_height * aspect_ratio)
-                else:
-                    thumbnail_width = original_width
-                    thumbnail_height = original_height
-
-                # Scale the pixmap to thumbnail dimensions
-                thumbnail_pixmap = pixmap.scaled(thumbnail_width, thumbnail_height, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
-
-                # Define the image format for thumbnail insertion
-                image_format = QTextImageFormat()
-                image_format.setName(image_url.toString())
-                image_format.setWidth(thumbnail_width)
-                image_format.setHeight(thumbnail_height)
-
-                # Insert the thumbnail image at the cursor position
-                cursor = editor.textCursor()
-                cursor.insertImage(image_format)
-
-                # Save the full-size image in the full_image_map for viewing
-                self.full_image_map[image_url.toString()] = pixmap  # Store full-size image by URL
-
-                # Install event filter to enable click-to-enlarge functionality
-                editor.viewport().installEventFilter(self)
-                logger.info("Thumbnail inserted into document.")
-        else:
-            QMessageBox.warning(self, "Capture Failed", "Failed to capture the pre-set area.")
-
-    """----------OCR Methods----------"""
-    def perform_ocr(self):
-        """Perform OCR with an overlay for user selection."""
-        screens = QGuiApplication.screens()
-        self.overlays = []
-
-        def close_all_overlays(rect):
-            for overlay in self.overlays:
-                overlay.close()
-            self.ocr_from_selected_area(rect)
-
-        for screen in screens:
-            screen_rect = screen.geometry()
-            overlay = SnippingOverlay(screen_rect, close_all_callback=close_all_overlays)
-            overlay.showFullScreen()
-            overlay.activateWindow()
-            overlay.raise_()
-            self.overlays.append(overlay)
-
-        logger.info("OCR overlay initialized.")
-
-    def ocr_from_selected_area(self, snip_rect):
-        """Capture selected area and perform OCR on it."""
-        screens = QGuiApplication.screens()
-        selected_screen = None
-        for screen in screens:
-            if screen.geometry().contains(snip_rect.center()):
-                selected_screen = screen
-                break
-        if not selected_screen:
-            selected_screen = QGuiApplication.primaryScreen()
-
-        # Adjust capture area to screen coordinates
-        screen_rect = selected_screen.geometry()
-        adjusted_x = snip_rect.x() - screen_rect.x()
-        adjusted_y = snip_rect.y() - screen_rect.y()
-
-        pixmap = selected_screen.grabWindow(0, adjusted_x, adjusted_y, snip_rect.width(), snip_rect.height())
-
-        if not pixmap.isNull():
-            buffer = QBuffer()
-            buffer.open(QBuffer.OpenModeFlag.ReadWrite)
-            pixmap.save(buffer, "PNG")
-            buffer.seek(0)
-
-            # Convert QBuffer to BytesIO for Pillow compatibility
-            image_data = BytesIO(buffer.data())
-            pil_image = Image.open(image_data)
-
-            # Perform OCR
-            ocr_text = pytesseract.image_to_string(pil_image)
-
-            # Insert OCR text into the editor without altering font settings
-            editor = self.get_current_editor()
-            if editor and isinstance(editor, QTextEdit):
-                cursor = editor.textCursor()
-                cursor.insertText(ocr_text)  # Inserts text using the current font
-                logger.info("OCR text inserted into document.")
-        else:
-            QMessageBox.warning(self, "OCR Failed", "Failed to capture the selected area for OCR.")
-              
-    """----------Helper Methods----------"""
-    def apply_format_to_selection_or_cursor(self, format):
-        editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-
-            # Apply background (highlight) color
-            if format.background() != Qt.GlobalColor.transparent:
-                background_format = QTextCharFormat()
-                background_format.setBackground(format.background())
-                cursor.mergeCharFormat(background_format)
-
-            # Apply foreground (text color) independently
-            if format.foreground() != QColor():
-                foreground_format = QTextCharFormat()
-                foreground_format.setForeground(format.foreground())
-                cursor.mergeCharFormat(foreground_format)
-
-            # Apply font weight (bold)
-            if format.fontWeight() != QFont.Weight.Normal:
-                bold_format = QTextCharFormat()
-                bold_format.setFontWeight(format.fontWeight())
-                cursor.mergeCharFormat(bold_format)
-
-            # Apply italic
-            if format.fontItalic():
-                italic_format = QTextCharFormat()
-                italic_format.setFontItalic(True)
-                cursor.mergeCharFormat(italic_format)
-            elif not format.fontItalic():
-                italic_format = QTextCharFormat()
-                italic_format.setFontItalic(False)
-                cursor.mergeCharFormat(italic_format)
-
-            # Apply underline
-            if format.fontUnderline():
-                underline_format = QTextCharFormat()
-                underline_format.setFontUnderline(True)
-                cursor.mergeCharFormat(underline_format)
-            elif not format.fontUnderline():
-                underline_format = QTextCharFormat()
-                underline_format.setFontUnderline(False)
-                cursor.mergeCharFormat(underline_format)
-
-            # Apply strikethrough
-            if format.fontStrikeOut():
-                strikethrough_format = QTextCharFormat()
-                strikethrough_format.setFontStrikeOut(True)
-                cursor.mergeCharFormat(strikethrough_format)
-            elif not format.fontStrikeOut():
-                strikethrough_format = QTextCharFormat()
-                strikethrough_format.setFontStrikeOut(False)
-                cursor.mergeCharFormat(strikethrough_format)
-
-            editor.setTextCursor(cursor)
-            logger.info("Text formatting applied to selection or cursor position.")
-            
-            
-    """----------Helper Methods-----------"""            
-    def eventFilter(self, source, event):
-        """Capture click events on inserted thumbnails to display full-size images."""
-        if event.type() == QEvent.Type.MouseButtonPress and event.button() == Qt.MouseButton.LeftButton:
-            editor = self.get_current_editor()
-            if editor and source == editor.viewport():
-                logger.debug(f"Mouse click detected at position: {event.pos()}")
-
-                # Obtain the cursor based on the mouse position
-                cursor = editor.cursorForPosition(event.pos())
-                # Get the character format at the cursor position
-                char_format = cursor.charFormat()
-                # Check if the format is an image format
-                if char_format.isImageFormat():
-                    # Access image properties directly from char_format
-                    image_url = char_format.property(QTextFormat.Property.ImageName)
-                    if image_url and image_url in self.full_image_map:
-                        # Retrieve thumbnail width and height from the image format
-                        thumbnail_width = int(char_format.property(QTextFormat.Property.ImageWidth) or 0)
-                        thumbnail_height = int(char_format.property(QTextFormat.Property.ImageHeight) or 0)
-
-                        # Check if dimensions are valid numbers
-                        if thumbnail_width <= 0 or thumbnail_height <= 0:
-                            logger.error("Thumbnail dimensions are invalid.")
-                            return False
-
-                        # Calculate the exact thumbnail rectangle based on cursor position
-                        image_rect = editor.cursorRect(cursor)
-                        image_rect.setX(int(image_rect.x() - (thumbnail_width // 2)))  # Adjust x to center horizontally
-                        image_rect.setWidth(thumbnail_width)
-                        image_rect.setHeight(thumbnail_height)
-                        logger.debug(f"Thumbnail rectangle calculated at: {image_rect}")
-
-                        # Check if the click is within the bounds of the thumbnail
-                        if image_rect.contains(event.pos()):
-                            self.show_full_image(self.full_image_map[image_url])
-                            logger.info(f"Thumbnail clicked; full image displayed for URL {image_url}")
-                            return True  # Event handled, stop further propagation
-
-        return super(MainWindow, self).eventFilter(source, event)
-
-    # Method to display the full-size image in a dialog
-    def show_full_image(self, pixmap):
-        """Display the full-size image in a new dialog when the thumbnail is clicked."""
-        dialog = ClickableImageDialog(pixmap, self)
-        dialog.exec()
-    
-    def display_full_image(self, full_image):
-        """Display the full-size image in a separate window."""
-        dialog = QDialog(self)
-        dialog.setWindowTitle("Full-Size Image")
-        dialog_layout = QVBoxLayout()
-        
-        label = QLabel()
-        label.setPixmap(full_image)
-        dialog_layout.addWidget(label)
-        
-        dialog.setLayout(dialog_layout)
-        dialog.setFixedSize(full_image.size())  # Set dialog size to match image
-        dialog.exec()
-    
+"""------------------------------------------------------------------------Main Function----------------------------------------"""
 # Main Application Execution
 if __name__ == "__main__":
     app = QApplication(sys.argv)
@@ -1690,4 +1788,4 @@ if __name__ == "__main__":
     window = MainWindow()
     window.show()
     logger.info("Application started.")
-    sys.exit(app.exec())
+    sys.exit(app.exec())        
