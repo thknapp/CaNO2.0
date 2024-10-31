@@ -20,16 +20,17 @@ from spellchecker import SpellChecker
 
 # PyQt6 imports
 from PyQt6.QtCore import (
-    QBuffer, QByteArray, QDateTime, QEvent, QPoint, QRect, QTimer, QUrl, Qt, QSize, pyqtSignal
+     QByteArray, QBuffer, QDateTime, QEvent, QPoint, QRect, QTimer, QUrl, Qt, QSize, 
+     pyqtSignal
 )
 from PyQt6.QtGui import (
     QAction, QActionGroup, QColor, QFont, QGuiApplication, QIcon, QPainter, QPen, QPixmap,
     QBitmap, QTextCharFormat, QTextCursor, QTextDocument, QTextFormat, QTextImageFormat, QTextListFormat
 )
 from PyQt6.QtWidgets import (
-    QApplication, QComboBox, QDialog, QFileDialog, QFontComboBox, QHBoxLayout, QLabel, QInputDialog,
-    QMainWindow, QMessageBox, QPushButton, QSizePolicy, QTabWidget, QTextEdit, QToolBar, QVBoxLayout,
-    QWidget, QWidgetAction, QMenu
+    QApplication, QComboBox, QDialog, QDialogButtonBox, QFileDialog, QFontComboBox, QHBoxLayout, QLabel, 
+    QLineEdit, QListWidget, QInputDialog, QMainWindow, QMessageBox, QPushButton, QSizePolicy, QTabWidget, 
+    QTextEdit, QToolBar, QVBoxLayout, QWidget, QWidgetAction, QMenu, 
 )
 
 """----------Constants for Application Configuration----------"""
@@ -52,6 +53,44 @@ DEFAULT_WINDOW_SIZE = [800, 600]  # [width, height]
 DEFAULT_WINDOW_POSITION = [100, 100]  # [x, y]
 FONT_SIZES = [str(i) for i in range(8, 98, 2)]  # Font sizes from 8 to 96 in increments of 2
 
+"""----------Toggle Button Styling----------"""
+TOGGLE_SWITCH_STYLE = """
+    QPushButton {
+        background-color: #ccc;
+        border: 1px solid #888;
+        border-radius: 15px;
+        padding: 2px;
+        min-width: 40px;
+        min-height: 20px;
+        color: transparent;  /* Hides any text */
+    }
+    QPushButton:checked {
+        background-color: #4CAF50; /* Green background for "on" state */
+        border: 1px solid #3E8E41;
+    }
+    QPushButton:checked::before {
+        content: "ON";
+        color: white;
+        position: absolute;
+        left: 5px;
+    }
+    QPushButton::before {
+        content: "OFF";
+        color: black;
+        position: absolute;
+        right: 5px;
+    }
+"""
+
+"""----------Button Style for Toggled Format Buttons----------"""
+TOGGLED_BUTTON_STYLE = """
+    QToolButton:checked {
+        background-color: #4CAF50;
+        border: 2px solid #3E8E41;
+        color: white;
+    }
+"""
+
 """----------Logging Setup----------"""
 logging.basicConfig(
     level=logging.DEBUG,
@@ -64,16 +103,18 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 """----------Load JSON Settings----------"""   
+# Load settings
 def load_settings():
-    """Load settings from a JSON file, creating an empty one if it doesn't exist."""
     if os.path.exists(SETTINGS_FILE):
         try:
             with open(SETTINGS_FILE, 'r') as f:
-                return json.load(f) or {}  # Return empty dict if the file is empty
+                return json.load(f) or {}  
         except json.JSONDecodeError:
             logger.warning("Settings file is empty or invalid. Using default settings.")
-            return {}  # Return default settings if JSON is invalid
-    return {}  # Return default settings if the file does not exist
+            return {}  
+    return {}  
+
+app_settings = load_settings()
 
 """----------Save Settings----------"""
 def save_settings(settings):
@@ -84,14 +125,6 @@ def save_settings(settings):
 # Load existing settings into a global variable
 app_settings = load_settings()  # This should work without issues now
 
-"""----------Defined UI Themes and Higlighter Values----------""" 
-TOGGLED_BUTTON_STYLE = """
-    QToolButton:checked {
-        background-color: #4CAF50;
-        border: 2px solid #3E8E41;
-        color: white;
-    }
-"""
 
 THEMES = {
     "Light Theme": {
@@ -385,7 +418,6 @@ if os.path.exists(CUSTOM_DICT_PATH):
         custom_words = json.load(f)
 else:
     custom_words = []
-spell.word_frequency.load_words(custom_words)
 
 # Add custom words to spell checker
 spell.word_frequency.load_words(custom_words)
@@ -450,6 +482,8 @@ class MainWindow(QMainWindow):
         # Apply global style for toggled buttons and the selected theme
         self.setStyleSheet(TOGGLED_BUTTON_STYLE)    
         self.apply_theme(self.current_theme)
+
+        self.settings_menu.addAction("Edit Custom Dictionary", self.edit_custom_dictionary)
 
         # Apply default font settings to the editor
         self.apply_default_font_settings()
@@ -569,9 +603,12 @@ class MainWindow(QMainWindow):
 
         # Initialize toolbars in the correct order
         self.init_auto_save_toolbar()
-        self.init_file_toolbar()
         self.init_edit_toolbar()
         self.init_font_toolbar()
+        
+      #  self.addToolBarBreak() 
+
+        self.init_file_toolbar()
         self.init_format_toolbar()
         self.init_spell_check_toolbar()  # Spell check toolbar uses format toolbar
         self.init_align_toolbar()
@@ -580,35 +617,64 @@ class MainWindow(QMainWindow):
 
     """----------------------------------------------------------Toolbars-------------------------------------------------""" 
 
-    """----------Alignment Toolbar----------"""
-    def init_align_toolbar(self):
-        align_toolbar = QToolBar("Align")
-        self.addToolBar(align_toolbar)
-
-        align_actions = [
-            ("<- Align Left", "align-left.png", Qt.AlignmentFlag.AlignLeft),
-            ("Align Center", "align-center.png", Qt.AlignmentFlag.AlignCenter),
-            ("Align Right ->", "align-right.png", Qt.AlignmentFlag.AlignRight),
-            ("<--> Justify", "align-justify.png", Qt.AlignmentFlag.AlignJustify)
-        ]
-        for name, icon, alignment in align_actions:
-            action = QAction(QIcon(os.path.join(self.images_dir, icon)), name, self)
-            action.setCheckable(True)
-            action.triggered.connect(lambda _, a=alignment: self.get_current_editor().setAlignment(a))
-            align_toolbar.addAction(action)
-            self.format_menu.addAction(action)
-            
+    """----------Auto Save Toolbar----------"""
     def init_auto_save_toolbar(self):
-        toolbar = QToolBar("Auto Save")  # Define a new QToolBar instance for the autosave toolbar
+        """Initialize Auto Save toolbar with a custom toggle switch button and a label above it."""
+        toolbar = QToolBar("Auto Save")
         self.addToolBar(toolbar)
 
-        # Autosave Toggle Button
-        autosave_action = QAction("Autosave", self)
-        autosave_action.setCheckable(True)
-        autosave_action.toggled.connect(self.toggle_autosave)  # Connect to toggle function
-        toolbar.addAction(autosave_action)
-        self.file_menu.addAction(autosave_action)
+        # Create a layout to hold both the label and button
+        layout = QVBoxLayout()
 
+        # Create the label and add it to the layout
+        autosave_label = QLabel("Auto Save")  # Text to appear above the button
+        autosave_label.setAlignment(Qt.AlignmentFlag.AlignCenter)  # Center-align text
+        layout.addWidget(autosave_label)
+
+        # Create the toggle switch button
+        self.autosave_toggle_button = QPushButton("OFF")
+        self.autosave_toggle_button.setCheckable(True)
+        self.autosave_toggle_button.setFixedSize(60, 30)
+
+        # Add the button to the layout and set initial style
+        layout.addWidget(self.autosave_toggle_button)
+        self.update_toggle_style(self.autosave_toggle_button.isChecked())
+        self.autosave_toggle_button.clicked.connect(self.handle_autosave_toggle)
+
+        # Add the layout containing both label and button to a widget
+        widget = QWidget()
+        widget.setLayout(layout)
+        toolbar.addWidget(widget)  # Add the widget with layout to the toolbar     
+
+
+    """----------Alignment Toolbar----------"""
+    def init_align_toolbar(self):
+        """Initialize the alignment toolbar."""
+        align_toolbar = QToolBar("Align")
+        align_toolbar.setIconSize(QSize(20, 20))
+        self.addToolBar(align_toolbar)
+
+        # Left alignment action
+        align_left_action = QAction(QIcon(os.path.join(self.images_dir, 'align-left.png')), "Align Left", self)
+        align_left_action.triggered.connect(lambda: self.set_alignment(Qt.AlignmentFlag.AlignLeft))
+        align_toolbar.addAction(align_left_action)
+
+        # Center alignment action
+        align_center_action = QAction(QIcon(os.path.join(self.images_dir, 'align-center.png')), "Align Center", self)
+        align_center_action.triggered.connect(lambda: self.set_alignment(Qt.AlignmentFlag.AlignCenter))
+        align_toolbar.addAction(align_center_action)
+
+        # Right alignment action
+        align_right_action = QAction(QIcon(os.path.join(self.images_dir, 'align-right.png')), "Align Right", self)
+        align_right_action.triggered.connect(lambda: self.set_alignment(Qt.AlignmentFlag.AlignRight))
+        align_toolbar.addAction(align_right_action)
+
+        # Justify alignment action
+        align_justify_action = QAction(QIcon(os.path.join(self.images_dir, 'align-justify.png')), "Align Justify", self)
+        align_justify_action.triggered.connect(lambda: self.set_alignment(Qt.AlignmentFlag.AlignJustify))
+        align_toolbar.addAction(align_justify_action)
+
+            
     """----------Capture Toolbar----------"""  
     def init_capture_toolbar(self):
         """Initialize Capture toolbar."""
@@ -761,12 +827,21 @@ class MainWindow(QMainWindow):
         self.bold_action.toggled.connect(lambda checked: self.toggle_text_format("bold", checked))
         self.format_toolbar.addAction(self.bold_action)
 
+        # Apply toggled style for Bold button
+        bold_button = self.format_toolbar.widgetForAction(self.bold_action)
+        bold_button.setStyleSheet(TOGGLED_BUTTON_STYLE)
+
+
         # Italic Button
         self.italic_action = QAction(QIcon(os.path.join(self.images_dir, 'italic.png')), "Italic", self)
         self.italic_action.setCheckable(True)
         self.italic_action.setShortcut("Ctrl+I")
         self.italic_action.toggled.connect(lambda checked: self.toggle_text_format("italic", checked))
         self.format_toolbar.addAction(self.italic_action)
+
+        # Apply toggled style for Italic button
+        italic_button = self.format_toolbar.widgetForAction(self.italic_action)
+        italic_button.setStyleSheet(TOGGLED_BUTTON_STYLE)
 
         # Underline Button
         self.underline_action = QAction(QIcon(os.path.join(self.images_dir, 'underline.png')), "Underline", self)
@@ -775,17 +850,29 @@ class MainWindow(QMainWindow):
         self.underline_action.toggled.connect(lambda checked: self.toggle_text_format("underline", checked))
         self.format_toolbar.addAction(self.underline_action)
 
+        # Apply toggled style for Underline button
+        underline_button = self.format_toolbar.widgetForAction(self.underline_action)
+        underline_button.setStyleSheet(TOGGLED_BUTTON_STYLE)
+
         # Strikethrough Button
         self.strikethrough_action = QAction(QIcon(os.path.join(self.images_dir, 'strikethrough.png')), "Strikethrough", self)
         self.strikethrough_action.setCheckable(True)
         self.strikethrough_action.toggled.connect(lambda checked: self.toggle_text_format("strikethrough", checked))
         self.format_toolbar.addAction(self.strikethrough_action)
 
+        # Apply toggled style for StrikeThrough button
+        strikethrough_button = self.format_toolbar.widgetForAction(self.strikethrough_action)
+        strikethrough_button.setStyleSheet(TOGGLED_BUTTON_STYLE)
+
         # Highlight Button with Dropdown
         self.highlight_action = QAction(QIcon(os.path.join(self.images_dir, 'highlighter.png')), "Highlight", self)
         self.highlight_action.setCheckable(True)
         self.highlight_action.toggled.connect(lambda checked: self.toggle_highlighting(checked))
         self.format_toolbar.addAction(self.highlight_action)
+
+        # Apply toggled style for Highlight button
+        highlight_button = self.format_toolbar.widgetForAction(self.highlight_action)
+        highlight_button.setStyleSheet(TOGGLED_BUTTON_STYLE)
 
         # Create a dropdown menu for highlight color selection
         highlight_menu = QMenu("Highlight Colors", self)
@@ -841,11 +928,22 @@ class MainWindow(QMainWindow):
     """----------Spell Check Toolbar-----------"""
     def init_spell_check_toolbar(self):
         """Initialize Spell Check toolbar."""
-        spell_check_action = QAction(QIcon(os.path.join(self.images_dir, 'spellcheck.png')), "Spell Check", self)
-        spell_check_action.setCheckable(True)
-        spell_check_action.toggled.connect(self.toggle_real_time_spell_check)
-        self.format_toolbar.addAction(spell_check_action)
-        self.spell_check_action = spell_check_action
+        toolbar = QToolBar("Spell Check")  # Define the toolbar for spell check
+        self.addToolBar(toolbar)
+
+        # Spell Check Toggle Button
+        self.spell_check_action = QAction(QIcon(os.path.join(self.images_dir, 'spellcheck.png')), "Spell Check", self)
+        self.spell_check_action.setCheckable(True)
+        self.spell_check_action.toggled.connect(self.toggle_real_time_spell_check)
+        toolbar.addAction(self.spell_check_action)
+        
+        # Apply toggled style for Spell Check button
+        spell_check_button = toolbar.widgetForAction(self.spell_check_action)
+        if spell_check_button:
+            spell_check_button.setStyleSheet(TOGGLED_BUTTON_STYLE)
+
+        self.spell_check_toolbar = toolbar  # Store the toolbar as an attribute if needed later
+
 
     """--------------------------------------------------------Alightment Methods-------------------------------------------""" 
     """----------Alignment Action Methods----------"""
@@ -867,11 +965,60 @@ class MainWindow(QMainWindow):
         
     """----------------------------------------------------------Auto Save Methods---------------------------------------------"""
     def toggle_autosave(self, checked):
-        """Toggle autosave functionality. Placeholder for future implementation."""
+        """Enable or disable autosave based on toggle state."""
         if checked:
             logger.info("Autosave enabled.")
+            # Add autosave functionality here
         else:
             logger.info("Autosave disabled.")
+            # Disable autosave functionality here
+
+    def handle_autosave_toggle(self):
+        """Handle the autosave toggle and apply style based on state."""
+        is_checked = self.autosave_toggle_button.isChecked()
+        self.autosave_toggle_button.setText("ON" if is_checked else "OFF")
+        
+        # Toggle autosave functionality
+        self.toggle_autosave(is_checked)
+        self.update_toggle_style(is_checked)
+
+    def toggle_autosave(self, enabled):
+        """Enable or disable autosave functionality."""
+        print("Autosave enabled" if enabled else "Autosave disabled")
+
+    def update_toggle_style(self, is_checked):
+        """Update the style of the toggle button based on its state."""
+        if is_checked:
+            # Style for "ON" state with a consistent rounded appearance
+            self.autosave_toggle_button.setStyleSheet(
+                """
+                QPushButton {
+                    background-color: #4CAF50;
+                    color: white;
+                    border-radius: 10px;
+                    min-width: 40px;
+                    min-height: 20px;
+                    font-weight: bold;
+                }
+                """
+            )
+            self.autosave_toggle_button.setText("ON")
+        else:
+            # Style for "OFF" state with the same rounded appearance
+            self.autosave_toggle_button.setStyleSheet(
+                """
+                QPushButton {
+                    background-color: #ccc;
+                    color: black;
+                    border-radius: 10px;
+                    min-width: 40px;
+                    min-height: 20px;
+                    font-weight: bold;
+                }
+                """
+            )
+            self.autosave_toggle_button.setText("OFF")
+
 
     """---------------------------------------------------------Capture Methods----------------------------------------------""" 
     """----------Capture and OCR Action Methods----------"""
@@ -971,25 +1118,6 @@ class MainWindow(QMainWindow):
         pixmap = selected_screen.grabWindow(0, adjusted_x, adjusted_y, snip_rect.width(), snip_rect.height())
         return pixmap if not pixmap.isNull() else None
 
-    def eventFilter(self, obj, event):
-        if event.type() == QEvent.Type.MouseButtonPress:
-            if obj == self.get_current_editor().viewport():
-                click_pos = event.pos()
-                editor = self.get_current_editor()
-                if editor:
-                    cursor = editor.cursorForPosition(click_pos)
-                    char_format = cursor.charFormat()
-                    if char_format.isImageFormat():
-                        # Get the rectangle of the image in viewport coordinates
-                        image_rect = editor.cursorRect(cursor)
-                        if image_rect.contains(click_pos):
-                            image_format = char_format.toImageFormat()
-                            image_id = image_format.name()
-                            if image_id and image_id in self.full_image_map:
-                                self.show_full_image(self.full_image_map[image_id])
-                                return True  # Event handled
-        return super(MainWindow, self).eventFilter(obj, event)
-
     def insert_image_with_thumbnail(self, pixmap):
         unique_id = str(uuid4())
         thumbnail_pixmap = pixmap.scaled(
@@ -997,15 +1125,16 @@ class MainWindow(QMainWindow):
         )
         editor = self.get_current_editor()
         if editor:
-            image_format = QTextImageFormat()
-            image_format.setName(unique_id)
-            image_format.setWidth(200)
-            image_format.setHeight(150)
+            # Add the thumbnail image to the document resources
             editor.document().addResource(
                 QTextDocument.ResourceType.ImageResource, QUrl(unique_id), thumbnail_pixmap
             )
+
+            # Create HTML with an anchor wrapping the image
+            html = f'<a href="{unique_id}"><img src="{unique_id}" width="200" height="150"/></a>'
             cursor = editor.textCursor()
-            cursor.insertImage(image_format)
+            cursor.insertHtml(html)
+
             # Store the full-size image for viewing
             self.full_image_map[unique_id] = pixmap
             editor.full_image_map = self.full_image_map  # Share the map with editor
@@ -1106,12 +1235,10 @@ class MainWindow(QMainWindow):
         if not isinstance(text, str):
             text = ""
 
-        new_tab = QTextEdit()
+        new_tab = ClickableTextEdit()
         new_tab.full_image_map = self.full_image_map
         new_tab.setFont(QFont(self.current_font_family, self.current_font_size))
         new_tab.setPlainText(text)
-        new_tab.viewport().installEventFilter(self)  # Install event filter
-        new_tab.installEventFilter(self)
         
         # Ensure custom context menu is set up
         self.setup_custom_context_menu()
@@ -1206,7 +1333,8 @@ class MainWindow(QMainWindow):
                     self.tab_widget.setTabToolTip(index, path)
                 else:
                     # Otherwise, open as a new tab
-                    editor = QTextEdit()
+                    editor = ClickableTextEdit()  # Use ClickableTextEdit
+                    editor.full_image_map = self.full_image_map  # Share the image map
                     self.load_file_content(path, editor)
                     new_index = self.tab_widget.addTab(editor, os.path.basename(path))
                     self.paths[new_index] = path
@@ -1216,6 +1344,7 @@ class MainWindow(QMainWindow):
                 logger.info(f"File opened: {path}")
             except Exception as e:
                 QMessageBox.critical(self, "Error", f"Failed to open file: {str(e)}")
+                logger.error(f"Failed to open file: {str(e)}")
 
     def load_file_content(self, path, editor):
         """Load the content of a file into the provided editor, handling TXT and HTML formats."""
@@ -1224,7 +1353,7 @@ class MainWindow(QMainWindow):
                 text_content = f.read()
             editor.setPlainText(text_content)
         elif path.endswith(".html"):
-            self.load_html_content(path, editor)
+            self.load_html_file(path)
 
     def load_html_content(self, path, editor):
         """Load HTML content, reconstructing images from base64 data."""
@@ -1258,37 +1387,51 @@ class MainWindow(QMainWindow):
 
             # Parse HTML content
             soup = BeautifulSoup(html_content, 'html.parser')
-            editor = QTextEdit()
+            editor = ClickableTextEdit()  # Use ClickableTextEdit
             editor.setFont(QFont(self.current_font_family, self.current_font_size))
-            
-            for element in soup.body.children:
-                if element.name == "a" and element.find("img"):
-                    # Extract base64 image and thumbnail link
-                    full_image_data = element["href"].split("base64,")[1]
-                    thumbnail_data = element.find("img")["src"].split("base64,")[1]
+            editor.full_image_map = self.full_image_map  # Share the image map
 
-                    # Decode the base64 data and create a pixmap
-                    full_image = QPixmap()
-                    thumbnail_image = QPixmap()
-                    full_image.loadFromData(base64.b64decode(full_image_data))
-                    thumbnail_image.loadFromData(base64.b64decode(thumbnail_data))
+            # Iterate over the elements in the body
+            for element in soup.body.contents:
+                if isinstance(element, str):
+                    # Handle text nodes
+                    editor.insertPlainText(element)
+                elif element.name == "a" and element.find("img"):
+                    # Handle image wrapped in anchor
+                    anchor_href = element.get("href")
+                    img_tag = element.find("img")
+                    img_src = img_tag.get("src")
 
-                    # Create a unique ID for the full image and store it in full_image_map
-                    image_id = str(uuid4())
-                    self.full_image_map[image_id] = full_image
+                    # Extract the image_id from the href and src
+                    image_id = anchor_href
+                    thumbnail_src = img_src
 
-                    # Insert the thumbnail into the editor as a clickable image
-                    image_format = QTextImageFormat()
-                    image_format.setName(image_id)
-                    image_format.setWidth(200)
-                    image_format.setHeight(150)
-                    editor.document().addResource(QTextDocument.ResourceType.ImageResource, QUrl(image_id), thumbnail_image)
-                    cursor = editor.textCursor()
-                    cursor.insertImage(image_format)
-                
-                elif element.name is None:
-                    # For text, simply add the content
-                    editor.append(element)
+                    # Load the thumbnail image from base64 data
+                    if thumbnail_src.startswith("data:image/png;base64,"):
+                        base64_data = thumbnail_src.split("base64,")[1]
+                        thumbnail_data = base64.b64decode(base64_data)
+                        thumbnail_pixmap = QPixmap()
+                        thumbnail_pixmap.loadFromData(thumbnail_data)
+
+                        # Load the full-size image from base64 data in data-fullimage attribute
+                        full_image_data = element.get("data-fullimage")
+                        if full_image_data:
+                            full_image_pixmap = QPixmap()
+                            full_image_pixmap.loadFromData(base64.b64decode(full_image_data))
+                            self.full_image_map[image_id] = full_image_pixmap
+                            editor.full_image_map = self.full_image_map  # Share the image map
+
+                        # Add the thumbnail image to the document resources
+                        editor.document().addResource(
+                            QTextDocument.ResourceType.ImageResource, QUrl(image_id), thumbnail_pixmap
+                        )
+
+                        # Insert HTML with anchor and image
+                        html = f'<a href="{image_id}"><img src="{image_id}" width="{img_tag.get("width")}" height="{img_tag.get("height")}"/></a>'
+                        editor.insertHtml(html)
+                else:
+                    # For other HTML elements, insert their content
+                    editor.insertHtml(str(element))
 
             # Add the HTML-loaded content as a new tab
             index = self.tab_widget.addTab(editor, os.path.basename(path))
@@ -1298,6 +1441,7 @@ class MainWindow(QMainWindow):
             logger.info(f"HTML file loaded into editor with images as thumbnails.")
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to load HTML file: {str(e)}")
+            logger.error(f"Failed to load HTML file: {str(e)}")
 
     def file_save_as(self, index=None):
         """Prompt user to select a save location and format (TXT or HTML), saving and converting as needed."""
@@ -1378,20 +1522,31 @@ class MainWindow(QMainWindow):
                     if image_id in self.full_image_map:
                         pixmap = self.full_image_map[image_id]
 
-                        # Convert image to base64
-                        buffer = QBuffer()
-                        buffer.open(QBuffer.OpenModeFlag.ReadWrite)
-                        pixmap.save(buffer, "PNG")
-                        base64_data = base64.b64encode(buffer.data()).decode('utf-8')
-                        buffer.close()
+                        # Convert full-size image to base64
+                        buffer_full = QBuffer()
+                        buffer_full.open(QBuffer.OpenModeFlag.ReadWrite)
+                        pixmap.save(buffer_full, "PNG")
+                        base64_full = base64.b64encode(buffer_full.data()).decode('utf-8')
+                        buffer_full.close()
 
-                        # Embed image in HTML
+                        # Get the thumbnail image from the document resources
+                        thumbnail_image = document.resource(QTextDocument.ResourceType.ImageResource, QUrl(image_id))
+
+                        # Convert thumbnail image to base64
+                        buffer_thumb = QBuffer()
+                        buffer_thumb.open(QBuffer.OpenModeFlag.ReadWrite)
+                        thumbnail_image.save(buffer_thumb, "PNG")
+                        base64_thumb = base64.b64encode(buffer_thumb.data()).decode('utf-8')
+                        buffer_thumb.close()
+
+                        # Embed image in HTML wrapped in anchor with data-fullimage attribute
                         width = image_format.width() if image_format.width() else pixmap.width()
                         height = image_format.height() if image_format.height() else pixmap.height()
-                        
+
                         thumbnail_html = (
-                            f'<img src="data:image/png;base64,{base64_data}" '
-                            f'width="{width}" height="{height}">'
+                            f'<a href="{image_id}" data-fullimage="{base64_full}">'
+                            f'<img src="data:image/png;base64,{base64_thumb}" '
+                            f'width="{width}" height="{height}"/></a>'
                         )
                         html_output += thumbnail_html
                 else:
@@ -1687,16 +1842,12 @@ class MainWindow(QMainWindow):
 
     """----------Custom Context Menu for Spell Check Suggestions----------"""
     def setup_custom_context_menu(self):
-        """Set up a custom context menu for the text editor with spell check options."""
         editor = self.get_current_editor()
         if editor:
             editor.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
             editor.customContextMenuRequested.connect(self.show_custom_context_menu)
 
-
-
     def show_custom_context_menu(self, pos):
-        """Display a custom context menu with spell check suggestions if a misspelled word is detected."""
         editor = self.get_current_editor()
         if editor:
             menu = QMenu(self)
@@ -1717,7 +1868,6 @@ class MainWindow(QMainWindow):
             menu.exec(editor.mapToGlobal(pos))
 
     def populate_spell_check_menu(self, word, cursor, spell_check_menu):
-        """Populate the spell check submenu with suggestions and an option to add to the dictionary."""
         suggestions = spell.candidates(word)
         for suggestion in suggestions:
             action = QAction(suggestion, self)
@@ -1730,7 +1880,6 @@ class MainWindow(QMainWindow):
 
     """----------Dictionary Management Methods----------"""
     def replace_word(self, cursor, replacement):
-        """Replace the misspelled word at the cursor position with the selected suggestion."""
         cursor.beginEditBlock()
         cursor.removeSelectedText()
         cursor.insertText(replacement)
@@ -1738,40 +1887,108 @@ class MainWindow(QMainWindow):
         logger.info(f"Replaced word with '{replacement}'.")
 
     def add_word_to_dictionary(self, word):
-        """Add a word to the custom dictionary and persist it in the dictionary file."""
         spell.word_frequency.add(word)
         self.save_custom_dictionary()
         QMessageBox.information(self, "Word Added", f"'{word}' has been added to the dictionary.")
         logger.info(f"Added '{word}' to custom dictionary.")
 
     def save_custom_dictionary(self):
-        """Save the custom dictionary to a JSON file for persistent storage."""
-        with open(custom_dict_path, 'w') as f:
+        with open(CUSTOM_DICT_PATH, 'w') as f:
             json.dump(list(spell.word_frequency.dictionary.keys()), f, indent=4)
         logger.info("Custom dictionary saved.")
- 
-"""===========Snipping Overlay Class=========="""
-class ClickableImageDialog(QDialog):
-    def __init__(self, full_pixmap, parent=None):
+        
+    def edit_custom_dictionary(self):
+        dialog = CustomDictionaryDialog(self)
+        dialog.exec()
+
+"""===========Custom Dictionary Dialog Class=========="""   
+class CustomDictionaryDialog(QDialog):
+    def __init__(self, parent=None):
         super().__init__(parent)
-        self.setWindowTitle("Full Image")
+        self.setWindowTitle("Edit Custom Dictionary")
         layout = QVBoxLayout(self)
         
-        full_image_label = QLabel()
-        full_image_label.setPixmap(full_pixmap)
-        layout.addWidget(full_image_label)
+        # Search bar for filtering words
+        self.search_bar = QLineEdit(self)
+        self.search_bar.setPlaceholderText("Search for a word...")
+        self.search_bar.textChanged.connect(self.filter_words)
+        layout.addWidget(self.search_bar)
+
+        # Word list display
+        self.word_list = QListWidget(self)
+        self.word_list.setSortingEnabled(True)
+        layout.addWidget(self.word_list)
+
+        # Load and display words
+        self.words = []  # Store all words for easy filtering
+        self.load_words()
+
+        # Add layout and buttons for adding and removing words
+        button_box = QDialogButtonBox(QDialogButtonBox.StandardButton.Ok | QDialogButtonBox.StandardButton.Cancel)
+        button_box.accepted.connect(self.save_changes)
+        button_box.rejected.connect(self.reject)
+        layout.addWidget(button_box)
+
+        add_button = QPushButton("Add Word")
+        add_button.clicked.connect(self.add_word)
+        layout.addWidget(add_button)
+
+        remove_button = QPushButton("Remove Selected Word")
+        remove_button.clicked.connect(self.remove_selected_word)
+        layout.addWidget(remove_button)
+
+    def load_words(self):
+        """Load words from the custom dictionary file, keeping the list sorted."""
+        if os.path.exists(CUSTOM_DICT_PATH):
+            with open(CUSTOM_DICT_PATH, 'r') as f:
+                self.words = sorted(json.load(f))
+            self.word_list.addItems(self.words)
+
+    def filter_words(self):
+        """Filter the word list based on the search bar input."""
+        search_text = self.search_bar.text().lower()
+        self.word_list.clear()
         
-        self.setLayout(layout)
-        
+        # Add only matching words to the list
+        for word in self.words:
+            if search_text in word.lower():
+                self.word_list.addItem(word)
+
+    def save_changes(self):
+        """Save the current words in alphabetical order."""
+        current_words = [self.word_list.item(i).text() for i in range(self.word_list.count())]
+        with open(CUSTOM_DICT_PATH, 'w') as f:
+            json.dump(sorted(current_words), f, indent=4)
+        spell.word_frequency.load_words(current_words)  # Update the spell checker
+        self.accept()
+
+    def add_word(self):
+        """Add a new word to the list and update display."""
+        text, ok = QInputDialog.getText(self, "Add Word", "Enter word to add:")
+        if ok and text:
+            self.words.append(text)
+            self.words.sort()  # Keep the list sorted
+            self.filter_words()  # Re-filter to reflect the added word
+
+    def remove_selected_word(self):
+        """Remove selected word(s) from the list and update the display."""
+        for item in self.word_list.selectedItems():
+            self.words.remove(item.text())
+            self.word_list.takeItem(self.word_list.row(item))
+
+"""===========Clicable Text Edit Class-----------"""
+class ClickableTextEdit(QTextEdit):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.full_image_map = {}  # To store full images
+
     def mousePressEvent(self, event):
         if event.button() == Qt.MouseButton.LeftButton:
             click_pos = event.position().toPoint()
-            cursor = self.cursorForPosition(click_pos)
-            char_format = cursor.charFormat()
-            if char_format.isImageFormat():
-                image_format = char_format.toImageFormat()
-                image_id = image_format.name()
-                if image_id and image_id in self.full_image_map:
+            anchor = self.anchorAt(click_pos)
+            if anchor:
+                image_id = anchor
+                if image_id in self.full_image_map:
                     self.show_full_image(self.full_image_map[image_id])
                     return  # Consume the event
         super().mousePressEvent(event)
@@ -1784,9 +2001,8 @@ class ClickableImageDialog(QDialog):
         full_image_label.setPixmap(pixmap)
         layout.addWidget(full_image_label)
         dialog.setLayout(layout)
-        dialog.exec()        
-        
-        
+        dialog.exec()
+
 """===========Snipping Overlay Class=========="""
 class SnippingOverlay(QWidget):
     snipCompleteGlobal = pyqtSignal(QRect)
