@@ -5681,3 +5681,142 @@
 2024-10-30 12:23:55,545 - INFO - Screen grab overlay initialized.
 2024-10-30 12:24:19,265 - INFO - Snipping tool initialized on all screens.
 2024-10-30 12:24:21,890 - INFO - Capture area set to: PyQt6.QtCore.QRect(4241, 280, 1513, 975)
+2024-10-30 12:28:07,617 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 12:28:07,620 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 12:28:07,621 - INFO - User interface initialized with tab support.
+2024-10-30 12:28:07,775 - INFO - Application started.
+2024-10-30 12:28:23,028 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 12:28:23,031 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 12:28:23,032 - INFO - User interface initialized with tab support.
+2024-10-30 12:28:23,195 - INFO - Application started.
+2024-10-30 12:29:59,614 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 12:29:59,618 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 12:29:59,619 - INFO - User interface initialized with tab support.
+2024-10-30 12:29:59,789 - INFO - Application started.
+2024-10-30 12:31:22,829 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 12:31:22,835 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 12:31:22,835 - INFO - User interface initialized with tab support.
+2024-10-30 12:31:23,066 - INFO - Application started.
+2024-10-30 12:31:37,937 - INFO - Snipping tool initialized on all screens.
+2024-10-30 12:31:44,441 - INFO - Capture area set to: PyQt6.QtCore.QRect(2658, 100, 2107, 1290)
+2024-10-30 12:33:28,815 - INFO - Real-time spell check enabled.
+2024-10-30 12:58:18,846 - INFO - Tab at index 0 renamed to '00499701'.
+2024-10-30 13:01:37,697 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 13:01:37,700 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 13:01:37,700 - INFO - User interface initialized with tab support.
+2024-10-30 13:01:37,879 - INFO - Application started.
+2024-10-30 13:02:09,277 - INFO - Tab at index 0 renamed to '00499701'.
+2024-10-30 13:04:05,446 - INFO - Tab at index 0 closed.
+2024-10-30 13:04:20,420 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 13:04:20,424 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 13:04:20,425 - INFO - User interface initialized with tab support.
+2024-10-30 13:04:20,580 - INFO - Application started.
+2024-10-30 13:04:32,860 - INFO - Tab at index 0 renamed to '00499701'.
+2024-10-30 13:04:41,520 - INFO - Tab at index 0 closed.
+2024-10-30 13:22:11,411 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 13:22:11,415 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 13:22:11,415 - INFO - User interface initialized with tab support.
+2024-10-30 13:22:11,564 - INFO - Application started.
+2024-10-30 13:23:01,018 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 13:23:01,021 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 13:23:01,023 - INFO - User interface initialized with tab support.
+2024-10-30 13:23:01,221 - INFO - Application started.
+2024-10-30 13:23:09,446 - INFO - Tab at index 0 closed.
+2024-10-30 13:23:47,489 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 13:23:47,492 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 13:23:47,494 - INFO - User interface initialized with tab support.
+2024-10-30 13:23:47,659 - INFO - Application started.
+2024-10-30 13:34:05,795 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 13:34:05,805 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 13:34:05,805 - INFO - User interface initialized with tab support.
+2024-10-30 13:34:06,177 - INFO - Application started.
+2024-10-30 13:34:19,354 - INFO - Snipping tool initialized on all screens.
+2024-10-30 13:34:23,024 - INFO - Capture area set to: PyQt6.QtCore.QRect(3049, 253, 2043, 1151)
+2024-10-30 13:37:02,184 - INFO - Screen grab overlay initialized.
+2024-10-30 13:37:18,461 - INFO - OCR overlay initialized.
+2024-10-30 13:37:21,098 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-30 13:37:21,098 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-30 13:37:21,098 - DEBUG - STREAM b'IDAT' 62 3211
+2024-10-30 13:37:21,106 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_zfioc6ru_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_zfioc6ru', 'txt']
+2024-10-30 13:37:27,787 - INFO - OCR text inserted into document.
+2024-10-30 13:37:39,482 - INFO - OCR overlay initialized.
+2024-10-30 13:37:43,261 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-30 13:37:43,261 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-30 13:37:43,261 - DEBUG - STREAM b'IDAT' 62 3581
+2024-10-30 13:37:43,265 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_pzscafe9_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_pzscafe9', 'txt']
+2024-10-30 13:37:43,617 - INFO - OCR text inserted into document.
+2024-10-30 14:11:35,896 - INFO - Autosave enabled.
+2024-10-30 14:11:38,092 - INFO - Autosave disabled.
+2024-10-30 14:11:56,698 - INFO - Tab at index 0 renamed to '00499602'.
+2024-10-30 14:18:39,083 - INFO - Real-time spell check enabled.
+2024-10-30 14:18:46,511 - INFO - Real-time spell check disabled.
+2024-10-30 14:18:48,586 - INFO - Real-time spell check enabled.
+2024-10-30 14:20:57,445 - INFO - Real-time spell check disabled.
+2024-10-30 14:29:38,018 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 14:29:38,021 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 14:29:38,022 - INFO - User interface initialized with tab support.
+2024-10-30 14:29:38,199 - INFO - Application started.
+2024-10-30 14:29:41,775 - INFO - Snipping tool initialized on all screens.
+2024-10-30 14:29:42,531 - INFO - Capture area set to: PyQt6.QtCore.QRect(3258, 221, 594, 515)
+2024-10-30 14:32:13,535 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 14:32:13,538 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 14:32:13,539 - INFO - User interface initialized with tab support.
+2024-10-30 14:32:13,741 - INFO - Application started.
+2024-10-30 14:32:25,956 - INFO - Snipping tool initialized on all screens.
+2024-10-30 14:32:29,168 - INFO - Capture area set to: PyQt6.QtCore.QRect(5309, 215, 1675, 944)
+2024-10-30 14:40:13,432 - INFO - OCR overlay initialized.
+2024-10-30 14:40:20,293 - DEBUG - STREAM b'IHDR' 16 13
+2024-10-30 14:40:20,294 - DEBUG - STREAM b'pHYs' 41 9
+2024-10-30 14:40:20,294 - DEBUG - STREAM b'IDAT' 62 8192
+2024-10-30 14:40:20,332 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_t3rfx73e_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_t3rfx73e', 'txt']
+2024-10-30 14:40:25,283 - INFO - OCR text inserted into document.
+2024-10-30 14:46:47,799 - INFO - Tab at index 0 renamed to '00498871'.
+2024-10-30 15:11:39,942 - INFO - Tab at index 0 renamed to '00498818'.
+2024-10-30 15:17:44,191 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 15:17:44,194 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 15:17:44,195 - INFO - User interface initialized with tab support.
+2024-10-30 15:17:44,373 - INFO - Application started.
+2024-10-30 15:17:50,172 - INFO - Snipping tool initialized on all screens.
+2024-10-30 15:17:51,372 - INFO - Capture area set to: PyQt6.QtCore.QRect(4652, 297, 761, 552)
+2024-10-30 15:19:10,900 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 15:19:10,904 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 15:19:10,905 - INFO - User interface initialized with tab support.
+2024-10-30 15:19:11,084 - INFO - Application started.
+2024-10-30 15:19:20,988 - INFO - Snipping tool initialized on all screens.
+2024-10-30 15:19:21,777 - INFO - Capture area set to: PyQt6.QtCore.QRect(3117, 171, 661, 474)
+2024-10-30 15:20:45,477 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 15:20:45,481 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 15:20:45,482 - INFO - User interface initialized with tab support.
+2024-10-30 15:20:45,646 - INFO - Application started.
+2024-10-30 15:20:48,771 - INFO - Snipping tool initialized on all screens.
+2024-10-30 15:20:49,672 - INFO - Capture area set to: PyQt6.QtCore.QRect(3061, 167, 540, 360)
+2024-10-30 15:22:15,628 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 15:22:15,633 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 15:22:15,634 - INFO - User interface initialized with tab support.
+2024-10-30 15:22:15,792 - INFO - Application started.
+2024-10-30 15:22:18,605 - INFO - Snipping tool initialized on all screens.
+2024-10-30 15:22:19,258 - INFO - Capture area set to: PyQt6.QtCore.QRect(3146, 244, 467, 364)
+2024-10-30 15:22:44,067 - INFO - Document saved as HTML: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/Untitled.html
+2024-10-30 15:28:40,498 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 15:28:40,502 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 15:28:40,502 - INFO - User interface initialized with tab support.
+2024-10-30 15:28:40,664 - INFO - Application started.
+2024-10-30 15:28:43,318 - INFO - Snipping tool initialized on all screens.
+2024-10-30 15:28:44,178 - INFO - Capture area set to: PyQt6.QtCore.QRect(3552, 339, 590, 478)
+2024-10-30 15:33:39,954 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 15:33:39,957 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 15:33:39,958 - INFO - User interface initialized with tab support.
+2024-10-30 15:33:40,140 - INFO - Application started.
+2024-10-30 15:33:44,815 - INFO - Snipping tool initialized on all screens.
+2024-10-30 15:33:47,235 - INFO - Capture area set to: PyQt6.QtCore.QRect(4402, 243, 1537, 899)
+2024-10-30 15:39:06,441 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 15:39:06,444 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 15:39:06,445 - INFO - User interface initialized with tab support.
+2024-10-30 15:39:06,608 - INFO - Application started.
+2024-10-30 15:39:19,435 - INFO - Snipping tool initialized on all screens.
+2024-10-30 15:39:21,026 - INFO - Capture area set to: PyQt6.QtCore.QRect(4521, 290, 612, 462)
+2024-10-30 18:15:07,169 - INFO - Applied and saved theme: Forest Green Theme
+2024-10-30 18:15:07,175 - INFO - Applied font settings: Cambria, 18pt
+2024-10-30 18:15:07,176 - INFO - User interface initialized with tab support.
+2024-10-30 18:15:07,373 - INFO - Application started.
+2024-10-30 18:15:31,176 - INFO - Real-time spell check enabled.

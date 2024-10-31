@@ -475,7 +475,37 @@ class MainWindow(QMainWindow):
         logger.info(f"Applied and saved theme: {theme_name}")
 
     def closeEvent(self, event):
-        """Override close event to save window position and size."""
+        """Override close event to prompt for saving unsaved changes in each tab."""
+        unsaved_tabs = []
+
+        # Check each tab for unsaved changes
+        for index in range(self.tab_widget.count()):
+            editor = self.tab_widget.widget(index)
+            if editor.document().isModified():
+                unsaved_tabs.append(index)
+
+        # If there are unsaved documents, prompt the user for each
+        for index in unsaved_tabs:
+            tab_name = self.tab_widget.tabText(index)
+            response = QMessageBox.question(
+                self,
+                "Unsaved Changes",
+                f"The document '{tab_name}' has unsaved changes. Would you like to save them?",
+                QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel,
+            )
+
+            if response == QMessageBox.StandardButton.Save:
+                if self.paths.get(index):
+                    # Save directly if there is already a file path
+                    self.file_save(index)
+                else:
+                    # Otherwise, prompt to save as with the tab name pre-filled
+                    self.file_save_as(index)
+            elif response == QMessageBox.StandardButton.Cancel:
+                event.ignore()  # Cancel the close event
+                return  # Exit the function to avoid closing the window
+
+        # Save window position and size on exit
         app_settings["window_size"] = [self.size().width(), self.size().height()]
         app_settings["window_position"] = [self.pos().x(), self.pos().y()]
         save_settings(app_settings)
@@ -538,6 +568,7 @@ class MainWindow(QMainWindow):
             self.themes_menu.addAction(theme_action)
 
         # Initialize toolbars in the correct order
+        self.init_auto_save_toolbar()
         self.init_file_toolbar()
         self.init_edit_toolbar()
         self.init_font_toolbar()
@@ -566,6 +597,17 @@ class MainWindow(QMainWindow):
             action.triggered.connect(lambda _, a=alignment: self.get_current_editor().setAlignment(a))
             align_toolbar.addAction(action)
             self.format_menu.addAction(action)
+            
+    def init_auto_save_toolbar(self):
+        toolbar = QToolBar("Auto Save")  # Define a new QToolBar instance for the autosave toolbar
+        self.addToolBar(toolbar)
+
+        # Autosave Toggle Button
+        autosave_action = QAction("Autosave", self)
+        autosave_action.setCheckable(True)
+        autosave_action.toggled.connect(self.toggle_autosave)  # Connect to toggle function
+        toolbar.addAction(autosave_action)
+        self.file_menu.addAction(autosave_action)
 
     """----------Capture Toolbar----------"""  
     def init_capture_toolbar(self):
@@ -822,6 +864,14 @@ class MainWindow(QMainWindow):
     def get_current_tab_index(self):
         """Get the current index of the active tab."""
         return self.tab_widget.currentIndex()
+        
+    """----------------------------------------------------------Auto Save Methods---------------------------------------------"""
+    def toggle_autosave(self, checked):
+        """Toggle autosave functionality. Placeholder for future implementation."""
+        if checked:
+            logger.info("Autosave enabled.")
+        else:
+            logger.info("Autosave disabled.")
 
     """---------------------------------------------------------Capture Methods----------------------------------------------""" 
     """----------Capture and OCR Action Methods----------"""
@@ -922,35 +972,43 @@ class MainWindow(QMainWindow):
         return pixmap if not pixmap.isNull() else None
 
     def eventFilter(self, obj, event):
-        """Detect clicks on thumbnails in the editor and open full-size images."""
         if event.type() == QEvent.Type.MouseButtonPress:
-            cursor = self.get_current_editor().cursorForPosition(event.pos())
-            image_format = cursor.charFormat().toImageFormat()
-            image_id = image_format.name()
-            if image_id and image_id in self.full_image_map:
-                self.show_full_image(self.full_image_map[image_id])
-                return True
+            if obj == self.get_current_editor().viewport():
+                click_pos = event.pos()
+                editor = self.get_current_editor()
+                if editor:
+                    cursor = editor.cursorForPosition(click_pos)
+                    char_format = cursor.charFormat()
+                    if char_format.isImageFormat():
+                        # Get the rectangle of the image in viewport coordinates
+                        image_rect = editor.cursorRect(cursor)
+                        if image_rect.contains(click_pos):
+                            image_format = char_format.toImageFormat()
+                            image_id = image_format.name()
+                            if image_id and image_id in self.full_image_map:
+                                self.show_full_image(self.full_image_map[image_id])
+                                return True  # Event handled
         return super(MainWindow, self).eventFilter(obj, event)
 
     def insert_image_with_thumbnail(self, pixmap):
-        """Inserts a thumbnail image into the document and saves the full image."""
         unique_id = str(uuid4())
-        thumbnail_pixmap = pixmap.scaled(200, 150, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation)
+        thumbnail_pixmap = pixmap.scaled(
+            200, 150, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation
+        )
         editor = self.get_current_editor()
         if editor:
             image_format = QTextImageFormat()
             image_format.setName(unique_id)
             image_format.setWidth(200)
             image_format.setHeight(150)
-            
-            editor.document().addResource(QTextDocument.ResourceType.ImageResource, QUrl(unique_id), thumbnail_pixmap)
+            editor.document().addResource(
+                QTextDocument.ResourceType.ImageResource, QUrl(unique_id), thumbnail_pixmap
+            )
             cursor = editor.textCursor()
             cursor.insertImage(image_format)
-
             # Store the full-size image for viewing
             self.full_image_map[unique_id] = pixmap
-            editor.viewport().installEventFilter(self)  # Add event filter to detect clicks on thumbnails
-
+            editor.full_image_map = self.full_image_map  # Share the map with editor
 
     def ocr_from_selected_area(self, snip_rect):
         """Capture selected area and perform OCR on it, inserting text into the document."""
@@ -1049,8 +1107,10 @@ class MainWindow(QMainWindow):
             text = ""
 
         new_tab = QTextEdit()
+        new_tab.full_image_map = self.full_image_map
         new_tab.setFont(QFont(self.current_font_family, self.current_font_size))
         new_tab.setPlainText(text)
+        new_tab.viewport().installEventFilter(self)  # Install event filter
         new_tab.installEventFilter(self)
         
         # Ensure custom context menu is set up
@@ -1167,40 +1227,28 @@ class MainWindow(QMainWindow):
             self.load_html_content(path, editor)
 
     def load_html_content(self, path, editor):
-        """Parse and load HTML content, displaying images as thumbnails with links to full-size images."""
+        """Load HTML content, reconstructing images from base64 data."""
         with open(path, 'r', encoding='utf-8') as f:
             html_content = f.read()
 
-        soup = BeautifulSoup(html_content, 'html.parser')
-        editor.clear()
-        
-        for element in soup.body.children:
-            if element.name == "a" and element.find("img"):
-                # Extract base64 data for both the full-size and thumbnail images
-                full_image_data = element["href"].split("base64,")[1]
-                thumbnail_data = element.find("img")["src"].split("base64,")[1]
+        # Set the HTML content directly
+        editor.setHtml(html_content)
 
-                # Create QPixmap objects from the base64 data
-                full_image = QPixmap()
-                thumbnail_image = QPixmap()
-                full_image.loadFromData(base64.b64decode(full_image_data))
-                thumbnail_image.loadFromData(base64.b64decode(thumbnail_data))
-
-                # Create a unique ID for the full image and store it in full_image_map
-                image_id = str(uuid4())
-                self.full_image_map[image_id] = full_image
-
-                # Insert the thumbnail into the editor
-                image_format = QTextImageFormat()
-                image_format.setName(image_id)
-                image_format.setWidth(200)
-                image_format.setHeight(150)
-                editor.document().addResource(QTextDocument.ResourceType.ImageResource, QUrl(image_id), thumbnail_image)
-                cursor = editor.textCursor()
-                cursor.insertImage(image_format)
-            elif element.name is None:
-                # For text content, append the text directly
-                editor.append(element)
+        # Reconstruct images
+        document = editor.document()
+        resource_iterator = document.allResources()
+        for resource_name in resource_iterator:
+            if resource_name.type() == QTextDocument.ResourceType.ImageResource:
+                image = document.resource(QTextDocument.ResourceType.ImageResource, resource_name)
+                if isinstance(image, QPixmap):
+                    # Store the image in full_image_map
+                    image_id = str(uuid4())
+                    self.full_image_map[image_id] = image
+                    # Update the image format to use the new ID
+                    image_format = QTextImageFormat()
+                    image_format.setName(image_id)
+                    # Update the document resource
+                    document.addResource(QTextDocument.ResourceType.ImageResource, QUrl(image_id), image)
 
     def load_html_file(self, path):
         """Load an HTML file with images and text into the editor, displaying thumbnails with clickable full-size images."""
@@ -1251,107 +1299,111 @@ class MainWindow(QMainWindow):
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to load HTML file: {str(e)}")
 
-    def file_save(self, index=None):
-        """Save the document, using the existing format if saved, or prompting if unsaved."""
-        if index is None:
-            index = self.get_current_tab_index()
-        
-        path = self.paths.get(index)
-        if path:
-            # Determine save method based on file extension
-            if path.endswith('.txt'):
-                self.save_as_text(path, index)
-            elif path.endswith('.html'):
-                self.save_as_html(path, index)
-        else:
-            # Prompt for save format and location if unsaved
-            self.file_save_as(index)
-
     def file_save_as(self, index=None):
         """Prompt user to select a save location and format (TXT or HTML), saving and converting as needed."""
         if index is None:
             index = self.get_current_tab_index()
         
-        # Open the Save File dialog with options for Text and HTML
+        # Retrieve the file path for the current tab or default to None
+        current_path = self.paths.get(index)
+        default_name = "Untitled"
+
+        # If the path exists, set directory and file name to populate the save dialog
+        if current_path:
+            directory = os.path.dirname(current_path)
+            default_name = os.path.basename(current_path)  # File name from the path
+        else:
+            directory = ""  # Default to starting in the current directory if there's no path
+
+        # Use `directory + default_name` to set the initial save dialog path
+        initial_path = os.path.join(directory, default_name)
+
+        # Open the Save File dialog, showing the existing name if provided
         path, _ = QFileDialog.getSaveFileName(
-            self, "Save As", "", "HTML documents (*.html);;Text documents (*.txt)"
+            self, "Save As", initial_path, "HTML documents (*.html);;Text documents (*.txt)"
         )
+        
         if path:
             # Save based on the selected extension
             if path.endswith(".txt"):
                 self.save_as_text(path, index)
             elif path.endswith(".html"):
                 self.save_as_html(path, index)
-
-    def save_as_text(self, path, index):
-        """Save the content of the current editor as a plain text file."""
-        try:
-            editor = self.tab_widget.widget(index)
-            text_content = editor.toPlainText()
-            with open(path, 'w', encoding='utf-8') as f:
-                f.write(text_content)
-
-            # Update tab path and title
-            self.paths[index] = path
-            filename = os.path.basename(path)
-            self.tab_widget.setTabText(index, filename)
-            self.tab_widget.setTabToolTip(index, path)
-            logger.info(f"Text file saved as: {path}")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Failed to save text file: {str(e)}")
-
+            return True  # File saved successfully
+        return False  # Save operation was canceled
+        
     def save_as_html(self, path, index):
-        """Save the content of the current editor as an HTML file, embedding images as thumbnails."""
-        try:
-            editor = self.tab_widget.widget(index)
+        """Save the document content as an HTML file with embedded images."""
+        editor = self.tab_widget.widget(index)
+        if editor:
             html_content = self.convert_document_to_html(editor.document())
             with open(path, 'w', encoding='utf-8') as f:
                 f.write(html_content)
-
-            # Update tab path and title
             self.paths[index] = path
-            filename = os.path.basename(path)
-            self.tab_widget.setTabText(index, filename)
+            self.tab_widget.setTabText(index, os.path.basename(path))
             self.tab_widget.setTabToolTip(index, path)
-            logger.info(f"HTML file saved as: {path}")
-        except Exception as e:
-            QMessageBox.critical(self, "Error", f"Failed to save HTML file: {str(e)}")
+            editor.document().setModified(False)
+            logger.info(f"Document saved as HTML: {path}")
+
+    def save_as_text(self, path, index):
+        """Save the document content as a plain text file."""
+        editor = self.tab_widget.widget(index)
+        if editor:
+            text_content = editor.toPlainText()
+            with open(path, 'w', encoding='utf-8') as f:
+                f.write(text_content)
+            self.paths[index] = path
+            self.tab_widget.setTabText(index, os.path.basename(path))
+            self.tab_widget.setTabToolTip(index, path)
+            editor.document().setModified(False)
+            logger.info(f"Document saved as text: {path}")        
 
     def convert_document_to_html(self, document):
         """Convert a QTextDocument to HTML with embedded images as clickable thumbnails."""
         cursor = QTextCursor(document)
         cursor.movePosition(QTextCursor.MoveOperation.Start)
-        
+
         html_output = "<html><body>"
-        
-        # Iterate over each block in the document
+
         while not cursor.atEnd():
             block = cursor.block()
-            for fragment in block:
+            it = block.begin()
+            while not it.atEnd():
+                fragment = it.fragment()
                 format = fragment.charFormat()
-                
+
                 if format.isImageFormat():
-                    image_id = format.toImageFormat().name()
+                    image_format = format.toImageFormat()
+                    image_id = image_format.name()
                     if image_id in self.full_image_map:
                         pixmap = self.full_image_map[image_id]
-                        
+
+                        # Convert image to base64
                         buffer = QBuffer()
                         buffer.open(QBuffer.OpenModeFlag.ReadWrite)
                         pixmap.save(buffer, "PNG")
                         base64_data = base64.b64encode(buffer.data()).decode('utf-8')
                         buffer.close()
+
+                        # Embed image in HTML
+                        width = image_format.width() if image_format.width() else pixmap.width()
+                        height = image_format.height() if image_format.height() else pixmap.height()
                         
                         thumbnail_html = (
-                            f'<a href="data:image/png;base64,{base64_data}" target="_blank">'
-                            f'<img src="data:image/png;base64,{base64_data}" width="200"></a>'
+                            f'<img src="data:image/png;base64,{base64_data}" '
+                            f'width="{width}" height="{height}">'
                         )
                         html_output += thumbnail_html
                 else:
-                    html_output += fragment.text().replace('\n', '<br>')
-            
+                    # Handle text
+                    text = fragment.text().replace('\n', '<br>')
+                    html_output += text
+
+                it += 1  # Move to the next fragment
+
             cursor.movePosition(QTextCursor.MoveOperation.NextBlock)
             html_output += "<br>"
-        
+
         html_output += "</body></html>"
         return html_output
 
@@ -1710,6 +1762,29 @@ class ClickableImageDialog(QDialog):
         layout.addWidget(full_image_label)
         
         self.setLayout(layout)
+        
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            click_pos = event.position().toPoint()
+            cursor = self.cursorForPosition(click_pos)
+            char_format = cursor.charFormat()
+            if char_format.isImageFormat():
+                image_format = char_format.toImageFormat()
+                image_id = image_format.name()
+                if image_id and image_id in self.full_image_map:
+                    self.show_full_image(self.full_image_map[image_id])
+                    return  # Consume the event
+        super().mousePressEvent(event)
+
+    def show_full_image(self, pixmap):
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Full Image")
+        layout = QVBoxLayout(dialog)
+        full_image_label = QLabel()
+        full_image_label.setPixmap(pixmap)
+        layout.addWidget(full_image_label)
+        dialog.setLayout(layout)
+        dialog.exec()        
         
         
 """===========Snipping Overlay Class=========="""
