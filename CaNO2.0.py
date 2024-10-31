@@ -1121,23 +1121,70 @@ class MainWindow(QMainWindow):
     def insert_image_with_thumbnail(self, pixmap):
         unique_id = str(uuid4())
         thumbnail_pixmap = pixmap.scaled(
-            200, 150, Qt.AspectRatioMode.KeepAspectRatio, Qt.TransformationMode.SmoothTransformation
+            200,
+            150,
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation,
         )
         editor = self.get_current_editor()
         if editor:
             # Add the thumbnail image to the document resources
             editor.document().addResource(
-                QTextDocument.ResourceType.ImageResource, QUrl(unique_id), thumbnail_pixmap
+                QTextDocument.ResourceType.ImageResource,
+                QUrl(unique_id),
+                thumbnail_pixmap,
             )
 
-            # Create HTML with an anchor wrapping the image
-            html = f'<a href="{unique_id}"><img src="{unique_id}" width="200" height="150"/></a>'
             cursor = editor.textCursor()
+            cursor.beginEditBlock()
+
+            # Insert a zero-width space before the image to isolate formatting on the left
+            cursor.insertText('\u200b')
+
+            # Insert the image wrapped in an anchor
+            html = f'<a href="{unique_id}"><img src="{unique_id}" width="200" height="150"/></a>'
             cursor.insertHtml(html)
+
+            # Move cursor after the image and insert a zero-width space to isolate formatting on the right
+            cursor.movePosition(QTextCursor.MoveOperation.Right)
+            cursor.insertText('\u200b')
+
+            # Re-apply a neutral format to isolate formatting on both sides
+            neutral_format = QTextCharFormat()
+            cursor.setCharFormat(neutral_format)
+
+            cursor.endEditBlock()
+
+            # Update the editor's cursor
+            editor.setTextCursor(cursor)
 
             # Store the full-size image for viewing
             self.full_image_map[unique_id] = pixmap
-            editor.full_image_map = self.full_image_map  # Share the map with editor
+            editor.full_image_map = self.full_image_map  # Share the map with the editor
+
+            # Connect the cursor position change to formatting clearing
+            editor.cursorPositionChanged.connect(self.clear_formatting_near_thumbnail)
+
+    def clear_formatting_near_thumbnail(self):
+        """Clear formatting if the cursor is within one space of a thumbnail image."""
+        editor = self.get_current_editor()
+        if editor:
+            cursor = editor.textCursor()
+
+            # Check if the character to the left or right of the cursor is a zero-width space
+            cursor.movePosition(QTextCursor.MoveOperation.Left, QTextCursor.MoveMode.KeepAnchor)
+            left_buffer = cursor.selectedText() == '\u200b'
+            cursor.clearSelection()
+
+            cursor.movePosition(QTextCursor.MoveOperation.Right, QTextCursor.MoveMode.KeepAnchor)
+            right_buffer = cursor.selectedText() == '\u200b'
+            cursor.clearSelection()
+
+            # Clear formatting if the cursor is within one space of a thumbnail
+            if left_buffer or right_buffer:
+                neutral_format = QTextCharFormat()
+                cursor.setCharFormat(neutral_format)
+                editor.setTextCursor(cursor)
 
     def ocr_from_selected_area(self, snip_rect):
         """Capture selected area and perform OCR on it, inserting text into the document."""
@@ -1986,11 +2033,23 @@ class ClickableTextEdit(QTextEdit):
         if event.button() == Qt.MouseButton.LeftButton:
             click_pos = event.position().toPoint()
             anchor = self.anchorAt(click_pos)
+            
             if anchor:
                 image_id = anchor
                 if image_id in self.full_image_map:
                     self.show_full_image(self.full_image_map[image_id])
                     return  # Consume the event
+            else:
+                # Check if the click is adjacent to an image and reset formatting
+                cursor = self.cursorForPosition(click_pos)
+                cursor.select(QTextCursor.SelectionType.WordUnderCursor)
+
+                # Clear formatting if zero-width space detected
+                if cursor.selectedText() == '\u200b':
+                    neutral_format = QTextCharFormat()
+                    cursor.setCharFormat(neutral_format)
+                    self.setTextCursor(cursor)
+                
         super().mousePressEvent(event)
 
     def show_full_image(self, pixmap):
