@@ -5,6 +5,7 @@ import ctypes
 import json
 import logging
 import os
+import shutil
 import subprocess
 import sys
 from io import BytesIO
@@ -29,8 +30,8 @@ from PyQt6.QtGui import (
 )
 from PyQt6.QtWidgets import (
     QApplication, QComboBox, QDialog, QDialogButtonBox, QFileDialog, QFontComboBox, QHBoxLayout, QLabel, 
-    QLineEdit, QListWidget, QInputDialog, QMainWindow, QMessageBox, QPushButton, QSizePolicy, QTabWidget, 
-    QTextEdit, QToolBar, QVBoxLayout, QWidget, QWidgetAction, QMenu, 
+    QLineEdit, QListWidget, QInputDialog, QMainWindow, QMessageBox, QPushButton, QSizePolicy, QSplitter, QSplitterHandle,  
+    QTabWidget, QTextEdit, QToolBar, QVBoxLayout, QWidget, QWidgetAction, QMenu, 
 )
 
 """----------Constants for Application Configuration----------"""
@@ -40,6 +41,11 @@ SETTINGS_DIR = os.path.join(os.getenv('APPDATA'), SCRIPT_NAME)
 os.makedirs(SETTINGS_DIR, exist_ok=True)
 SETTINGS_FILE = os.path.join(SETTINGS_DIR, f"{SCRIPT_NAME}-settings.json")
 CUSTOM_DICT_PATH = os.path.join(SETTINGS_DIR, "custom_dictionary.json")
+
+# Define the folder for persistent storage of saved files
+PERSISTENT_FOLDER = os.path.join(SETTINGS_DIR, "saved_files")
+os.makedirs(PERSISTENT_FOLDER, exist_ok=True)  # Create the directory if it doesn't exist
+
 
 # Paths for logging and images
 LOG_FILE = os.path.join(os.path.dirname(__file__), f"{SCRIPT_NAME}.log")
@@ -116,6 +122,25 @@ def load_settings():
 
 app_settings = load_settings()
 
+
+# Define the path to the themes file
+THEMES_FILE = os.path.join(os.path.dirname(__file__), 'themes.json')
+
+# Load themes from JSON file
+def load_themes():
+    with open(THEMES_FILE, 'r', encoding='utf-8') as f:
+        themes = json.load(f)
+    # Convert color and font settings to the expected PyQt objects
+    for theme_name, settings in themes.items():
+        settings['text_color'] = QColor(settings['text_color'])
+        settings['font_family'] = settings.get('font_family', 'Cambria')
+        settings['font_size'] = settings.get('font_size', 14)
+    return themes
+
+# Load themes
+THEMES = load_themes()
+
+
 """----------Save Settings----------"""
 def save_settings(settings):
     """Save settings to a JSON file."""
@@ -125,284 +150,6 @@ def save_settings(settings):
 # Load existing settings into a global variable
 app_settings = load_settings()  # This should work without issues now
 
-
-THEMES = {
-    "Light Theme": {
-        "style": """
-            QMainWindow { background-color: white; }
-            QTextEdit { background-color: white; color: black; selection-background-color: #d3d7df; }
-            QMenuBar, QMenu, QToolBar { background-color: #f0f0f0; color: black; }
-            QMenu::item:selected, QToolButton:hover { background-color: #e0e0e0; }
-        """,
-        "text_color": QColor("black"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Dark Theme": {
-        "style": """
-            QMainWindow { background-color: #2e2e2e; }
-            QTextEdit { background-color: #1e1e1e; color: #dcdcdc; selection-background-color: #505050; }
-            QMenuBar, QMenu, QToolBar { background-color: #3c3c3c; color: #dcdcdc; }
-            QMenu::item:selected, QToolButton:hover { background-color: #505050; }
-        """,
-        "text_color": QColor("#dcdcdc"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Sepia Theme": {
-        "style": """
-            QMainWindow { background-color: #f5e6d2; }
-            QTextEdit { background-color: #f5e6d2; color: #5b4636; selection-background-color: #d3c4b4; }
-            QMenuBar, QMenu, QToolBar { background-color: #f2d7b5; color: #5b4636; }
-            QMenu::item:selected, QToolButton:hover { background-color: #e6c7a0; }
-        """,
-        "text_color": QColor("#5b4636"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Monokai Theme": {
-        "style": """
-            QMainWindow { background-color: #272822; }
-            QTextEdit { background-color: #272822; color: #f8f8f2; selection-background-color: #49483e; }
-            QMenuBar, QMenu, QToolBar { background-color: #3e3d32; color: #f8f8f2; }
-            QMenu::item:selected, QToolButton:hover { background-color: #49483e; }
-        """,
-        "text_color": QColor("#f8f8f2"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Ocean Blue Theme": {
-        "style": """
-            QMainWindow { background-color: #1a1f3b; }
-            QTextEdit { background-color: #1a1f3b; color: #aaccff; selection-background-color: #3b5998; }
-            QMenuBar, QMenu, QToolBar { background-color: #162447; color: #aaccff; }
-            QMenu::item:selected, QToolButton:hover { background-color: #3b5998; }
-        """,
-        "text_color": QColor("#aaccff"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Forest Green Theme": {
-        "style": """
-            QMainWindow { background-color: #2b472e; }
-            QTextEdit { background-color: #2b472e; color: #d3e2c2; selection-background-color: #4a6356; }
-            QMenuBar, QMenu, QToolBar { background-color: #3c5c46; color: #d3e2c2; }
-            QMenu::item:selected, QToolButton:hover { background-color: #4a6356; }
-        """,
-        "text_color": QColor("#d3e2c2"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Desert Sand Theme": {
-        "style": """
-            QMainWindow { background-color: #edc9af; }
-            QTextEdit { background-color: #edc9af; color: #5f4632; selection-background-color: #cdb79e; }
-            QMenuBar, QMenu, QToolBar { background-color: #e3b89b; color: #5f4632; }
-            QMenu::item:selected, QToolButton:hover { background-color: #c7a693; }
-        """,
-        "text_color": QColor("#5f4632"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Lavender Theme": {
-        "style": """
-            QMainWindow { background-color: #e6e6fa; }
-            QTextEdit { background-color: #e6e6fa; color: #4b0082; selection-background-color: #d8bfd8; }
-            QMenuBar, QMenu, QToolBar { background-color: #dcdcdc; color: #4b0082; }
-            QMenu::item:selected, QToolButton:hover { background-color: #c0c0c0; }
-        """,
-        "text_color": QColor("#4b0082"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Rose Gold Theme": {
-        "style": """
-            QMainWindow { background-color: #b76e79; }
-            QTextEdit { background-color: #f7cac9; color: #6d1d3e; selection-background-color: #e6a6b0; }
-            QMenuBar, QMenu, QToolBar { background-color: #d4a5a5; color: #6d1d3e; }
-            QMenu::item:selected, QToolButton:hover { background-color: #e6a6b0; }
-        """,
-        "text_color": QColor("#6d1d3e"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Midnight Purple Theme": {
-        "style": """
-            QMainWindow { background-color: #2e1a47; }
-            QTextEdit { background-color: #2e1a47; color: #d1c4e9; selection-background-color: #4a306d; }
-            QMenuBar, QMenu, QToolBar { background-color: #3a245e; color: #d1c4e9; }
-            QMenu::item:selected, QToolButton:hover { background-color: #4a306d; }
-        """,
-        "text_color": QColor("#d1c4e9"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Vintage Paper Theme": {
-        "style": """
-            QMainWindow { background-color: #fefbf3; }
-            QTextEdit { background-color: #fefbf3; color: #3e3b32; selection-background-color: #eae0c8; }
-            QMenuBar, QMenu, QToolBar { background-color: #ece3d1; color: #3e3b32; }
-            QMenu::item:selected, QToolButton:hover { background-color: #e0d3c3; }
-        """,
-        "text_color": QColor("#3e3b32"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Cool Gray Theme": {
-        "style": """
-            QMainWindow { background-color: #e0e6ed; }
-            QTextEdit { background-color: #d3dae0; color: #4f5b66; selection-background-color: #b0bec5; }
-            QMenuBar, QMenu, QToolBar { background-color: #c5cfd6; color: #4f5b66; }
-            QMenu::item:selected, QToolButton:hover { background-color: #a9b7bf; }
-        """,
-        "text_color": QColor("#4f5b66"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Autumn Maple Theme": {
-        "style": """
-            QMainWindow { background-color: #d2691e; }
-            QTextEdit { background-color: #f4a460; color: #4b2e2e; selection-background-color: #e3735e; }
-            QMenuBar, QMenu, QToolBar { background-color: #cc774f; color: #4b2e2e; }
-            QMenu::item:selected, QToolButton:hover { background-color: #d98258; }
-        """,
-        "text_color": QColor("#4b2e2e"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Emerald Theme": {
-        "style": """
-            QMainWindow { background-color: #0a3d3e; }
-            QTextEdit { background-color: #0f4d4f; color: #cde0c9; selection-background-color: #39796b; }
-            QMenuBar, QMenu, QToolBar { background-color: #0f4d4f; color: #cde0c9; }
-            QMenu::item:selected, QToolButton:hover { background-color: #39796b; }
-        """,
-        "text_color": QColor("#cde0c9"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Sunset Orange Theme": {
-        "style": """
-            QMainWindow { background-color: #ff6f61; }
-            QTextEdit { background-color: #ff867f; color: #4d1e18; selection-background-color: #ffab91; }
-            QMenuBar, QMenu, QToolBar { background-color: #ff867f; color: #4d1e18; }
-            QMenu::item:selected, QToolButton:hover { background-color: #ffab91; }
-        """,
-        "text_color": QColor("#4d1e18"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Ice Blue Theme": {
-        "style": """
-            QMainWindow { background-color: #e1f5fe; }
-            QTextEdit { background-color: #b3e5fc; color: #01579b; selection-background-color: #81d4fa; }
-            QMenuBar, QMenu, QToolBar { background-color: #b3e5fc; color: #01579b; }
-            QMenu::item:selected, QToolButton:hover { background-color: #81d4fa; }
-        """,
-        "text_color": QColor("#01579b"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Bronze Theme": {
-        "style": """
-            QMainWindow { background-color: #cd7f32; }
-            QTextEdit { background-color: #d89b5e; color: #3b1e06; selection-background-color: #b87333; }
-            QMenuBar, QMenu, QToolBar { background-color: #b87333; color: #3b1e06; }
-            QMenu::item:selected, QToolButton:hover { background-color: #d89b5e; }
-        """,
-        "text_color": QColor("#3b1e06"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Berry Purple Theme": {
-        "style": """
-            QMainWindow { background-color: #4b0082; }
-            QTextEdit { background-color: #6a0dad; color: #e6e6fa; selection-background-color: #9932cc; }
-            QMenuBar, QMenu, QToolBar { background-color: #6a0dad; color: #e6e6fa; }
-            QMenu::item:selected, QToolButton:hover { background-color: #9932cc; }
-        """,
-        "text_color": QColor("#e6e6fa"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Aqua Marine Theme": {
-        "style": """
-            QMainWindow { background-color: #7fdbff; }
-            QTextEdit { background-color: #0074d9; color: #001f3f; selection-background-color: #39c0ed; }
-            QMenuBar, QMenu, QToolBar { background-color: #0074d9; color: #ffffff; }
-            QMenu::item:selected, QToolButton:hover { background-color: #39c0ed; }
-        """,
-        "text_color": QColor("#001f3f"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Rustic Red Theme": {
-        "style": """
-            QMainWindow { background-color: #8b0000; }
-            QTextEdit { background-color: #b22222; color: #f5f5f5; selection-background-color: #cd5c5c; }
-            QMenuBar, QMenu, QToolBar { background-color: #a52a2a; color: #f5f5f5; }
-            QMenu::item:selected, QToolButton:hover { background-color: #cd5c5c; }
-        """,
-        "text_color": QColor("#f5f5f5"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Peach Blossom Theme": {
-        "style": """
-            QMainWindow { background-color: #ffe5b4; }
-            QTextEdit { background-color: #ffdab9; color: #8b4513; selection-background-color: #ffdead; }
-            QMenuBar, QMenu, QToolBar { background-color: #ffdead; color: #8b4513; }
-            QMenu::item:selected, QToolButton:hover { background-color: #ffe4c4; }
-        """,
-        "text_color": QColor("#8b4513"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Deep Space Theme": {
-        "style": """
-            QMainWindow { background-color: #0d0d0d; }
-            QTextEdit { background-color: #1a1a1a; color: #b0b0b0; selection-background-color: #333333; }
-            QMenuBar, QMenu, QToolBar { background-color: #1a1a1a; color: #b0b0b0; }
-            QMenu::item:selected, QToolButton:hover { background-color: #333333; }
-        """,
-        "text_color": QColor("#b0b0b0"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Olive Green Theme": {
-        "style": """
-            QMainWindow { background-color: #556b2f; }
-            QTextEdit { background-color: #6b8e23; color: #f0e68c; selection-background-color: #bdb76b; }
-            QMenuBar, QMenu, QToolBar { background-color: #808000; color: #f0e68c; }
-            QMenu::item:selected, QToolButton:hover { background-color: #bdb76b; }
-        """,
-        "text_color": QColor("#f0e68c"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Amber Glow Theme": {
-        "style": """
-            QMainWindow { background-color: #ffbf00; }
-            QTextEdit { background-color: #ffdd44; color: #4a3c00; selection-background-color: #ffe680; }
-            QMenuBar, QMenu, QToolBar { background-color: #ffdd44; color: #4a3c00; }
-            QMenu::item:selected, QToolButton:hover { background-color: #ffe680; }
-        """,
-        "text_color": QColor("#4a3c00"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    },
-    "Golden Yellow Theme": {
-        "style": """
-            QMainWindow { background-color: #ffd700; }
-            QTextEdit { background-color: #ffec8b; color: #6b4226; selection-background-color: #ffd662; }
-            QMenuBar, QMenu, QToolBar { background-color: #ffec8b; color: #6b4226; }
-            QMenu::item:selected, QToolButton:hover { background-color: #ffd662; }
-        """,
-        "text_color": QColor("#6b4226"),
-        "font_family": DEFAULT_FONT_FAMILY,
-        "font_size": DEFAULT_FONT_SIZE
-    }
-}
 
 # Highlight Colors
 HIGHLIGHT_STYLES = {
@@ -473,12 +220,9 @@ class MainWindow(QMainWindow):
         # Set up main tab widget and set it as the central widget
         self.setup_tab_widget()
 
-        # Add the initial tab
-        self.add_new_tab()
-
         # Initialize UI components
-        self.init_ui()  # Setup UI elements like toolbars, menus, etc.
-        
+        self.init_ui()  # Setup UI elements like toolbars, menus, etc.      
+      
         # Apply global style for toggled buttons and the selected theme
         self.setStyleSheet(TOGGLED_BUTTON_STYLE)    
         self.apply_theme(self.current_theme)
@@ -491,6 +235,75 @@ class MainWindow(QMainWindow):
         # Force a repaint and update to apply all theme and layout settings
         self.repaint()
         self.update()
+             
+        # Initialize splitter for main layout
+        self.splitter = QSplitter(Qt.Orientation.Horizontal)
+        self.setCentralWidget(self.splitter)
+
+        # Use the custom splitter with a handle
+        self.splitter = CustomSplitter(Qt.Orientation.Horizontal)
+        self.setCentralWidget(self.splitter)
+
+        # Initialize saved files panel
+        self.saved_files_panel = SavedFilesPanel(self)
+        self.saved_files_panel.setMaximumWidth(200)
+        self.splitter.addWidget(self.saved_files_panel)
+
+        # Initialize editor tab widget
+        self.tab_widget = QTabWidget()
+        self.tab_widget.setTabsClosable(True)  # Enable close buttons on tabs
+        self.tab_widget.tabCloseRequested.connect(self.close_tab)
+        self.splitter.addWidget(self.tab_widget)
+        self.splitter.setStretchFactor(0, 0)
+        
+        self.init_toolbar()
+        
+        # Add the initial tab
+        self.add_new_tab()
+
+    def init_toolbar(self):
+        """Initialize the toolbar with a toggle button for the saved files panel."""
+        toolbar = QToolBar("Main Toolbar")
+        self.addToolBar(toolbar)
+
+        # Create the toggle button action
+        self.toggle_panel_action = QAction("Hide Panel", self)
+        self.toggle_panel_action.setCheckable(True)
+        self.toggle_panel_action.setChecked(True)  # Panel starts as visible
+        self.toggle_panel_action.setIcon(QIcon("icon-path/show-hide-icon.png"))  # Set icon for show/hide
+        self.toggle_panel_action.triggered.connect(self.sync_toggle_buttons)
+
+        # Add toggle button to toolbar
+        toolbar.addAction(self.toggle_panel_action)
+        
+        # Set the initial text on the panel button to "Hide Panel"
+        self.saved_files_panel.toggle_button.setText("Hide Panel")
+        self.saved_files_panel.toggle_button.setChecked(True)  # Ensure initial state
+
+        # Connect panel button to the same slot
+        self.saved_files_panel.toggle_button.clicked.connect(self.sync_toggle_buttons)        
+
+    def sync_toggle_buttons(self):
+        """Sync the toggle states of the toolbar and panel buttons and manage visibility."""
+        if self.toggle_panel_action.isChecked():
+            self.saved_files_panel.show()
+            self.toggle_panel_action.setText("Hide Panel")
+            self.saved_files_panel.toggle_button.setChecked(True)
+            self.saved_files_panel.toggle_button.setText("Hide Panel")
+        else:
+            self.saved_files_panel.hide()
+            self.toggle_panel_action.setText("Show Panel")
+            self.saved_files_panel.toggle_button.setChecked(False)
+            self.saved_files_panel.toggle_button.setText("Show Panel")
+
+    def toggle_panel_visibility(self):
+        """Toggle visibility of the saved files panel and update the button text."""
+        if self.toggle_panel_action.isChecked():
+            self.saved_files_panel.show()
+            self.toggle_panel_action.setText("Hide Panel")
+        else:
+            self.saved_files_panel.hide()
+            self.toggle_panel_action.setText("Show Panel")        
         
         logger.info("User interface initialized with tab support.")
 
@@ -615,6 +428,8 @@ class MainWindow(QMainWindow):
         self.init_list_toolbar()
         self.init_capture_toolbar()
 
+
+
     """----------------------------------------------------------Toolbars-------------------------------------------------""" 
 
     """----------Auto Save Toolbar----------"""
@@ -711,7 +526,7 @@ class MainWindow(QMainWindow):
     """----------Edit Toolbar----------"""
     def init_edit_toolbar(self):
         edit_toolbar = QToolBar("Edit")
-        edit_toolbar.setIconSize(QSize(20, 20))
+        edit_toolbar.setIconSize(QSize(25, 25))
         self.addToolBar(edit_toolbar)
 
         # Undo and Redo
@@ -753,14 +568,14 @@ class MainWindow(QMainWindow):
         toolbar.setIconSize(QSize(20, 20))
         self.addToolBar(toolbar)
 
-        new_window_action = QAction("New Window", self)
+        new_window_action = QAction(QIcon(os.path.join(self.images_dir, 'new-instance.png')), "New Instance", self)
         new_window_action.setShortcut("Ctrl+N")
         new_window_action.triggered.connect(self.open_new_instance)
         toolbar.addAction(new_window_action)
         self.file_menu.addAction(new_window_action)
 
         # New Tab
-        new_tab_action = QAction(QIcon(os.path.join(self.images_dir, 'new_file.png')), "New Tab", self)
+        new_tab_action = QAction(QIcon(os.path.join(self.images_dir, 'new-tab.png')), "New Tab", self)
         new_tab_action.setShortcut("Ctrl+T")
         new_tab_action.triggered.connect(self.add_new_tab)
         toolbar.addAction(new_tab_action)
@@ -788,7 +603,8 @@ class MainWindow(QMainWindow):
         self.file_menu.addAction(saveas_action)
 
         # Close All Tabs
-        close_all_action = QAction("Close All Tabs", self)
+        close_all_action = QAction(QIcon(os.path.join(self.images_dir, 'close-tab.png')), "Close All Tabs", self)
+        close_all_action.setShortcut("Ctrl+Shift+W")
         close_all_action.triggered.connect(self.close_all_tabs)
         toolbar.addAction(close_all_action)
         self.file_menu.addAction(close_all_action)
@@ -1425,6 +1241,19 @@ class MainWindow(QMainWindow):
                     image_format.setName(image_id)
                     # Update the document resource
                     document.addResource(QTextDocument.ResourceType.ImageResource, QUrl(image_id), image)
+                    
+    def open_file_in_new_tab(self, file_path):
+        """Open a specified file in a new tab and display its content."""
+        with open(file_path, 'r', encoding='utf-8') as f:
+            content = f.read()
+
+        editor = ClickableTextEdit()
+        editor.setPlainText(content)
+        tab_index = self.tab_widget.addTab(editor, os.path.basename(file_path))
+        self.tab_widget.setCurrentIndex(tab_index)
+        self.paths[tab_index] = file_path
+        logger.info(f"Opened file in new tab: {file_path}")                   
+                    
 
     def load_html_file(self, path):
         """Load an HTML file with images and text into the editor, displaying thumbnails with clickable full-size images."""
@@ -1491,37 +1320,30 @@ class MainWindow(QMainWindow):
             logger.error(f"Failed to load HTML file: {str(e)}")
 
     def file_save_as(self, index=None):
-        """Prompt user to select a save location and format (TXT or HTML), saving and converting as needed."""
+        """Save file to the persistent folder and add it to the saved files panel."""
         if index is None:
             index = self.get_current_tab_index()
+
+        # Choose a filename and prompt the user to confirm the save location within PERSISTENT_FOLDER
+        file_name, _ = QFileDialog.getSaveFileName(self, "Save As", PERSISTENT_FOLDER, "Text documents (*.txt);;HTML documents (*.html)")
         
-        # Retrieve the file path for the current tab or default to None
-        current_path = self.paths.get(index)
-        default_name = "Untitled"
+        if file_name:
+            # Ensure file is saved in the persistent folder
+            if not file_name.startswith(PERSISTENT_FOLDER):
+                file_name = os.path.join(PERSISTENT_FOLDER, os.path.basename(file_name))
 
-        # If the path exists, set directory and file name to populate the save dialog
-        if current_path:
-            directory = os.path.dirname(current_path)
-            default_name = os.path.basename(current_path)  # File name from the path
-        else:
-            directory = ""  # Default to starting in the current directory if there's no path
+            # Save file content
+            editor = self.tab_widget.widget(index)
+            if file_name.endswith(".txt"):
+                with open(file_name, 'w', encoding='utf-8') as f:
+                    f.write(editor.toPlainText())
+            elif file_name.endswith(".html"):
+                with open(file_name, 'w', encoding='utf-8') as f:
+                    f.write(editor.toHtml())
 
-        # Use `directory + default_name` to set the initial save dialog path
-        initial_path = os.path.join(directory, default_name)
-
-        # Open the Save File dialog, showing the existing name if provided
-        path, _ = QFileDialog.getSaveFileName(
-            self, "Save As", initial_path, "HTML documents (*.html);;Text documents (*.txt)"
-        )
-        
-        if path:
-            # Save based on the selected extension
-            if path.endswith(".txt"):
-                self.save_as_text(path, index)
-            elif path.endswith(".html"):
-                self.save_as_html(path, index)
-            return True  # File saved successfully
-        return False  # Save operation was canceled
+            # Add file to saved files panel
+            self.saved_files_panel.add_saved_file(os.path.basename(file_name))
+            logger.info(f"File saved in persistent folder: {file_name}")
         
     def save_as_html(self, path, index):
         """Save the document content as an HTML file with embedded images."""
@@ -1948,6 +1770,45 @@ class MainWindow(QMainWindow):
         dialog = CustomDictionaryDialog(self)
         dialog.exec()
 
+"""===========Clicable Text Edit Class-----------"""
+class ClickableTextEdit(QTextEdit):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.full_image_map = {}  # To store full images
+
+    def mousePressEvent(self, event):
+        if event.button() == Qt.MouseButton.LeftButton:
+            click_pos = event.position().toPoint()
+            anchor = self.anchorAt(click_pos)
+            
+            if anchor:
+                image_id = anchor
+                if image_id in self.full_image_map:
+                    self.show_full_image(self.full_image_map[image_id])
+                    return  # Consume the event
+            else:
+                # Check if the click is adjacent to an image and reset formatting
+                cursor = self.cursorForPosition(click_pos)
+                cursor.select(QTextCursor.SelectionType.WordUnderCursor)
+
+                # Clear formatting if zero-width space detected
+                if cursor.selectedText() == '\u200b':
+                    neutral_format = QTextCharFormat()
+                    cursor.setCharFormat(neutral_format)
+                    self.setTextCursor(cursor)
+                
+        super().mousePressEvent(event)
+
+    def show_full_image(self, pixmap):
+        dialog = QDialog(self)
+        dialog.setWindowTitle("Full Image")
+        layout = QVBoxLayout(dialog)
+        full_image_label = QLabel()
+        full_image_label.setPixmap(pixmap)
+        layout.addWidget(full_image_label)
+        dialog.setLayout(layout)
+        dialog.exec()
+
 """===========Custom Dictionary Dialog Class=========="""   
 class CustomDictionaryDialog(QDialog):
     def __init__(self, parent=None):
@@ -2022,45 +1883,100 @@ class CustomDictionaryDialog(QDialog):
         for item in self.word_list.selectedItems():
             self.words.remove(item.text())
             self.word_list.takeItem(self.word_list.row(item))
-
-"""===========Clicable Text Edit Class-----------"""
-class ClickableTextEdit(QTextEdit):
-    def __init__(self, parent=None):
-        super().__init__(parent)
-        self.full_image_map = {}  # To store full images
-
-    def mousePressEvent(self, event):
-        if event.button() == Qt.MouseButton.LeftButton:
-            click_pos = event.position().toPoint()
-            anchor = self.anchorAt(click_pos)
             
-            if anchor:
-                image_id = anchor
-                if image_id in self.full_image_map:
-                    self.show_full_image(self.full_image_map[image_id])
-                    return  # Consume the event
-            else:
-                # Check if the click is adjacent to an image and reset formatting
-                cursor = self.cursorForPosition(click_pos)
-                cursor.select(QTextCursor.SelectionType.WordUnderCursor)
+class CustomSplitterHandle(QSplitterHandle):
+    def __init__(self, orientation, parent=None):
+        super().__init__(orientation, parent)
+        self.init_ui()
 
-                # Clear formatting if zero-width space detected
-                if cursor.selectedText() == '\u200b':
-                    neutral_format = QTextCharFormat()
-                    cursor.setCharFormat(neutral_format)
-                    self.setTextCursor(cursor)
-                
-        super().mousePressEvent(event)
+    def init_ui(self):
+        # Set up a layout for the handle to include a label as the "grip"
+        layout = QVBoxLayout() if self.orientation() == Qt.Orientation.Vertical else QVBoxLayout()
+        layout.setContentsMargins(0, 0, 0, 0)
 
-    def show_full_image(self, pixmap):
-        dialog = QDialog(self)
-        dialog.setWindowTitle("Full Image")
-        layout = QVBoxLayout(dialog)
-        full_image_label = QLabel()
-        full_image_label.setPixmap(pixmap)
-        layout.addWidget(full_image_label)
-        dialog.setLayout(layout)
-        dialog.exec()
+        # Create a label to act as a visual grip
+        grip_label = QLabel(self)
+        grip_label.setFixedSize(QSize(20, 50))  # Size of the handle grip
+        grip_label.setStyleSheet("""
+            QLabel {
+                background-color: #888;  /* Handle color */
+                border-radius: 5px;
+                margin: 2px;
+            }
+        """)
+
+        # Add label to layout and set layout to handle
+        layout.addWidget(grip_label, alignment=Qt.AlignmentFlag.AlignCenter)
+        self.setLayout(layout)
+
+class CustomSplitter(QSplitter):
+    def __init__(self, orientation, parent=None):
+        super().__init__(orientation, parent)
+
+    def createHandle(self):
+        """Override to use the custom splitter handle."""
+        return CustomSplitterHandle(self.orientation(), self)            
+
+class SavedFilesPanel(QWidget):
+    """A panel to display saved files on the left side of the main window."""
+    def __init__(self, main_window):
+        super(SavedFilesPanel, self).__init__(main_window)
+        self.main_window = main_window
+        self.setWindowTitle("Saved Files")
+        self.setFixedWidth(200)
+
+        # Initialize layout and widgets
+        self.layout = QVBoxLayout(self)
+        self.saved_files_list = QListWidget(self)
+        self.layout.addWidget(self.saved_files_list)
+
+        # Expand/collapse button with custom font size and optional icon
+        self.toggle_button = QPushButton(self)
+        self.toggle_button.setCheckable(True)
+        self.toggle_button.clicked.connect(self.toggle_panel)
+        self.toggle_button.setFixedSize(75, 42)  # Adjust button size
+
+        # Set text and style with larger font size, or replace with icon
+        self.toggle_button.setText("Hide")  # Set text if needed
+        self.toggle_button.setFont(QFont("Arial", 10))  # Set font size to 10, for example
+        # Uncomment the following line to replace the text with an icon
+        # self.toggle_button.setIcon(QIcon(os.path.join("path_to_icons", "hide_icon.png")))
+
+        self.layout.insertWidget(0, self.toggle_button)
+
+        # Load saved files from the persistent folder
+        self.load_saved_files()
+        self.saved_files_list.itemDoubleClicked.connect(self.open_selected_file)
+
+    def load_saved_files(self):
+        """Load saved files from the persistent folder into the list widget."""
+        self.saved_files_list.clear()
+        # List all files in the persistent folder
+        saved_files = [f for f in os.listdir(PERSISTENT_FOLDER) if os.path.isfile(os.path.join(PERSISTENT_FOLDER, f))]
+        for file_name in saved_files:
+            self.saved_files_list.addItem(file_name)
+
+    def add_saved_file(self, file_name):
+        """Add a new file to the saved files folder and refresh the list."""
+        if not os.path.exists(os.path.join(PERSISTENT_FOLDER, file_name)):
+            self.saved_files_list.addItem(file_name)
+
+    def toggle_panel(self):
+        """Toggle visibility of the saved files panel."""
+        is_visible = self.isVisible()  # Check current visibility
+        self.setVisible(not is_visible)  # Toggle visibility
+
+        # Update button text based on visibility
+        self.toggle_button.setText("Show" if not is_visible else "Hide")
+
+        # Update the toolbar action in the main window to sync with this button
+        self.main_window.toggle_panel_action.setChecked(not is_visible)
+
+    def open_selected_file(self, item):
+        """Open the selected file in a new tab."""
+        file_name = item.text()
+        file_path = os.path.join(PERSISTENT_FOLDER, file_name)
+        self.main_window.open_file_in_new_tab(file_path)
 
 """===========Snipping Overlay Class=========="""
 class SnippingOverlay(QWidget):

@@ -1,0 +1,596 @@
+{
+    "Amber Glow Theme": {
+        "style": "QMainWindow { background-color: #ffbf00; } QTextEdit { background-color: #ffdd44; color: #4a3c00; selection-background-color: #ffe680; } QMenuBar, QMenu, QToolBar { background-color: #ffdd44; color: #4a3c00; } QMenu::item:selected, QToolButton:hover { background-color: #ffe680; }",
+        "text_color": "#4a3c00",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Aqua Marine Theme": {
+        "style": "QMainWindow { background-color: #7fdbff; } QTextEdit { background-color: #0074d9; color: #001f3f; selection-background-color: #39c0ed; } QMenuBar, QMenu, QToolBar { background-color: #0074d9; color: #ffffff; } QMenu::item:selected, QToolButton:hover { background-color: #39c0ed; }",
+        "text_color": "#001f3f",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Autumn Maple Theme": {
+        "style": "QMainWindow { background-color: #d2691e; } QTextEdit { background-color: #f4a460; color: #4b2e2e; selection-background-color: #e3735e; } QMenuBar, QMenu, QToolBar { background-color: #cc774f; color: #4b2e2e; } QMenu::item:selected, QToolButton:hover { background-color: #d98258; }",
+        "text_color": "#4b2e2e",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Berry Purple Theme": {
+        "style": "QMainWindow { background-color: #4b0082; } QTextEdit { background-color: #6a0dad; color: #e6e6fa; selection-background-color: #9932cc; } QMenuBar, QMenu, QToolBar { background-color: #6a0dad; color: #e6e6fa; } QMenu::item:selected, QToolButton:hover { background-color: #9932cc; }",
+        "text_color": "#e6e6fa",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Bronze Theme": {
+        "style": "QMainWindow { background-color: #cd7f32; } QTextEdit { background-color: #d89b5e; color: #3b1e06; selection-background-color: #b87333; } QMenuBar, QMenu, QToolBar { background-color: #b87333; color: #3b1e06; } QMenu::item:selected, QToolButton:hover { background-color: #d89b5e; }",
+        "text_color": "#3b1e06",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Cool Gray Theme": {
+        "style": "QMainWindow { background-color: #e0e6ed; } QTextEdit { background-color: #d3dae0; color: #4f5b66; selection-background-color: #b0bec5; } QMenuBar, QMenu, QToolBar { background-color: #c5cfd6; color: #4f5b66; } QMenu::item:selected, QToolButton:hover { background-color: #a9b7bf; }",
+        "text_color": "#4f5b66",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Dark Theme": {
+        "style": "QMainWindow { background-color: #2e2e2e; } QTextEdit { background-color: #1e1e1e; color: #dcdcdc; selection-background-color: #505050; } QMenuBar, QMenu, QToolBar { background-color: #3c3c3c; color: #dcdcdc; } QMenu::item:selected, QToolButton:hover { background-color: #505050; }",
+        "text_color": "#dcdcdc",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Deep Space Theme": {
+        "style": "QMainWindow { background-color: #0d0d0d; } QTextEdit { background-color: #1a1a1a; color: #b0b0b0; selection-background-color: #333333; } QMenuBar, QMenu, QToolBar { background-color: #1a1a1a; color: #b0b0b0; } QMenu::item:selected, QToolButton:hover { background-color: #333333; }",
+        "text_color": "#b0b0b0",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Desert Sand Theme": {
+        "style": "QMainWindow { background-color: #edc9af; } QTextEdit { background-color: #edc9af; color: #5f4632; selection-background-color: #cdb79e; } QMenuBar, QMenu, QToolBar { background-color: #e3b89b; color: #5f4632; } QMenu::item:selected, QToolButton:hover { background-color: #c7a693; }",
+        "text_color": "#5f4632",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Emerald Theme": {
+        "style": "QMainWindow { background-color: #0a3d3e; } QTextEdit { background-color: #0f4d4f; color: #cde0c9; selection-background-color: #39796b; } QMenuBar, QMenu, QToolBar { background-color: #0f4d4f; color: #cde0c9; } QMenu::item:selected, QToolButton:hover { background-color: #39796b; }",
+        "text_color": "#cde0c9",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Forest Green Theme": {
+        "style": "QMainWindow { background-color: #2b472e; } QTextEdit { background-color: #2b472e; color: #d3e2c2; selection-background-color: #4a6356; } QMenuBar, QMenu, QToolBar { background-color: #3c5c46; color: #d3e2c2; } QMenu::item:selected, QToolButton:hover { background-color: #4a6356; }",
+        "text_color": "#d3e2c2",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Golden Yellow Theme": {
+        "style": "QMainWindow { background-color: #ffd700; } QTextEdit { background-color: #ffec8b; color: #6b4226; selection-background-color: #ffd662; } QMenuBar, QMenu, QToolBar { background-color: #ffec8b; color: #6b4226; } QMenu::item:selected, QToolButton:hover { background-color: #ffd662; }",
+        "text_color": "#6b4226",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Ice Blue Theme": {
+        "style": "QMainWindow { background-color: #e1f5fe; } QTextEdit { background-color: #b3e5fc; color: #01579b; selection-background-color: #81d4fa; } QMenuBar, QMenu, QToolBar { background-color: #b3e5fc; color: #01579b; } QMenu::item:selected, QToolButton:hover { background-color: #81d4fa; }",
+        "text_color": "#01579b",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Lavender Theme": {
+        "style": "QMainWindow { background-color: #e6e6fa; } QTextEdit { background-color: #e6e6fa; color: #4b0082; selection-background-color: #d8bfd8; } QMenuBar, QMenu, QToolBar { background-color: #dcdcdc; color: #4b0082; } QMenu::item:selected, QToolButton:hover { background-color: #c0c0c0; }",
+        "text_color": "#4b0082",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Light Theme": {
+        "style": "QMainWindow { background-color: white; } QTextEdit { background-color: white; color: black; selection-background-color: #d3d7df; } QMenuBar, QMenu, QToolBar { background-color: #f0f0f0; color: black; } QMenu::item:selected, QToolButton:hover { background-color: #e0e0e0; }",
+        "text_color": "#000000",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Midnight Purple Theme": {
+        "style": "QMainWindow { background-color: #2e1a47; } QTextEdit { background-color: #2e1a47; color: #d1c4e9; selection-background-color: #4a306d; } QMenuBar, QMenu, QToolBar { background-color: #3a245e; color: #d1c4e9; } QMenu::item:selected, QToolButton:hover { background-color: #4a306d; }",
+        "text_color": "#d1c4e9",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Monokai Theme": {
+        "style": "QMainWindow { background-color: #272822; } QTextEdit { background-color: #272822; color: #f8f8f2; selection-background-color: #49483e; } QMenuBar, QMenu, QToolBar { background-color: #3e3d32; color: #f8f8f2; } QMenu::item:selected, QToolButton:hover { background-color: #49483e; }",
+        "text_color": "#f8f8f2",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Ocean Blue Theme": {
+        "style": "QMainWindow { background-color: #1a1f3b; } QTextEdit { background-color: #1a1f3b; color: #aaccff; selection-background-color: #3b5998; } QMenuBar, QMenu, QToolBar { background-color: #162447; color: #aaccff; } QMenu::item:selected, QToolButton:hover { background-color: #3b5998; }",
+        "text_color": "#aaccff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Olive Green Theme": {
+        "style": "QMainWindow { background-color: #556b2f; } QTextEdit { background-color: #6b8e23; color: #f0e68c; selection-background-color: #bdb76b; } QMenuBar, QMenu, QToolBar { background-color: #808000; color: #f0e68c; } QMenu::item:selected, QToolButton:hover { background-color: #bdb76b; }",
+        "text_color": "#f0e68c",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Peach Blossom Theme": {
+        "style": "QMainWindow { background-color: #ffe5b4; } QTextEdit { background-color: #ffdab9; color: #8b4513; selection-background-color: #ffdead; } QMenuBar, QMenu, QToolBar { background-color: #ffdead; color: #8b4513; } QMenu::item:selected, QToolButton:hover { background-color: #ffe4c4; }",
+        "text_color": "#8b4513",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Rose Gold Theme": {
+        "style": "QMainWindow { background-color: #b76e79; } QTextEdit { background-color: #f7cac9; color: #6d1d3e; selection-background-color: #e6a6b0; } QMenuBar, QMenu, QToolBar { background-color: #d4a5a5; color: #6d1d3e; } QMenu::item:selected, QToolButton:hover { background-color: #e6a6b0; }",
+        "text_color": "#6d1d3e",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Rustic Red Theme": {
+        "style": "QMainWindow { background-color: #8b0000; } QTextEdit { background-color: #b22222; color: #f5f5f5; selection-background-color: #cd5c5c; } QMenuBar, QMenu, QToolBar { background-color: #a52a2a; color: #f5f5f5; } QMenu::item:selected, QToolButton:hover { background-color: #cd5c5c; }",
+        "text_color": "#f5f5f5",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Sepia Theme": {
+        "style": "QMainWindow { background-color: #f5e6d2; } QTextEdit { background-color: #f5e6d2; color: #5b4636; selection-background-color: #d3c4b4; } QMenuBar, QMenu, QToolBar { background-color: #f2d7b5; color: #5b4636; } QMenu::item:selected, QToolButton:hover { background-color: #e6c7a0; }",
+        "text_color": "#5b4636",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Sunset Orange Theme": {
+        "style": "QMainWindow { background-color: #ff6f61; } QTextEdit { background-color: #ff867f; color: #4d1e18; selection-background-color: #ffab91; } QMenuBar, QMenu, QToolBar { background-color: #ff867f; color: #4d1e18; } QMenu::item:selected, QToolButton:hover { background-color: #ffab91; }",
+        "text_color": "#4d1e18",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Vintage Paper Theme": {
+        "style": "QMainWindow { background-color: #fefbf3; } QTextEdit { background-color: #fefbf3; color: #3e3b32; selection-background-color: #eae0c8; } QMenuBar, QMenu, QToolBar { background-color: #ece3d1; color: #3e3b32; } QMenu::item:selected, QToolButton:hover { background-color: #e0d3c3; }",
+        "text_color": "#3e3b32",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Amethyst Dream Theme": {
+        "style": "QMainWindow { background-color: #9b59b6; } QTextEdit { background-color: #8e44ad; color: #f8f8f8; selection-background-color: #d5a6e6; } QMenuBar, QMenu, QToolBar { background-color: #8e44ad; color: #f8f8f8; } QMenu::item:selected, QToolButton:hover { background-color: #d5a6e6; }",
+        "text_color": "#f8f8f8",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Antique Ivory Theme": {
+        "style": "QMainWindow { background-color: #f2e5d5; } QTextEdit { background-color: #f5e1c8; color: #5b4033; selection-background-color: #e8d3bc; } QMenuBar, QMenu, QToolBar { background-color: #ead2b9; color: #5b4033; } QMenu::item:selected, QToolButton:hover { background-color: #e8d3bc; }",
+        "text_color": "#5b4033",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Aubergine Mist Theme": {
+        "style": "QMainWindow { background-color: #3d2c3e; } QTextEdit { background-color: #4b2b4d; color: #e6d7f7; selection-background-color: #6a3e70; } QMenuBar, QMenu, QToolBar { background-color: #4b2b4d; color: #e6d7f7; } QMenu::item:selected, QToolButton:hover { background-color: #6a3e70; }",
+        "text_color": "#e6d7f7",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Blush Rose Theme": {
+        "style": "QMainWindow { background-color: #f7cac9; } QTextEdit { background-color: #ffe5e5; color: #7d3f3f; selection-background-color: #f9d1d1; } QMenuBar, QMenu, QToolBar { background-color: #ffe5e5; color: #7d3f3f; } QMenu::item:selected, QToolButton:hover { background-color: #f9d1d1; }",
+        "text_color": "#7d3f3f",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Burnished Copper Theme": {
+        "style": "QMainWindow { background-color: #b87333; } QTextEdit { background-color: #d89463; color: #442200; selection-background-color: #c8814c; } QMenuBar, QMenu, QToolBar { background-color: #d89463; color: #442200; } QMenu::item:selected, QToolButton:hover { background-color: #c8814c; }",
+        "text_color": "#442200",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Canyon Clay Theme": {
+        "style": "QMainWindow { background-color: #c1440e; } QTextEdit { background-color: #d36719; color: #ffe0c7; selection-background-color: #e07530; } QMenuBar, QMenu, QToolBar { background-color: #d36719; color: #ffe0c7; } QMenu::item:selected, QToolButton:hover { background-color: #e07530; }",
+        "text_color": "#ffe0c7",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Celestial Indigo Theme": {
+        "style": "QMainWindow { background-color: #3a2f5b; } QTextEdit { background-color: #5e5d9f; color: #d6d7e2; selection-background-color: #7a79b9; } QMenuBar, QMenu, QToolBar { background-color: #5e5d9f; color: #d6d7e2; } QMenu::item:selected, QToolButton:hover { background-color: #7a79b9; }",
+        "text_color": "#d6d7e2",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Cherry Blossom Theme": {
+        "style": "QMainWindow { background-color: #ffe5f7; } QTextEdit { background-color: #ffcadc; color: #7a2948; selection-background-color: #ffb3d1; } QMenuBar, QMenu, QToolBar { background-color: #ffcadc; color: #7a2948; } QMenu::item:selected, QToolButton:hover { background-color: #ffb3d1; }",
+        "text_color": "#7a2948",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Chestnut Brown Theme": {
+        "style": "QMainWindow { background-color: #a0522d; } QTextEdit { background-color: #b56539; color: #ffe5d4; selection-background-color: #d2691e; } QMenuBar, QMenu, QToolBar { background-color: #b56539; color: #ffe5d4; } QMenu::item:selected, QToolButton:hover { background-color: #d2691e; }",
+        "text_color": "#ffe5d4",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Coral Reef Theme": {
+        "style": "QMainWindow { background-color: #ff7f50; } QTextEdit { background-color: #ffb9a3; color: #401000; selection-background-color: #ff8867; } QMenuBar, QMenu, QToolBar { background-color: #ffb9a3; color: #401000; } QMenu::item:selected, QToolButton:hover { background-color: #ff8867; }",
+        "text_color": "#401000",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Dandelion Yellow Theme": {
+        "style": "QMainWindow { background-color: #ffcc00; } QTextEdit { background-color: #ffd633; color: #4a3d00; selection-background-color: #ffeb80; } QMenuBar, QMenu, QToolBar { background-color: #ffd633; color: #4a3d00; } QMenu::item:selected, QToolButton:hover { background-color: #ffeb80; }",
+        "text_color": "#4a3d00",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Dawn Pink Theme": {
+        "style": "QMainWindow { background-color: #ffe6e6; } QTextEdit { background-color: #ffb3b3; color: #5a2d2d; selection-background-color: #ffcccc; } QMenuBar, QMenu, QToolBar { background-color: #ffb3b3; color: #5a2d2d; } QMenu::item:selected, QToolButton:hover { background-color: #ffcccc; }",
+        "text_color": "#5a2d2d",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Dusk Blue Theme": {
+        "style": "QMainWindow { background-color: #0f4c75; } QTextEdit { background-color: #3282b8; color: #f0f8ff; selection-background-color: #7b9fb1; } QMenuBar, QMenu, QToolBar { background-color: #3282b8; color: #f0f8ff; } QMenu::item:selected, QToolButton:hover { background-color: #7b9fb1; }",
+        "text_color": "#f0f8ff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Eucalyptus Green Theme": {
+        "style": "QMainWindow { background-color: #3b7a57; } QTextEdit { background-color: #4a9d68; color: #d4e6d5; selection-background-color: #68b881; } QMenuBar, QMenu, QToolBar { background-color: #4a9d68; color: #d4e6d5; } QMenu::item:selected, QToolButton:hover { background-color: #68b881; }",
+        "text_color": "#d4e6d5",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Golden Sand Theme": {
+        "style": "QMainWindow { background-color: #e0b16d; } QTextEdit { background-color: #ffdab9; color: #3d200b; selection-background-color: #d4a55d; } QMenuBar, QMenu, QToolBar { background-color: #ffdab9; color: #3d200b; } QMenu::item:selected, QToolButton:hover { background-color: #d4a55d; }",
+        "text_color": "#3d200b",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Granite Gray Theme": {
+        "style": "QMainWindow { background-color: #696969; } QTextEdit { background-color: #b2b2b2; color: #1f1f1f; selection-background-color: #d3d3d3; } QMenuBar, QMenu, QToolBar { background-color: #b2b2b2; color: #1f1f1f; } QMenu::item:selected, QToolButton:hover { background-color: #d3d3d3; }",
+        "text_color": "#1f1f1f",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Honey Gold Theme": {
+        "style": "QMainWindow { background-color: #e8a535; } QTextEdit { background-color: #f3c65a; color: #5c3e00; selection-background-color: #ffdd73; } QMenuBar, QMenu, QToolBar { background-color: #f3c65a; color: #5c3e00; } QMenu::item:selected, QToolButton:hover { background-color: #ffdd73; }",
+        "text_color": "#5c3e00",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Lavender Haze Theme": {
+        "style": "QMainWindow { background-color: #e6e6fa; } QTextEdit { background-color: #dcd7f7; color: #4b0082; selection-background-color: #d0c1ff; } QMenuBar, QMenu, QToolBar { background-color: #dcd7f7; color: #4b0082; } QMenu::item:selected, QToolButton:hover { background-color: #d0c1ff; }",
+        "text_color": "#4b0082",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Lush Garden Theme": {
+        "style": "QMainWindow { background-color: #3d521c; } QTextEdit { background-color: #4f7630; color: #dfe6c5; selection-background-color: #648639; } QMenuBar, QMenu, QToolBar { background-color: #4f7630; color: #dfe6c5; } QMenu::item:selected, QToolButton:hover { background-color: #648639; }",
+        "text_color": "#dfe6c5",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Moonlit Sky Theme": {
+        "style": "QMainWindow { background-color: #0c1445; } QTextEdit { background-color: #1f305e; color: #d9d9f3; selection-background-color: #506090; } QMenuBar, QMenu, QToolBar { background-color: #1f305e; color: #d9d9f3; } QMenu::item:selected, QToolButton:hover { background-color: #506090; }",
+        "text_color": "#d9d9f3",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Morning Dew Theme": {
+        "style": "QMainWindow { background-color: #d9f2e6; } QTextEdit { background-color: #e0f4ed; color: #3a4f3e; selection-background-color: #d0e8dc; } QMenuBar, QMenu, QToolBar { background-color: #e0f4ed; color: #3a4f3e; } QMenu::item:selected, QToolButton:hover { background-color: #d0e8dc; }",
+        "text_color": "#3a4f3e",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Ocean Wave Theme": {
+        "style": "QMainWindow { background-color: #88c0d0; } QTextEdit { background-color: #5e81ac; color: #eceff4; selection-background-color: #4c566a; } QMenuBar, QMenu, QToolBar { background-color: #5e81ac; color: #eceff4; } QMenu::item:selected, QToolButton:hover { background-color: #4c566a; }",
+        "text_color": "#eceff4",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Peacock Blue Theme": {
+        "style": "QMainWindow { background-color: #003b46; } QTextEdit { background-color: #07575b; color: #d4e2e6; selection-background-color: #2e8b57; } QMenuBar, QMenu, QToolBar { background-color: #07575b; color: #d4e2e6; } QMenu::item:selected, QToolButton:hover { background-color: #2e8b57; }",
+        "text_color": "#d4e2e6",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Pine Forest Theme": {
+        "style": "QMainWindow { background-color: #2a5934; } QTextEdit { background-color: #3e7251; color: #d6e4d3; selection-background-color: #578a60; } QMenuBar, QMenu, QToolBar { background-color: #3e7251; color: #d6e4d3; } QMenu::item:selected, QToolButton:hover { background-color: #578a60; }",
+        "text_color": "#d6e4d3",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Plum Purple Theme": {
+        "style": "QMainWindow { background-color: #4b0082; } QTextEdit { background-color: #6a0dad; color: #e6e6fa; selection-background-color: #9932cc; } QMenuBar, QMenu, QToolBar { background-color: #6a0dad; color: #e6e6fa; } QMenu::item:selected, QToolButton:hover { background-color: #9932cc; }",
+        "text_color": "#e6e6fa",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Royal Blue Theme": {
+        "style": "QMainWindow { background-color: #4169e1; } QTextEdit { background-color: #5a8dee; color: #f5f8ff; selection-background-color: #7aa6f7; } QMenuBar, QMenu, QToolBar { background-color: #5a8dee; color: #f5f8ff; } QMenu::item:selected, QToolButton:hover { background-color: #7aa6f7; }",
+        "text_color": "#f5f8ff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Rustic Barn Theme": {
+        "style": "QMainWindow { background-color: #a52a2a; } QTextEdit { background-color: #cc4f4f; color: #fffaf0; selection-background-color: #d98282; } QMenuBar, QMenu, QToolBar { background-color: #cc4f4f; color: #fffaf0; } QMenu::item:selected, QToolButton:hover { background-color: #d98282; }",
+        "text_color": "#fffaf0",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Seafoam Green Theme": {
+        "style": "QMainWindow { background-color: #93e9be; } QTextEdit { background-color: #a5f2c8; color: #2b5934; selection-background-color: #88d9ad; } QMenuBar, QMenu, QToolBar { background-color: #a5f2c8; color: #2b5934; } QMenu::item:selected, QToolButton:hover { background-color: #88d9ad; }",
+        "text_color": "#2b5934",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Silver Mist Theme": {
+        "style": "QMainWindow { background-color: #dcdcdc; } QTextEdit { background-color: #f0f0f0; color: #333333; selection-background-color: #c8c8c8; } QMenuBar, QMenu, QToolBar { background-color: #f0f0f0; color: #333333; } QMenu::item:selected, QToolButton:hover { background-color: #c8c8c8; }",
+        "text_color": "#333333",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Skyline Blue Theme": {
+        "style": "QMainWindow { background-color: #3b5998; } QTextEdit { background-color: #4a6ea9; color: #dce3ef; selection-background-color: #6a89cc; } QMenuBar, QMenu, QToolBar { background-color: #4a6ea9; color: #dce3ef; } QMenu::item:selected, QToolButton:hover { background-color: #6a89cc; }",
+        "text_color": "#dce3ef",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Slate Gray Theme": {
+        "style": "QMainWindow { background-color: #708090; } QTextEdit { background-color: #778899; color: #f8f8ff; selection-background-color: #6b7a8f; } QMenuBar, QMenu, QToolBar { background-color: #778899; color: #f8f8ff; } QMenu::item:selected, QToolButton:hover { background-color: #6b7a8f; }",
+        "text_color": "#f8f8ff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Snow Drift Theme": {
+        "style": "QMainWindow { background-color: #fffafa; } QTextEdit { background-color: #f8f8ff; color: #2f4f4f; selection-background-color: #e5e5e5; } QMenuBar, QMenu, QToolBar { background-color: #f8f8ff; color: #2f4f4f; } QMenu::item:selected, QToolButton:hover { background-color: #e5e5e5; }",
+        "text_color": "#2f4f4f",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Soft Mint Theme": {
+        "style": "QMainWindow { background-color: #98ff98; } QTextEdit { background-color: #b3ffb3; color: #004d00; selection-background-color: #99ff99; } QMenuBar, QMenu, QToolBar { background-color: #b3ffb3; color: #004d00; } QMenu::item:selected, QToolButton:hover { background-color: #99ff99; }",
+        "text_color": "#004d00",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Sunburst Yellow Theme": {
+        "style": "QMainWindow { background-color: #ffcc00; } QTextEdit { background-color: #ffe066; color: #5c3b00; selection-background-color: #ffd633; } QMenuBar, QMenu, QToolBar { background-color: #ffe066; color: #5c3b00; } QMenu::item:selected, QToolButton:hover { background-color: #ffd633; }",
+        "text_color": "#5c3b00",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Teal Blue Theme": {
+        "style": "QMainWindow { background-color: #008080; } QTextEdit { background-color: #009999; color: #e6ffff; selection-background-color: #66cccc; } QMenuBar, QMenu, QToolBar { background-color: #009999; color: #e6ffff; } QMenu::item:selected, QToolButton:hover { background-color: #66cccc; }",
+        "text_color": "#e6ffff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Terracotta Theme": {
+        "style": "QMainWindow { background-color: #e2725b; } QTextEdit { background-color: #d2691e; color: #f5deb3; selection-background-color: #b36755; } QMenuBar, QMenu, QToolBar { background-color: #d2691e; color: #f5deb3; } QMenu::item:selected, QToolButton:hover { background-color: #b36755; }",
+        "text_color": "#f5deb3",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Thistle Mist Theme": {
+        "style": "QMainWindow { background-color: #d8bfd8; } QTextEdit { background-color: #f0e6f7; color: #4b0082; selection-background-color: #e4d3f0; } QMenuBar, QMenu, QToolBar { background-color: #f0e6f7; color: #4b0082; } QMenu::item:selected, QToolButton:hover { background-color: #e4d3f0; }",
+        "text_color": "#4b0082",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Tiger Orange Theme": {
+        "style": "QMainWindow { background-color: #ff6600; } QTextEdit { background-color: #ff944d; color: #4a2600; selection-background-color: #ff751a; } QMenuBar, QMenu, QToolBar { background-color: #ff944d; color: #4a2600; } QMenu::item:selected, QToolButton:hover { background-color: #ff751a; }",
+        "text_color": "#4a2600",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Timeless Gray Theme": {
+        "style": "QMainWindow { background-color: #808080; } QTextEdit { background-color: #bfbfbf; color: #333333; selection-background-color: #9a9a9a; } QMenuBar, QMenu, QToolBar { background-color: #bfbfbf; color: #333333; } QMenu::item:selected, QToolButton:hover { background-color: #9a9a9a; }",
+        "text_color": "#333333",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Topaz Blue Theme": {
+        "style": "QMainWindow { background-color: #007b83; } QTextEdit { background-color: #00a8b5; color: #e8ffff; selection-background-color: #5ec8d4; } QMenuBar, QMenu, QToolBar { background-color: #00a8b5; color: #e8ffff; } QMenu::item:selected, QToolButton:hover { background-color: #5ec8d4; }",
+        "text_color": "#e8ffff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Tropical Pink Theme": {
+        "style": "QMainWindow { background-color: #ff66b2; } QTextEdit { background-color: #ff99cc; color: #660033; selection-background-color: #ff80bf; } QMenuBar, QMenu, QToolBar { background-color: #ff99cc; color: #660033; } QMenu::item:selected, QToolButton:hover { background-color: #ff80bf; }",
+        "text_color": "#660033",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Tuscan Brown Theme": {
+        "style": "QMainWindow { background-color: #a0522d; } QTextEdit { background-color: #cd853f; color: #fdf5e6; selection-background-color: #8b4513; } QMenuBar, QMenu, QToolBar { background-color: #cd853f; color: #fdf5e6; } QMenu::item:selected, QToolButton:hover { background-color: #8b4513; }",
+        "text_color": "#fdf5e6",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Turquoise Tide Theme": {
+        "style": "QMainWindow { background-color: #40e0d0; } QTextEdit { background-color: #66e0ff; color: #003333; selection-background-color: #4dc4cf; } QMenuBar, QMenu, QToolBar { background-color: #66e0ff; color: #003333; } QMenu::item:selected, QToolButton:hover { background-color: #4dc4cf; }",
+        "text_color": "#003333",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Twilight Purple Theme": {
+        "style": "QMainWindow { background-color: #5d3a6d; } QTextEdit { background-color: #7b4d89; color: #f3e5ff; selection-background-color: #916fa3; } QMenuBar, QMenu, QToolBar { background-color: #7b4d89; color: #f3e5ff; } QMenu::item:selected, QToolButton:hover { background-color: #916fa3; }",
+        "text_color": "#f3e5ff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Vintage Rose Theme": {
+        "style": "QMainWindow { background-color: #e7a6a1; } QTextEdit { background-color: #f2c3bc; color: #602020; selection-background-color: #d99a90; } QMenuBar, QMenu, QToolBar { background-color: #f2c3bc; color: #602020; } QMenu::item:selected, QToolButton:hover { background-color: #d99a90; }",
+        "text_color": "#602020",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Warm Earth Theme": {
+        "style": "QMainWindow { background-color: #b5651d; } QTextEdit { background-color: #de9d5e; color: #2d1400; selection-background-color: #ca853d; } QMenuBar, QMenu, QToolBar { background-color: #de9d5e; color: #2d1400; } QMenu::item:selected, QToolButton:hover { background-color: #ca853d; }",
+        "text_color": "#2d1400",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Waterfall Theme": {
+        "style": "QMainWindow { background-color: #3399ff; } QTextEdit { background-color: #80bfff; color: #0f305e; selection-background-color: #66a3ff; } QMenuBar, QMenu, QToolBar { background-color: #80bfff; color: #0f305e; } QMenu::item:selected, QToolButton:hover { background-color: #66a3ff; }",
+        "text_color": "#0f305e",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Wildflower Theme": {
+        "style": "QMainWindow { background-color: #ffb3b3; } QTextEdit { background-color: #ffcccc; color: #660033; selection-background-color: #ff9999; } QMenuBar, QMenu, QToolBar { background-color: #ffcccc; color: #660033; } QMenu::item:selected, QToolButton:hover { background-color: #ff9999; }",
+        "text_color": "#660033",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Wine Red Theme": {
+        "style": "QMainWindow { background-color: #8b0000; } QTextEdit { background-color: #a52a2a; color: #f5f5f5; selection-background-color: #cd5c5c; } QMenuBar, QMenu, QToolBar { background-color: #a52a2a; color: #f5f5f5; } QMenu::item:selected, QToolButton:hover { background-color: #cd5c5c; }",
+        "text_color": "#f5f5f5",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Winter Frost Theme": {
+        "style": "QMainWindow { background-color: #e0f7fa; } QTextEdit { background-color: #b2ebf2; color: #006064; selection-background-color: #80deea; } QMenuBar, QMenu, QToolBar { background-color: #b2ebf2; color: #006064; } QMenu::item:selected, QToolButton:hover { background-color: #80deea; }",
+        "text_color": "#006064",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Woodland Green Theme": {
+        "style": "QMainWindow { background-color: #556b2f; } QTextEdit { background-color: #6b8e23; color: #f0e68c; selection-background-color: #bdb76b; } QMenuBar, QMenu, QToolBar { background-color: #808000; color: #f0e68c; } QMenu::item:selected, QToolButton:hover { background-color: #bdb76b; }",
+        "text_color": "#f0e68c",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Worn Leather Theme": {
+        "style": "QMainWindow { background-color: #d2b48c; } QTextEdit { background-color: #e6c3a4; color: #4d2600; selection-background-color: #bf8f57; } QMenuBar, QMenu, QToolBar { background-color: #e6c3a4; color: #4d2600; } QMenu::item:selected, QToolButton:hover { background-color: #bf8f57; }",
+        "text_color": "#4d2600",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Blue Lagoon Theme": {
+        "style": "QMainWindow { background-color: #005f6a; } QTextEdit { background-color: #008891; color: #e1f5fe; selection-background-color: #66cdaa; } QMenuBar, QMenu, QToolBar { background-color: #008891; color: #e1f5fe; } QMenu::item:selected, QToolButton:hover { background-color: #66cdaa; }",
+        "text_color": "#e1f5fe",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Woodsmoke Black Theme": {
+        "style": "QMainWindow { background-color: #0b0c10; } QTextEdit { background-color: #1f2833; color: #c5c6c7; selection-background-color: #4b515d; } QMenuBar, QMenu, QToolBar { background-color: #1f2833; color: #c5c6c7; } QMenu::item:selected, QToolButton:hover { background-color: #4b515d; }",
+        "text_color": "#c5c6c7",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Warm Beige Theme": {
+        "style": "QMainWindow { background-color: #f5f5dc; } QTextEdit { background-color: #fff5e1; color: #5f4632; selection-background-color: #e4d6ba; } QMenuBar, QMenu, QToolBar { background-color: #fff5e1; color: #5f4632; } QMenu::item:selected, QToolButton:hover { background-color: #e4d6ba; }",
+        "text_color": "#5f4632",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Coral Blush Theme": {
+        "style": "QMainWindow { background-color: #ff7f50; } QTextEdit { background-color: #ffb6c1; color: #800000; selection-background-color: #ff9999; } QMenuBar, QMenu, QToolBar { background-color: #ffb6c1; color: #800000; } QMenu::item:selected, QToolButton:hover { background-color: #ff9999; }",
+        "text_color": "#800000",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Emerald Isle Theme": {
+        "style": "QMainWindow { background-color: #228b22; } QTextEdit { background-color: #32cd32; color: #f0fff0; selection-background-color: #2e8b57; } QMenuBar, QMenu, QToolBar { background-color: #32cd32; color: #f0fff0; } QMenu::item:selected, QToolButton:hover { background-color: #2e8b57; }",
+        "text_color": "#f0fff0",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Golden Sunset Theme": {
+        "style": "QMainWindow { background-color: #f4a460; } QTextEdit { background-color: #ffdab9; color: #8b4513; selection-background-color: #ffdead; } QMenuBar, QMenu, QToolBar { background-color: #ffdab9; color: #8b4513; } QMenu::item:selected, QToolButton:hover { background-color: #ffdead; }",
+        "text_color": "#8b4513",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Deep Navy Theme": {
+        "style": "QMainWindow { background-color: #000080; } QTextEdit { background-color: #00008b; color: #add8e6; selection-background-color: #1e90ff; } QMenuBar, QMenu, QToolBar { background-color: #00008b; color: #add8e6; } QMenu::item:selected, QToolButton:hover { background-color: #1e90ff; }",
+        "text_color": "#add8e6",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Frosted Mint Theme": {
+        "style": "QMainWindow { background-color: #e0f7fa; } QTextEdit { background-color: #b2ebf2; color: #006064; selection-background-color: #80deea; } QMenuBar, QMenu, QToolBar { background-color: #b2ebf2; color: #006064; } QMenu::item:selected, QToolButton:hover { background-color: #80deea; }",
+        "text_color": "#006064",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Rich Burgundy Theme": {
+        "style": "QMainWindow { background-color: #800020; } QTextEdit { background-color: #993333; color: #ffefdb; selection-background-color: #a52a2a; } QMenuBar, QMenu, QToolBar { background-color: #993333; color: #ffefdb; } QMenu::item:selected, QToolButton:hover { background-color: #a52a2a; }",
+        "text_color": "#ffefdb",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Cobalt Blue Theme": {
+        "style": "QMainWindow { background-color: #0047ab; } QTextEdit { background-color: #0057b7; color: #ffffff; selection-background-color: #0070ff; } QMenuBar, QMenu, QToolBar { background-color: #0057b7; color: #ffffff; } QMenu::item:selected, QToolButton:hover { background-color: #0070ff; }",
+        "text_color": "#ffffff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Coral Peach Theme": {
+        "style": "QMainWindow { background-color: #ffb07c; } QTextEdit { background-color: #ffc4a3; color: #662200; selection-background-color: #ffbb99; } QMenuBar, QMenu, QToolBar { background-color: #ffc4a3; color: #662200; } QMenu::item:selected, QToolButton:hover { background-color: #ffbb99; }",
+        "text_color": "#662200",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Champagne Gold Theme": {
+        "style": "QMainWindow { background-color: #f7e7ce; } QTextEdit { background-color: #fbe4b9; color: #8b7500; selection-background-color: #f5deb3; } QMenuBar, QMenu, QToolBar { background-color: #fbe4b9; color: #8b7500; } QMenu::item:selected, QToolButton:hover { background-color: #f5deb3; }",
+        "text_color": "#8b7500",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Vibrant Orchid Theme": {
+        "style": "QMainWindow { background-color: #da70d6; } QTextEdit { background-color: #ee82ee; color: #4b0082; selection-background-color: #d87093; } QMenuBar, QMenu, QToolBar { background-color: #ee82ee; color: #4b0082; } QMenu::item:selected, QToolButton:hover { background-color: #d87093; }",
+        "text_color": "#4b0082",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Olive Drab Theme": {
+        "style": "QMainWindow { background-color: #6b8e23; } QTextEdit { background-color: #808000; color: #f5deb3; selection-background-color: #9acd32; } QMenuBar, QMenu, QToolBar { background-color: #808000; color: #f5deb3; } QMenu::item:selected, QToolButton:hover { background-color: #9acd32; }",
+        "text_color": "#f5deb3",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Saffron Yellow Theme": {
+        "style": "QMainWindow { background-color: #ffc300; } QTextEdit { background-color: #ffea00; color: #4d2b00; selection-background-color: #ffd700; } QMenuBar, QMenu, QToolBar { background-color: #ffea00; color: #4d2b00; } QMenu::item:selected, QToolButton:hover { background-color: #ffd700; }",
+        "text_color": "#4d2b00",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Fuchsia Dream Theme": {
+        "style": "QMainWindow { background-color: #ff00ff; } QTextEdit { background-color: #e60073; color: #660066; selection-background-color: #ff66b2; } QMenuBar, QMenu, QToolBar { background-color: #e60073; color: #660066; } QMenu::item:selected, QToolButton:hover { background-color: #ff66b2; }",
+        "text_color": "#660066",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Stormy Sky Theme": {
+        "style": "QMainWindow { background-color: #778899; } QTextEdit { background-color: #708090; color: #f8f8ff; selection-background-color: #1c1c1c; } QMenuBar, QMenu, QToolBar { background-color: #708090; color: #f8f8ff; } QMenu::item:selected, QToolButton:hover { background-color: #1c1c1c; }",
+        "text_color": "#f8f8ff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Smoky Lavender Theme": {
+        "style": "QMainWindow { background-color: #967bb6; } QTextEdit { background-color: #b18bb1; color: #4b0082; selection-background-color: #7a5d8f; } QMenuBar, QMenu, QToolBar { background-color: #b18bb1; color: #4b0082; } QMenu::item:selected, QToolButton:hover { background-color: #7a5d8f; }",
+        "text_color": "#4b0082",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Peacock Feather Theme": {
+        "style": "QMainWindow { background-color: #2e8b57; } QTextEdit { background-color: #66cdaa; color: #ffffff; selection-background-color: #4682b4; } QMenuBar, QMenu, QToolBar { background-color: #66cdaa; color: #ffffff; } QMenu::item:selected, QToolButton:hover { background-color: #4682b4; }",
+        "text_color": "#ffffff",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Aqua Splash Theme": {
+        "style": "QMainWindow { background-color: #7fdbff; } QTextEdit { background-color: #0074d9; color: #001f3f; selection-background-color: #39c0ed; } QMenuBar, QMenu, QToolBar { background-color: #0074d9; color: #ffffff; } QMenu::item:selected, QToolButton:hover { background-color: #39c0ed; }",
+        "text_color": "#001f3f",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Tangerine Twist Theme": {
+        "style": "QMainWindow { background-color: #ff8c00; } QTextEdit { background-color: #ffb07c; color: #4d1e18; selection-background-color: #ffab91; } QMenuBar, QMenu, QToolBar { background-color: #ff8c00; color: #4d1e18; } QMenu::item:selected, QToolButton:hover { background-color: #ffab91; }",
+        "text_color": "#4d1e18",
+        "font_family": "Cambria",
+        "font_size": 14
+    },
+    "Mossy Green Theme": {
+        "style": "QMainWindow { background-color: #8f9779; } QTextEdit { background-color: #9acd32; color: #2e463; selection-background-color: #6b8e23; } QMenuBar, QMenu, QToolBar { background-color: #9acd32; color: #2e463; } QMenu::item:selected, QToolButton:hover { background-color: #6b8e23; }",
+        "text_color": "#2e463",
+        "font_family": "Cambria",
+        "font_size": 14
+    }
+}
