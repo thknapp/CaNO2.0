@@ -8,6 +8,7 @@ import os
 import shutil
 import subprocess
 import sys
+from datetime import datetime
 from io import BytesIO
 from uuid import uuid4
 
@@ -46,7 +47,6 @@ CUSTOM_DICT_PATH = os.path.join(SETTINGS_DIR, "custom_dictionary.json")
 PERSISTENT_FOLDER = os.path.join(SETTINGS_DIR, "saved_files")
 os.makedirs(PERSISTENT_FOLDER, exist_ok=True)  # Create the directory if it doesn't exist
 
-
 # Paths for logging and images
 LOG_FILE = os.path.join(os.path.dirname(__file__), f"{SCRIPT_NAME}.log")
 IMAGES_DIR = os.path.join(os.path.dirname(__file__), 'images')
@@ -58,6 +58,9 @@ DEFAULT_THEME = "Light Theme"
 DEFAULT_WINDOW_SIZE = [800, 600]  # [width, height]
 DEFAULT_WINDOW_POSITION = [100, 100]  # [x, y]
 FONT_SIZES = [str(i) for i in range(8, 98, 2)]  # Font sizes from 8 to 96 in increments of 2
+
+# Path for storing file metadata JSON
+METADATA_FILE = os.path.join(PERSISTENT_FOLDER, "file_metadata.json")
 
 """----------Toggle Button Styling----------"""
 TOGGLE_SWITCH_STYLE = """
@@ -119,9 +122,28 @@ def load_settings():
             logger.warning("Settings file is empty or invalid. Using default settings.")
             return {}  
     return {}  
+    
+def load_file_metadata():
+    """Load file metadata from the metadata file or return an empty dictionary if not found."""
+    if os.path.exists(METADATA_FILE):
+        with open(METADATA_FILE, 'r') as f:
+            return json.load(f)
+    return {}
 
-app_settings = load_settings()
+def save_file_metadata(metadata):
+    """Save metadata dictionary to JSON file."""
+    with open(METADATA_FILE, 'w') as f:
+        json.dump(metadata, f, indent=4)
 
+def update_file_metadata(self, file_name, user_path, persistent_path):
+    """Update the metadata with both the user-chosen path and persistent app path."""
+    self.metadata[file_name] = {
+        "user_path": user_path,
+        "persistent_path": persistent_path,
+        "last_modified": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        "created_at": self.metadata.get(file_name, {}).get("created_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
+    }
+    self.save_metadata()
 
 # Define the path to the themes file
 THEMES_FILE = os.path.join(os.path.dirname(__file__), 'themes.json')
@@ -155,8 +177,17 @@ app_settings = load_settings()  # This should work without issues now
 HIGHLIGHT_STYLES = {
     "Light Yellow / Dark Gray": {"highlight": QColor(255, 255, 204), "font": QColor(64, 64, 64)},
     "Light Blue / Dark Navy": {"highlight": QColor(204, 229, 255), "font": QColor(0, 0, 51)},
-    # Add more highlight styles as needed
+    "Light Green / Dark Green": {"highlight": QColor(204, 255, 204), "font": QColor(0, 51, 0)},
+    "Light Pink / Dark Purple": {"highlight": QColor(255, 204, 229), "font": QColor(51, 0, 51)},
+    "Light Orange / Dark Brown": {"highlight": QColor(255, 229, 204), "font": QColor(102, 51, 0)},
+    "Light Gray / Black": {"highlight": QColor(224, 224, 224), "font": QColor(0, 0, 0)},
+    "Light Purple / Dark Purple": {"highlight": QColor(229, 204, 255), "font": QColor(51, 0, 51)},
+    "Light Peach / Dark Brown": {"highlight": QColor(255, 229, 204), "font": QColor(102, 51, 0)},
+    "Light Teal / Dark Teal": {"highlight": QColor(204, 255, 255), "font": QColor(0, 51, 51)},
+    "Pale Yellow / Dark Olive": {"highlight": QColor(255, 255, 153), "font": QColor(51, 51, 0)},
+    "Mint Green / Dark Green": {"highlight": QColor(204, 255, 229), "font": QColor(0, 51, 0)}
 }
+
 """----------Spell Checker Intialization----------""" 
 # Spell Checker Initialization
 spell = SpellChecker()
@@ -213,6 +244,9 @@ class MainWindow(QMainWindow):
         window_position = app_settings.get("window_position", DEFAULT_WINDOW_POSITION)
         self.resize(window_size[0], window_size[1])
         self.move(window_position[0], window_position[1])
+        
+        # Initialize FileMetadataManager
+        self.file_metadata_manager = FileMetadataManager()
         
         # Initialize path tracking
         self.paths = {}  # Stores file paths for each tab
@@ -1318,59 +1352,39 @@ class MainWindow(QMainWindow):
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to load HTML file: {str(e)}")
             logger.error(f"Failed to load HTML file: {str(e)}")
-
-    def file_save(self, index=None):
-        """Save the current file, creating a new save if needed."""
-        if index is None:
-            index = self.get_current_tab_index()
-
-        path = self.paths.get(index)
-        if path is None:
-            # If there is no existing path, call save as to define it
-            self.file_save_as(index)
-        else:
-            editor = self.tab_widget.widget(index)
-            if path.endswith(".txt"):
-                with open(path, 'w', encoding='utf-8') as f:
-                    f.write(editor.toPlainText())
-            elif path.endswith(".html"):
-                with open(path, 'w', encoding='utf-8') as f:
-                    f.write(editor.toHtml())
-
-            editor.document().setModified(False)
-            logger.info(f"File saved at existing path: {path}")
-            self.saved_files_panel.refresh_files_list()  # Refresh the saved files panel
-
+            
     def file_save_as(self, index=None):
-        """Save file to the persistent folder and add it to the saved files panel."""
+        """Save file to both the persistent folder and user-chosen location, tracking both paths."""
         if index is None:
             index = self.get_current_tab_index()
 
-        # Prompt the user to select a save location in PERSISTENT_FOLDER
-        file_name, _ = QFileDialog.getSaveFileName(self, "Save As", PERSISTENT_FOLDER, "Text documents (*.txt);;HTML documents (*.html)")
-        
-        if file_name:
-            # Ensure file is saved in the persistent folder
-            if not file_name.startswith(PERSISTENT_FOLDER):
-                file_name = os.path.join(PERSISTENT_FOLDER, os.path.basename(file_name))
+        # Prompt user to select a location and name for saving the file
+        user_path, _ = QFileDialog.getSaveFileName(
+            self, "Save As", "", "Text documents (*.txt);;HTML documents (*.html)"
+        )
 
+        if user_path:
+            # Save in persistent folder
+            file_name = os.path.basename(user_path)
+            persistent_path = os.path.join(PERSISTENT_FOLDER, file_name)
+
+            # Save content to both user path and persistent path
             editor = self.tab_widget.widget(index)
-            if file_name.endswith(".txt"):
-                with open(file_name, 'w', encoding='utf-8') as f:
-                    f.write(editor.toPlainText())
-            elif file_name.endswith(".html"):
-                with open(file_name, 'w', encoding='utf-8') as f:
-                    f.write(editor.toHtml())
+            if user_path.endswith(".txt") or persistent_path.endswith(".txt"):
+                content = editor.toPlainText()
+                with open(user_path, 'w', encoding='utf-8') as f_user, open(persistent_path, 'w', encoding='utf-8') as f_persist:
+                    f_user.write(content)
+                    f_persist.write(content)
+            elif user_path.endswith(".html") or persistent_path.endswith(".html"):
+                content = editor.toHtml()
+                with open(user_path, 'w', encoding='utf-8') as f_user, open(persistent_path, 'w', encoding='utf-8') as f_persist:
+                    f_user.write(content)
+                    f_persist.write(content)
 
-            # Update paths and set tab title
-            self.paths[index] = file_name
-            self.tab_widget.setTabText(index, os.path.basename(file_name))
-            self.tab_widget.setTabToolTip(index, file_name)
-            editor.document().setModified(False)
-
-            # Refresh saved files list in panel
-            self.saved_files_panel.refresh_files_list()
-            logger.info(f"File saved in persistent folder: {file_name}")
+            # Track both paths in metadata
+            self.file_metadata_manager.update_file_metadata(file_name, user_path, persistent_path)
+            self.saved_files_panel.add_saved_file(file_name)  # Update saved files panel
+            logger.info(f"File saved at user path: {user_path} and persistent path: {persistent_path}")
         
     def save_as_html(self, path, index):
         """Save the document content as an HTML file with embedded images."""
@@ -1961,49 +1975,94 @@ class SavedFilesPanel(QWidget):
         self.toggle_button = QPushButton(self)
         self.toggle_button.setCheckable(True)
         self.toggle_button.clicked.connect(self.toggle_panel)
-        self.toggle_button.setFixedSize(75, 42)  # Adjust button size
+        self.toggle_button.setFixedSize(75, 42)
 
-        # Set text and style with larger font size, or replace with icon
-        self.toggle_button.setText("Hide")  # Set text if needed
-        self.toggle_button.setFont(QFont("Arial", 10))  # Set font size to 10, for example
-        # Uncomment the following line to replace the text with an icon
-        # self.toggle_button.setIcon(QIcon(os.path.join("path_to_icons", "hide_icon.png")))
-
+        # Set text and style for expand/collapse
+        self.toggle_button.setText("Hide")
+        self.toggle_button.setFont(QFont("Arial", 10))
         self.layout.insertWidget(0, self.toggle_button)
 
-        # Load saved files from the persistent folder
-        self.load_saved_files()
+        # Load and validate saved files from the persistent folder
+        self.refresh_files_list()
         self.saved_files_list.itemDoubleClicked.connect(self.open_selected_file)
 
-    def load_saved_files(self):
-        """Load saved files from the persistent folder into the list widget."""
-        self.saved_files_list.clear()
-        # List all files in the persistent folder
-        saved_files = [f for f in os.listdir(PERSISTENT_FOLDER) if os.path.isfile(os.path.join(PERSISTENT_FOLDER, f))]
+    def refresh_files_list(self):
+        """Refresh the saved files list, removing any entries with missing files."""
+        self.saved_files_list.clear()  # Clear the list to reload
+
+        # Retrieve all files in the persistent folder
+        saved_files = [
+            f for f in os.listdir(PERSISTENT_FOLDER) 
+            if os.path.isfile(os.path.join(PERSISTENT_FOLDER, f))
+        ]
+
+        # Check and add valid file paths, removing broken links
         for file_name in saved_files:
-            self.saved_files_list.addItem(file_name)
+            file_path = os.path.join(PERSISTENT_FOLDER, file_name)
+            if os.path.exists(file_path):
+                self.saved_files_list.addItem(file_name)
+            else:
+                logging.warning(f"File missing or path broken: {file_name}")
 
     def add_saved_file(self, file_name):
         """Add a new file to the saved files folder and refresh the list."""
         if not os.path.exists(os.path.join(PERSISTENT_FOLDER, file_name)):
             self.saved_files_list.addItem(file_name)
+            self.refresh_files_list()
 
     def toggle_panel(self):
         """Toggle visibility of the saved files panel."""
-        is_visible = self.isVisible()  # Check current visibility
-        self.setVisible(not is_visible)  # Toggle visibility
-
-        # Update button text based on visibility
+        is_visible = self.isVisible()
+        self.setVisible(not is_visible)
         self.toggle_button.setText("Show" if not is_visible else "Hide")
-
-        # Update the toolbar action in the main window to sync with this button
         self.main_window.toggle_panel_action.setChecked(not is_visible)
 
     def open_selected_file(self, item):
         """Open the selected file in a new tab."""
         file_name = item.text()
         file_path = os.path.join(PERSISTENT_FOLDER, file_name)
-        self.main_window.open_file_in_new_tab(file_path)
+        if os.path.exists(file_path):
+            self.main_window.open_file_in_new_tab(file_path)
+        else:
+            QMessageBox.warning(self, "File Not Found", f"The file '{file_name}' cannot be found.")
+            self.refresh_files_list()  # Refresh the list if the file is missing
+
+class FileMetadataManager:
+    """Handles file metadata management, including loading, saving, and updating file paths."""
+    
+    def __init__(self, metadata_file=METADATA_FILE):
+        self.metadata_file = metadata_file
+        self.metadata = self.load_metadata()
+
+    def load_metadata(self):
+        """Load file metadata from JSON, or initialize as empty if the file doesn't exist."""
+        if os.path.exists(self.metadata_file):
+            with open(self.metadata_file, 'r') as f:
+                return json.load(f)
+        return {}
+
+    def save_metadata(self):
+        """Persist the metadata dictionary to JSON."""
+        with open(self.metadata_file, 'w') as f:
+            json.dump(self.metadata, f, indent=4)
+
+    def update_file_metadata(self, file_name, user_path, persistent_path):
+        """Update the metadata with the latest paths and timestamps for a file."""
+        self.metadata[file_name] = {
+            "user_path": user_path,
+            "persistent_path": persistent_path,
+            "last_modified": datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "created_at": self.metadata.get(file_name, {}).get(
+                "created_at", datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+            ),
+        }
+        self.save_metadata()
+
+    def remove_metadata_entry(self, file_name):
+        """Remove an entry from the metadata if the file is deleted or no longer exists."""
+        if file_name in self.metadata:
+            del self.metadata[file_name]
+            self.save_metadata()
 
 """===========Snipping Overlay Class=========="""
 class SnippingOverlay(QWidget):

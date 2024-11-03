@@ -7785,3 +7785,51 @@
 2024-11-01 21:19:36,503 - INFO - Tab at index 0 closed.
 2024-11-01 21:19:37,697 - INFO - Tab at index 0 closed.
 2024-11-01 21:19:39,235 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled.html
+2024-11-02 01:15:34,631 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 01:15:34,829 - INFO - Application started.
+2024-11-02 01:15:47,556 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled.html
+2024-11-02 01:15:49,310 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 01:15:50,302 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.html
+2024-11-02 01:18:35,864 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 01:18:36,078 - INFO - Application started.
+2024-11-02 01:19:20,999 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 01:19:21,183 - INFO - Application started.
+2024-11-02 01:19:24,966 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 01:21:46,948 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 01:21:47,112 - INFO - Application started.
+2024-11-02 11:37:26,763 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 11:37:26,957 - INFO - Application started.
+2024-11-02 11:37:45,451 - INFO - Cleared formatting to current theme defaults.
+2024-11-02 11:37:47,066 - INFO - Cleared formatting to current theme defaults.
+2024-11-02 13:04:08,326 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 13:04:08,505 - INFO - Application started.
+2024-11-02 13:05:12,136 - INFO - File saved in persistent folder: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 13:06:42,004 - INFO - File saved in persistent folder: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 13:06:52,348 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 13:06:52,516 - INFO - Application started.
+2024-11-02 13:06:57,594 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 13:06:59,327 - INFO - Tab at index 1 closed.
+2024-11-02 13:06:59,985 - INFO - Tab at index 0 closed.
+2024-11-02 13:18:05,926 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 13:18:06,120 - INFO - Application started.
+2024-11-02 13:20:06,150 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 13:20:06,331 - INFO - Application started.
+2024-11-02 13:22:03,254 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 13:22:03,461 - INFO - Application started.
+2024-11-02 13:22:18,264 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 13:22:24,880 - INFO - File saved in persistent folder and metadata updated: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 13:23:15,453 - INFO - File saved in persistent folder and metadata updated: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 13:27:30,564 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 13:27:30,844 - INFO - Application started.
+2024-11-02 13:27:45,659 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\file_metadata.json
+2024-11-02 13:27:50,000 - INFO - Tab at index 1 closed.
+2024-11-02 13:28:03,808 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 13:28:22,977 - INFO - File saved at user path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/test.txt and persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 13:28:41,366 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\file_metadata.json
+2024-11-02 13:29:13,311 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 13:29:13,486 - INFO - Application started.
+2024-11-02 13:33:03,652 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-02 13:33:03,821 - INFO - Application started.
+2024-11-02 13:33:09,344 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
+2024-11-02 13:33:11,877 - INFO - Tab at index 0 closed.
+2024-11-02 13:33:32,978 - INFO - File saved to user path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/test.txt and persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\test.txt
