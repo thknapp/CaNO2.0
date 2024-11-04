@@ -117,11 +117,14 @@ def load_settings():
     if os.path.exists(SETTINGS_FILE):
         try:
             with open(SETTINGS_FILE, 'r') as f:
-                return json.load(f) or {}  
+                settings = json.load(f) or {}
+                # Ensure "Auto Save" setting is present with a default value if missing
+                settings.setdefault("auto_save", False)  # Default to disabled
+                return settings
         except json.JSONDecodeError:
             logger.warning("Settings file is empty or invalid. Using default settings.")
-            return {}  
-    return {}  
+            return {"auto_save": False}  # Default to disabled if file is invalid
+    return {"auto_save": False}  # Default if file doesn't exist 
     
 def load_file_metadata():
     """Load file metadata from the metadata file or return an empty dictionary if not found."""
@@ -165,9 +168,10 @@ THEMES = load_themes()
 
 """----------Save Settings----------"""
 def save_settings(settings):
-    """Save settings to a JSON file."""
+    """Save settings to a JSON file, including the 'Auto Save' setting."""
     with open(SETTINGS_FILE, 'w') as f:
         json.dump(settings, f, indent=4)
+    logger.info("Settings saved.")
 
 # Load existing settings into a global variable
 app_settings = load_settings()  # This should work without issues now
@@ -238,6 +242,7 @@ class MainWindow(QMainWindow):
         self.current_theme_settings = THEMES.get(self.current_theme, THEMES["Light Theme"])
         self.current_font_family = app_settings.get("font_family", DEFAULT_FONT_FAMILY)
         self.current_font_size = app_settings.get("font_size", DEFAULT_FONT_SIZE)
+        self.auto_save_enabled = app_settings.get("auto_save", False) 
         
         # Set window size and position from settings
         window_size = app_settings.get("window_size", DEFAULT_WINDOW_SIZE)
@@ -356,37 +361,36 @@ class MainWindow(QMainWindow):
         logger.info(f"Applied and saved theme: {theme_name}")
 
     def closeEvent(self, event):
-        """Override close event to prompt for saving unsaved changes in each tab."""
-        unsaved_tabs = []
-
-        # Check each tab for unsaved changes
-        for index in range(self.tab_widget.count()):
+        """Override close event to auto-save modified documents without prompt on exit if autosave is enabled."""
+        for index in reversed(range(self.tab_widget.count())):
             editor = self.tab_widget.widget(index)
-            if editor.document().isModified():
-                unsaved_tabs.append(index)
+            file_path = self.paths.get(index)
 
-        # If there are unsaved documents, prompt the user for each
-        for index in unsaved_tabs:
-            tab_name = self.tab_widget.tabText(index)
-            response = QMessageBox.question(
-                self,
-                "Unsaved Changes",
-                f"The document '{tab_name}' has unsaved changes. Would you like to save them?",
-                QMessageBox.StandardButton.Save | QMessageBox.StandardButton.Discard | QMessageBox.StandardButton.Cancel,
-            )
-
-            if response == QMessageBox.StandardButton.Save:
-                if self.paths.get(index):
-                    # Save directly if there is already a file path
-                    self.file_save(index)
+            # Auto-save modified documents before closing the program if autosave is enabled
+            if self.autosave_toggle_button.isChecked() and editor.document().isModified():
+                if file_path:
+                    self.auto_save_current_tab(index=index)
                 else:
-                    # Otherwise, prompt to save as with the tab name pre-filled
-                    self.file_save_as(index)
-            elif response == QMessageBox.StandardButton.Cancel:
-                event.ignore()  # Cancel the close event
-                return  # Exit the function to avoid closing the window
+                    # If no filename, save with default auto-generated name in persistent folder
+                    file_name = f"Untitled_{index + 1}.txt"
+                    persistent_path = os.path.join(PERSISTENT_FOLDER, file_name)
+                    with open(persistent_path, 'w', encoding='utf-8') as f:
+                        f.write(editor.toPlainText())
+                    self.file_metadata_manager.update_file_metadata(file_name, persistent_path, persistent_path)
+                    self.saved_files_panel.add_saved_file(file_name)
 
-        # Save window position and size on exit
+            # Remove empty auto-saved files
+            if file_path and file_path.startswith(PERSISTENT_FOLDER) and self.is_tab_empty(editor):
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                    self.file_metadata_manager.remove_metadata_entry(os.path.basename(file_path))
+                    logger.info(f"Empty auto-saved file removed on exit: {file_path}")
+                    self.saved_files_panel.refresh_files_list()
+
+            # Close each tab after auto-save or empty check
+            self.close_tab(index)
+
+        # Save window settings and other configurations on exit
         app_settings["window_size"] = [self.size().width(), self.size().height()]
         app_settings["window_position"] = [self.pos().x(), self.pos().y()]
         save_settings(app_settings)
@@ -402,11 +406,12 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(self.tab_widget)  # Set the tab widget as the central widget
        
     def close_tab(self, index):
-        """Close the tab at the specified index, checking for unsaved changes."""
         editor = self.tab_widget.widget(index)
-        
-        if editor.document().isModified():
-            # Prompt the user to save unsaved changes
+        file_path = self.paths.get(index)
+
+        # Check if the document has unsaved changes
+        if editor.document().isModified() and not self.autosave_toggle_button.isChecked():
+            # Prompt for saving unsaved changes only if autosave is disabled
             response = QMessageBox.question(
                 self,
                 "Unsaved Changes",
@@ -418,8 +423,16 @@ class MainWindow(QMainWindow):
                 self.file_save(index)
             elif response == QMessageBox.StandardButton.Cancel:
                 return  # Do not close the tab if canceled
+        else:
+            # Remove empty auto-saved files (files with no text or images) if autosave is enabled and document is unmodified
+            if file_path and file_path.startswith(PERSISTENT_FOLDER) and self.is_tab_empty(editor):
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                    self.file_metadata_manager.remove_metadata_entry(os.path.basename(file_path))
+                    logger.info(f"Empty auto-saved file removed: {file_path}")
+                    self.saved_files_panel.refresh_files_list()
 
-        # Close the tab if no unsaved changes or after saving/discarding
+        # Close the tab
         self.tab_widget.removeTab(index)
         if index in self.paths:
             del self.paths[index]
@@ -489,6 +502,9 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.autosave_toggle_button)
         self.update_toggle_style(self.autosave_toggle_button.isChecked())
         self.autosave_toggle_button.clicked.connect(self.handle_autosave_toggle)
+        
+        self.autosave_toggle_button.setChecked(self.auto_save_enabled)
+        self.update_toggle_style(self.auto_save_enabled)       
 
         # Add the layout containing both label and button to a widget
         widget = QWidget()
@@ -824,13 +840,20 @@ class MainWindow(QMainWindow):
             # Disable autosave functionality here
 
     def handle_autosave_toggle(self):
-        """Handle the autosave toggle and apply style based on state."""
+        """Handle the auto-save toggle and apply style based on state."""
         is_checked = self.autosave_toggle_button.isChecked()
         self.autosave_toggle_button.setText("ON" if is_checked else "OFF")
         
-        # Toggle autosave functionality
-        self.toggle_autosave(is_checked)
-        self.update_toggle_style(is_checked)
+        # Enable or disable the auto-save timer based on toggle state
+        if is_checked:
+            self.enable_auto_save_timer()
+        else:
+            self.disable_auto_save_timer()
+        
+        # Update and save the "auto_save" setting
+        app_settings["auto_save"] = is_checked
+        save_settings(app_settings)  # Persist the change
+        logger.info(f"Auto Save setting updated to: {'enabled' if is_checked else 'disabled'}")
 
     def toggle_autosave(self, enabled):
         """Enable or disable autosave functionality."""
@@ -869,6 +892,33 @@ class MainWindow(QMainWindow):
             )
             self.autosave_toggle_button.setText("OFF")
 
+    def enable_auto_save_timer(self):
+        """Enable the auto-save timer to periodically save content."""
+        self.auto_save_timer = QTimer()
+        self.auto_save_timer.timeout.connect(self.auto_save_current_tab)
+        self.auto_save_timer.start(5000)  # Adjust interval as needed (5000ms = 5 seconds)
+        logger.info("Auto-save timer started.")
+
+    def disable_auto_save_timer(self):
+        """Disable the auto-save timer."""
+        if hasattr(self, 'auto_save_timer'):
+            self.auto_save_timer.stop()
+            del self.auto_save_timer
+        logger.info("Auto-save timer stopped.")
+
+    def auto_save_current_tab(self, index=None):
+        """Auto-save the content of the current tab if it has been modified."""
+        if index is None:
+            index = self.get_current_tab_index()
+        
+        editor = self.tab_widget.widget(index)
+        file_path = self.paths.get(index)
+
+        if editor.document().isModified() and file_path and file_path.startswith(PERSISTENT_FOLDER):
+            with open(file_path, 'w', encoding='utf-8') as f:
+                f.write(editor.toPlainText())
+            editor.document().setModified(False)  # Reset modified flag after saving
+            logger.info(f"Auto-saved changes to: {file_path}")
 
     """---------------------------------------------------------Capture Methods----------------------------------------------""" 
     """----------Capture and OCR Action Methods----------"""
@@ -1127,22 +1177,40 @@ class MainWindow(QMainWindow):
         
     """------------------------------------------------------File Methods-------------------------------------------------"""     
     """----------File Action Methods----------"""
-    def add_new_tab(self, checked=False, text=""):
-        # Ensure 'text' is a string
+    def add_new_tab(self, text=None):
+        """Add a new untitled tab with a unique incremented name."""
+        # Ensure 'text' is a string and defaults to an empty string if None or False
         if not isinstance(text, str):
             text = ""
 
+        # Determine the next available untitled file name
+        untitled_count = 1
+        existing_titles = [self.tab_widget.tabText(i) for i in range(self.tab_widget.count())]
+        existing_files = os.listdir(PERSISTENT_FOLDER)
+
+        while f"Untitled_{untitled_count}.txt" in existing_titles or f"Untitled_{untitled_count}.txt" in existing_files:
+            untitled_count += 1
+        untitled_name = f"Untitled_{untitled_count}.txt"
+
+        # Create the new tab editor
         new_tab = ClickableTextEdit()
         new_tab.full_image_map = self.full_image_map
         new_tab.setFont(QFont(self.current_font_family, self.current_font_size))
         new_tab.setPlainText(text)
-        
-        # Ensure custom context menu is set up
-        self.setup_custom_context_menu()
-        
-        index = self.tab_widget.addTab(new_tab, "Untitled")
-        self.paths[index] = None
+
+        # Add the new tab with a unique name
+        index = self.tab_widget.addTab(new_tab, untitled_name)
         self.tab_widget.setCurrentIndex(index)
+
+        # If auto-save is enabled, save the initial file to the persistent folder
+        if self.autosave_toggle_button.isChecked():
+            persistent_path = os.path.join(PERSISTENT_FOLDER, untitled_name)
+            with open(persistent_path, 'w', encoding='utf-8') as f:
+                f.write(text)
+            self.file_metadata_manager.update_file_metadata(untitled_name, persistent_path, persistent_path)
+            self.paths[index] = persistent_path
+            self.saved_files_panel.refresh_files_list()
+            logger.info(f"Auto-saved initial content to persistent path: {persistent_path}")
 
     def show_tab_context_menu(self, position):
         """Show context menu for tabs with options to rename or close the current tab."""
@@ -1170,10 +1238,8 @@ class MainWindow(QMainWindow):
             logger.info(f"Tab at index {index} renamed to '{new_name}'.")
 
     def is_tab_empty(self, editor):
-        """Check if the editor tab is empty (no text and no images)."""
-        if editor:
-            return not editor.toPlainText().strip() and not self.has_images(editor)
-        return False
+        """Check if the editor tab is empty, meaning it contains no text or images."""
+        return not editor.toPlainText().strip() and not self.has_images(editor)
 
     def has_images(self, editor):
         """Check if the editor contains any images."""
@@ -1354,44 +1420,33 @@ class MainWindow(QMainWindow):
             logger.error(f"Failed to load HTML file: {str(e)}")
             
     def file_save_as(self, index=None):
-        """Save file to the user-specified location and a backup copy in the persistent folder."""
+        """Save file to a user-specified location and update the tab and saved files panel."""
         if index is None:
             index = self.get_current_tab_index()
 
-        # Prompt user for the save location and file name
         user_path, _ = QFileDialog.getSaveFileName(
             self, "Save As", "", "Text documents (*.txt);;HTML documents (*.html)"
         )
 
         if user_path:
-            # Define the filename and the path for saving in the persistent folder
+            # Save the file and update paths
             file_name = os.path.basename(user_path)
             persistent_path = os.path.join(PERSISTENT_FOLDER, file_name)
-
-            # Save the content to both locations
             editor = self.tab_widget.widget(index)
-            if user_path.endswith(".txt"):
-                content = editor.toPlainText()
-                # Save to user path
-                with open(user_path, 'w', encoding='utf-8') as f_user:
-                    f_user.write(content)
-                # Save to persistent path
-                with open(persistent_path, 'w', encoding='utf-8') as f_persist:
-                    f_persist.write(content)
-            elif user_path.endswith(".html"):
-                content = editor.toHtml()
-                # Save to user path
-                with open(user_path, 'w', encoding='utf-8') as f_user:
-                    f_user.write(content)
-                # Save to persistent path
-                with open(persistent_path, 'w', encoding='utf-8') as f_persist:
-                    f_persist.write(content)
+            content = editor.toPlainText() if user_path.endswith(".txt") else editor.toHtml()
 
-            # Track the paths in metadata: user_path (selected by user) and persistent_path (backup)
+            # Write to both user and persistent paths
+            with open(user_path, 'w', encoding='utf-8') as f_user, open(persistent_path, 'w', encoding='utf-8') as f_persist:
+                f_user.write(content)
+                f_persist.write(content)
+
+            # Update tab name and paths
             self.file_metadata_manager.update_file_metadata(file_name, user_path, persistent_path)
-            self.saved_files_panel.add_saved_file(file_name)  # Refresh saved files panel
-            logger.info(f"File saved to user path: {user_path} and persistent path: {persistent_path}")
-            
+            self.paths[index] = persistent_path
+            self.tab_widget.setTabText(index, file_name)
+            self.saved_files_panel.refresh_files_list()
+            logger.info(f"File saved as '{file_name}' to user path '{user_path}' and persistent path '{persistent_path}'.")
+
     def save_as_html(self, path, index):
         """Save the document content as an HTML file with embedded images."""
         editor = self.tab_widget.widget(index)
@@ -1974,47 +2029,87 @@ class SavedFilesPanel(QWidget):
 
         # Initialize layout and widgets
         self.layout = QVBoxLayout(self)
-        self.saved_files_list = QListWidget(self)
-        self.layout.addWidget(self.saved_files_list)
 
-        # Expand/collapse button with custom font size and optional icon
-        self.toggle_button = QPushButton(self)
+        # Toggle button for expanding/collapsing
+        self.toggle_button = QPushButton("Hide")
         self.toggle_button.setCheckable(True)
         self.toggle_button.clicked.connect(self.toggle_panel)
         self.toggle_button.setFixedSize(75, 42)
+        self.layout.addWidget(self.toggle_button)
 
-        # Set text and style for expand/collapse
-        self.toggle_button.setText("Hide")
-        self.toggle_button.setFont(QFont("Arial", 10))
-        self.layout.insertWidget(0, self.toggle_button)
+        # Search bar
+        self.search_bar = QLineEdit()
+        self.search_bar.setPlaceholderText("Search files...")
+        self.search_bar.textChanged.connect(self.refresh_files_list)
+        self.layout.addWidget(self.search_bar)
 
-        # Load and validate saved files from the persistent folder
+        # Horizontal layout for sort options and order toggle
+        sort_layout = QHBoxLayout()
+
+        # Sort criteria combo box
+        self.sort_by_combo = QComboBox()
+        self.sort_by_combo.setFixedWidth(150) 
+        self.sort_by_combo.addItems(["Name", "Modification Date", "Creation Date"])
+        self.sort_by_combo.currentIndexChanged.connect(self.refresh_files_list)
+        sort_layout.addWidget(self.sort_by_combo)
+
+        # Sorting direction button (arrow up/down)
+        self.sort_order_button = QPushButton("▲")
+        self.sort_order_button.setFixedSize(25, 25)
+        self.sort_order_button.setCheckable(True)
+        self.sort_order_button.clicked.connect(self.toggle_sort_order)
+        sort_layout.addWidget(self.sort_order_button)
+        self.sort_ascending = True  # Default sort order
+
+        # Add the sort layout to the main layout
+        self.layout.addLayout(sort_layout)
+
+        # Saved files list
+        self.saved_files_list = QListWidget(self)
+        self.layout.addWidget(self.saved_files_list)
+
+        # Context menu for file actions
+        self.saved_files_list.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.saved_files_list.customContextMenuRequested.connect(self.show_context_menu)
+
+        # Manual refresh button
+        self.refresh_button = QPushButton("Refresh Files")
+        self.refresh_button.clicked.connect(self.refresh_files_list)
+        self.layout.addWidget(self.refresh_button)
+
+        # Initial load of saved files
         self.refresh_files_list()
-        self.saved_files_list.itemDoubleClicked.connect(self.open_selected_file)
 
     def refresh_files_list(self):
-        """Refresh the saved files list, removing any entries with missing files."""
-        self.saved_files_list.clear()  # Clear the list to reload
+        """Refresh the saved files list based on search, sort options, and sorting preferences."""
+        self.saved_files_list.clear()  # Clear the current list
 
-        # Retrieve all files in the persistent folder
-        saved_files = [
-            f for f in os.listdir(PERSISTENT_FOLDER) 
-            if os.path.isfile(os.path.join(PERSISTENT_FOLDER, f))
+        # Retrieve and filter files
+        search_text = self.search_bar.text().lower()
+        all_files = [
+            f for f in os.listdir(PERSISTENT_FOLDER)
+            if os.path.isfile(os.path.join(PERSISTENT_FOLDER, f)) and f != "file_metadata.json"
         ]
+        
+        # Filter files by search text
+        filtered_files = [f for f in all_files if search_text in f.lower()]
 
-        # Check and add valid file paths, removing broken links
-        for file_name in saved_files:
-            file_path = os.path.join(PERSISTENT_FOLDER, file_name)
-            if os.path.exists(file_path):
-                self.saved_files_list.addItem(file_name)
-            else:
-                logging.warning(f"File missing or path broken: {file_name}")
+        # Sort files based on selected criteria
+        sort_criteria = self.sort_by_combo.currentText()
+        reverse_order = not self.sort_ascending
 
-    def add_saved_file(self, file_name):
-        """Add a new file to the saved files folder and refresh the list."""
-        if not os.path.exists(os.path.join(PERSISTENT_FOLDER, file_name)):
-            self.saved_files_list.addItem(file_name)
-            self.refresh_files_list()
+        if sort_criteria == "Name":
+            sorted_files = sorted(filtered_files, reverse=reverse_order)
+        else:
+            sorted_files = sorted(
+                filtered_files,
+                key=lambda f: os.path.getmtime(os.path.join(PERSISTENT_FOLDER, f)) if sort_criteria == "Modification Date"
+                else os.path.getctime(os.path.join(PERSISTENT_FOLDER, f)),
+                reverse=reverse_order
+            )
+
+        # Add sorted and filtered files to the list
+        self.saved_files_list.addItems(sorted_files)
 
     def toggle_panel(self):
         """Toggle visibility of the saved files panel."""
@@ -2023,16 +2118,110 @@ class SavedFilesPanel(QWidget):
         self.toggle_button.setText("Show" if not is_visible else "Hide")
         self.main_window.toggle_panel_action.setChecked(not is_visible)
 
+    def toggle_sort_order(self):
+        """Toggle the sort order between ascending and descending with an arrow button."""
+        self.sort_ascending = not self.sort_ascending
+        self.sort_order_button.setText("▲" if self.sort_ascending else "▼")
+        self.refresh_files_list()  # Refresh the list to apply the new sort order
+
+    def show_context_menu(self, pos):
+        """Show context menu for file actions in the saved files list."""
+        menu = QMenu(self)
+        open_action = QAction("Open", self)
+        open_action.triggered.connect(lambda: self.open_selected_file(self.saved_files_list.currentItem()))
+        menu.addAction(open_action)
+
+        delete_action = QAction("Delete", self)
+        delete_action.triggered.connect(lambda: self.delete_selected_file())
+        menu.addAction(delete_action)
+
+        properties_action = QAction("Properties", self)
+        properties_action.triggered.connect(lambda: self.show_file_properties(self.saved_files_list.currentItem()))
+        menu.addAction(properties_action)
+
+        menu.exec(self.saved_files_list.mapToGlobal(pos))
+
+    def add_saved_file(self, file_name):
+        """Add a new file to the saved files folder and refresh the list."""
+        if not os.path.exists(os.path.join(PERSISTENT_FOLDER, file_name)):
+            self.saved_files_list.addItem(file_name)
+            self.refresh_files_list()
+
     def open_selected_file(self, item):
         """Open the selected file in a new tab."""
-        file_name = item.text()
-        file_path = os.path.join(PERSISTENT_FOLDER, file_name)
-        if os.path.exists(file_path):
-            self.main_window.open_file_in_new_tab(file_path)
-        else:
-            QMessageBox.warning(self, "File Not Found", f"The file '{file_name}' cannot be found.")
-            self.refresh_files_list()  # Refresh the list if the file is missing
+        if item:
+            file_name = item.text()
+            file_path = os.path.join(PERSISTENT_FOLDER, file_name)
+            if os.path.exists(file_path):
+                # Check if the file is already open in a tab
+                for index in range(self.main_window.tab_widget.count()):
+                    tab_path = self.main_window.paths.get(index)
+                    if tab_path == file_path:
+                        self.main_window.tab_widget.setCurrentIndex(index)
+                        return
+                # Open the file in a new tab if not already open
+                self.main_window.open_file_in_new_tab(file_path)
+            else:
+                QMessageBox.warning(self, "File Not Found", f"The file '{file_name}' could not be found.")
+                self.refresh_files_list()  # Refresh the list if the file is missing
 
+    def delete_selected_file(self):
+        """Delete the selected file and close the corresponding tab if it is open."""
+        item = self.saved_files_list.currentItem()
+        if item:
+            file_name = item.text()
+            file_path = os.path.join(PERSISTENT_FOLDER, file_name)
+
+            # Confirm deletion
+            confirm = QMessageBox.question(
+                self, 
+                "Delete File", 
+                f"Are you sure you want to delete '{file_name}'?",
+                QMessageBox.StandardButton.Yes | QMessageBox.StandardButton.No
+            )
+
+            if confirm == QMessageBox.StandardButton.Yes:
+                if os.path.exists(file_path):
+                    os.remove(file_path)
+                    self.saved_files_list.takeItem(self.saved_files_list.row(item))
+                    self.main_window.file_metadata_manager.remove_metadata_entry(file_name)
+
+                    # Close the corresponding tab if open
+                    for index in range(self.main_window.tab_widget.count()):
+                        tab_path = self.main_window.paths.get(index)
+                        if tab_path == file_path:
+                            self.main_window.tab_widget.removeTab(index)
+                            del self.main_window.paths[index]
+                            break
+                    self.refresh_files_list()
+                    logging.info(f"File '{file_name}' deleted from saved files and any open tab closed.")
+
+    def show_file_properties(self, item):
+        """Show the properties of the selected file, including location, created/modified times, and size."""
+        if item:
+            file_name = item.text()
+            file_path = os.path.join(PERSISTENT_FOLDER, file_name)
+
+            if os.path.exists(file_path):
+                file_info = os.stat(file_path)
+                created_time = datetime.fromtimestamp(file_info.st_ctime).strftime('%Y-%m-%d %H:%M:%S')
+                modified_time = datetime.fromtimestamp(file_info.st_mtime).strftime('%Y-%m-%d %H:%M:%S')
+                file_size = file_info.st_size
+
+                # Display file properties in a message box
+                QMessageBox.information(
+                    self, 
+                    "File Properties", 
+                    f"File: {file_name}\n\n"
+                    f"Location: {file_path}\n"
+                    f"Created: {created_time}\n"
+                    f"Modified: {modified_time}\n"
+                    f"Size: {file_size} bytes"
+                )
+            else:
+                QMessageBox.warning(self, "File Not Found", f"The file '{file_name}' could not be found.")
+                self.refresh_files_list()
+                
 class FileMetadataManager:
     """Handles file metadata management, including loading, saving, and updating file paths."""
     
