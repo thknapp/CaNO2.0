@@ -256,7 +256,7 @@ class MainWindow(QMainWindow):
         # Initialize path tracking
         self.paths = {}  # Stores file paths for each tab
 
-        # Set up main tab widget and set it as the central widget
+        # Set up main tab widget and add a plus button to its tab bar
         self.setup_tab_widget()
 
         # Initialize UI components
@@ -288,13 +288,43 @@ class MainWindow(QMainWindow):
         self.saved_files_panel.setMaximumWidth(200)
         self.splitter.addWidget(self.saved_files_panel)
 
-        # Initialize editor tab widget
+        # Initialize editor tab widget and add to layout
+        tab_layout = QHBoxLayout()  # Layout to hold the tab widget and the "+" button
+
         self.tab_widget = QTabWidget()
         self.tab_widget.setTabsClosable(True)  # Enable close buttons on tabs
         self.tab_widget.tabCloseRequested.connect(self.close_tab)
         self.splitter.addWidget(self.tab_widget)
-        self.splitter.setStretchFactor(0, 0)
         
+        # Adding the "+" button to the tab bar directly
+        self.new_tab_button = QPushButton("  +  ", self.tab_widget)
+        self.new_tab_button.setFixedSize(25, 20)  # Adjust size as needed
+        self.new_tab_button.setToolTip("New Tab")
+        self.new_tab_button.clicked.connect(self.add_new_tab)
+
+        # Set font size and make it bold
+        font = self.new_tab_button.font()
+        font.setPointSize(16)  # Set the desired font size
+        font.setBold(True)      # Make the font bold
+        self.new_tab_button.setFont(font)
+
+        self.new_tab_button.setStyleSheet("""
+            QPushButton {
+                background-color: transparent;
+                border: none;
+                padding: 0px;
+                margin-left: 5px;
+            }
+            QPushButton:hover {
+                background-color: rgba(211, 211, 211, 0.0);  /* Light gray with 30% opacity */
+                border-radius: 4px;
+            }
+            """)
+        
+        # Add the button to the right end of the tab bar
+        self.tab_widget.setCornerWidget(self.new_tab_button, Qt.Corner.TopRightCorner)
+
+        # Initialize the toolbar
         self.init_toolbar()
         
         # Add the initial tab
@@ -314,26 +344,20 @@ class MainWindow(QMainWindow):
 
         # Add toggle button to toolbar
         toolbar.addAction(self.toggle_panel_action)
-        
-        # Set the initial text on the panel button to "Hide Panel"
-        self.saved_files_panel.toggle_button.setText("Hide Panel")
-        self.saved_files_panel.toggle_button.setChecked(True)  # Ensure initial state
 
         # Connect panel button to the same slot
-        self.saved_files_panel.toggle_button.clicked.connect(self.sync_toggle_buttons)        
+        self.saved_files_panel.collapse_button.clicked.connect(self.sync_toggle_buttons)    
 
     def sync_toggle_buttons(self):
         """Sync the toggle states of the toolbar and panel buttons and manage visibility."""
         if self.toggle_panel_action.isChecked():
             self.saved_files_panel.show()
             self.toggle_panel_action.setText("Hide Panel")
-            self.saved_files_panel.toggle_button.setChecked(True)
-            self.saved_files_panel.toggle_button.setText("Hide Panel")
+            self.saved_files_panel.collapse_button.setText("◀")  # Icon to collapse
         else:
             self.saved_files_panel.hide()
             self.toggle_panel_action.setText("Show Panel")
-            self.saved_files_panel.toggle_button.setChecked(False)
-            self.saved_files_panel.toggle_button.setText("Show Panel")
+            self.saved_files_panel.collapse_button.setText("▶")  # Icon to expand
 
     def toggle_panel_visibility(self):
         """Toggle visibility of the saved files panel and update the button text."""
@@ -516,7 +540,7 @@ class MainWindow(QMainWindow):
     def init_align_toolbar(self):
         """Initialize the alignment toolbar."""
         align_toolbar = QToolBar("Align")
-        align_toolbar.setIconSize(QSize(20, 20))
+        align_toolbar.setIconSize(QSize(30, 30))
         self.addToolBar(align_toolbar)
 
         # Left alignment action
@@ -544,7 +568,7 @@ class MainWindow(QMainWindow):
     def init_capture_toolbar(self):
         """Initialize Capture toolbar."""
         self.capture_toolbar = QToolBar("Capture")
-        self.capture_toolbar.setIconSize(QSize(25, 25))
+        self.capture_toolbar.setIconSize(QSize(30, 30))
         self.addToolBar(Qt.ToolBarArea.TopToolBarArea, self.capture_toolbar)
 
         # Set Capture Area Button
@@ -683,7 +707,7 @@ class MainWindow(QMainWindow):
     def init_format_toolbar(self):
         """Initialize the format toolbar and assign it to self.format_toolbar."""
         self.format_toolbar = QToolBar("Format")
-        self.format_toolbar.setIconSize(QSize(20, 20))
+        self.format_toolbar.setIconSize(QSize(30, 30))
         self.addToolBar(self.format_toolbar)
 
         # Bold Button
@@ -766,7 +790,7 @@ class MainWindow(QMainWindow):
     """----------List Toolbar----------"""
     def init_list_toolbar(self):
         list_toolbar = QToolBar("Lists")
-        list_toolbar.setIconSize(QSize(25, 25))
+        list_toolbar.setIconSize(QSize(30, 30))
         self.addToolBar(list_toolbar)
 
         bullet_list_action = QAction(QIcon(os.path.join(self.images_dir, 'bullet.png')), "Bullet List", self)
@@ -1992,22 +2016,15 @@ class CustomSplitterHandle(QSplitterHandle):
         self.init_ui()
 
     def init_ui(self):
-        # Set up a layout for the handle to include a label as the "grip"
-        layout = QVBoxLayout() if self.orientation() == Qt.Orientation.Vertical else QVBoxLayout()
-        layout.setContentsMargins(0, 0, 0, 0)
+        # Set up the handle layout with only the grip label
+        layout = QVBoxLayout() if self.orientation() == Qt.Orientation.Vertical else QHBoxLayout()
+        layout.setContentsMargins(2, 2, 2, 2)
 
-        # Create a label to act as a visual grip
-        grip_label = QLabel(self)
-        grip_label.setFixedSize(QSize(20, 50))  # Size of the handle grip
-        grip_label.setStyleSheet("""
-            QLabel {
-                background-color: #888;  /* Handle color */
-                border-radius: 5px;
-                margin: 2px;
-            }
-        """)
-
-        # Add label to layout and set layout to handle
+        # Create the grip label for visual feedback
+        grip_label = QLabel("|||", self)  # Using "|||" as a visual cue for grip
+        grip_label.setFixedSize(QSize(40, 40))
+        grip_label.setStyleSheet("background-color: #888; font-size: 14px; color: white;")
+        
         layout.addWidget(grip_label, alignment=Qt.AlignmentFlag.AlignCenter)
         self.setLayout(layout)
 
@@ -2017,10 +2034,10 @@ class CustomSplitter(QSplitter):
 
     def createHandle(self):
         """Override to use the custom splitter handle."""
-        return CustomSplitterHandle(self.orientation(), self)            
-
+        return CustomSplitterHandle(self.orientation(), self)
+      
 class SavedFilesPanel(QWidget):
-    """A panel to display saved files on the left side of the main window."""
+    """A panel to display saved files on the left side of the main window, with toggle and collapse functionality."""
     def __init__(self, main_window):
         super(SavedFilesPanel, self).__init__(main_window)
         self.main_window = main_window
@@ -2029,13 +2046,32 @@ class SavedFilesPanel(QWidget):
 
         # Initialize layout and widgets
         self.layout = QVBoxLayout(self)
+        self.layout.setContentsMargins(0, 0, 0, 0)
 
-        # Toggle button for expanding/collapsing
-        self.toggle_button = QPushButton("Hide")
-        self.toggle_button.setCheckable(True)
+        # Header layout for collapse and toggle button
+        header_layout = QHBoxLayout()
+        header_layout.setContentsMargins(5, 5, 5, 5)
+
+        # Collapse button for hiding the panel
+        self.collapse_button = QPushButton("◀", self)
+        font = self.collapse_button.font()
+        font.setPointSize(16)  
+        self.collapse_button.setFont(font) 
+        self.collapse_button.setFixedSize(20, 20)
+
+        self.collapse_button.clicked.connect(self.collapse_panel)
+        header_layout.addWidget(self.collapse_button, alignment=Qt.AlignmentFlag.AlignLeft)
+
+        # Toggle button for showing/hiding the panel content
+        self.toggle_button = QPushButton(self)
+        self.toggle_button.setIcon(QIcon.fromTheme("window-close"))  # Uses a standard "X" close icon
+        self.toggle_button.setFixedSize(8, 8)
         self.toggle_button.clicked.connect(self.toggle_panel)
-        self.toggle_button.setFixedSize(75, 42)
-        self.layout.addWidget(self.toggle_button)
+
+        header_layout.addWidget(self.toggle_button, alignment=Qt.AlignmentFlag.AlignRight)
+
+        # Add the header layout to the main layout
+        self.layout.addLayout(header_layout)
 
         # Search bar
         self.search_bar = QLineEdit()
@@ -2073,7 +2109,7 @@ class SavedFilesPanel(QWidget):
         self.saved_files_list.customContextMenuRequested.connect(self.show_context_menu)
 
         # Manual refresh button
-        self.refresh_button = QPushButton("Refresh Files")
+        self.refresh_button = QPushButton("Refresh 🔄")
         self.refresh_button.clicked.connect(self.refresh_files_list)
         self.layout.addWidget(self.refresh_button)
 
@@ -2112,11 +2148,16 @@ class SavedFilesPanel(QWidget):
         self.saved_files_list.addItems(sorted_files)
 
     def toggle_panel(self):
-        """Toggle visibility of the saved files panel."""
+        """Toggle visibility of the saved files panel content."""
         is_visible = self.isVisible()
         self.setVisible(not is_visible)
-        self.toggle_button.setText("Show" if not is_visible else "Hide")
         self.main_window.toggle_panel_action.setChecked(not is_visible)
+
+
+    def collapse_panel(self):
+        """Collapse the splitter panel containing this widget."""
+        splitter = self.main_window.splitter  # Access the main splitter
+        splitter.setSizes([0, 1])  # Collapse the left panel (self)
 
     def toggle_sort_order(self):
         """Toggle the sort order between ascending and descending with an arrow button."""
