@@ -9029,3 +9029,209 @@
 2024-11-04 16:05:20,047 - INFO - Application started.
 2024-11-04 16:05:43,089 - INFO - Tab at index 0 closed.
 2024-11-04 16:05:43,091 - INFO - Settings saved.
+2024-11-04 16:10:42,698 - INFO - Settings saved.
+2024-11-04 16:10:42,698 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-04 16:10:43,156 - INFO - Application started.
+2024-11-04 16:11:38,535 - INFO - Tab at index 0 closed.
+2024-11-04 16:11:38,536 - INFO - Settings saved.
+2024-11-04 16:12:05,332 - INFO - Settings saved.
+2024-11-04 16:12:05,334 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-04 16:12:06,026 - INFO - Application started.
+2024-11-04 16:12:58,294 - INFO - Tab at index 0 closed.
+2024-11-04 16:12:58,297 - INFO - Settings saved.
+2024-11-04 16:21:46,874 - INFO - Settings saved.
+2024-11-04 16:21:46,876 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-04 16:21:47,681 - INFO - Application started.
+2024-11-04 16:22:01,344 - INFO - Snipping tool initialized on all screens.
+2024-11-04 16:22:03,576 - INFO - Capture area set to: PyQt6.QtCore.QRect(1441, 212, 1332, 762)
+2024-11-04 16:22:24,721 - INFO - OCR overlay initialized.
+2024-11-04 16:22:29,094 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-04 16:22:29,094 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-04 16:22:29,094 - DEBUG - STREAM b'IDAT' 62 6850
+2024-11-04 16:22:29,103 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_gv6lwm94_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_gv6lwm94', 'txt']
+2024-11-04 16:22:33,841 - INFO - OCR text inserted into document.
+2024-11-04 16:22:45,819 - INFO - Tab at index 0 closed.
+2024-11-04 16:22:45,820 - INFO - Settings saved.
+2024-11-04 23:34:43,143 - INFO - Settings saved.
+2024-11-04 23:34:43,144 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-04 23:34:43,975 - INFO - Application started.
+2024-11-04 23:35:19,554 - INFO - Tab at index 0 closed.
+2024-11-04 23:35:19,555 - INFO - Settings saved.
+2024-11-04 23:38:51,625 - INFO - Settings saved.
+2024-11-04 23:38:51,627 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-04 23:38:52,099 - INFO - Application started.
+2024-11-04 23:50:23,132 - INFO - Settings saved.
+2024-11-04 23:50:23,133 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-04 23:50:23,614 - INFO - Application started.
+2024-11-04 23:50:27,233 - INFO - Tab at index 0 closed.
+2024-11-04 23:50:27,234 - INFO - Settings saved.
+2024-11-04 23:50:33,121 - INFO - Cleared formatting to current theme defaults.
+2024-11-04 23:50:48,676 - INFO - Real-time spell check enabled.
+2024-11-04 23:50:58,275 - INFO - Tab at index 0 closed.
+2024-11-04 23:50:58,276 - INFO - Settings saved.
+2024-11-04 23:53:48,556 - INFO - Settings saved.
+2024-11-04 23:53:48,557 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-04 23:53:48,988 - INFO - Application started.
+2024-11-04 23:54:47,768 - INFO - Settings saved.
+2024-11-04 23:54:47,769 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-04 23:54:48,208 - INFO - Application started.
+2024-11-04 23:56:46,990 - INFO - Settings saved.
+2024-11-04 23:56:46,991 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-04 23:56:47,436 - INFO - Application started.
+2024-11-04 23:56:59,132 - INFO - Real-time spell check enabled.
+2024-11-04 23:58:15,640 - INFO - Tab at index 0 closed.
+2024-11-04 23:58:26,866 - INFO - Tab at index 0 closed.
+2024-11-04 23:58:26,868 - INFO - Settings saved.
+2024-11-05 07:57:32,970 - INFO - Settings saved.
+2024-11-05 07:57:32,971 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-05 07:57:33,661 - INFO - Application started.
+2024-11-05 07:58:05,445 - INFO - Auto-save timer started.
+2024-11-05 07:58:05,446 - INFO - Settings saved.
+2024-11-05 07:58:05,446 - INFO - Auto Save setting updated to: enabled
+2024-11-05 07:58:10,835 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-11-05 07:58:20,578 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-11-05 07:58:20,579 - INFO - Tab at index 1 closed.
+2024-11-05 07:58:26,122 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-11-05 07:58:43,667 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-11-05 07:58:43,668 - INFO - Tab at index 1 closed.
+2024-11-05 07:59:17,558 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-11-05 07:59:17,750 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_3.txt
+2024-11-05 07:59:17,945 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_4.txt
+2024-11-05 07:59:18,121 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_5.txt
+2024-11-05 07:59:18,319 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_6.txt
+2024-11-05 07:59:18,510 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_7.txt
+2024-11-05 07:59:18,710 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_8.txt
+2024-11-05 07:59:18,904 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_9.txt
+2024-11-05 07:59:19,099 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_10.txt
+2024-11-05 07:59:19,291 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_11.txt
+2024-11-05 07:59:19,487 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_12.txt
+2024-11-05 07:59:19,689 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_13.txt
+2024-11-05 07:59:21,811 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:22,024 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:22,238 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:22,458 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:22,674 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:22,863 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:23,063 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:23,252 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:23,445 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:23,643 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:23,849 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:24,045 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:24,271 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:42,471 - INFO - Settings saved.
+2024-11-05 07:59:42,474 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-05 07:59:42,711 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 07:59:42,907 - INFO - Application started.
+2024-11-05 07:59:46,820 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 07:59:46,823 - INFO - Tab at index 0 closed.
+2024-11-05 07:59:59,008 - INFO - File 'Untitled_9.txt' deleted from saved files and any open tab closed.
+2024-11-05 08:03:40,433 - INFO - Auto-save timer stopped.
+2024-11-05 08:03:40,436 - INFO - Settings saved.
+2024-11-05 08:03:40,436 - INFO - Auto Save setting updated to: disabled
+2024-11-05 08:03:42,512 - INFO - Auto-save timer started.
+2024-11-05 08:03:42,513 - INFO - Settings saved.
+2024-11-05 08:03:42,515 - INFO - Auto Save setting updated to: enabled
+2024-11-05 08:03:43,229 - INFO - Auto-save timer stopped.
+2024-11-05 08:03:43,230 - INFO - Settings saved.
+2024-11-05 08:03:43,230 - INFO - Auto Save setting updated to: disabled
+2024-11-05 08:03:44,235 - INFO - Auto-save timer started.
+2024-11-05 08:03:44,237 - INFO - Settings saved.
+2024-11-05 08:03:44,237 - INFO - Auto Save setting updated to: enabled
+2024-11-05 08:08:10,026 - INFO - Settings saved.
+2024-11-05 08:08:10,027 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-05 08:08:10,354 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:08:10,569 - INFO - Application started.
+2024-11-05 08:08:20,656 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-11-05 08:08:20,838 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_3.txt
+2024-11-05 08:08:21,012 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_4.txt
+2024-11-05 08:08:21,292 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_5.txt
+2024-11-05 08:08:21,529 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_6.txt
+2024-11-05 08:08:49,866 - INFO - Tab at index 0 closed.
+2024-11-05 08:08:50,491 - INFO - Tab at index 0 closed.
+2024-11-05 08:08:50,688 - INFO - Tab at index 0 closed.
+2024-11-05 08:08:50,905 - INFO - Tab at index 0 closed.
+2024-11-05 08:08:51,425 - INFO - Tab at index 0 closed.
+2024-11-05 08:09:01,338 - INFO - Tab at index 0 closed.
+2024-11-05 08:09:04,896 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:09:22,922 - INFO - Settings saved.
+2024-11-05 08:09:22,933 - INFO - Applied and saved theme: Peacock Blue Theme
+2024-11-05 08:12:28,702 - INFO - Auto-saved changes to: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:12:28,702 - INFO - Tab at index 0 closed.
+2024-11-05 08:12:28,705 - INFO - Settings saved.
+2024-11-05 08:12:36,318 - INFO - Settings saved.
+2024-11-05 08:12:36,319 - INFO - Applied and saved theme: Peacock Blue Theme
+2024-11-05 08:12:36,554 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-11-05 08:12:36,771 - INFO - Application started.
+2024-11-05 08:12:44,484 - INFO - Tab at index 0 closed.
+2024-11-05 08:12:52,833 - INFO - File 'Untitled_2.txt' deleted from saved files and any open tab closed.
+2024-11-05 08:12:56,632 - INFO - File 'Untitled_1.txt' deleted from saved files and any open tab closed.
+2024-11-05 08:13:02,453 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:13:09,865 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:13:09,866 - INFO - Tab at index 0 closed.
+2024-11-05 08:13:12,177 - INFO - Settings saved.
+2024-11-05 08:23:24,397 - INFO - Settings saved.
+2024-11-05 08:23:24,397 - INFO - Applied and saved theme: Peacock Blue Theme
+2024-11-05 08:23:24,653 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:23:24,861 - INFO - Application started.
+2024-11-05 08:24:41,511 - INFO - Empty auto-saved file removed on exit: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:24:41,513 - INFO - Tab at index 0 closed.
+2024-11-05 08:24:41,514 - INFO - Settings saved.
+2024-11-05 08:27:13,078 - INFO - Settings saved.
+2024-11-05 08:27:13,079 - INFO - Applied and saved theme: Peacock Blue Theme
+2024-11-05 08:27:13,309 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:27:13,534 - INFO - Application started.
+2024-11-05 08:28:39,744 - INFO - Empty auto-saved file removed on exit: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:28:39,745 - INFO - Tab at index 0 closed.
+2024-11-05 08:28:39,745 - INFO - Settings saved.
+2024-11-05 08:29:48,233 - INFO - Settings saved.
+2024-11-05 08:29:48,235 - INFO - Applied and saved theme: Peacock Blue Theme
+2024-11-05 08:29:48,476 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:29:48,680 - INFO - Application started.
+2024-11-05 08:33:02,975 - INFO - Auto-save timer stopped.
+2024-11-05 08:33:02,976 - INFO - Settings saved.
+2024-11-05 08:33:02,977 - INFO - Auto Save setting updated to: disabled
+2024-11-05 08:33:05,988 - INFO - Empty auto-saved file removed on exit: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:33:05,992 - INFO - Tab at index 0 closed.
+2024-11-05 08:33:05,993 - INFO - Settings saved.
+2024-11-05 08:36:04,160 - INFO - Settings saved.
+2024-11-05 08:36:04,161 - INFO - Applied and saved theme: Peacock Blue Theme
+2024-11-05 08:36:04,634 - INFO - Application started.
+2024-11-05 08:36:10,783 - INFO - Auto-save timer started.
+2024-11-05 08:36:10,785 - INFO - Settings saved.
+2024-11-05 08:36:10,785 - INFO - Auto Save setting updated to: enabled
+2024-11-05 08:36:11,866 - INFO - Auto-save timer stopped.
+2024-11-05 08:36:11,867 - INFO - Settings saved.
+2024-11-05 08:36:11,867 - INFO - Auto Save setting updated to: disabled
+2024-11-05 08:36:12,792 - INFO - Auto-save timer started.
+2024-11-05 08:36:12,794 - INFO - Settings saved.
+2024-11-05 08:36:12,794 - INFO - Auto Save setting updated to: enabled
+2024-11-05 08:36:13,601 - INFO - Auto-save timer stopped.
+2024-11-05 08:36:13,601 - INFO - Settings saved.
+2024-11-05 08:36:13,602 - INFO - Auto Save setting updated to: disabled
+2024-11-05 08:36:14,345 - INFO - Auto-save timer started.
+2024-11-05 08:36:14,346 - INFO - Settings saved.
+2024-11-05 08:36:14,346 - INFO - Auto Save setting updated to: enabled
+2024-11-05 08:36:14,878 - INFO - Auto-save timer stopped.
+2024-11-05 08:36:14,880 - INFO - Settings saved.
+2024-11-05 08:36:14,880 - INFO - Auto Save setting updated to: disabled
+2024-11-05 08:36:16,399 - INFO - Auto-save timer started.
+2024-11-05 08:36:16,400 - INFO - Settings saved.
+2024-11-05 08:36:16,400 - INFO - Auto Save setting updated to: enabled
+2024-11-05 08:36:18,015 - INFO - Tab at index 0 closed.
+2024-11-05 08:36:18,016 - INFO - Settings saved.
+2024-11-05 08:36:25,562 - INFO - Settings saved.
+2024-11-05 08:36:25,563 - INFO - Applied and saved theme: Peacock Blue Theme
+2024-11-05 08:36:25,798 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:36:25,998 - INFO - Application started.
+2024-11-05 08:36:27,424 - INFO - Auto-save timer stopped.
+2024-11-05 08:36:27,426 - INFO - Settings saved.
+2024-11-05 08:36:27,426 - INFO - Auto Save setting updated to: disabled
+2024-11-05 08:37:10,165 - INFO - Real-time spell check enabled.
+2024-11-05 08:37:58,776 - INFO - Real-time spell check disabled.
+2024-11-05 08:37:59,502 - INFO - Real-time spell check enabled.
+2024-11-05 08:39:21,522 - INFO - Empty auto-saved file removed on exit: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-11-05 08:39:24,055 - INFO - Tab at index 0 closed.
+2024-11-05 08:39:24,057 - INFO - Settings saved.
+2024-11-05 08:47:37,503 - INFO - Settings saved.
+2024-11-05 08:47:37,504 - INFO - Applied and saved theme: Peacock Blue Theme

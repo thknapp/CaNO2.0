@@ -243,7 +243,7 @@ class MainWindow(QMainWindow):
         self.current_font_family = app_settings.get("font_family", DEFAULT_FONT_FAMILY)
         self.current_font_size = app_settings.get("font_size", DEFAULT_FONT_SIZE)
         self.auto_save_enabled = app_settings.get("auto_save", False) 
-        
+   
         # Set window size and position from settings
         window_size = app_settings.get("window_size", DEFAULT_WINDOW_SIZE)
         window_position = app_settings.get("window_position", DEFAULT_WINDOW_POSITION)
@@ -329,6 +329,11 @@ class MainWindow(QMainWindow):
         
         # Add the initial tab
         self.add_new_tab()
+        
+    def setup_custom_context_menu(self):
+        """Sets up the custom context menu policy and connects the right-click event."""
+        self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
+        self.customContextMenuRequested.connect(self.show_custom_context_menu)
 
     def init_toolbar(self):
         """Initialize the toolbar with a toggle button for the saved files panel."""
@@ -473,6 +478,8 @@ class MainWindow(QMainWindow):
         menubar = self.menuBar()
         self.file_menu = menubar.addMenu("File")
         self.edit_menu = menubar.addMenu("Edit")
+        self.search_menu = menubar.addMenu("Search")
+        self.view_menu = menubar.addMenu("View")
         self.format_menu = menubar.addMenu("Format")
         self.font_menu = menubar.addMenu("Font")
         self.settings_menu = menubar.addMenu("Settings")
@@ -521,20 +528,17 @@ class MainWindow(QMainWindow):
         self.autosave_toggle_button = QPushButton("OFF")
         self.autosave_toggle_button.setCheckable(True)
         self.autosave_toggle_button.setFixedSize(60, 30)
+        self.autosave_toggle_button.clicked.connect(self.handle_autosave_toggle)
+
+        # Set the initial state and color based on saved settings
+        self.autosave_toggle_button.setChecked(self.auto_save_enabled)
+        self.update_toggle_style(self.auto_save_enabled)
 
         # Add the button to the layout and set initial style
         layout.addWidget(self.autosave_toggle_button)
-        self.update_toggle_style(self.autosave_toggle_button.isChecked())
-        self.autosave_toggle_button.clicked.connect(self.handle_autosave_toggle)
-        
-        self.autosave_toggle_button.setChecked(self.auto_save_enabled)
-        self.update_toggle_style(self.auto_save_enabled)       
-
-        # Add the layout containing both label and button to a widget
         widget = QWidget()
         widget.setLayout(layout)
-        toolbar.addWidget(widget)  # Add the widget with layout to the toolbar     
-
+        toolbar.addWidget(widget)
 
     """----------Alignment Toolbar----------"""
     def init_align_toolbar(self):
@@ -600,7 +604,7 @@ class MainWindow(QMainWindow):
     """----------Edit Toolbar----------"""
     def init_edit_toolbar(self):
         edit_toolbar = QToolBar("Edit")
-        edit_toolbar.setIconSize(QSize(25, 25))
+        edit_toolbar.setIconSize(QSize(15, 15))
         self.addToolBar(edit_toolbar)
 
         # Undo and Redo
@@ -866,14 +870,14 @@ class MainWindow(QMainWindow):
     def handle_autosave_toggle(self):
         """Handle the auto-save toggle and apply style based on state."""
         is_checked = self.autosave_toggle_button.isChecked()
-        self.autosave_toggle_button.setText("ON" if is_checked else "OFF")
-        
+        self.update_toggle_style(is_checked)
+
         # Enable or disable the auto-save timer based on toggle state
         if is_checked:
             self.enable_auto_save_timer()
         else:
             self.disable_auto_save_timer()
-        
+
         # Update and save the "auto_save" setting
         app_settings["auto_save"] = is_checked
         save_settings(app_settings)  # Persist the change
@@ -886,11 +890,11 @@ class MainWindow(QMainWindow):
     def update_toggle_style(self, is_checked):
         """Update the style of the toggle button based on its state."""
         if is_checked:
-            # Style for "ON" state with a consistent rounded appearance
+            # Style for "ON" state with green color
             self.autosave_toggle_button.setStyleSheet(
                 """
                 QPushButton {
-                    background-color: #4CAF50;
+                    background-color: #4CAF50;  /* Green for ON */
                     color: white;
                     border-radius: 10px;
                     min-width: 40px;
@@ -901,11 +905,11 @@ class MainWindow(QMainWindow):
             )
             self.autosave_toggle_button.setText("ON")
         else:
-            # Style for "OFF" state with the same rounded appearance
+            # Style for "OFF" state with gray color
             self.autosave_toggle_button.setStyleSheet(
                 """
                 QPushButton {
-                    background-color: #ccc;
+                    background-color: #ccc;  /* Gray for OFF */
                     color: black;
                     border-radius: 10px;
                     min-width: 40px;
@@ -938,11 +942,14 @@ class MainWindow(QMainWindow):
         editor = self.tab_widget.widget(index)
         file_path = self.paths.get(index)
 
-        if editor.document().isModified() and file_path and file_path.startswith(PERSISTENT_FOLDER):
+        # Check if the editor is None to avoid accessing an attribute of None
+        if editor is not None and editor.document().isModified() and file_path and file_path.startswith(PERSISTENT_FOLDER):
             with open(file_path, 'w', encoding='utf-8') as f:
                 f.write(editor.toPlainText())
             editor.document().setModified(False)  # Reset modified flag after saving
             logger.info(f"Auto-saved changes to: {file_path}")
+        else:
+            logger.warning("No editor found for the current tab or tab not modified; auto-save skipped.")
 
     """---------------------------------------------------------Capture Methods----------------------------------------------""" 
     """----------Capture and OCR Action Methods----------"""
@@ -1225,6 +1232,9 @@ class MainWindow(QMainWindow):
         # Add the new tab with a unique name
         index = self.tab_widget.addTab(new_tab, untitled_name)
         self.tab_widget.setCurrentIndex(index)
+
+        # Set up the custom context menu for the new tab
+        self.setup_custom_context_menu()
 
         # If auto-save is enabled, save the initial file to the persistent folder
         if self.autosave_toggle_button.isChecked():
@@ -1646,23 +1656,22 @@ class MainWindow(QMainWindow):
     """--------------------------------------------------------------Formatting Methods------------------------------------------"""
     """----------Text Formatting Toggle Methods----------"""
     def toggle_text_format(self, format_type, checked):
-        """Toggle text formatting (bold, italic, underline, strikethrough) based on the checked state."""
+        """Toggle text format based on format type."""
         editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            format = QTextCharFormat()
+        cursor = editor.textCursor()
+        format = QTextCharFormat()
 
-            if format_type == "bold":
-                format.setFontWeight(QFont.Weight.Bold if checked else QFont.Weight.Normal)
-            elif format_type == "italic":
-                format.setFontItalic(checked)
-            elif format_type == "underline":
-                format.setFontUnderline(checked)
-            elif format_type == "strikethrough":
-                format.setFontStrikeOut(checked)
+        if format_type == "bold":
+            format.setFontWeight(QFont.Weight.Bold if checked else QFont.Weight.Normal)
+        elif format_type == "italic":
+            format.setFontItalic(checked)
+        elif format_type == "underline":
+            format.setFontUnderline(checked)
+        elif format_type == "strikethrough":
+            format.setFontStrikeOut(checked)
 
-            cursor.mergeCharFormat(format)
-            editor.setTextCursor(cursor)
+        cursor.mergeCharFormat(format)
+        editor.setTextCursor(cursor)
 
     def toggle_highlighting(self, checked):
         """Toggle highlighting on/off with the current highlight color if checked."""
@@ -1843,25 +1852,117 @@ class MainWindow(QMainWindow):
             editor.customContextMenuRequested.connect(self.show_custom_context_menu)
 
     def show_custom_context_menu(self, pos):
+        """Create a custom context menu with text editing, spell-check, and formatting options in a gray color scheme."""
         editor = self.get_current_editor()
-        if editor:
-            menu = QMenu(self)
-            cursor = editor.cursorForPosition(pos)
-            cursor.select(QTextCursor.SelectionType.WordUnderCursor)
-            word = cursor.selectedText()
+        if not editor:
+            return  # Exit if there's no active editor
 
-            if word and word not in spell:
-                spell_check_menu = QMenu("Spell Check", menu)
-                self.populate_spell_check_menu(word, cursor, spell_check_menu)
-                menu.addMenu(spell_check_menu)
+        # Initialize the context menu with a gray color scheme
+        context_menu = QMenu(self)
+        context_menu.setStyleSheet("""
+            QMenu {
+                background-color: #2b2b2b;  /* Dark gray background */
+                color: #f0f0f0;             /* Light gray text */
+                border: 1px solid #5a5a5a;  /* Border color */
+            }
+            QMenu::item {
+                background-color: transparent;
+                padding: 4px 24px;
+            }
+            QMenu::item:selected {
+                background-color: #3a3a3a;  /* Slightly lighter gray on selection */
+                color: #ffffff;             /* White text on selection */
+            }
+            QMenu::separator {
+                height: 1px;
+                background: #5a5a5a;        /* Gray separator line */
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        """)
 
-            menu.addSeparator()
-            menu.addAction("Cut", editor.cut)
-            menu.addAction("Copy", editor.copy)
-            menu.addAction("Paste", editor.paste)
-            menu.addAction("Select All", editor.selectAll)
-            menu.exec(editor.mapToGlobal(pos))
+        # Basic editing actions
+        cut_action = QAction("Cut", self)
+        cut_action.setShortcut("Ctrl+X")
+        cut_action.triggered.connect(editor.cut)
+        context_menu.addAction(cut_action)
 
+        copy_action = QAction("Copy", self)
+        copy_action.setShortcut("Ctrl+C")
+        copy_action.triggered.connect(editor.copy)
+        context_menu.addAction(copy_action)
+
+        paste_action = QAction("Paste", self)
+        paste_action.setShortcut("Ctrl+V")
+        paste_action.triggered.connect(editor.paste)
+        context_menu.addAction(paste_action)
+
+        delete_action = QAction("Delete", self)
+        delete_action.triggered.connect(lambda: editor.textCursor().removeSelectedText())
+        context_menu.addAction(delete_action)
+
+        context_menu.addSeparator()
+
+        # Spell-check suggestions
+        cursor = editor.textCursor()
+        cursor.select(QTextCursor.SelectionType.WordUnderCursor)
+        word = cursor.selectedText()
+        if word and word not in spell:
+            spell_menu = QMenu("Spelling Suggestions", self)
+            spell_menu.setStyleSheet(context_menu.styleSheet())  # Apply gray color scheme
+
+            # Get suggestions, with a check in case no suggestions are available
+            suggestions = spell.candidates(word)
+            if suggestions:
+                for suggestion in suggestions:
+                    action = QAction(suggestion, self)
+                    action.triggered.connect(lambda _, sug=suggestion: self.replace_word(cursor, sug))
+                    spell_menu.addAction(action)
+            
+            add_to_dict_action = QAction("Add to Dictionary", self)
+            add_to_dict_action.triggered.connect(lambda _, w=word: self.add_word_to_dictionary(w))
+            spell_menu.addAction(add_to_dict_action)
+
+            context_menu.addMenu(spell_menu)
+
+        context_menu.addSeparator()
+
+        # Text formatting options
+        bold_action = QAction("Bold", self)
+        bold_action.setCheckable(True)
+        bold_action.setChecked(editor.fontWeight() == QFont.Weight.Bold)
+        bold_action.triggered.connect(lambda: self.toggle_text_format("bold", bold_action.isChecked()))
+        context_menu.addAction(bold_action)
+
+        italic_action = QAction("Italic", self)
+        italic_action.setCheckable(True)
+        italic_action.setChecked(editor.fontItalic())
+        italic_action.triggered.connect(lambda: self.toggle_text_format("italic", italic_action.isChecked()))
+        context_menu.addAction(italic_action)
+
+        underline_action = QAction("Underline", self)
+        underline_action.setCheckable(True)
+        underline_action.setChecked(editor.fontUnderline())
+        underline_action.triggered.connect(lambda: self.toggle_text_format("underline", underline_action.isChecked()))
+        context_menu.addAction(underline_action)
+
+        strikethrough_action = QAction("Strikethrough", self)
+        strikethrough_action.setCheckable(True)
+        strikethrough_action.triggered.connect(lambda: self.toggle_text_format("strikethrough", strikethrough_action.isChecked()))
+        context_menu.addAction(strikethrough_action)
+
+        # Highlight options (with a submenu for color selection)
+        highlight_action = QMenu("Highlight", self)
+        highlight_action.setStyleSheet(context_menu.styleSheet())  # Apply gray color scheme
+        for name, colors in HIGHLIGHT_STYLES.items():
+            color_action = QAction(name, self)
+            color_action.triggered.connect(lambda _, col=colors: self.apply_highlight_style(col))
+            highlight_action.addAction(color_action)
+        context_menu.addMenu(highlight_action)
+
+        # Show the context menu at the cursor position
+        context_menu.exec(self.mapToGlobal(pos))
+        
     def populate_spell_check_menu(self, word, cursor, spell_check_menu):
         suggestions = spell.candidates(word)
         for suggestion in suggestions:
@@ -1875,17 +1976,17 @@ class MainWindow(QMainWindow):
 
     """----------Dictionary Management Methods----------"""
     def replace_word(self, cursor, replacement):
+        """Replace the selected word with the provided replacement."""
         cursor.beginEditBlock()
         cursor.removeSelectedText()
         cursor.insertText(replacement)
         cursor.endEditBlock()
-        logger.info(f"Replaced word with '{replacement}'.")
 
     def add_word_to_dictionary(self, word):
+        """Add a word to the custom dictionary."""
         spell.word_frequency.add(word)
         self.save_custom_dictionary()
         QMessageBox.information(self, "Word Added", f"'{word}' has been added to the dictionary.")
-        logger.info(f"Added '{word}' to custom dictionary.")
 
     def save_custom_dictionary(self):
         with open(CUSTOM_DICT_PATH, 'w') as f:
@@ -2109,7 +2210,7 @@ class SavedFilesPanel(QWidget):
         self.saved_files_list.customContextMenuRequested.connect(self.show_context_menu)
 
         # Manual refresh button
-        self.refresh_button = QPushButton("Refresh Files")
+        self.refresh_button = QPushButton("Refresh 🔄")
         self.refresh_button.clicked.connect(self.refresh_files_list)
         self.layout.addWidget(self.refresh_button)
 
@@ -2166,8 +2267,30 @@ class SavedFilesPanel(QWidget):
         self.refresh_files_list()  # Refresh the list to apply the new sort order
 
     def show_context_menu(self, pos):
-        """Show context menu for file actions in the saved files list."""
+        """Show context menu for file actions in the saved files list with a gray color scheme."""
         menu = QMenu(self)
+        menu.setStyleSheet("""
+            QMenu {
+                background-color: #2b2b2b;  /* Dark gray background */
+                color: #f0f0f0;             /* Light gray text */
+                border: 1px solid #5a5a5a;  /* Border color */
+            }
+            QMenu::item {
+                background-color: transparent;
+                padding: 4px 24px;
+            }
+            QMenu::item:selected {
+                background-color: #3a3a3a;  /* Slightly lighter gray on selection */
+                color: #ffffff;             /* White text on selection */
+            }
+            QMenu::separator {
+                height: 1px;
+                background: #5a5a5a;        /* Gray separator line */
+                margin-left: 10px;
+                margin-right: 10px;
+            }
+        """)
+
         open_action = QAction("Open", self)
         open_action.triggered.connect(lambda: self.open_selected_file(self.saved_files_list.currentItem()))
         menu.addAction(open_action)
