@@ -14,15 +14,13 @@ from uuid import uuid4
 
 # Third-party packages
 import pytesseract
-import win32con
-import win32gui
 from bs4 import BeautifulSoup
 from PIL import Image
 from spellchecker import SpellChecker
 
 # PyQt6 imports
 from PyQt6.QtCore import (
-     QByteArray, QBuffer, QDateTime, QEvent, QPoint, QRect, QTimer, QUrl, Qt, QSize, 
+     QByteArray, QBuffer, QDateTime, QEvent, QIODevice, QPoint, QRect, QTimer, QUrl, Qt, QSize, 
      pyqtSignal
 )
 from PyQt6.QtGui import (
@@ -230,6 +228,23 @@ class MainWindow(QMainWindow):
         super(MainWindow, self).__init__()
         self.setWindowTitle("Case and Note Organizer 2.0")
         
+        # Initialize thumbnail image map to store thumbnail images
+        self.thumbnail_image_map = {} 
+        
+        # Initialize full_image_map in MainWindow
+        self.full_image_map = {} 
+        
+        self.editor = ClickableTextEdit(self)
+        self.editor.full_image_map = self.full_image_map 
+        
+        # Path to the icon in the images folder
+        icon_path = os.path.join(os.path.dirname(__file__), "images", "cano.ico")
+        if not os.path.exists(icon_path):
+            print("Icon file not found at:", icon_path)
+
+        # Set the window icon specifically for the main window
+        self.setWindowIcon(QIcon(icon_path))
+       
         # Initialize essential attributes
         self.capture_in_progress = False  # Tracks if a capture is in progress
         self.full_image_map = {}  # Stores full-size images by URL
@@ -323,9 +338,6 @@ class MainWindow(QMainWindow):
         
         # Add the button to the right end of the tab bar
         self.tab_widget.setCornerWidget(self.new_tab_button, Qt.Corner.TopRightCorner)
-
-        # Initialize the toolbar
-        self.init_toolbar()
         
         # Add the initial tab
         self.add_new_tab()
@@ -335,29 +347,11 @@ class MainWindow(QMainWindow):
         self.setContextMenuPolicy(Qt.ContextMenuPolicy.CustomContextMenu)
         self.customContextMenuRequested.connect(self.show_custom_context_menu)
 
-    def init_toolbar(self):
-        """Initialize the toolbar with a toggle button for the saved files panel."""
-        toolbar = QToolBar("Main Toolbar")
-        self.addToolBar(toolbar)
-
-        # Create the toggle button action
-        self.toggle_panel_action = QAction("Hide Panel", self)
-        self.toggle_panel_action.setCheckable(True)
-        self.toggle_panel_action.setChecked(True)  # Panel starts as visible
-        self.toggle_panel_action.setIcon(QIcon("icon-path/show-hide-icon.png"))  # Set icon for show/hide
-        self.toggle_panel_action.triggered.connect(self.sync_toggle_buttons)
-
-        # Add toggle button to toolbar
-        toolbar.addAction(self.toggle_panel_action)
-
-        # Connect panel button to the same slot
-        self.saved_files_panel.collapse_button.clicked.connect(self.sync_toggle_buttons)    
-
     def sync_toggle_buttons(self):
-        """Sync the toggle states of the toolbar and panel buttons and manage visibility."""
+        """Sync the visibility of the saved files panel with the View menu toggle action."""
         if self.toggle_panel_action.isChecked():
             self.saved_files_panel.show()
-            self.toggle_panel_action.setText("Hide Panel")
+           # self.toggle_panel_action.setText("Hide Panel")
             self.saved_files_panel.collapse_button.setText("◀")  # Icon to collapse
         else:
             self.saved_files_panel.hide()
@@ -371,7 +365,7 @@ class MainWindow(QMainWindow):
             self.toggle_panel_action.setText("Hide Panel")
         else:
             self.saved_files_panel.hide()
-            self.toggle_panel_action.setText("Show Panel")        
+          #  self.toggle_panel_action.setText("Show Panel")        
         
         logger.info("User interface initialized with tab support.")
 
@@ -491,6 +485,12 @@ class MainWindow(QMainWindow):
             theme_action = QAction(theme_name, self)
             theme_action.triggered.connect(lambda checked, name=theme_name: self.apply_theme(name))
             self.themes_menu.addAction(theme_action)
+
+        # Add "Toggle Panel" action to the View menu
+        self.toggle_panel_action = QAction("Saved Files Panel", self, checkable=True)
+        self.toggle_panel_action.setChecked(True)  # Start with the panel visible
+        self.toggle_panel_action.triggered.connect(self.sync_toggle_buttons)
+        self.view_menu.addAction(self.toggle_panel_action)
 
         # Initialize toolbars in the correct order
         self.init_auto_save_toolbar()
@@ -1049,53 +1049,6 @@ class MainWindow(QMainWindow):
         pixmap = selected_screen.grabWindow(0, adjusted_x, adjusted_y, snip_rect.width(), snip_rect.height())
         return pixmap if not pixmap.isNull() else None
 
-    def insert_image_with_thumbnail(self, pixmap):
-        unique_id = str(uuid4())
-        thumbnail_pixmap = pixmap.scaled(
-            200,
-            150,
-            Qt.AspectRatioMode.KeepAspectRatio,
-            Qt.TransformationMode.SmoothTransformation,
-        )
-        editor = self.get_current_editor()
-        if editor:
-            # Add the thumbnail image to the document resources
-            editor.document().addResource(
-                QTextDocument.ResourceType.ImageResource,
-                QUrl(unique_id),
-                thumbnail_pixmap,
-            )
-
-            cursor = editor.textCursor()
-            cursor.beginEditBlock()
-
-            # Insert a zero-width space before the image to isolate formatting on the left
-            cursor.insertText('\u200b')
-
-            # Insert the image wrapped in an anchor
-            html = f'<a href="{unique_id}"><img src="{unique_id}" width="200" height="150"/></a>'
-            cursor.insertHtml(html)
-
-            # Move cursor after the image and insert a zero-width space to isolate formatting on the right
-            cursor.movePosition(QTextCursor.MoveOperation.Right)
-            cursor.insertText('\u200b')
-
-            # Re-apply a neutral format to isolate formatting on both sides
-            neutral_format = QTextCharFormat()
-            cursor.setCharFormat(neutral_format)
-
-            cursor.endEditBlock()
-
-            # Update the editor's cursor
-            editor.setTextCursor(cursor)
-
-            # Store the full-size image for viewing
-            self.full_image_map[unique_id] = pixmap
-            editor.full_image_map = self.full_image_map  # Share the map with the editor
-
-            # Connect the cursor position change to formatting clearing
-            editor.cursorPositionChanged.connect(self.clear_formatting_near_thumbnail)
-
     def clear_formatting_near_thumbnail(self):
         """Clear formatting if the cursor is within one space of a thumbnail image."""
         editor = self.get_current_editor()
@@ -1147,18 +1100,58 @@ class MainWindow(QMainWindow):
             self.capture()
             self.capture_in_progress = False
 
-    def show_full_image(self, pixmap):
-        """Display the full-size image in a dialog."""
-        dialog = QDialog(self)
-        dialog.setWindowTitle("Full Image")
-        layout = QVBoxLayout(dialog)
-        
-        full_image_label = QLabel()
-        full_image_label.setPixmap(pixmap)
-        layout.addWidget(full_image_label)
-        
-        dialog.setLayout(layout)
-        dialog.exec()
+    def insert_image_with_thumbnail(self, pixmap):
+        unique_id = str(uuid4())
+        logger.debug(f"Generated unique_id for image: {unique_id}")
+
+        # Generate thumbnail
+        thumbnail_pixmap = pixmap.scaled(
+            200,
+            150,
+            Qt.AspectRatioMode.KeepAspectRatio,
+            Qt.TransformationMode.SmoothTransformation,
+        )
+        logger.debug(f"Thumbnail generated for image ID {unique_id}")
+
+        # Base64 encode the full image
+        buffer_full = QBuffer()
+        buffer_full.open(QBuffer.OpenModeFlag.ReadWrite)
+        pixmap.save(buffer_full, "PNG")
+        base64_full_image = base64.b64encode(buffer_full.data()).decode('utf-8')
+        buffer_full.close()
+        logger.debug(f"Base64 encoding complete for full image with ID {unique_id}, length: {len(base64_full_image)}")
+
+        # Insert HTML thumbnail with link to full image
+        editor = self.get_current_editor()
+        if editor:
+            # Add the thumbnail image to document resources
+            editor.document().addResource(
+                QTextDocument.ResourceType.ImageResource,
+                QUrl(unique_id),
+                thumbnail_pixmap,
+            )
+            logger.debug(f"Thumbnail image resource added to document for ID {unique_id}")
+
+            cursor = editor.textCursor()
+            cursor.beginEditBlock()
+            cursor.insertText('\u200b')  # Zero-width space for formatting isolation
+            html = f'<a href="{unique_id}" onclick="showFullImage(\'data:image/png;base64,{base64_full_image}\')"><img src="{unique_id}" width="200" height="150" style="cursor:pointer;"/></a>'
+            cursor.insertHtml(html)
+            cursor.movePosition(QTextCursor.MoveOperation.Right)
+            cursor.insertText('\u200b')
+            cursor.setCharFormat(QTextCharFormat())
+            cursor.endEditBlock()
+            editor.setTextCursor(cursor)
+
+            # Store images in maps
+            self.full_image_map[unique_id] = base64_full_image
+            self.thumbnail_image_map[unique_id] = thumbnail_pixmap
+            logger.info(f"Full-size image and thumbnail stored for ID {unique_id}")
+            
+            # Assign maps to editor for access
+            editor.full_image_map = self.full_image_map
+            editor.thumbnail_image_map = self.thumbnail_image_map
+
 
     """------------------------------------------------------------Edit Methods------------------------------------------""" 
     """----------Edit Action Methods----------"""
@@ -1452,60 +1445,161 @@ class MainWindow(QMainWindow):
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to load HTML file: {str(e)}")
             logger.error(f"Failed to load HTML file: {str(e)}")
-            
+ 
+    def file_save(self, index=None):
+        """Save the current document. If the file has not been saved before, perform 'Save As'."""
+        if index is None:
+            index = self.get_current_tab_index()
+
+        # Check if the file has a path associated with it
+        path = self.paths.get(index)
+
+        if not path:
+            # If there's no saved path, prompt 'Save As'
+            logger.info("No existing save path. Calling 'Save As'.")
+            self.file_save_as(index)
+        else:
+            # Determine whether to save as HTML or plain text based on file extension
+            editor = self.tab_widget.widget(index)
+            if path.endswith(".html"):
+                # Use save_as_html for HTML files
+                self.save_as_html_with_js(path, index)
+                logger.info(f"File re-saved as HTML with embedded images: {path}")
+            else:
+                # For non-HTML formats, save as plain text
+                content = editor.toPlainText()
+                with open(path, 'w', encoding='utf-8') as file:
+                    file.write(content)
+                editor.document().setModified(False)
+                logger.info(f"File re-saved as plain text: {path}")
+
+ 
     def file_save_as(self, index=None):
-        """Save file to a user-specified location and update the tab and saved files panel."""
+        """Save file to a user-specified location with embedded images and JavaScript for full-size display."""
         if index is None:
             index = self.get_current_tab_index()
 
         user_path, _ = QFileDialog.getSaveFileName(
-            self, "Save As", "", "Text documents (*.txt);;HTML documents (*.html)"
+            self, "Save As", "", "HTML documents (*.html)"
         )
 
         if user_path:
-            # Save the file and update paths
-            file_name = os.path.basename(user_path)
-            persistent_path = os.path.join(PERSISTENT_FOLDER, file_name)
-            editor = self.tab_widget.widget(index)
-            content = editor.toPlainText() if user_path.endswith(".txt") else editor.toHtml()
+            # Use the JavaScript-enabled HTML save method
+            self.save_as_html_with_js(user_path, index)
 
-            # Write to both user and persistent paths
-            with open(user_path, 'w', encoding='utf-8') as f_user, open(persistent_path, 'w', encoding='utf-8') as f_persist:
-                f_user.write(content)
-                f_persist.write(content)
 
-            # Update tab name and paths
-            self.file_metadata_manager.update_file_metadata(file_name, user_path, persistent_path)
-            self.paths[index] = persistent_path
-            self.tab_widget.setTabText(index, file_name)
-            self.saved_files_panel.refresh_files_list()
-            logger.info(f"File saved as '{file_name}' to user path '{user_path}' and persistent path '{persistent_path}'.")
-
-    def save_as_html(self, path, index):
-        """Save the document content as an HTML file with embedded images."""
+    def save_as_html_with_js(self, path, index):
+        """Save the document content as an HTML file with embedded images and JavaScript for full-size image display."""
+        logger.info(f"Starting save_as_html_with_js for path: {path} and index: {index}")
+        
         editor = self.tab_widget.widget(index)
         if editor:
-            html_content = self.convert_document_to_html(editor.document())
-            with open(path, 'w', encoding='utf-8') as f:
-                f.write(html_content)
+            # Step 1: Get HTML content from the editor
+            html_content = editor.document().toHtml()
+            logger.debug("Original HTML content retrieved from editor.")
+            
+            # Step 2: Embed images within HTML content using embed_images_in_html_with_js
+            embedded_html_content = self.embed_images_in_html_with_js(html_content, editor.document())
+            logger.debug("HTML content after embedding images.")
+            
+            # Append JavaScript for full-size image display functionality
+            embedded_html_content += """
+            <script type="text/javascript">
+                function showFullImage(fullImageData) {
+                    var overlay = document.getElementById('overlay');
+                    var fullImage = document.getElementById('fullImage');
+                    fullImage.src = fullImageData;
+                    overlay.style.display = 'flex';
+                }
+
+                function hideFullImage() {
+                    document.getElementById('overlay').style.display = 'none';
+                }
+            </script>
+            <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+                <img id="fullImage" src="" style="max-width:90%; max-height:90%;"/>
+                <button onclick="hideFullImage()" style="position:absolute; top:20px; right:20px; background-color:white; border:none; font-size:18px;">Close</button>
+            </div>
+            """
+
+            # Step 3: Save the final HTML content with JavaScript and embedded images
+            with open(path, 'w', encoding='utf-8') as file:
+                file.write(embedded_html_content)
+                logger.info(f"Embedded HTML content with JavaScript saved to {path}")
+
+            # Additional logging for UI updates
             self.paths[index] = path
             self.tab_widget.setTabText(index, os.path.basename(path))
             self.tab_widget.setTabToolTip(index, path)
             editor.document().setModified(False)
-            logger.info(f"Document saved as HTML: {path}")
+            logger.info(f"Document saved and UI updated for path: {path}")
 
-    def save_as_text(self, path, index):
-        """Save the document content as a plain text file."""
-        editor = self.tab_widget.widget(index)
-        if editor:
-            text_content = editor.toPlainText()
-            with open(path, 'w', encoding='utf-8') as f:
-                f.write(text_content)
-            self.paths[index] = path
-            self.tab_widget.setTabText(index, os.path.basename(path))
-            self.tab_widget.setTabToolTip(index, path)
-            editor.document().setModified(False)
-            logger.info(f"Document saved as text: {path}")        
+    def embed_images_in_html_with_js(self, html_content, document):
+        """Embed both thumbnail and full-size image as base64 in HTML with JavaScript for overlay viewing."""
+        logger.info("Starting embed_images_in_html_with_js")
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        for img_tag in soup.find_all('img'):
+            src = img_tag.get('src')
+            logger.debug(f"Found <img> tag with src: {src}")
+            
+            if src:
+                # Retrieve the full-size image from the map by unique ID
+                full_image = self.full_image_map.get(src)
+                if full_image is None:
+                    logger.warning(f"No image found in full_image_map for ID {src}")
+                    continue
+                
+                if isinstance(full_image, QPixmap):
+                    try:
+                        # Convert the full-size image to Base64
+                        buffer_full = QBuffer()
+                        buffer_full.open(QBuffer.OpenModeFlag.ReadWrite)
+                        full_image.save(buffer_full, "PNG")
+                        base64_full = base64.b64encode(buffer_full.data()).decode('utf-8')
+                        buffer_full.close()
+
+                        # Log the length of the Base64 string for verification
+                        logger.info(f"Image ID {src} converted to Base64 with length: {len(base64_full)}")
+
+                        # Embed as thumbnail
+                        formatted_base64_src = f"data:image/png;base64,{base64_full}"
+                        img_tag['src'] = formatted_base64_src
+                        img_tag.wrap(soup.new_tag("a", href=formatted_base64_src))
+                        img_tag['onclick'] = f"showFullImage('{formatted_base64_src}')"
+                        img_tag['style'] = "cursor: pointer;"
+
+                    except Exception as e:
+                        logger.error(f"Failed to convert and embed image for ID {src}: {e}")
+                        img_tag['alt'] = "Image could not be loaded"
+                else:
+                    logger.warning(f"Image found for ID {src} is not a QPixmap instance.")
+
+        # Add overlay and script for full-size viewing if not already present
+        if not soup.find(id="overlay"):
+            logger.info("Adding JavaScript and overlay HTML for full-size image viewing.")
+            overlay_script = """
+            <script type="text/javascript">
+                function showFullImage(fullImageData) {
+                    var overlay = document.getElementById('overlay');
+                    var fullImage = document.getElementById('fullImage');
+                    fullImage.src = fullImageData;
+                    overlay.style.display = 'flex';
+                }
+
+                function hideFullImage() {
+                    document.getElementById('overlay').style.display = 'none';
+                }
+            </script>
+            <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+                <img id="fullImage" src="" style="max-width:90%; max-height:90%;" alt="Full Size"/>
+                <button onclick="hideFullImage()" style="position:absolute; top:20px; right:20px; background-color:white; border:none; font-size:18px;">Close</button>
+            </div>
+            """
+            soup.body.append(BeautifulSoup(overlay_script, 'html.parser'))
+
+        logger.info("Completed embed_images_in_html_with_js")
+        return str(soup)
 
     def convert_document_to_html(self, document):
         """Convert a QTextDocument to HTML with embedded images as clickable thumbnails."""
@@ -1524,36 +1618,44 @@ class MainWindow(QMainWindow):
                 if format.isImageFormat():
                     image_format = format.toImageFormat()
                     image_id = image_format.name()
+
                     if image_id in self.full_image_map:
                         pixmap = self.full_image_map[image_id]
 
-                        # Convert full-size image to base64
+                        # Convert full-size image to base64 for embedding in `href`
                         buffer_full = QBuffer()
                         buffer_full.open(QBuffer.OpenModeFlag.ReadWrite)
                         pixmap.save(buffer_full, "PNG")
                         base64_full = base64.b64encode(buffer_full.data()).decode('utf-8')
                         buffer_full.close()
 
-                        # Get the thumbnail image from the document resources
+                        # Get thumbnail image from document resources
                         thumbnail_image = document.resource(QTextDocument.ResourceType.ImageResource, QUrl(image_id))
+                        
+                        if thumbnail_image:
+                            # Convert thumbnail to base64 for embedding in `src`
+                            buffer_thumb = QBuffer()
+                            buffer_thumb.open(QBuffer.OpenModeFlag.ReadWrite)
+                            thumbnail_image.save(buffer_thumb, "PNG")
+                            base64_thumb = base64.b64encode(buffer_thumb.data()).decode('utf-8')
+                            buffer_thumb.close()
 
-                        # Convert thumbnail image to base64
-                        buffer_thumb = QBuffer()
-                        buffer_thumb.open(QBuffer.OpenModeFlag.ReadWrite)
-                        thumbnail_image.save(buffer_thumb, "PNG")
-                        base64_thumb = base64.b64encode(buffer_thumb.data()).decode('utf-8')
-                        buffer_thumb.close()
+                            # Embed the image as a clickable thumbnail
+                            width = image_format.width() if image_format.width() else pixmap.width()
+                            height = image_format.height() if image_format.height() else pixmap.height()
 
-                        # Embed image in HTML wrapped in anchor with data-fullimage attribute
-                        width = image_format.width() if image_format.width() else pixmap.width()
-                        height = image_format.height() if image_format.height() else pixmap.height()
-
-                        thumbnail_html = (
-                            f'<a href="{image_id}" data-fullimage="{base64_full}">'
-                            f'<img src="data:image/png;base64,{base64_thumb}" '
-                            f'width="{width}" height="{height}"/></a>'
-                        )
-                        html_output += thumbnail_html
+                            thumbnail_html = (
+                                f'<a href="data:image/png;base64,{base64_full}" target="_blank">'
+                                f'<img src="data:image/png;base64,{base64_thumb}" '
+                                f'width="{width}" height="{height}"/></a>'
+                            )
+                            html_output += thumbnail_html
+                        else:
+                            # Log warning if thumbnail not found
+                            logger.warning(f"Thumbnail image for ID {image_id} not found in document resources.")
+                    else:
+                        # Log warning if full-size image not found
+                        logger.warning(f"Image with ID {image_id} not found in full_image_map.")
                 else:
                     # Handle text
                     text = fragment.text().replace('\n', '<br>')
@@ -2026,15 +2128,26 @@ class ClickableTextEdit(QTextEdit):
                 
         super().mousePressEvent(event)
 
-    def show_full_image(self, pixmap):
-        dialog = QDialog(self)
-        dialog.setWindowTitle("Full Image")
-        layout = QVBoxLayout(dialog)
+    def show_full_image(self, base64_image_data):
+        """Display the full-size image in a separate dialog or label."""
+        # Decode the base64 data and load it into a QPixmap
+        image_data = base64.b64decode(base64_image_data)
+        pixmap = QPixmap()
+        pixmap.loadFromData(QByteArray(image_data))
+        
+        # Create a label or dialog to display the full-size image
         full_image_label = QLabel()
         full_image_label.setPixmap(pixmap)
+        full_image_label.setWindowTitle("Full-Size Image")
+        full_image_label.setScaledContents(True)
+        full_image_label.setFixedSize(pixmap.size())
+        
+        # Display the full-size image in a modal dialog
+        full_image_dialog = QDialog(self)
+        layout = QVBoxLayout()
         layout.addWidget(full_image_label)
-        dialog.setLayout(layout)
-        dialog.exec()
+        full_image_dialog.setLayout(layout)
+        full_image_dialog.exec()
 
 """===========Custom Dictionary Dialog Class=========="""   
 class CustomDictionaryDialog(QDialog):
@@ -2495,8 +2608,14 @@ class SnippingOverlay(QWidget):
 # Main Application Execution
 if __name__ == "__main__":
     app = QApplication(sys.argv)
-    app.setApplicationName("Case and Note Organizer 2.0")
+    
+    # Path to the icon in the images folder
+    icon_path = os.path.join(os.path.dirname(__file__), "images", "cano.ico")
+    
+    # Set the global application icon
+    app.setWindowIcon(QIcon(icon_path))
+
     window = MainWindow()
     window.show()
-    logger.info("Application started.")
-    sys.exit(app.exec())        
+    
+    sys.exit(app.exec())
