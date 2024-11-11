@@ -1,0 +1,53 @@
+from PyQt6.QtCore import QUrl, Qt  # Import Qt for color
+from PyQt6.QtWidgets import QApplication, QTextEdit, QVBoxLayout, QWidget
+from PyQt6.QtGui import QPixmap, QTextCursor, QTextImageFormat
+import sys
+import time
+
+def test_image_insertion():
+    """Test inserting an image into QTextEdit."""
+    app = QApplication(sys.argv)
+    
+    # Set up the main window with QTextEdit
+    window = QWidget()
+    window.setWindowTitle("QTextEdit Image Insertion Test")
+    layout = QVBoxLayout(window)
+    
+    editor = QTextEdit()
+    layout.addWidget(editor)
+    window.setLayout(layout)
+
+    # Create a pixmap for testing
+    pixmap = QPixmap(100, 100)
+    pixmap.fill(Qt.GlobalColor.blue)
+
+    # Convert QPixmap to QImage
+    image = pixmap.toImage()
+    
+    # Generate a unique ID and URL for the image
+    unique_id = f"image_{int(time.time())}"
+    image_url = QUrl(unique_id)
+
+    # Register the image as a resource in QTextEdit's document
+    editor.document().addResource(2, image_url, image)  # 2 is the ImageResource type
+
+    # Set up QTextImageFormat with the unique resource ID
+    image_format = QTextImageFormat()
+    image_format.setName(image_url.toString())
+    image_format.setWidth(pixmap.width())
+    image_format.setHeight(pixmap.height())
+
+    # Insert the image at the cursor position
+    cursor = editor.textCursor()
+    cursor.movePosition(QTextCursor.MoveOperation.End)
+    cursor.insertImage(image_format)
+
+    # Show the window
+    window.resize(300, 200)
+    window.show()
+
+    sys.exit(app.exec())
+
+# Run the test function
+if __name__ == "__main__":
+    test_image_insertion()

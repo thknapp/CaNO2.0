@@ -1,181 +1,769 @@
-2024-11-06 23:19:57,686 - INFO - Settings saved.
-2024-11-06 23:19:57,686 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-06 23:27:13,643 - INFO - Snipping tool initialized on all screens.
-2024-11-06 23:27:14,700 - INFO - Capture area set to: PyQt6.QtCore.QRect(4394, 248, 404, 314)
-2024-11-06 23:27:14,771 - DEBUG - Generated unique_id for image: 96c159b3-a004-4b81-b6ed-e77c95d285b8
-2024-11-06 23:27:14,790 - INFO - Inserted image with thumbnail for ID 96c159b3-a004-4b81-b6ed-e77c95d285b8
-2024-11-06 23:27:29,044 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-06 23:27:29,046 - INFO - Document saved as HTML with embedded images and JavaScript: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-06 23:27:42,711 - INFO - Tab at index 0 closed.
-2024-11-06 23:27:42,712 - INFO - Settings saved.
-2024-11-06 23:31:18,066 - INFO - Settings saved.
-2024-11-06 23:31:18,067 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-06 23:31:20,787 - INFO - Snipping tool initialized on all screens.
-2024-11-06 23:31:21,521 - INFO - Capture area set to: PyQt6.QtCore.QRect(4395, 273, 448, 382)
-2024-11-06 23:31:21,569 - DEBUG - Generated unique_id for image: e34209b1-94ca-4f27-b468-eafc78076a4b
-2024-11-06 23:31:21,587 - INFO - Inserted image with thumbnail for ID e34209b1-94ca-4f27-b468-eafc78076a4b
-2024-11-06 23:31:55,398 - INFO - Settings saved.
-2024-11-06 23:31:55,399 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-06 23:31:58,881 - INFO - Snipping tool initialized on all screens.
-2024-11-06 23:31:59,657 - INFO - Capture area set to: PyQt6.QtCore.QRect(4323, 257, 295, 270)
-2024-11-06 23:31:59,703 - DEBUG - Generated unique_id for image: 38636992-43e0-4ac3-acba-6844924805dc
-2024-11-06 23:31:59,722 - INFO - Inserted image with thumbnail for ID 38636992-43e0-4ac3-acba-6844924805dc
-2024-11-06 23:35:51,515 - INFO - Settings saved.
-2024-11-06 23:35:51,515 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-06 23:35:53,898 - INFO - Snipping tool initialized on all screens.
-2024-11-06 23:35:54,910 - INFO - Capture area set to: PyQt6.QtCore.QRect(5251, 380, 799, 518)
-2024-11-06 23:35:54,984 - DEBUG - Generated unique_id for image: 3afc9abd-ea6b-4db5-ae10-a68aacaf8445
-2024-11-06 23:35:55,044 - INFO - Inserted image with thumbnail for ID 3afc9abd-ea6b-4db5-ae10-a68aacaf8445
-2024-11-06 23:36:22,122 - INFO - Document saved as HTML with embedded images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-06 23:36:22,122 - INFO - Document saved at: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-06 23:38:07,632 - INFO - Tab at index 0 closed.
-2024-11-06 23:38:07,633 - INFO - Settings saved.
-2024-11-06 23:38:34,295 - INFO - Settings saved.
-2024-11-06 23:38:34,296 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-06 23:38:36,709 - INFO - Snipping tool initialized on all screens.
-2024-11-06 23:38:38,667 - INFO - Capture area set to: PyQt6.QtCore.QRect(4363, 25, 713, 816)
-2024-11-06 23:38:38,747 - DEBUG - Generated unique_id for image: 176ed7b8-e1c9-4edd-bc01-938c6f76c4d9
-2024-11-06 23:38:38,855 - INFO - Inserted image with thumbnail for ID 176ed7b8-e1c9-4edd-bc01-938c6f76c4d9
-2024-11-06 23:48:15,490 - INFO - Settings saved.
-2024-11-06 23:48:15,491 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-06 23:48:18,420 - INFO - Snipping tool initialized on all screens.
-2024-11-06 23:48:19,218 - INFO - Capture area set to: PyQt6.QtCore.QRect(4349, 270, 557, 442)
-2024-11-06 23:48:19,272 - DEBUG - Generated unique_id for image: aabc3d39-6c64-4420-8dcf-d31e47fabe29
-2024-11-06 23:48:19,298 - INFO - Inserted image with thumbnail for ID aabc3d39-6c64-4420-8dcf-d31e47fabe29
-2024-11-06 23:48:34,056 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-06 23:48:34,057 - INFO - Document saved as HTML with embedded images and JavaScript: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-06 23:50:52,212 - INFO - Tab at index 0 closed.
-2024-11-06 23:50:52,213 - INFO - Settings saved.
-2024-11-06 23:51:11,110 - INFO - Settings saved.
-2024-11-06 23:51:11,111 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-06 23:51:13,740 - INFO - Snipping tool initialized on all screens.
-2024-11-06 23:51:14,884 - INFO - Capture area set to: PyQt6.QtCore.QRect(4411, 262, 609, 390)
-2024-11-06 23:51:14,932 - DEBUG - Generated unique_id for image: 26eb7edf-15fd-4ed0-b8f0-0f0a4ff157ad
-2024-11-06 23:51:14,966 - INFO - Inserted image with thumbnail for ID 26eb7edf-15fd-4ed0-b8f0-0f0a4ff157ad
-2024-11-06 23:51:48,362 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\a.html
-2024-11-06 23:58:38,493 - INFO - Settings saved.
-2024-11-06 23:58:38,493 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-06 23:58:45,984 - INFO - Opened file in new tab: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\a.html
-2024-11-06 23:59:25,402 - INFO - Tab at index 1 closed.
-2024-11-07 00:00:23,611 - INFO - Tab at index 0 closed.
-2024-11-07 00:00:23,612 - INFO - Settings saved.
-2024-11-07 00:00:58,208 - INFO - Settings saved.
-2024-11-07 00:00:58,208 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-07 00:01:00,304 - INFO - Snipping tool initialized on all screens.
-2024-11-07 00:01:01,331 - INFO - Capture area set to: PyQt6.QtCore.QRect(4808, 202, 342, 244)
-2024-11-07 00:01:01,371 - DEBUG - Generated unique_id for image: cc3e2c4a-7430-4cc3-8a51-94306ea16472
-2024-11-07 00:01:01,426 - INFO - Inserted image with thumbnail for ID cc3e2c4a-7430-4cc3-8a51-94306ea16472
-2024-11-07 00:01:25,363 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:01:25,364 - INFO - Document saved as HTML with embedded images and JavaScript: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:06:15,405 - INFO - Tab at index 0 closed.
-2024-11-07 00:06:15,406 - INFO - Settings saved.
-2024-11-07 00:12:15,942 - INFO - Settings saved.
-2024-11-07 00:12:15,943 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-07 00:12:34,452 - INFO - Snipping tool initialized on all screens.
-2024-11-07 00:12:36,169 - INFO - Capture area set to: PyQt6.QtCore.QRect(4564, 209, 535, 743)
-2024-11-07 00:12:36,221 - DEBUG - Generated unique_id for image: 9b485339-8aa4-4056-9a48-ad18c91f18bd
-2024-11-07 00:12:36,416 - INFO - Inserted image with thumbnail for ID 9b485339-8aa4-4056-9a48-ad18c91f18bd
-2024-11-07 00:12:50,531 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:12:50,532 - INFO - Document saved as HTML with embedded images and JavaScript: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:15:59,435 - INFO - Settings saved.
-2024-11-07 00:15:59,435 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-07 00:16:02,471 - INFO - OCR overlay initialized.
-2024-11-07 00:16:07,307 - DEBUG - STREAM b'IHDR' 16 13
-2024-11-07 00:16:07,307 - DEBUG - STREAM b'pHYs' 41 9
-2024-11-07 00:16:07,308 - DEBUG - STREAM b'IDAT' 62 6348
-2024-11-07 00:16:07,312 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_x1ik3hfu_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_x1ik3hfu', 'txt']
-2024-11-07 00:16:11,408 - INFO - OCR text inserted into document.
-2024-11-07 00:16:11,572 - INFO - Snipping tool initialized on all screens.
-2024-11-07 00:16:15,233 - INFO - Capture area set to: PyQt6.QtCore.QRect(4449, 185, 666, 1053)
-2024-11-07 00:16:15,299 - DEBUG - Generated unique_id for image: 32aeefef-3913-4d40-b493-1cd4a450703a
-2024-11-07 00:16:15,649 - INFO - Inserted image with thumbnail for ID 32aeefef-3913-4d40-b493-1cd4a450703a
-2024-11-07 00:16:36,756 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
-2024-11-07 00:16:36,757 - DEBUG - Original HTML content retrieved from editor.
-2024-11-07 00:16:36,757 - INFO - Starting embed_images_in_html_with_js
-2024-11-07 00:16:36,759 - DEBUG - Found <img> tag with src: 32aeefef-3913-4d40-b493-1cd4a450703a
-2024-11-07 00:16:36,759 - WARNING - Image found for ID 32aeefef-3913-4d40-b493-1cd4a450703a is not a QPixmap instance.
-2024-11-07 00:16:36,759 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
-2024-11-07 00:16:36,760 - INFO - Completed embed_images_in_html_with_js
-2024-11-07 00:16:36,760 - DEBUG - HTML content after embedding images.
-2024-11-07 00:16:36,761 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:16:36,761 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:18:08,754 - INFO - Tab at index 0 closed.
-2024-11-07 00:18:08,755 - INFO - Settings saved.
-2024-11-07 00:22:04,687 - INFO - Settings saved.
-2024-11-07 00:22:04,688 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-07 00:22:07,055 - INFO - Snipping tool initialized on all screens.
-2024-11-07 00:22:08,471 - INFO - Capture area set to: PyQt6.QtCore.QRect(4457, 218, 647, 887)
-2024-11-07 00:22:08,522 - DEBUG - Generated unique_id for image: e68cf060-874a-45aa-9bb9-55371256a76d
-2024-11-07 00:22:08,524 - DEBUG - Thumbnail generated for image ID e68cf060-874a-45aa-9bb9-55371256a76d
-2024-11-07 00:22:08,773 - DEBUG - Base64 encoding complete for full image with ID e68cf060-874a-45aa-9bb9-55371256a76d, length: 1062472
-2024-11-07 00:22:08,775 - DEBUG - Thumbnail image resource added to document for ID e68cf060-874a-45aa-9bb9-55371256a76d
-2024-11-07 00:22:08,788 - INFO - Full-size image and thumbnail stored for ID e68cf060-874a-45aa-9bb9-55371256a76d
-2024-11-07 00:22:20,609 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
-2024-11-07 00:22:20,609 - DEBUG - Original HTML content retrieved from editor.
-2024-11-07 00:22:20,609 - INFO - Starting embed_images_in_html_with_js
-2024-11-07 00:22:20,610 - DEBUG - Found <img> tag with src: e68cf060-874a-45aa-9bb9-55371256a76d
-2024-11-07 00:22:20,612 - WARNING - Image found for ID e68cf060-874a-45aa-9bb9-55371256a76d is not a QPixmap instance.
-2024-11-07 00:22:20,612 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
-2024-11-07 00:22:20,612 - INFO - Completed embed_images_in_html_with_js
-2024-11-07 00:22:20,613 - DEBUG - HTML content after embedding images.
-2024-11-07 00:22:20,613 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:22:20,614 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:23:18,229 - INFO - Tab at index 0 closed.
-2024-11-07 00:23:18,230 - INFO - Settings saved.
-2024-11-07 00:23:56,242 - INFO - Settings saved.
-2024-11-07 00:23:56,242 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-07 00:23:59,585 - INFO - Snipping tool initialized on all screens.
-2024-11-07 00:24:01,547 - INFO - Capture area set to: PyQt6.QtCore.QRect(4487, 229, 556, 946)
-2024-11-07 00:24:01,601 - DEBUG - Generated unique_id for image: 67ee2f3a-08d8-4eab-b42d-7ed78fb174f3
-2024-11-07 00:24:01,602 - DEBUG - Thumbnail generated for image ID 67ee2f3a-08d8-4eab-b42d-7ed78fb174f3
-2024-11-07 00:24:01,826 - DEBUG - Base64 encoding complete for full image with ID 67ee2f3a-08d8-4eab-b42d-7ed78fb174f3, length: 982988
-2024-11-07 00:24:01,828 - DEBUG - Thumbnail image resource added to document for ID 67ee2f3a-08d8-4eab-b42d-7ed78fb174f3
-2024-11-07 00:24:01,841 - INFO - Full-size image and thumbnail stored for ID 67ee2f3a-08d8-4eab-b42d-7ed78fb174f3
-2024-11-07 00:24:21,676 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
-2024-11-07 00:24:21,677 - DEBUG - Original HTML content retrieved from editor.
-2024-11-07 00:24:21,677 - INFO - Starting embed_images_in_html_with_js
-2024-11-07 00:24:21,678 - DEBUG - Found <img> tag with src: 67ee2f3a-08d8-4eab-b42d-7ed78fb174f3
-2024-11-07 00:24:21,678 - INFO - Embedding Base64 image directly for ID 67ee2f3a-08d8-4eab-b42d-7ed78fb174f3, length: 982988
-2024-11-07 00:24:21,680 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
-2024-11-07 00:24:21,682 - INFO - Completed embed_images_in_html_with_js
-2024-11-07 00:24:21,706 - DEBUG - HTML content after embedding images.
-2024-11-07 00:24:21,720 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:24:21,721 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:24:58,423 - INFO - Tab at index 0 closed.
-2024-11-07 00:24:58,424 - INFO - Settings saved.
-2024-11-07 00:25:09,049 - INFO - Settings saved.
-2024-11-07 00:25:09,049 - INFO - Applied and saved theme: Forest Green Theme
-2024-11-07 00:25:13,124 - INFO - Snipping tool initialized on all screens.
-2024-11-07 00:25:15,633 - INFO - Capture area set to: PyQt6.QtCore.QRect(2003, 76, 2668, 1312)
-2024-11-07 00:25:15,745 - DEBUG - Generated unique_id for image: f7c2668e-1086-4810-a4d1-ca94f68f18df
-2024-11-07 00:25:15,746 - DEBUG - Thumbnail generated for image ID f7c2668e-1086-4810-a4d1-ca94f68f18df
-2024-11-07 00:25:15,991 - DEBUG - Base64 encoding complete for full image with ID f7c2668e-1086-4810-a4d1-ca94f68f18df, length: 1024172
-2024-11-07 00:25:15,993 - DEBUG - Thumbnail image resource added to document for ID f7c2668e-1086-4810-a4d1-ca94f68f18df
-2024-11-07 00:25:16,008 - INFO - Full-size image and thumbnail stored for ID f7c2668e-1086-4810-a4d1-ca94f68f18df
-2024-11-07 00:25:23,361 - INFO - Screen grab overlay initialized.
-2024-11-07 00:25:25,646 - DEBUG - Generated unique_id for image: 4f3b1ca2-3b3e-45c4-aab8-8ef637432ae0
-2024-11-07 00:25:25,647 - DEBUG - Thumbnail generated for image ID 4f3b1ca2-3b3e-45c4-aab8-8ef637432ae0
-2024-11-07 00:25:25,758 - DEBUG - Base64 encoding complete for full image with ID 4f3b1ca2-3b3e-45c4-aab8-8ef637432ae0, length: 581792
-2024-11-07 00:25:25,759 - DEBUG - Thumbnail image resource added to document for ID 4f3b1ca2-3b3e-45c4-aab8-8ef637432ae0
-2024-11-07 00:25:25,765 - INFO - Full-size image and thumbnail stored for ID 4f3b1ca2-3b3e-45c4-aab8-8ef637432ae0
-2024-11-07 00:25:34,301 - DEBUG - Generated unique_id for image: 6731d6b4-547b-4a30-84c6-2f7d22d21a3c
-2024-11-07 00:25:34,304 - DEBUG - Thumbnail generated for image ID 6731d6b4-547b-4a30-84c6-2f7d22d21a3c
-2024-11-07 00:25:34,568 - DEBUG - Base64 encoding complete for full image with ID 6731d6b4-547b-4a30-84c6-2f7d22d21a3c, length: 1062760
-2024-11-07 00:25:34,568 - DEBUG - Thumbnail image resource added to document for ID 6731d6b4-547b-4a30-84c6-2f7d22d21a3c
-2024-11-07 00:25:34,580 - INFO - Full-size image and thumbnail stored for ID 6731d6b4-547b-4a30-84c6-2f7d22d21a3c
-2024-11-07 00:25:55,570 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
-2024-11-07 00:25:55,572 - DEBUG - Original HTML content retrieved from editor.
-2024-11-07 00:25:55,572 - INFO - Starting embed_images_in_html_with_js
-2024-11-07 00:25:55,574 - DEBUG - Found <img> tag with src: f7c2668e-1086-4810-a4d1-ca94f68f18df
-2024-11-07 00:25:55,575 - INFO - Embedding Base64 image directly for ID f7c2668e-1086-4810-a4d1-ca94f68f18df, length: 1024172
-2024-11-07 00:25:55,576 - DEBUG - Found <img> tag with src: 4f3b1ca2-3b3e-45c4-aab8-8ef637432ae0
-2024-11-07 00:25:55,576 - INFO - Embedding Base64 image directly for ID 4f3b1ca2-3b3e-45c4-aab8-8ef637432ae0, length: 581792
-2024-11-07 00:25:55,577 - DEBUG - Found <img> tag with src: 6731d6b4-547b-4a30-84c6-2f7d22d21a3c
-2024-11-07 00:25:55,578 - INFO - Embedding Base64 image directly for ID 6731d6b4-547b-4a30-84c6-2f7d22d21a3c, length: 1062760
-2024-11-07 00:25:55,579 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
-2024-11-07 00:25:55,580 - INFO - Completed embed_images_in_html_with_js
-2024-11-07 00:25:55,646 - DEBUG - HTML content after embedding images.
-2024-11-07 00:25:55,679 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:25:55,680 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
-2024-11-07 00:26:16,205 - INFO - Tab at index 0 closed.
-2024-11-07 00:26:16,206 - INFO - Settings saved.
+2024-11-07 23:02:56,005 - INFO - Settings saved.
+2024-11-07 23:02:56,005 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-07 23:02:58,861 - INFO - Screen grab overlay initialized.
+2024-11-07 23:02:59,964 - DEBUG - Generated unique_id for image: 5476cd5f-3f82-4785-88bc-27bb1929c49b
+2024-11-07 23:02:59,966 - DEBUG - Thumbnail generated for image ID 5476cd5f-3f82-4785-88bc-27bb1929c49b
+2024-11-07 23:03:00,153 - DEBUG - Base64 encoding complete for full image with ID 5476cd5f-3f82-4785-88bc-27bb1929c49b, length: 2543452
+2024-11-07 23:03:00,154 - DEBUG - Thumbnail image resource added to document for ID 5476cd5f-3f82-4785-88bc-27bb1929c49b
+2024-11-07 23:03:00,185 - INFO - Full-size image and thumbnail stored for ID 5476cd5f-3f82-4785-88bc-27bb1929c49b
+2024-11-07 23:03:12,839 - INFO - File saved as DOCX with images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-07 23:03:12,840 - INFO - File saved as DOCX: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-07 23:04:48,169 - INFO - Tab at index 0 closed.
+2024-11-07 23:04:48,170 - INFO - Settings saved.
+2024-11-07 23:04:55,713 - INFO - Settings saved.
+2024-11-07 23:04:55,714 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-07 23:04:58,818 - INFO - Screen grab overlay initialized.
+2024-11-07 23:04:59,780 - DEBUG - Generated unique_id for image: bcb19072-67bb-4346-b8e5-680ac80e252a
+2024-11-07 23:04:59,780 - DEBUG - Thumbnail generated for image ID bcb19072-67bb-4346-b8e5-680ac80e252a
+2024-11-07 23:04:59,854 - DEBUG - Base64 encoding complete for full image with ID bcb19072-67bb-4346-b8e5-680ac80e252a, length: 1082640
+2024-11-07 23:04:59,855 - DEBUG - Thumbnail image resource added to document for ID bcb19072-67bb-4346-b8e5-680ac80e252a
+2024-11-07 23:04:59,871 - INFO - Full-size image and thumbnail stored for ID bcb19072-67bb-4346-b8e5-680ac80e252a
+2024-11-07 23:05:15,891 - INFO - File saved as DOCX with images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-07 23:05:15,891 - INFO - File saved as DOCX: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-07 23:06:27,277 - INFO - Tab at index 0 closed.
+2024-11-07 23:06:32,060 - ERROR - Failed to open file C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx: 'NoneType' object has no attribute 'clear'
+2024-11-07 23:06:35,506 - INFO - Settings saved.
+2024-11-08 08:42:03,803 - INFO - Settings saved.
+2024-11-08 08:42:03,804 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 08:42:35,485 - INFO - Settings saved.
+2024-11-08 08:42:35,486 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 08:42:39,835 - INFO - Snipping tool initialized on all screens.
+2024-11-08 08:42:41,197 - INFO - Capture area set to: PyQt6.QtCore.QRect(5233, 380, 522, 348)
+2024-11-08 08:42:41,294 - DEBUG - Generated unique_id for image: 44fec897-82d4-4ef7-b0f2-509dfa992dad
+2024-11-08 08:42:41,294 - DEBUG - Thumbnail generated for image ID 44fec897-82d4-4ef7-b0f2-509dfa992dad
+2024-11-08 08:42:41,319 - DEBUG - Base64 encoding complete for full image with ID 44fec897-82d4-4ef7-b0f2-509dfa992dad, length: 275520
+2024-11-08 08:42:41,323 - DEBUG - Thumbnail image resource added to document for ID 44fec897-82d4-4ef7-b0f2-509dfa992dad
+2024-11-08 08:42:41,333 - INFO - Full-size image and thumbnail stored for ID 44fec897-82d4-4ef7-b0f2-509dfa992dad
+2024-11-08 08:43:28,271 - INFO - Settings saved.
+2024-11-08 08:43:28,271 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 08:43:32,733 - INFO - Snipping tool initialized on all screens.
+2024-11-08 08:43:34,764 - INFO - Capture area set to: PyQt6.QtCore.QRect(5243, 288, 344, 329)
+2024-11-08 08:43:34,835 - DEBUG - Generated unique_id for image: cf1ae144-c9ab-449c-a63b-da52ddbcf402
+2024-11-08 08:43:34,838 - DEBUG - Thumbnail generated for image ID cf1ae144-c9ab-449c-a63b-da52ddbcf402
+2024-11-08 08:43:34,867 - DEBUG - Base64 encoding complete for full image with ID cf1ae144-c9ab-449c-a63b-da52ddbcf402, length: 235872
+2024-11-08 08:43:34,875 - DEBUG - Thumbnail image resource added to document for ID cf1ae144-c9ab-449c-a63b-da52ddbcf402
+2024-11-08 08:43:34,891 - INFO - Full-size image and thumbnail stored for ID cf1ae144-c9ab-449c-a63b-da52ddbcf402
+2024-11-08 08:43:51,703 - INFO - File saved as DOCX with images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-08 08:43:51,703 - INFO - File saved as DOCX: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-08 08:44:49,182 - INFO - Tab at index 0 closed.
+2024-11-08 08:44:49,194 - INFO - Settings saved.
+2024-11-08 13:36:10,964 - INFO - Settings saved.
+2024-11-08 13:36:10,965 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:38:44,370 - INFO - Snipping tool initialized on all screens.
+2024-11-08 13:38:45,808 - INFO - Capture area set to: PyQt6.QtCore.QRect(5784, 544, 813, 541)
+2024-11-08 13:38:45,898 - DEBUG - Generated unique_id for image: f836e821-c7d5-4749-82b7-173dd4e68d8a
+2024-11-08 13:38:45,899 - DEBUG - Thumbnail generated for image ID f836e821-c7d5-4749-82b7-173dd4e68d8a
+2024-11-08 13:38:45,925 - DEBUG - Base64 encoding complete for full image with ID f836e821-c7d5-4749-82b7-173dd4e68d8a, length: 102772
+2024-11-08 13:38:45,928 - DEBUG - Thumbnail image resource added to document for ID f836e821-c7d5-4749-82b7-173dd4e68d8a
+2024-11-08 13:38:45,934 - INFO - Full-size image and thumbnail stored for ID f836e821-c7d5-4749-82b7-173dd4e68d8a
+2024-11-08 13:39:05,653 - INFO - DOCX file saved at C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-08 13:39:05,654 - INFO - File saved as DOCX: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-08 13:39:55,938 - INFO - Cleared formatting to current theme defaults.
+2024-11-08 13:40:05,609 - INFO - Tab at index 0 closed.
+2024-11-08 13:40:05,611 - INFO - Settings saved.
+2024-11-08 13:44:48,239 - INFO - Settings saved.
+2024-11-08 13:44:48,240 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:44:52,504 - INFO - Snipping tool initialized on all screens.
+2024-11-08 13:44:53,899 - INFO - Capture area set to: PyQt6.QtCore.QRect(5460, 239, 1112, 645)
+2024-11-08 13:45:02,532 - INFO - Settings saved.
+2024-11-08 13:45:02,533 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:45:39,492 - INFO - Settings saved.
+2024-11-08 13:45:39,492 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:45:43,530 - INFO - Snipping tool initialized on all screens.
+2024-11-08 13:45:45,588 - INFO - Capture area set to: PyQt6.QtCore.QRect(5356, 406, 542, 368)
+2024-11-08 13:45:58,018 - INFO - Screen grab overlay initialized.
+2024-11-08 13:46:16,661 - INFO - DOCX file saved at C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-08 13:46:16,661 - INFO - File saved as DOCX: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-08 13:46:40,536 - INFO - Tab at index 0 closed.
+2024-11-08 13:46:40,536 - INFO - Settings saved.
+2024-11-08 13:47:10,729 - INFO - Settings saved.
+2024-11-08 13:47:10,729 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:47:13,838 - INFO - Snipping tool initialized on all screens.
+2024-11-08 13:47:14,913 - INFO - Capture area set to: PyQt6.QtCore.QRect(5631, 303, 973, 592)
+2024-11-08 13:47:27,457 - INFO - Tab at index 0 closed.
+2024-11-08 13:47:27,457 - INFO - Settings saved.
+2024-11-08 13:47:32,926 - INFO - Settings saved.
+2024-11-08 13:47:32,927 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:48:12,809 - INFO - Tab at index 0 closed.
+2024-11-08 13:48:12,810 - INFO - Settings saved.
+2024-11-08 13:49:13,855 - INFO - Settings saved.
+2024-11-08 13:49:13,855 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:49:24,375 - INFO - Snipping tool initialized on all screens.
+2024-11-08 13:49:26,045 - INFO - Capture area set to: PyQt6.QtCore.QRect(5726, 332, 914, 570)
+2024-11-08 13:49:26,981 - INFO - Settings saved.
+2024-11-08 13:49:26,982 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:49:31,927 - INFO - Tab at index 0 closed.
+2024-11-08 13:49:31,927 - INFO - Settings saved.
+2024-11-08 13:49:41,013 - INFO - Screen grab overlay initialized.
+2024-11-08 13:49:54,996 - INFO - Tab at index 0 closed.
+2024-11-08 13:49:54,997 - INFO - Settings saved.
+2024-11-08 13:49:57,085 - INFO - Settings saved.
+2024-11-08 13:49:57,085 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:50:05,513 - INFO - Tab at index 0 closed.
+2024-11-08 13:50:05,514 - INFO - Settings saved.
+2024-11-08 13:51:19,684 - INFO - Settings saved.
+2024-11-08 13:51:19,685 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:51:24,542 - INFO - Screen grab overlay initialized.
+2024-11-08 13:51:28,368 - INFO - Snipping tool initialized on all screens.
+2024-11-08 13:51:29,443 - INFO - Capture area set to: PyQt6.QtCore.QRect(5744, 466, 985, 531)
+2024-11-08 13:51:35,729 - INFO - Settings saved.
+2024-11-08 13:51:35,730 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:51:48,657 - INFO - Tab at index 0 closed.
+2024-11-08 13:51:48,658 - INFO - Settings saved.
+2024-11-08 13:53:17,697 - INFO - Settings saved.
+2024-11-08 13:53:17,698 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:53:25,421 - INFO - Snipping tool initialized on all screens.
+2024-11-08 13:53:27,263 - INFO - Capture area set to: PyQt6.QtCore.QRect(5975, 400, 774, 678)
+2024-11-08 13:53:44,391 - INFO - Screen grab overlay initialized.
+2024-11-08 13:54:59,161 - INFO - Settings saved.
+2024-11-08 13:54:59,162 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 13:55:08,440 - INFO - Snipping tool initialized on all screens.
+2024-11-08 13:55:09,730 - INFO - Capture area set to: PyQt6.QtCore.QRect(5937, 435, 577, 478)
+2024-11-08 13:55:13,445 - INFO - Screen grab overlay initialized.
+2024-11-08 13:55:20,361 - INFO - Tab at index 0 closed.
+2024-11-08 13:55:20,363 - INFO - Settings saved.
+2024-11-08 18:27:44,167 - INFO - Settings saved.
+2024-11-08 18:27:44,168 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:27:48,176 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:27:49,134 - INFO - Capture area set to: PyQt6.QtCore.QRect(5657, 254, 485, 362)
+2024-11-08 18:27:49,198 - INFO - Image inserted directly from pixmap
+2024-11-08 18:28:59,042 - INFO - Tab at index 0 closed.
+2024-11-08 18:28:59,043 - INFO - Settings saved.
+2024-11-08 18:29:52,443 - INFO - Settings saved.
+2024-11-08 18:29:52,445 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:29:55,672 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:29:56,757 - INFO - Capture area set to: PyQt6.QtCore.QRect(5456, 311, 658, 436)
+2024-11-08 18:29:56,818 - INFO - Image inserted directly from pixmap
+2024-11-08 18:30:49,116 - INFO - Tab at index 0 closed.
+2024-11-08 18:30:49,117 - INFO - Settings saved.
+2024-11-08 18:31:24,809 - INFO - Settings saved.
+2024-11-08 18:31:24,810 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:31:28,502 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:31:29,554 - INFO - Capture area set to: PyQt6.QtCore.QRect(5667, 303, 518, 442)
+2024-11-08 18:31:36,111 - INFO - Settings saved.
+2024-11-08 18:31:36,112 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:31:38,521 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:31:39,146 - INFO - Capture area set to: PyQt6.QtCore.QRect(5521, 341, 678, 439)
+2024-11-08 18:32:20,449 - INFO - Settings saved.
+2024-11-08 18:32:20,449 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:32:23,855 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:32:24,853 - INFO - Capture area set to: PyQt6.QtCore.QRect(5546, 460, 684, 636)
+2024-11-08 18:32:30,939 - INFO - Screen grab overlay initialized.
+2024-11-08 18:32:31,762 - INFO - Image inserted directly from pixmap
+2024-11-08 18:32:44,395 - INFO - Tab at index 0 closed.
+2024-11-08 18:32:44,396 - INFO - Settings saved.
+2024-11-08 18:33:26,836 - INFO - Settings saved.
+2024-11-08 18:33:26,838 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:33:29,136 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:33:30,322 - INFO - Capture area set to: PyQt6.QtCore.QRect(5706, 316, 944, 713)
+2024-11-08 18:34:32,379 - INFO - OCR overlay initialized.
+2024-11-08 18:34:34,869 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 18:34:34,869 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 18:34:34,869 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-08 18:34:34,887 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_qm76d238_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_qm76d238', 'txt']
+2024-11-08 18:34:39,725 - INFO - OCR text inserted into document.
+2024-11-08 18:34:57,171 - INFO - Tab at index 0 closed.
+2024-11-08 18:34:57,171 - INFO - Settings saved.
+2024-11-08 18:35:59,772 - INFO - Settings saved.
+2024-11-08 18:35:59,773 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:36:02,917 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:36:04,031 - INFO - Capture area set to: PyQt6.QtCore.QRect(5768, 327, 596, 482)
+2024-11-08 18:36:17,413 - INFO - Tab at index 0 closed.
+2024-11-08 18:36:17,414 - INFO - Settings saved.
+2024-11-08 18:36:36,513 - INFO - Settings saved.
+2024-11-08 18:36:36,514 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:36:38,584 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:36:39,548 - INFO - Capture area set to: PyQt6.QtCore.QRect(5712, 396, 795, 510)
+2024-11-08 18:36:39,653 - INFO - Image displayed in QLabel for testing
+2024-11-08 18:36:57,613 - INFO - Tab at index 0 closed.
+2024-11-08 18:36:57,614 - INFO - Settings saved.
+2024-11-08 18:38:20,181 - INFO - Settings saved.
+2024-11-08 18:38:20,182 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:38:23,437 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:38:24,536 - INFO - Capture area set to: PyQt6.QtCore.QRect(5469, 427, 600, 471)
+2024-11-08 18:38:24,607 - INFO - Image displayed in QLabel for testing
+2024-11-08 18:47:49,830 - INFO - Settings saved.
+2024-11-08 18:47:49,830 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:47:52,120 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:47:53,481 - INFO - Capture area set to: PyQt6.QtCore.QRect(5629, 306, 864, 602)
+2024-11-08 18:47:53,553 - INFO - Image displayed in QLabel
+2024-11-08 18:48:02,451 - INFO - Screen grab overlay initialized.
+2024-11-08 18:48:05,026 - INFO - Image displayed in QLabel
+2024-11-08 18:48:11,246 - INFO - Image displayed in QLabel
+2024-11-08 18:48:15,161 - INFO - Screen grab overlay initialized.
+2024-11-08 18:48:17,263 - INFO - Image displayed in QLabel
+2024-11-08 18:49:22,443 - INFO - Tab at index 0 closed.
+2024-11-08 18:49:22,445 - INFO - Settings saved.
+2024-11-08 18:49:51,408 - INFO - Settings saved.
+2024-11-08 18:49:51,408 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:49:54,481 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:49:55,948 - INFO - Capture area set to: PyQt6.QtCore.QRect(5431, 289, 863, 584)
+2024-11-08 18:49:56,019 - INFO - Image displayed in QLabel
+2024-11-08 18:50:42,301 - INFO - Tab at index 0 closed.
+2024-11-08 18:50:42,302 - INFO - Settings saved.
+2024-11-08 18:50:48,714 - INFO - Settings saved.
+2024-11-08 18:50:48,715 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:50:52,347 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:50:53,720 - INFO - Capture area set to: PyQt6.QtCore.QRect(5642, 274, 849, 677)
+2024-11-08 18:50:53,783 - ERROR - Failed to insert image in editor: type object 'QTextCursor' has no attribute 'ResourceType'
+2024-11-08 18:51:08,317 - INFO - Tab at index 0 closed.
+2024-11-08 18:51:08,319 - INFO - Settings saved.
+2024-11-08 18:53:57,260 - INFO - Settings saved.
+2024-11-08 18:53:57,260 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:54:00,495 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:54:01,720 - INFO - Capture area set to: PyQt6.QtCore.QRect(5544, 396, 1150, 522)
+2024-11-08 18:54:01,788 - ERROR - Failed to insert image in editor: addResource(self, type: int, name: QUrl, resource: Any): argument 2 has unexpected type 'str'
+2024-11-08 18:54:09,263 - INFO - Tab at index 0 closed.
+2024-11-08 18:54:09,264 - INFO - Settings saved.
+2024-11-08 18:54:56,276 - INFO - Settings saved.
+2024-11-08 18:54:56,277 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:54:58,397 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:54:59,306 - INFO - Capture area set to: PyQt6.QtCore.QRect(3106, 181, 586, 486)
+2024-11-08 18:54:59,378 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:06,205 - INFO - Tab at index 0 closed.
+2024-11-08 18:55:10,768 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:11,667 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:11,931 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:12,131 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:12,330 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:12,531 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:12,733 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:12,930 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:13,098 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:13,300 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:13,464 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:13,702 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:13,865 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:14,068 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:14,232 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:14,433 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:14,634 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:14,835 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:15,065 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:55:20,644 - INFO - Tab at index 0 closed.
+2024-11-08 18:55:20,645 - INFO - Settings saved.
+2024-11-08 18:59:09,137 - INFO - Settings saved.
+2024-11-08 18:59:09,138 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 18:59:11,416 - INFO - Snipping tool initialized on all screens.
+2024-11-08 18:59:12,634 - INFO - Capture area set to: PyQt6.QtCore.QRect(5465, 356, 1224, 654)
+2024-11-08 18:59:12,706 - INFO - Image inserted in QTextEdit editor
+2024-11-08 18:59:20,561 - INFO - Tab at index 0 closed.
+2024-11-08 18:59:20,563 - INFO - Settings saved.
+2024-11-08 19:15:15,320 - INFO - User interface initialized.
+2024-11-08 19:16:26,319 - INFO - User interface initialized.
+2024-11-08 19:17:42,572 - INFO - User interface initialized.
+2024-11-08 19:19:25,874 - INFO - Settings saved.
+2024-11-08 19:19:25,874 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:19:35,452 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:19:36,676 - INFO - Capture area set to: PyQt6.QtCore.QRect(5725, 432, 1159, 663)
+2024-11-08 19:19:36,750 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:24:47,600 - INFO - Tab at index 0 closed.
+2024-11-08 19:24:47,602 - INFO - Settings saved.
+2024-11-08 19:36:48,343 - INFO - Settings saved.
+2024-11-08 19:36:48,344 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:36:51,194 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:36:52,516 - INFO - Capture area set to: PyQt6.QtCore.QRect(5555, 418, 770, 554)
+2024-11-08 19:36:52,582 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:37:11,061 - ERROR - Failed to save file C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx: 'iterator' object has no attribute 'text'
+2024-11-08 19:37:53,407 - INFO - Screen grab overlay initialized.
+2024-11-08 19:37:54,401 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:38:16,716 - INFO - Tab at index 0 closed.
+2024-11-08 19:38:16,716 - INFO - Settings saved.
+2024-11-08 19:39:18,544 - INFO - Settings saved.
+2024-11-08 19:39:18,544 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:39:20,985 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:39:22,590 - INFO - Capture area set to: PyQt6.QtCore.QRect(5370, 462, 1212, 738)
+2024-11-08 19:39:22,674 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:40:05,687 - INFO - Settings saved.
+2024-11-08 19:40:05,688 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:40:15,221 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-08 19:40:38,447 - INFO - Screen grab overlay initialized.
+2024-11-08 19:40:39,294 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:41:44,825 - INFO - Tab at index 0 closed.
+2024-11-08 19:41:44,826 - INFO - Settings saved.
+2024-11-08 19:41:52,033 - INFO - Settings saved.
+2024-11-08 19:41:52,033 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:41:54,725 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:41:55,612 - INFO - Capture area set to: PyQt6.QtCore.QRect(3099, 154, 446, 289)
+2024-11-08 19:41:55,681 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:46:59,792 - INFO - Settings saved.
+2024-11-08 19:46:59,793 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:47:02,048 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:47:03,228 - INFO - Capture area set to: PyQt6.QtCore.QRect(3324, 285, 1142, 763)
+2024-11-08 19:47:03,319 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:47:06,894 - INFO - Screen grab overlay initialized.
+2024-11-08 19:47:08,117 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:47:52,248 - INFO - Settings saved.
+2024-11-08 19:47:52,248 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:47:54,768 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:47:55,465 - INFO - Capture area set to: PyQt6.QtCore.QRect(3054, 220, 619, 449)
+2024-11-08 19:47:55,524 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:50:49,405 - INFO - Settings saved.
+2024-11-08 19:50:49,405 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:50:51,639 - INFO - Screen grab overlay initialized.
+2024-11-08 19:50:53,238 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:50:57,056 - INFO - OCR overlay initialized.
+2024-11-08 19:51:01,400 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 19:51:01,401 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 19:51:01,401 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-08 19:51:01,411 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_w706lirv_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_w706lirv', 'txt']
+2024-11-08 19:51:05,978 - INFO - OCR text inserted into document.
+2024-11-08 19:51:26,421 - INFO - Settings saved.
+2024-11-08 19:51:26,421 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:51:31,309 - INFO - OCR overlay initialized.
+2024-11-08 19:51:32,811 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 19:51:32,812 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 19:51:32,812 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-08 19:51:32,823 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_yf_jayqa_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_yf_jayqa', 'txt']
+2024-11-08 19:51:33,367 - INFO - OCR text inserted into document.
+2024-11-08 19:51:38,357 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:51:39,495 - INFO - Capture area set to: PyQt6.QtCore.QRect(3038, 169, 613, 464)
+2024-11-08 19:51:39,552 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:53:44,004 - INFO - Settings saved.
+2024-11-08 19:53:44,005 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:53:46,390 - INFO - OCR overlay initialized.
+2024-11-08 19:53:48,998 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 19:53:48,998 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 19:53:48,999 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-08 19:53:49,006 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_24r3efjc_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_24r3efjc', 'txt']
+2024-11-08 19:53:49,364 - INFO - OCR text inserted into document.
+2024-11-08 19:53:54,615 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:53:55,550 - INFO - Capture area set to: PyQt6.QtCore.QRect(3044, 191, 556, 387)
+2024-11-08 19:53:55,619 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:54:15,267 - INFO - Settings saved.
+2024-11-08 19:54:15,268 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:54:22,785 - INFO - OCR overlay initialized.
+2024-11-08 19:54:23,998 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 19:54:23,999 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 19:54:23,999 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-08 19:54:24,010 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_te7tv93f_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_te7tv93f', 'txt']
+2024-11-08 19:54:24,458 - INFO - OCR text inserted into document.
+2024-11-08 19:54:31,553 - INFO - Screen grab overlay initialized.
+2024-11-08 19:54:32,361 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:56:23,628 - INFO - Settings saved.
+2024-11-08 19:56:23,629 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:56:28,029 - INFO - OCR overlay initialized.
+2024-11-08 19:56:30,704 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 19:56:30,705 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 19:56:30,705 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-08 19:56:30,723 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_wu0958na_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_wu0958na', 'txt']
+2024-11-08 19:56:31,206 - INFO - OCR text inserted into document.
+2024-11-08 19:56:38,715 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:56:39,522 - INFO - Capture area set to: PyQt6.QtCore.QRect(3041, 200, 647, 494)
+2024-11-08 19:56:39,584 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:57:13,340 - INFO - Settings saved.
+2024-11-08 19:57:13,341 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:57:16,132 - INFO - OCR overlay initialized.
+2024-11-08 19:57:18,856 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 19:57:18,857 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 19:57:18,857 - DEBUG - STREAM b'IDAT' 62 4350
+2024-11-08 19:57:18,864 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess__cc4gpbb_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess__cc4gpbb', 'txt']
+2024-11-08 19:57:19,151 - INFO - OCR text inserted into document.
+2024-11-08 19:57:24,039 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:57:24,803 - INFO - Capture area set to: PyQt6.QtCore.QRect(3068, 203, 476, 285)
+2024-11-08 19:57:24,853 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:59:02,213 - INFO - Settings saved.
+2024-11-08 19:59:02,214 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 19:59:05,339 - INFO - Snipping tool initialized on all screens.
+2024-11-08 19:59:05,939 - INFO - Capture area set to: PyQt6.QtCore.QRect(3132, 223, 390, 335)
+2024-11-08 19:59:06,001 - INFO - Image inserted in QTextEdit editor
+2024-11-08 19:59:18,932 - INFO - DOCX file saved at C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-08 19:59:18,932 - INFO - File saved as DOCX: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.docx
+2024-11-08 19:59:37,102 - INFO - OCR overlay initialized.
+2024-11-08 19:59:38,396 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 19:59:38,397 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 19:59:38,397 - DEBUG - STREAM b'IDAT' 62 5002
+2024-11-08 19:59:38,402 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_vusggxnt_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_vusggxnt', 'txt']
+2024-11-08 19:59:38,723 - INFO - OCR text inserted into document.
+2024-11-08 20:02:55,918 - INFO - Settings saved.
+2024-11-08 20:02:55,919 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 20:02:58,132 - INFO - OCR overlay initialized.
+2024-11-08 20:02:59,584 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 20:02:59,584 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 20:02:59,584 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-08 20:02:59,598 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_9vjyss7c_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_9vjyss7c', 'txt']
+2024-11-08 20:03:00,090 - INFO - OCR text inserted into document.
+2024-11-08 20:03:04,404 - INFO - Snipping tool initialized on all screens.
+2024-11-08 20:03:05,680 - INFO - Capture area set to: PyQt6.QtCore.QRect(5404, 355, 1311, 643)
+2024-11-08 20:03:05,763 - INFO - Image inserted in QTextEdit editor
+2024-11-08 20:06:14,117 - INFO - Settings saved.
+2024-11-08 20:06:14,118 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 20:06:16,075 - INFO - OCR overlay initialized.
+2024-11-08 20:06:18,295 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-08 20:06:18,295 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-08 20:06:18,295 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-08 20:06:18,304 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_zif26_hg_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_zif26_hg', 'txt']
+2024-11-08 20:06:18,691 - INFO - OCR text inserted into document.
+2024-11-08 20:06:22,579 - INFO - Snipping tool initialized on all screens.
+2024-11-08 20:06:25,705 - INFO - Capture area set to: PyQt6.QtCore.QRect(3139, 430, 943, 497)
+2024-11-08 20:06:25,768 - INFO - Image inserted in QTextEdit editor
+2024-11-08 20:06:42,849 - DEBUG - Processing fragment: '# Acg tie purron ro me pigne eng or ene tap par'
+2024-11-08 20:10:13,069 - INFO - Settings saved.
+2024-11-08 20:10:13,069 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 20:10:17,529 - INFO - Screen grab overlay initialized.
+2024-11-08 20:10:18,323 - INFO - Image inserted in QTextEdit editor
+2024-11-08 20:13:50,458 - INFO - Settings saved.
+2024-11-08 20:13:50,458 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-08 20:13:53,706 - INFO - Snipping tool initialized on all screens.
+2024-11-08 20:13:54,440 - INFO - Capture area set to: PyQt6.QtCore.QRect(3088, 186, 484, 453)
+2024-11-08 20:13:54,512 - INFO - Image inserted in QTextEdit editor
+2024-11-08 20:14:06,200 - DEBUG - Found object replacement character in text fragment.
+2024-11-08 20:14:06,200 - DEBUG - Processing fragment: ''
+2024-11-08 20:14:06,211 - DEBUG - Processing fragment: 'test'
+2024-11-11 08:48:56,847 - INFO - Settings saved.
+2024-11-11 08:48:56,848 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 08:49:20,163 - INFO - Snipping tool initialized on all screens.
+2024-11-11 08:49:21,728 - INFO - Capture area set to: PyQt6.QtCore.QRect(5234, 264, 634, 583)
+2024-11-11 08:49:21,820 - INFO - Image inserted in QTextEdit editor
+2024-11-11 08:49:33,104 - INFO - Tab at index 0 closed.
+2024-11-11 08:49:33,106 - INFO - Settings saved.
+2024-11-11 08:50:41,287 - INFO - Settings saved.
+2024-11-11 08:50:41,288 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 08:50:44,259 - INFO - Snipping tool initialized on all screens.
+2024-11-11 08:50:45,802 - INFO - Capture area set to: PyQt6.QtCore.QRect(5294, 408, 643, 490)
+2024-11-11 08:50:45,863 - DEBUG - Generated unique_id for image: f04070bb-ce9c-4f15-86ae-f525142ff7ab
+2024-11-11 08:50:45,865 - DEBUG - Thumbnail generated for image ID f04070bb-ce9c-4f15-86ae-f525142ff7ab
+2024-11-11 08:50:45,900 - DEBUG - Base64 encoding complete for full image with ID f04070bb-ce9c-4f15-86ae-f525142ff7ab, length: 388156
+2024-11-11 08:50:45,902 - DEBUG - Thumbnail image resource added to document for ID f04070bb-ce9c-4f15-86ae-f525142ff7ab
+2024-11-11 08:50:45,914 - INFO - Full-size image and thumbnail stored for ID f04070bb-ce9c-4f15-86ae-f525142ff7ab
+2024-11-11 08:50:54,998 - INFO - Tab at index 0 closed.
+2024-11-11 08:50:54,999 - INFO - Settings saved.
+2024-11-11 09:05:28,530 - INFO - Settings saved.
+2024-11-11 09:05:28,530 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 09:05:33,506 - INFO - Snipping tool initialized on all screens.
+2024-11-11 09:05:34,863 - INFO - Capture area set to: PyQt6.QtCore.QRect(3557, 225, 903, 677)
+2024-11-11 09:05:34,978 - DEBUG - Generated unique_id for image: 87fdc047-fd9e-4507-95f3-6934fe180ecb
+2024-11-11 09:05:34,980 - DEBUG - Thumbnail generated for image ID 87fdc047-fd9e-4507-95f3-6934fe180ecb
+2024-11-11 09:05:35,040 - DEBUG - Base64 encoding complete for full image with ID 87fdc047-fd9e-4507-95f3-6934fe180ecb, length: 113332
+2024-11-11 09:05:35,043 - DEBUG - Thumbnail image resource added to document for ID 87fdc047-fd9e-4507-95f3-6934fe180ecb
+2024-11-11 09:05:35,052 - INFO - Full-size image and thumbnail stored for ID 87fdc047-fd9e-4507-95f3-6934fe180ecb
+2024-11-11 09:05:55,688 - INFO - Tab at index 0 closed.
+2024-11-11 09:05:55,689 - INFO - Settings saved.
+2024-11-11 09:08:51,319 - INFO - Settings saved.
+2024-11-11 09:08:51,319 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 09:08:54,657 - INFO - Snipping tool initialized on all screens.
+2024-11-11 09:08:55,936 - INFO - Capture area set to: PyQt6.QtCore.QRect(3909, 197, 810, 609)
+2024-11-11 09:08:56,009 - DEBUG - Generated unique_id for image: a44878c2-2e18-48c8-a4f3-24526b1d26d2
+2024-11-11 09:08:56,011 - DEBUG - Thumbnail generated for image ID a44878c2-2e18-48c8-a4f3-24526b1d26d2
+2024-11-11 09:08:56,054 - DEBUG - Base64 encoding complete for full image with ID a44878c2-2e18-48c8-a4f3-24526b1d26d2, length: 69800
+2024-11-11 09:08:56,057 - DEBUG - Thumbnail image resource added to document for ID a44878c2-2e18-48c8-a4f3-24526b1d26d2
+2024-11-11 09:08:56,065 - INFO - Full-size image and thumbnail stored for ID a44878c2-2e18-48c8-a4f3-24526b1d26d2
+2024-11-11 09:09:10,402 - INFO - Screen grab overlay initialized.
+2024-11-11 09:09:12,374 - DEBUG - Generated unique_id for image: a2d3c070-2adc-4051-a055-0b122f790a2b
+2024-11-11 09:09:12,375 - DEBUG - Thumbnail generated for image ID a2d3c070-2adc-4051-a055-0b122f790a2b
+2024-11-11 09:09:12,433 - DEBUG - Base64 encoding complete for full image with ID a2d3c070-2adc-4051-a055-0b122f790a2b, length: 69396
+2024-11-11 09:09:12,437 - DEBUG - Thumbnail image resource added to document for ID a2d3c070-2adc-4051-a055-0b122f790a2b
+2024-11-11 09:09:12,441 - INFO - Full-size image and thumbnail stored for ID a2d3c070-2adc-4051-a055-0b122f790a2b
+2024-11-11 09:09:30,616 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 09:09:30,617 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 09:09:30,618 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 09:09:30,619 - DEBUG - Found <img> tag with src: a44878c2-2e18-48c8-a4f3-24526b1d26d2
+2024-11-11 09:09:30,621 - INFO - Embedding Base64 image directly for ID a44878c2-2e18-48c8-a4f3-24526b1d26d2, length: 69800
+2024-11-11 09:09:30,621 - DEBUG - Found <img> tag with src: a2d3c070-2adc-4051-a055-0b122f790a2b
+2024-11-11 09:09:30,621 - INFO - Embedding Base64 image directly for ID a2d3c070-2adc-4051-a055-0b122f790a2b, length: 69396
+2024-11-11 09:09:30,622 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 09:09:30,622 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 09:09:30,628 - DEBUG - HTML content after embedding images.
+2024-11-11 09:09:30,630 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:09:30,632 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:09:49,007 - INFO - Tab at index 0 closed.
+2024-11-11 09:10:40,304 - ERROR - Failed to open file: 'NoneType' object has no attribute 'toPlainText'
+2024-11-11 09:10:41,850 - INFO - Settings saved.
+2024-11-11 09:16:32,259 - INFO - Settings saved.
+2024-11-11 09:16:32,259 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 09:16:44,983 - WARNING - Image source is missing or not in expected format.
+2024-11-11 09:16:44,983 - WARNING - Image source is missing or not in expected format.
+2024-11-11 09:16:44,992 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 09:16:44,992 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:17:09,633 - INFO - Snipping tool initialized on all screens.
+2024-11-11 09:17:12,111 - INFO - Capture area set to: PyQt6.QtCore.QRect(5175, 373, 454, 494)
+2024-11-11 09:17:12,183 - DEBUG - Generated unique_id for image: 3a47aab9-4502-4a4a-a5e0-cc9bacfed828
+2024-11-11 09:17:12,184 - DEBUG - Thumbnail generated for image ID 3a47aab9-4502-4a4a-a5e0-cc9bacfed828
+2024-11-11 09:17:12,225 - DEBUG - Base64 encoding complete for full image with ID 3a47aab9-4502-4a4a-a5e0-cc9bacfed828, length: 521516
+2024-11-11 09:17:12,225 - DEBUG - Thumbnail image resource added to document for ID 3a47aab9-4502-4a4a-a5e0-cc9bacfed828
+2024-11-11 09:17:12,232 - INFO - Full-size image and thumbnail stored for ID 3a47aab9-4502-4a4a-a5e0-cc9bacfed828
+2024-11-11 09:17:25,696 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 09:17:25,697 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 09:17:25,698 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 09:17:25,700 - DEBUG - Found <img> tag with src: 086a7128-e28d-4cc9-8a63-b0e9c0db6382
+2024-11-11 09:17:25,701 - INFO - Embedding Base64 image directly for ID 086a7128-e28d-4cc9-8a63-b0e9c0db6382, length: 69800
+2024-11-11 09:17:25,701 - DEBUG - Found <img> tag with src: 054544d2-8e0e-46c0-96c6-76eec04d283d
+2024-11-11 09:17:25,701 - INFO - Embedding Base64 image directly for ID 054544d2-8e0e-46c0-96c6-76eec04d283d, length: 69396
+2024-11-11 09:17:25,701 - DEBUG - Found <img> tag with src: 3a47aab9-4502-4a4a-a5e0-cc9bacfed828
+2024-11-11 09:17:25,702 - INFO - Embedding Base64 image directly for ID 3a47aab9-4502-4a4a-a5e0-cc9bacfed828, length: 521516
+2024-11-11 09:17:25,703 - DEBUG - Found <img> tag with src: 
+2024-11-11 09:17:25,703 - DEBUG - Found <img> tag with src: 
+2024-11-11 09:17:25,704 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 09:17:25,705 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 09:17:25,723 - DEBUG - HTML content after embedding images.
+2024-11-11 09:17:25,732 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:17:25,732 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:17:25,733 - INFO - File re-saved as HTML with embedded images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:27:10,962 - INFO - Tab at index 0 closed.
+2024-11-11 09:27:10,964 - INFO - Settings saved.
+2024-11-11 09:27:18,906 - INFO - Settings saved.
+2024-11-11 09:27:18,907 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 09:28:59,299 - WARNING - Image source is missing or not in expected format.
+2024-11-11 09:28:59,300 - WARNING - Image source is missing or not in expected format.
+2024-11-11 09:28:59,300 - WARNING - Image source is missing or not in expected format.
+2024-11-11 09:28:59,308 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 09:28:59,309 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:36:48,712 - INFO - Tab at index 0 closed.
+2024-11-11 09:36:48,713 - INFO - Settings saved.
+2024-11-11 09:36:50,427 - INFO - Settings saved.
+2024-11-11 09:36:50,428 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 09:36:55,343 - INFO - Snipping tool initialized on all screens.
+2024-11-11 09:36:58,229 - INFO - Capture area set to: PyQt6.QtCore.QRect(5164, 321, 365, 550)
+2024-11-11 09:36:58,281 - DEBUG - Generated unique_id for image: ab53dc1b-5fce-4f6b-8c90-f0cbcead74db
+2024-11-11 09:36:58,282 - DEBUG - Thumbnail generated for image ID ab53dc1b-5fce-4f6b-8c90-f0cbcead74db
+2024-11-11 09:36:58,333 - DEBUG - Base64 encoding complete for full image with ID ab53dc1b-5fce-4f6b-8c90-f0cbcead74db, length: 578976
+2024-11-11 09:36:58,335 - DEBUG - Thumbnail image resource added to document for ID ab53dc1b-5fce-4f6b-8c90-f0cbcead74db
+2024-11-11 09:36:58,345 - INFO - Full-size image and thumbnail stored for ID ab53dc1b-5fce-4f6b-8c90-f0cbcead74db
+2024-11-11 09:37:06,543 - INFO - Screen grab overlay initialized.
+2024-11-11 09:37:09,154 - DEBUG - Generated unique_id for image: c70d1a6c-7109-45e1-9466-11674d11a375
+2024-11-11 09:37:09,155 - DEBUG - Thumbnail generated for image ID c70d1a6c-7109-45e1-9466-11674d11a375
+2024-11-11 09:37:09,191 - DEBUG - Base64 encoding complete for full image with ID c70d1a6c-7109-45e1-9466-11674d11a375, length: 82976
+2024-11-11 09:37:09,191 - DEBUG - Thumbnail image resource added to document for ID c70d1a6c-7109-45e1-9466-11674d11a375
+2024-11-11 09:37:09,193 - INFO - Full-size image and thumbnail stored for ID c70d1a6c-7109-45e1-9466-11674d11a375
+2024-11-11 09:37:19,066 - INFO - No existing save path. Calling 'Save As'.
+2024-11-11 09:37:27,013 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 09:37:27,013 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 09:37:27,013 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 09:37:27,016 - DEBUG - Found <img> tag with src (unique_id): ab53dc1b-5fce-4f6b-8c90-f0cbcead74db
+2024-11-11 09:37:27,018 - INFO - Embedding Base64 images directly for ID ab53dc1b-5fce-4f6b-8c90-f0cbcead74db
+2024-11-11 09:37:27,019 - DEBUG - Found <img> tag with src (unique_id): c70d1a6c-7109-45e1-9466-11674d11a375
+2024-11-11 09:37:27,029 - INFO - Embedding Base64 images directly for ID c70d1a6c-7109-45e1-9466-11674d11a375
+2024-11-11 09:37:27,031 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 09:37:27,031 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 09:37:27,037 - DEBUG - HTML content after embedding images.
+2024-11-11 09:37:27,042 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:37:27,043 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:37:47,332 - INFO - Tab at index 0 closed.
+2024-11-11 09:44:37,141 - ERROR - Failed to open file: 'NoneType' object has no attribute 'toPlainText'
+2024-11-11 09:44:38,268 - INFO - Settings saved.
+2024-11-11 09:44:45,811 - INFO - Settings saved.
+2024-11-11 09:44:45,811 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 09:44:51,171 - INFO - Snipping tool initialized on all screens.
+2024-11-11 09:44:54,204 - INFO - Capture area set to: PyQt6.QtCore.QRect(5172, 340, 320, 421)
+2024-11-11 09:44:54,258 - DEBUG - Generated unique_id for image: 56d88f38-3274-4b44-a0f5-4ecadb93e074
+2024-11-11 09:44:54,259 - DEBUG - Thumbnail generated for image ID 56d88f38-3274-4b44-a0f5-4ecadb93e074
+2024-11-11 09:44:54,292 - DEBUG - Base64 encoding complete for full image with ID 56d88f38-3274-4b44-a0f5-4ecadb93e074, length: 385072
+2024-11-11 09:44:54,294 - DEBUG - Thumbnail image resource added to document for ID 56d88f38-3274-4b44-a0f5-4ecadb93e074
+2024-11-11 09:44:54,302 - INFO - Full-size image and thumbnail stored for ID 56d88f38-3274-4b44-a0f5-4ecadb93e074
+2024-11-11 09:45:10,161 - INFO - Screen grab overlay initialized.
+2024-11-11 09:45:12,719 - DEBUG - Generated unique_id for image: 61bc71d1-b185-4589-9757-c5eab76cd223
+2024-11-11 09:45:12,720 - DEBUG - Thumbnail generated for image ID 61bc71d1-b185-4589-9757-c5eab76cd223
+2024-11-11 09:45:12,739 - DEBUG - Base64 encoding complete for full image with ID 61bc71d1-b185-4589-9757-c5eab76cd223, length: 42956
+2024-11-11 09:45:12,739 - DEBUG - Thumbnail image resource added to document for ID 61bc71d1-b185-4589-9757-c5eab76cd223
+2024-11-11 09:45:12,741 - INFO - Full-size image and thumbnail stored for ID 61bc71d1-b185-4589-9757-c5eab76cd223
+2024-11-11 09:45:16,620 - INFO - OCR overlay initialized.
+2024-11-11 09:45:21,234 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-11 09:45:21,235 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-11 09:45:21,235 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-11 09:45:21,245 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_ci2ijego_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_ci2ijego', 'txt']
+2024-11-11 09:45:25,912 - INFO - OCR text inserted into document.
+2024-11-11 09:45:29,919 - INFO - No existing save path. Calling 'Save As'.
+2024-11-11 09:45:40,912 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 09:45:40,913 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 09:45:40,913 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 09:45:40,914 - DEBUG - Found <img> tag with src (unique_id): 56d88f38-3274-4b44-a0f5-4ecadb93e074
+2024-11-11 09:45:40,920 - INFO - Embedding Base64 images directly for ID 56d88f38-3274-4b44-a0f5-4ecadb93e074
+2024-11-11 09:45:40,920 - DEBUG - Found <img> tag with src (unique_id): 61bc71d1-b185-4589-9757-c5eab76cd223
+2024-11-11 09:45:40,928 - INFO - Embedding Base64 images directly for ID 61bc71d1-b185-4589-9757-c5eab76cd223
+2024-11-11 09:45:40,929 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 09:45:40,930 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 09:45:40,936 - DEBUG - HTML content after embedding images.
+2024-11-11 09:45:40,938 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:45:40,939 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:46:24,820 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 09:46:24,820 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 09:46:24,820 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 09:46:24,822 - DEBUG - Found <img> tag with src (unique_id): 56d88f38-3274-4b44-a0f5-4ecadb93e074
+2024-11-11 09:46:24,826 - INFO - Embedding Base64 images directly for ID 56d88f38-3274-4b44-a0f5-4ecadb93e074
+2024-11-11 09:46:24,826 - DEBUG - Found <img> tag with src (unique_id): 61bc71d1-b185-4589-9757-c5eab76cd223
+2024-11-11 09:46:24,836 - INFO - Embedding Base64 images directly for ID 61bc71d1-b185-4589-9757-c5eab76cd223
+2024-11-11 09:46:24,837 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 09:46:24,837 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 09:46:24,843 - DEBUG - HTML content after embedding images.
+2024-11-11 09:46:24,847 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:46:24,848 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:46:24,848 - INFO - File re-saved as HTML with embedded images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:46:49,515 - INFO - Tab at index 0 closed.
+2024-11-11 09:47:14,050 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 09:47:14,051 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:47:26,961 - INFO - Screen grab overlay initialized.
+2024-11-11 09:47:31,132 - DEBUG - Generated unique_id for image: 29eb9946-3771-4f8e-9035-1f8ffaac3664
+2024-11-11 09:47:31,133 - DEBUG - Thumbnail generated for image ID 29eb9946-3771-4f8e-9035-1f8ffaac3664
+2024-11-11 09:47:31,244 - DEBUG - Base64 encoding complete for full image with ID 29eb9946-3771-4f8e-9035-1f8ffaac3664, length: 323716
+2024-11-11 09:47:31,244 - DEBUG - Thumbnail image resource added to document for ID 29eb9946-3771-4f8e-9035-1f8ffaac3664
+2024-11-11 09:47:31,249 - INFO - Full-size image and thumbnail stored for ID 29eb9946-3771-4f8e-9035-1f8ffaac3664
+2024-11-11 09:48:03,514 - INFO - Cleared formatting to current theme defaults.
+2024-11-11 09:48:26,082 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 09:48:26,083 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 09:48:26,083 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 09:48:26,086 - DEBUG - Found <img> tag with src (unique_id): 96e5aefc-f4e4-43da-8e1d-7c2ab8c7df56
+2024-11-11 09:48:26,086 - WARNING - No images found in image maps for ID 96e5aefc-f4e4-43da-8e1d-7c2ab8c7df56
+2024-11-11 09:48:26,087 - DEBUG - Found <img> tag with src (unique_id): a2b00eac-c74d-4f70-bb57-251d952799b7
+2024-11-11 09:48:26,087 - WARNING - No images found in image maps for ID a2b00eac-c74d-4f70-bb57-251d952799b7
+2024-11-11 09:48:26,087 - DEBUG - Found <img> tag with src (unique_id): 29eb9946-3771-4f8e-9035-1f8ffaac3664
+2024-11-11 09:48:26,089 - INFO - Embedding Base64 images directly for ID 29eb9946-3771-4f8e-9035-1f8ffaac3664
+2024-11-11 09:48:26,090 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 09:48:26,090 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 09:48:26,094 - DEBUG - HTML content after embedding images.
+2024-11-11 09:48:26,096 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:48:26,096 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:48:26,097 - INFO - File re-saved as HTML with embedded images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:49:09,500 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 09:49:09,501 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 09:49:09,501 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 09:49:09,505 - DEBUG - Found <img> tag with src (unique_id): 96e5aefc-f4e4-43da-8e1d-7c2ab8c7df56
+2024-11-11 09:49:09,505 - WARNING - No images found in image maps for ID 96e5aefc-f4e4-43da-8e1d-7c2ab8c7df56
+2024-11-11 09:49:09,505 - DEBUG - Found <img> tag with src (unique_id): a2b00eac-c74d-4f70-bb57-251d952799b7
+2024-11-11 09:49:09,506 - WARNING - No images found in image maps for ID a2b00eac-c74d-4f70-bb57-251d952799b7
+2024-11-11 09:49:09,506 - DEBUG - Found <img> tag with src (unique_id): 29eb9946-3771-4f8e-9035-1f8ffaac3664
+2024-11-11 09:49:09,507 - INFO - Embedding Base64 images directly for ID 29eb9946-3771-4f8e-9035-1f8ffaac3664
+2024-11-11 09:49:09,508 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 09:49:09,508 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 09:49:09,512 - DEBUG - HTML content after embedding images.
+2024-11-11 09:49:09,514 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:49:09,515 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:49:38,596 - INFO - Tab at index 0 closed.
+2024-11-11 09:49:38,598 - INFO - Settings saved.
+2024-11-11 09:55:33,130 - INFO - Settings saved.
+2024-11-11 09:55:33,130 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 09:55:35,784 - INFO - Snipping tool initialized on all screens.
+2024-11-11 09:55:37,334 - INFO - Capture area set to: PyQt6.QtCore.QRect(5157, 414, 340, 244)
+2024-11-11 09:55:37,372 - DEBUG - Generated unique_id for image: a04f20ea-6d42-4b9a-badd-c1ff6105423c
+2024-11-11 09:55:37,374 - DEBUG - Thumbnail generated for image ID a04f20ea-6d42-4b9a-badd-c1ff6105423c
+2024-11-11 09:55:37,394 - DEBUG - Base64 encoding complete for full image with ID a04f20ea-6d42-4b9a-badd-c1ff6105423c, length: 236696
+2024-11-11 09:55:37,399 - DEBUG - Thumbnail image resource added to document for ID a04f20ea-6d42-4b9a-badd-c1ff6105423c
+2024-11-11 09:55:37,410 - INFO - Full-size image and thumbnail stored for ID a04f20ea-6d42-4b9a-badd-c1ff6105423c
+2024-11-11 09:55:46,719 - INFO - No existing save path. Calling 'Save As'.
+2024-11-11 09:55:53,691 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 09:55:53,692 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 09:55:53,692 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 09:55:53,693 - DEBUG - Found <img> tag with src (unique_id): a04f20ea-6d42-4b9a-badd-c1ff6105423c
+2024-11-11 09:55:53,698 - INFO - Embedding Base64 images directly for ID a04f20ea-6d42-4b9a-badd-c1ff6105423c
+2024-11-11 09:55:53,699 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 09:55:53,700 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 09:55:53,702 - DEBUG - HTML content after embedding images.
+2024-11-11 09:55:53,705 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:55:53,706 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:56:06,954 - INFO - Tab at index 0 closed.
+2024-11-11 09:56:18,074 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 09:56:18,075 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:56:28,351 - INFO - Screen grab overlay initialized.
+2024-11-11 09:56:32,412 - DEBUG - Generated unique_id for image: 775d53ee-d879-49a8-b53c-10b5e1184649
+2024-11-11 09:56:32,413 - DEBUG - Thumbnail generated for image ID 775d53ee-d879-49a8-b53c-10b5e1184649
+2024-11-11 09:56:32,435 - DEBUG - Base64 encoding complete for full image with ID 775d53ee-d879-49a8-b53c-10b5e1184649, length: 52700
+2024-11-11 09:56:32,435 - DEBUG - Thumbnail image resource added to document for ID 775d53ee-d879-49a8-b53c-10b5e1184649
+2024-11-11 09:56:32,439 - INFO - Full-size image and thumbnail stored for ID 775d53ee-d879-49a8-b53c-10b5e1184649
+2024-11-11 09:56:38,167 - INFO - OCR overlay initialized.
+2024-11-11 09:56:42,428 - DEBUG - STREAM b'IHDR' 16 13
+2024-11-11 09:56:42,429 - DEBUG - STREAM b'pHYs' 41 9
+2024-11-11 09:56:42,429 - DEBUG - STREAM b'IDAT' 62 8192
+2024-11-11 09:56:42,458 - DEBUG - ['tesseract', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_a7krq311_input.PNG', 'C:\\Users\\TED~1.KNA\\AppData\\Local\\Temp\\tess_a7krq311', 'txt']
+2024-11-11 09:56:43,239 - INFO - OCR text inserted into document.
+2024-11-11 09:57:02,009 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 09:57:02,010 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 09:57:02,010 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 09:57:02,015 - DEBUG - Found <img> tag with src (unique_id): 4dcf2fca-01fd-4949-a110-05902662ca92
+2024-11-11 09:57:02,024 - INFO - Embedding Base64 images directly for ID 4dcf2fca-01fd-4949-a110-05902662ca92
+2024-11-11 09:57:02,024 - DEBUG - Found <img> tag with src (unique_id): 775d53ee-d879-49a8-b53c-10b5e1184649
+2024-11-11 09:57:02,033 - INFO - Embedding Base64 images directly for ID 775d53ee-d879-49a8-b53c-10b5e1184649
+2024-11-11 09:57:02,034 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 09:57:02,035 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 09:57:02,039 - DEBUG - HTML content after embedding images.
+2024-11-11 09:57:02,041 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:57:02,042 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:57:02,043 - INFO - File re-saved as HTML with embedded images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 09:58:33,698 - INFO - Real-time spell check enabled.
+2024-11-11 09:58:50,735 - INFO - Tab at index 0 closed.
+2024-11-11 09:58:50,736 - INFO - Settings saved.
+2024-11-11 10:08:19,234 - INFO - Settings saved.
+2024-11-11 10:08:19,236 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 10:08:31,181 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 10:08:31,181 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:08:39,127 - INFO - Real-time spell check enabled.
+2024-11-11 10:09:05,719 - INFO - Tab at index 0 closed.
+2024-11-11 10:09:05,720 - INFO - Settings saved.
+2024-11-11 10:13:01,895 - INFO - Settings saved.
+2024-11-11 10:13:01,895 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 10:13:23,911 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 10:13:23,911 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:13:27,235 - INFO - Real-time spell check enabled.
+2024-11-11 10:13:53,637 - INFO - Settings saved.
+2024-11-11 10:13:53,637 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 10:14:08,506 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 10:14:08,506 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:14:13,440 - INFO - Real-time spell check enabled.
+2024-11-11 10:19:07,353 - INFO - Settings saved.
+2024-11-11 10:19:07,353 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 10:19:17,390 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 10:19:17,390 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:19:24,271 - INFO - Real-time spell check enabled.
+2024-11-11 10:20:02,452 - INFO - Tab at index 1 closed.
+2024-11-11 10:25:35,961 - INFO - Tab at index 0 closed.
+2024-11-11 10:25:35,962 - INFO - Settings saved.
+2024-11-11 10:25:44,637 - INFO - Settings saved.
+2024-11-11 10:25:44,638 - INFO - Applied and saved theme: Forest Green Theme
+2024-11-11 10:25:59,195 - INFO - No existing save path. Calling 'Save As'.
+2024-11-11 10:34:08,507 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 10:34:08,507 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:36:49,431 - INFO - Screen grab overlay initialized.
+2024-11-11 10:36:52,462 - DEBUG - Generated unique_id for image: cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:36:52,462 - DEBUG - Thumbnail generated for image ID cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:36:52,579 - DEBUG - Base64 encoding complete for full image with ID cfcc9933-9e75-4b46-bca2-11a722b090d3, length: 322508
+2024-11-11 10:36:52,580 - DEBUG - Thumbnail image resource added to document for ID cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:36:52,596 - INFO - Full-size image and thumbnail stored for ID cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:36:58,737 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 10:36:58,739 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 10:36:58,740 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 10:36:58,745 - DEBUG - Found <img> tag with src (unique_id): 98b926d0-9077-4ecb-a6e3-c17605c697e4
+2024-11-11 10:36:58,752 - INFO - Embedding Base64 images directly for ID 98b926d0-9077-4ecb-a6e3-c17605c697e4
+2024-11-11 10:36:58,753 - DEBUG - Found <img> tag with src (unique_id): a96032be-306a-48f8-b0e4-9b7848dad473
+2024-11-11 10:36:58,762 - INFO - Embedding Base64 images directly for ID a96032be-306a-48f8-b0e4-9b7848dad473
+2024-11-11 10:36:58,762 - DEBUG - Found <img> tag with src (unique_id): cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:36:58,765 - INFO - Embedding Base64 images directly for ID cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:36:58,766 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 10:36:58,767 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 10:36:58,777 - DEBUG - HTML content after embedding images.
+2024-11-11 10:36:58,781 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:36:58,782 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:36:58,783 - INFO - File re-saved as HTML with embedded images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:37:04,302 - INFO - Real-time spell check enabled.
+2024-11-11 10:37:47,263 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 10:37:47,266 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 10:37:47,266 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 10:37:47,279 - DEBUG - Found <img> tag with src (unique_id): 98b926d0-9077-4ecb-a6e3-c17605c697e4
+2024-11-11 10:37:47,292 - INFO - Embedding Base64 images directly for ID 98b926d0-9077-4ecb-a6e3-c17605c697e4
+2024-11-11 10:37:47,293 - DEBUG - Found <img> tag with src (unique_id): a96032be-306a-48f8-b0e4-9b7848dad473
+2024-11-11 10:37:47,311 - INFO - Embedding Base64 images directly for ID a96032be-306a-48f8-b0e4-9b7848dad473
+2024-11-11 10:37:47,311 - DEBUG - Found <img> tag with src (unique_id): cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:37:47,317 - INFO - Embedding Base64 images directly for ID cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:37:47,319 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 10:37:47,321 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 10:37:47,336 - DEBUG - HTML content after embedding images.
+2024-11-11 10:37:47,342 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:37:47,344 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:37:47,344 - INFO - File re-saved as HTML with embedded images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:37:57,800 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-11-11 10:37:57,801 - DEBUG - Original HTML content retrieved from editor.
+2024-11-11 10:37:57,801 - INFO - Starting embed_images_in_html_with_js
+2024-11-11 10:37:57,806 - DEBUG - Found <img> tag with src (unique_id): 98b926d0-9077-4ecb-a6e3-c17605c697e4
+2024-11-11 10:37:57,813 - INFO - Embedding Base64 images directly for ID 98b926d0-9077-4ecb-a6e3-c17605c697e4
+2024-11-11 10:37:57,814 - DEBUG - Found <img> tag with src (unique_id): a96032be-306a-48f8-b0e4-9b7848dad473
+2024-11-11 10:37:57,822 - INFO - Embedding Base64 images directly for ID a96032be-306a-48f8-b0e4-9b7848dad473
+2024-11-11 10:37:57,822 - DEBUG - Found <img> tag with src (unique_id): cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:37:57,824 - INFO - Embedding Base64 images directly for ID cfcc9933-9e75-4b46-bca2-11a722b090d3
+2024-11-11 10:37:57,826 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-11-11 10:37:57,827 - INFO - Completed embed_images_in_html_with_js
+2024-11-11 10:37:57,835 - DEBUG - HTML content after embedding images.
+2024-11-11 10:37:57,838 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:37:57,839 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:37:57,839 - INFO - File re-saved as HTML with embedded images: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:37:57,840 - INFO - Tab at index 0 closed.
+2024-11-11 10:38:06,162 - INFO - HTML file 'C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html' loaded into editor with images reconstructed.
+2024-11-11 10:38:06,163 - INFO - File opened: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-11-11 10:40:13,269 - INFO - Tab at index 0 closed.
+2024-11-11 10:40:13,270 - INFO - Settings saved.

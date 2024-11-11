@@ -5,6 +5,7 @@ import ctypes
 import json
 import logging
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -1197,7 +1198,7 @@ class MainWindow(QMainWindow):
 
     def get_current_tab_index(self):
         """Get the current index of the active tab."""
-        return self.tab_widget.currentIndex()
+        return self.tab_widget.currentIndex() if self.tab_widget.count() > 0 else -1
         
     """------------------------------------------------------File Methods-------------------------------------------------"""     
     """----------File Action Methods----------"""
@@ -1266,10 +1267,15 @@ class MainWindow(QMainWindow):
 
     def is_tab_empty(self, editor):
         """Check if the editor tab is empty, meaning it contains no text or images."""
+        if editor is None:
+            return True  # If there's no editor, consider the tab empty
         return not editor.toPlainText().strip() and not self.has_images(editor)
+
 
     def has_images(self, editor):
         """Check if the editor contains any images."""
+        if editor is None:
+            return False
         cursor = editor.textCursor()
         cursor.movePosition(QTextCursor.MoveOperation.Start)
         while not cursor.atEnd():
@@ -1286,6 +1292,14 @@ class MainWindow(QMainWindow):
         html_tab.setHtml("<html><body>" + text.replace("\n", "<br>") + "</body></html>")
         index = self.tab_widget.addTab(html_tab, title)
         self.tab_widget.setCurrentIndex(index)
+
+    def add_editor_to_tab(self, editor, path):
+        """Add the editor to a new tab and set up paths and tab text."""
+        index = self.tab_widget.addTab(editor, os.path.basename(path))
+        self.paths[index] = path
+        self.tab_widget.setCurrentIndex(index)
+        self.tab_widget.setTabToolTip(index, path)
+        return index
         
     def open_new_instance(self):
         """Open a new instance of the application with a cascaded window position."""
@@ -1307,29 +1321,34 @@ class MainWindow(QMainWindow):
     def file_open(self):
         """Open a file, loading its content based on its format (TXT or HTML)."""
         path, _ = QFileDialog.getOpenFileName(
-            self, "Open file", "", "Text documents (*.txt), HTML documents (*.html);;All files (*.*)"
+            self,
+            "Open file",
+            "",
+            "Text and HTML documents (*.txt *.html);;All files (*.*)"
         )
         if path:
             try:
+                # Determine whether to use the current tab or create a new one
                 index = self.get_current_tab_index()
-                current_editor = self.tab_widget.widget(index)
+                current_editor = self.tab_widget.widget(index) if index >= 0 else None
 
-                # Check if the current tab is an empty "Untitled" tab and replace it if empty
-                if self.is_tab_empty(current_editor):
+                # Check if the current tab exists and is empty and unmodified
+                if current_editor and self.is_tab_empty(current_editor) and not current_editor.document().isModified():
+                    # Reuse the current tab
+                    editor = current_editor
                     self.paths[index] = path
-                    filename = os.path.basename(path)
-                    self.load_file_content(path, current_editor)
-                    self.tab_widget.setTabText(index, filename)
+                    self.tab_widget.setTabText(index, os.path.basename(path))
                     self.tab_widget.setTabToolTip(index, path)
                 else:
-                    # Otherwise, open as a new tab
-                    editor = ClickableTextEdit()  # Use ClickableTextEdit
-                    editor.full_image_map = self.full_image_map  # Share the image map
-                    self.load_file_content(path, editor)
-                    new_index = self.tab_widget.addTab(editor, os.path.basename(path))
-                    self.paths[new_index] = path
-                    self.tab_widget.setCurrentIndex(new_index)
-                    self.tab_widget.setTabToolTip(new_index, path)
+                    # Create a new tab
+                    editor = ClickableTextEdit()
+                    index = self.tab_widget.addTab(editor, os.path.basename(path))
+                    self.paths[index] = path
+                    self.tab_widget.setCurrentIndex(index)
+                    self.tab_widget.setTabToolTip(index, path)
+
+                # Load the file content into the editor
+                self.load_file_content(path, editor)
 
                 logger.info(f"File opened: {path}")
             except Exception as e:
@@ -1337,13 +1356,13 @@ class MainWindow(QMainWindow):
                 logger.error(f"Failed to open file: {str(e)}")
 
     def load_file_content(self, path, editor):
-        """Load the content of a file into the provided editor, handling TXT and HTML formats."""
-        if path.endswith(".txt"):
+        """Load the content of a file into the provided editor."""
+        if path.endswith(".html"):
+            self.load_html_file(path, editor)
+        else:
             with open(path, 'r', encoding='utf-8') as f:
                 text_content = f.read()
             editor.setPlainText(text_content)
-        elif path.endswith(".html"):
-            self.load_html_file(path)
 
     def load_html_content(self, path, editor):
         """Load HTML content, reconstructing images from base64 data."""
@@ -1382,70 +1401,90 @@ class MainWindow(QMainWindow):
         logger.info(f"Opened file in new tab: {file_path}")                   
                     
 
-    def load_html_file(self, path):
-        """Load an HTML file with images and text into the editor, displaying thumbnails with clickable full-size images."""
+    def load_html_file(self, path, editor):
+        """Load an HTML file with images and text into the provided editor, reconstructing images and mappings."""
         try:
             with open(path, 'r', encoding='utf-8') as f:
                 html_content = f.read()
 
-            # Parse HTML content
+            # Parse HTML content using BeautifulSoup
             soup = BeautifulSoup(html_content, 'html.parser')
-            editor = ClickableTextEdit()  # Use ClickableTextEdit
-            editor.setFont(QFont(self.current_font_family, self.current_font_size))
-            editor.full_image_map = self.full_image_map  # Share the image map
 
-            # Iterate over the elements in the body
-            for element in soup.body.contents:
-                if isinstance(element, str):
-                    # Handle text nodes
-                    editor.insertPlainText(element)
-                elif element.name == "a" and element.find("img"):
-                    # Handle image wrapped in anchor
-                    anchor_href = element.get("href")
-                    img_tag = element.find("img")
-                    img_src = img_tag.get("src")
+            # Remove all script tags
+            for script in soup.find_all('script'):
+                script.decompose()
 
-                    # Extract the image_id from the href and src
-                    image_id = anchor_href
-                    thumbnail_src = img_src
+            # Remove all overlay divs with id="overlay"
+            for overlay_div in soup.find_all('div', id='overlay'):
+                overlay_div.decompose()
 
-                    # Load the thumbnail image from base64 data
-                    if thumbnail_src.startswith("data:image/png;base64,"):
-                        base64_data = thumbnail_src.split("base64,")[1]
-                        thumbnail_data = base64.b64decode(base64_data)
-                        thumbnail_pixmap = QPixmap()
-                        thumbnail_pixmap.loadFromData(thumbnail_data)
+            # Remove any buttons with text 'Close'
+            for button in soup.find_all('button'):
+                if button.get_text(strip=True) == 'Close':
+                    button.decompose()
 
-                        # Load the full-size image from base64 data in data-fullimage attribute
-                        full_image_data = element.get("data-fullimage")
-                        if full_image_data:
-                            full_image_pixmap = QPixmap()
-                            full_image_pixmap.loadFromData(base64.b64decode(full_image_data))
-                            self.full_image_map[image_id] = full_image_pixmap
-                            editor.full_image_map = self.full_image_map  # Share the image map
+            # Initialize image maps for this editor
+            editor.full_image_map = {}
+            editor.thumbnail_image_map = {}
+
+            # Iterate over all 'img' tags in the HTML
+            for img_tag in soup.find_all('img'):
+                # Get the base64 thumbnail image data from the 'src' attribute
+                img_src = img_tag.get('src')
+                if img_src and img_src.startswith("data:image/png;base64,"):
+                    base64_thumbnail = img_src.split("base64,")[1]
+                    thumbnail_data = base64.b64decode(base64_thumbnail)
+                    thumbnail_pixmap = QPixmap()
+                    thumbnail_pixmap.loadFromData(thumbnail_data)
+
+                    # Extract the base64 full image data from the 'onclick' attribute
+                    onclick_attr = img_tag.get('onclick')
+                    if onclick_attr and "showFullImage" in onclick_attr:
+                        # Extract the base64 full image data
+                        base64_full_image = onclick_attr.split("base64,")[1].rstrip("')")
+
+                        # Assign a unique ID to this image
+                        unique_id = str(uuid4())
+
+                        # Store images in both the editor's and main window's image maps
+                        editor.full_image_map[unique_id] = base64_full_image
+                        editor.thumbnail_image_map[unique_id] = thumbnail_pixmap
+                        self.full_image_map[unique_id] = base64_full_image
+                        self.thumbnail_image_map[unique_id] = thumbnail_pixmap
+
+                        # Replace 'src' with the unique ID
+                        img_tag['src'] = unique_id
+
+                        # Clear the 'onclick' attribute
+                        img_tag['onclick'] = ""
+
+                        # Remove the 'href' attribute from parent 'a' tag if it exists
+                        if img_tag.parent and img_tag.parent.name == 'a':
+                            img_tag.parent['href'] = unique_id
 
                         # Add the thumbnail image to the document resources
                         editor.document().addResource(
-                            QTextDocument.ResourceType.ImageResource, QUrl(image_id), thumbnail_pixmap
+                            QTextDocument.ResourceType.ImageResource,
+                            QUrl(unique_id),
+                            thumbnail_pixmap,
                         )
-
-                        # Insert HTML with anchor and image
-                        html = f'<a href="{image_id}"><img src="{image_id}" width="{img_tag.get("width")}" height="{img_tag.get("height")}"/></a>'
-                        editor.insertHtml(html)
+                    else:
+                        logger.warning("Full-size image data not found for an image.")
                 else:
-                    # For other HTML elements, insert their content
-                    editor.insertHtml(str(element))
+                    # Handle cases where 'img_src' is not properly set
+                    logger.warning("Image source is missing or not in expected format.")
 
-            # Add the HTML-loaded content as a new tab
-            index = self.tab_widget.addTab(editor, os.path.basename(path))
-            self.paths[index] = path
-            self.tab_widget.setCurrentIndex(index)
+            # Convert the modified soup back to HTML
+            modified_html = str(soup)
 
-            logger.info(f"HTML file loaded into editor with images as thumbnails.")
+            # Set the editor's HTML content
+            editor.setHtml(modified_html)
+
+            logger.info(f"HTML file '{path}' loaded into editor with images reconstructed.")
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to load HTML file: {str(e)}")
             logger.error(f"Failed to load HTML file: {str(e)}")
- 
+
     def file_save(self, index=None):
         """Save the current document. If the file has not been saved before, perform 'Save As'."""
         if index is None:
@@ -1491,72 +1530,63 @@ class MainWindow(QMainWindow):
     def save_as_html_with_js(self, path, index):
         """Save the document content as an HTML file with embedded images and JavaScript for full-size image display."""
         logger.info(f"Starting save_as_html_with_js for path: {path} and index: {index}")
-        
+
         editor = self.tab_widget.widget(index)
         if editor:
             # Step 1: Get HTML content from the editor
             html_content = editor.document().toHtml()
             logger.debug("Original HTML content retrieved from editor.")
-            
-            # Step 2: Embed images within HTML content using embed_images_in_html_with_js
-            embedded_html_content = self.embed_images_in_html_with_js(html_content, editor.document())
-            logger.debug("HTML content after embedding images.")
-            
-            # Append JavaScript for full-size image display functionality
-            embedded_html_content += """
-            <script type="text/javascript">
-                function showFullImage(fullImageData) {
-                    var overlay = document.getElementById('overlay');
-                    var fullImage = document.getElementById('fullImage');
-                    fullImage.src = fullImageData;
-                    overlay.style.display = 'flex';
-                }
 
-                function hideFullImage() {
-                    document.getElementById('overlay').style.display = 'none';
-                }
-            </script>
-            <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
-                <img id="fullImage" src="" style="max-width:90%; max-height:90%;"/>
-                <button onclick="hideFullImage()" style="position:absolute; top:20px; right:20px; background-color:white; border:none; font-size:18px;">Close</button>
-            </div>
-            """
+            # Step 2: Embed images within HTML content using editor's image maps
+            embedded_html_content = self.embed_images_in_html_with_js(html_content, editor.document(), editor)
+            logger.debug("HTML content after embedding images.")
 
             # Step 3: Save the final HTML content with JavaScript and embedded images
             with open(path, 'w', encoding='utf-8') as file:
                 file.write(embedded_html_content)
                 logger.info(f"Embedded HTML content with JavaScript saved to {path}")
 
-            # Additional logging for UI updates
+            # Update paths and UI
             self.paths[index] = path
             self.tab_widget.setTabText(index, os.path.basename(path))
             self.tab_widget.setTabToolTip(index, path)
             editor.document().setModified(False)
             logger.info(f"Document saved and UI updated for path: {path}")
 
-    def embed_images_in_html_with_js(self, html_content, document):
-        """Embed both thumbnail and full-size image as base64 in HTML with JavaScript for overlay viewing."""
+
+    def embed_images_in_html_with_js(self, html_content, document, editor):
+        """Embed both thumbnail and full-size images as base64 in HTML with JavaScript for overlay viewing."""
         logger.info("Starting embed_images_in_html_with_js")
         soup = BeautifulSoup(html_content, 'html.parser')
 
         for img_tag in soup.find_all('img'):
-            src = img_tag.get('src')
-            logger.debug(f"Found <img> tag with src: {src}")
-            
-            if src:
-                # Retrieve the Base64-encoded image from the map by unique ID
-                base64_full_image = self.full_image_map.get(src)
-                if not base64_full_image:
-                    logger.warning(f"No image found in full_image_map for ID {src}")
+            unique_id = img_tag.get('src')
+            logger.debug(f"Found <img> tag with src (unique_id): {unique_id}")
+
+            if unique_id:
+                # Retrieve images from the editor's image maps
+                base64_full_image = editor.full_image_map.get(unique_id)
+                thumbnail_pixmap = editor.thumbnail_image_map.get(unique_id)
+                if not base64_full_image or not thumbnail_pixmap:
+                    logger.warning(f"No images found in editor's image maps for ID {unique_id}")
                     continue
 
-                logger.info(f"Embedding Base64 image directly for ID {src}, length: {len(base64_full_image)}")
+                # Encode thumbnail image to base64
+                buffer = QBuffer()
+                buffer.open(QBuffer.OpenModeFlag.ReadWrite)
+                thumbnail_pixmap.save(buffer, "PNG")
+                base64_thumbnail_image = base64.b64encode(buffer.data()).decode('utf-8')
+                buffer.close()
 
-                # Embed the Base64 string directly in the `src` attribute and wrap for full-size display
-                img_tag['src'] = f"data:image/png;base64,{base64_full_image}"
-                img_tag.wrap(soup.new_tag("a", href=f"data:image/png;base64,{base64_full_image}"))
+                logger.info(f"Embedding Base64 images directly for ID {unique_id}")
+
+                # Embed the Base64 string in the `src` attribute
+                img_tag['src'] = f"data:image/png;base64,{base64_thumbnail_image}"
+                # Update the `onclick` attribute for full-size image display
                 img_tag['onclick'] = f"showFullImage('data:image/png;base64,{base64_full_image}')"
                 img_tag['style'] = "cursor: pointer;"
+                if img_tag.parent and img_tag.parent.name == 'a':
+                    img_tag.parent['href'] = "javascript:void(0);"
 
         # Add overlay and script for full-size viewing if not already present
         if not soup.find(id="overlay"):
@@ -1574,16 +1604,17 @@ class MainWindow(QMainWindow):
                     document.getElementById('overlay').style.display = 'none';
                 }
             </script>
-            <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
+            <div id="overlay" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%;
+                 background-color:rgba(0,0,0,0.8); justify-content:center; align-items:center;">
                 <img id="fullImage" src="" style="max-width:90%; max-height:90%;" alt="Full Size"/>
-                <button onclick="hideFullImage()" style="position:absolute; top:20px; right:20px; background-color:white; border:none; font-size:18px;">Close</button>
+                <button onclick="hideFullImage()" style="position:absolute; top:20px; right:20px;
+                        background-color:white; border:none; font-size:18px;">Close</button>
             </div>
             """
             soup.body.append(BeautifulSoup(overlay_script, 'html.parser'))
 
         logger.info("Completed embed_images_in_html_with_js")
         return str(soup)
-
 
     def convert_document_to_html(self, document):
         """Convert a QTextDocument to HTML with embedded images as clickable thumbnails."""
@@ -1910,25 +1941,67 @@ class MainWindow(QMainWindow):
 
     """----------Real-Time Spell Check Method----------"""
     def perform_real_time_spell_check(self):
-        """Underline misspelled words in real-time using a spell check underline."""
+        """Underline misspelled words in real-time without affecting images or other formatting."""
         editor = self.get_current_editor()
         if editor:
             cursor = editor.textCursor()
-            cursor.select(QTextCursor.SelectionType.Document)
-            cursor.setCharFormat(QTextCharFormat())  # Clear previous formatting
+            cursor.beginEditBlock()
 
-            text = editor.toPlainText()
-            words = text.split()
-            position = 0
-            for word in words:
-                if word not in spell:
-                    cursor.setPosition(position)
-                    cursor.movePosition(QTextCursor.MoveOperation.NextWord, QTextCursor.MoveMode.KeepAnchor)
-                    format = QTextCharFormat()
-                    format.setUnderlineStyle(QTextCharFormat.UnderlineStyle.SpellCheckUnderline)
-                    format.setUnderlineColor(Qt.GlobalColor.red)
-                    cursor.mergeCharFormat(format)
-                position += len(word) + 1
+            block = editor.document().firstBlock()
+            while block.isValid():
+                it = block.begin()
+                while not it.atEnd():
+                    fragment = it.fragment()
+                    if fragment.isValid():
+                        # Check if the fragment is an image
+                        if fragment.charFormat().isImageFormat():
+                            pass  # Skip image fragments
+                        else:
+                            # Get the start and end positions of the fragment
+                            start_pos = fragment.position()
+                            end_pos = start_pos + fragment.length()
+
+                            # Create a cursor for the fragment
+                            fragment_cursor = QTextCursor(editor.document())
+                            fragment_cursor.setPosition(start_pos)
+                            fragment_cursor.setPosition(end_pos, QTextCursor.MoveMode.KeepAnchor)
+
+                            # Remove existing spell check underlines from this fragment
+                            format = QTextCharFormat()
+                            format.setUnderlineStyle(QTextCharFormat.UnderlineStyle.NoUnderline)
+                            fragment_cursor.mergeCharFormat(format)
+
+                            # Get the text of the fragment
+                            text = fragment.text()
+                            if text:
+                                self.check_text_fragment(fragment_cursor, text)
+                    it += 1
+                block = block.next()
+            cursor.endEditBlock()
+     
+    def check_text_fragment(self, cursor, text):
+        """Check a text fragment for spelling errors and apply underlines."""
+        # Tokenize the text into words using regular expressions
+        words = re.finditer(r'\b\w+\b', text)
+        for word_match in words:
+            word = word_match.group()
+            start_offset = word_match.start()
+            end_offset = word_match.end()
+
+            # Calculate the absolute positions
+            start = cursor.selectionStart() + start_offset
+            end = cursor.selectionStart() + end_offset
+
+            word_cursor = QTextCursor(cursor.document())
+            word_cursor.setPosition(start)
+            word_cursor.setPosition(end, QTextCursor.MoveMode.KeepAnchor)
+
+            if word not in spell:
+                # Apply spell check underline
+                misspelled_format = QTextCharFormat()
+                misspelled_format.setUnderlineStyle(QTextCharFormat.UnderlineStyle.SpellCheckUnderline)
+                misspelled_format.setUnderlineColor(Qt.GlobalColor.red)
+                word_cursor.mergeCharFormat(misspelled_format)
 
     """----------Custom Context Menu for Spell Check Suggestions----------"""
     def setup_custom_context_menu(self):
@@ -1944,7 +2017,7 @@ class MainWindow(QMainWindow):
             return  # Exit if there's no active editor
 
         # Initialize the context menu with a gray color scheme
-        context_menu = QMenu(self)
+        context_menu = QMenu(editor)
         context_menu.setStyleSheet("""
             QMenu {
                 background-color: #2b2b2b;  /* Dark gray background */
@@ -1968,44 +2041,47 @@ class MainWindow(QMainWindow):
         """)
 
         # Basic editing actions
-        cut_action = QAction("Cut", self)
+        cut_action = QAction("Cut", editor)
         cut_action.setShortcut("Ctrl+X")
         cut_action.triggered.connect(editor.cut)
         context_menu.addAction(cut_action)
 
-        copy_action = QAction("Copy", self)
+        copy_action = QAction("Copy", editor)
         copy_action.setShortcut("Ctrl+C")
         copy_action.triggered.connect(editor.copy)
         context_menu.addAction(copy_action)
 
-        paste_action = QAction("Paste", self)
+        paste_action = QAction("Paste", editor)
         paste_action.setShortcut("Ctrl+V")
         paste_action.triggered.connect(editor.paste)
         context_menu.addAction(paste_action)
 
-        delete_action = QAction("Delete", self)
+        delete_action = QAction("Delete", editor)
         delete_action.triggered.connect(lambda: editor.textCursor().removeSelectedText())
         context_menu.addAction(delete_action)
 
         context_menu.addSeparator()
 
-        # Spell-check suggestions
-        cursor = editor.textCursor()
+        # Get the cursor at the position where the context menu was requested
+        cursor = editor.cursorForPosition(pos)
         cursor.select(QTextCursor.SelectionType.WordUnderCursor)
         word = cursor.selectedText()
+        start_pos = cursor.selectionStart()
+        end_pos = cursor.selectionEnd()
+
         if word and word not in spell:
-            spell_menu = QMenu("Spelling Suggestions", self)
+            spell_menu = QMenu("Spelling Suggestions", editor)
             spell_menu.setStyleSheet(context_menu.styleSheet())  # Apply gray color scheme
 
-            # Get suggestions, with a check in case no suggestions are available
+            # Get suggestions
             suggestions = spell.candidates(word)
             if suggestions:
                 for suggestion in suggestions:
-                    action = QAction(suggestion, self)
-                    action.triggered.connect(lambda _, sug=suggestion: self.replace_word(cursor, sug))
+                    action = QAction(suggestion, editor)
+                    action.triggered.connect(lambda _, sug=suggestion, s=start_pos, e=end_pos: self.replace_word(editor, s, e, sug))
                     spell_menu.addAction(action)
-            
-            add_to_dict_action = QAction("Add to Dictionary", self)
+
+            add_to_dict_action = QAction("Add to Dictionary", editor)
             add_to_dict_action.triggered.connect(lambda _, w=word: self.add_word_to_dictionary(w))
             spell_menu.addAction(add_to_dict_action)
 
@@ -2014,41 +2090,41 @@ class MainWindow(QMainWindow):
         context_menu.addSeparator()
 
         # Text formatting options
-        bold_action = QAction("Bold", self)
+        bold_action = QAction("Bold", editor)
         bold_action.setCheckable(True)
         bold_action.setChecked(editor.fontWeight() == QFont.Weight.Bold)
         bold_action.triggered.connect(lambda: self.toggle_text_format("bold", bold_action.isChecked()))
         context_menu.addAction(bold_action)
 
-        italic_action = QAction("Italic", self)
+        italic_action = QAction("Italic", editor)
         italic_action.setCheckable(True)
         italic_action.setChecked(editor.fontItalic())
         italic_action.triggered.connect(lambda: self.toggle_text_format("italic", italic_action.isChecked()))
         context_menu.addAction(italic_action)
 
-        underline_action = QAction("Underline", self)
+        underline_action = QAction("Underline", editor)
         underline_action.setCheckable(True)
         underline_action.setChecked(editor.fontUnderline())
         underline_action.triggered.connect(lambda: self.toggle_text_format("underline", underline_action.isChecked()))
         context_menu.addAction(underline_action)
 
-        strikethrough_action = QAction("Strikethrough", self)
+        strikethrough_action = QAction("Strikethrough", editor)
         strikethrough_action.setCheckable(True)
         strikethrough_action.triggered.connect(lambda: self.toggle_text_format("strikethrough", strikethrough_action.isChecked()))
         context_menu.addAction(strikethrough_action)
 
         # Highlight options (with a submenu for color selection)
-        highlight_action = QMenu("Highlight", self)
-        highlight_action.setStyleSheet(context_menu.styleSheet())  # Apply gray color scheme
+        highlight_menu = QMenu("Highlight", editor)
+        highlight_menu.setStyleSheet(context_menu.styleSheet())  # Apply gray color scheme
         for name, colors in HIGHLIGHT_STYLES.items():
-            color_action = QAction(name, self)
+            color_action = QAction(name, editor)
             color_action.triggered.connect(lambda _, col=colors: self.apply_highlight_style(col))
-            highlight_action.addAction(color_action)
-        context_menu.addMenu(highlight_action)
+            highlight_menu.addAction(color_action)
+        context_menu.addMenu(highlight_menu)
 
-        # Show the context menu at the cursor position
-        context_menu.exec(self.mapToGlobal(pos))
-        
+        # Show the context menu at the global position
+        context_menu.exec(editor.viewport().mapToGlobal(pos))
+            
     def populate_spell_check_menu(self, word, cursor, spell_check_menu):
         suggestions = spell.candidates(word)
         for suggestion in suggestions:
@@ -2061,18 +2137,25 @@ class MainWindow(QMainWindow):
         spell_check_menu.addAction(add_to_dict_action)
 
     """----------Dictionary Management Methods----------"""
-    def replace_word(self, cursor, replacement):
-        """Replace the selected word with the provided replacement."""
+    def replace_word(self, editor, start_pos, end_pos, replacement):
+        """Replace the word at the given position with the provided replacement."""
+        cursor = QTextCursor(editor.document())
+        cursor.setPosition(start_pos)
+        cursor.setPosition(end_pos, QTextCursor.MoveMode.KeepAnchor)
         cursor.beginEditBlock()
         cursor.removeSelectedText()
         cursor.insertText(replacement)
         cursor.endEditBlock()
+        # Re-run spell check to update underlines
+        self.perform_real_time_spell_check()
 
     def add_word_to_dictionary(self, word):
         """Add a word to the custom dictionary."""
         spell.word_frequency.add(word)
         self.save_custom_dictionary()
         QMessageBox.information(self, "Word Added", f"'{word}' has been added to the dictionary.")
+        # Re-run spell check to update underlines
+        self.perform_real_time_spell_check()
 
     def save_custom_dictionary(self):
         with open(CUSTOM_DICT_PATH, 'w') as f:
