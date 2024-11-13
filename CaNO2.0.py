@@ -1922,22 +1922,26 @@ class MainWindow(QMainWindow):
     """------------------------------------------------------------Spell Check Methods-----------------------------------""" 
     """----------Spell Check Toggle Method----------"""
     def toggle_real_time_spell_check(self, checked):
-        """Enable or disable real-time spell check based on the toggle state."""
+        """Enable or disable real-time spell check based on the toggle state, preserving images."""
         editor = self.get_current_editor()
         if checked:
             self.spell_check_timer = QTimer()
             self.spell_check_timer.setSingleShot(True)
             self.spell_check_timer.timeout.connect(self.perform_real_time_spell_check)
+            
+            # Connect to text changes only if there's an active editor
             if editor:
                 editor.textChanged.connect(lambda: self.spell_check_timer.start(500))
             logger.info("Real-time spell check enabled.")
         else:
+            # Disconnect spell check to prevent interference
             if editor:
                 try:
                     editor.textChanged.disconnect()
                 except TypeError:
-                    pass  # If already disconnected
+                    pass  # Safe disconnect if already disconnected
             logger.info("Real-time spell check disabled.")
+
 
     """----------Real-Time Spell Check Method----------"""
     def perform_real_time_spell_check(self):
@@ -1978,7 +1982,8 @@ class MainWindow(QMainWindow):
                     it += 1
                 block = block.next()
             cursor.endEditBlock()
-     
+
+
     def check_text_fragment(self, cursor, text):
         """Check a text fragment for spelling errors and apply underlines."""
         # Tokenize the text into words using regular expressions
@@ -2002,6 +2007,7 @@ class MainWindow(QMainWindow):
                 misspelled_format.setUnderlineStyle(QTextCharFormat.UnderlineStyle.SpellCheckUnderline)
                 misspelled_format.setUnderlineColor(Qt.GlobalColor.red)
                 word_cursor.mergeCharFormat(misspelled_format)
+
 
     """----------Custom Context Menu for Spell Check Suggestions----------"""
     def setup_custom_context_menu(self):

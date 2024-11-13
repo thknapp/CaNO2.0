@@ -1922,86 +1922,84 @@ class MainWindow(QMainWindow):
     """------------------------------------------------------------Spell Check Methods-----------------------------------""" 
     """----------Spell Check Toggle Method----------"""
     def toggle_real_time_spell_check(self, checked):
-        """Enable or disable real-time spell check based on the toggle state."""
+        """Enable or disable real-time spell check based on the toggle state, preserving images."""
         editor = self.get_current_editor()
         if checked:
             self.spell_check_timer = QTimer()
             self.spell_check_timer.setSingleShot(True)
             self.spell_check_timer.timeout.connect(self.perform_real_time_spell_check)
+            
+            # Connect to text changes only if there's an active editor
             if editor:
                 editor.textChanged.connect(lambda: self.spell_check_timer.start(500))
             logger.info("Real-time spell check enabled.")
         else:
+            # Disconnect spell check to prevent interference
             if editor:
                 try:
                     editor.textChanged.disconnect()
                 except TypeError:
-                    pass  # If already disconnected
+                    pass  # Safe disconnect if already disconnected
             logger.info("Real-time spell check disabled.")
+
 
     """----------Real-Time Spell Check Method----------"""
     def perform_real_time_spell_check(self):
-        """Underline misspelled words in real-time without affecting images or other formatting."""
+        """Perform spell checking on each block and underline misspelled words."""
         editor = self.get_current_editor()
-        if editor:
-            cursor = editor.textCursor()
-            cursor.beginEditBlock()
+        if not editor:
+            return
 
-            block = editor.document().firstBlock()
-            while block.isValid():
-                it = block.begin()
-                while not it.atEnd():
-                    fragment = it.fragment()
-                    if fragment.isValid():
-                        # Check if the fragment is an image
-                        if fragment.charFormat().isImageFormat():
-                            pass  # Skip image fragments
-                        else:
-                            # Get the start and end positions of the fragment
-                            start_pos = fragment.position()
-                            end_pos = start_pos + fragment.length()
+        # Create a cursor to traverse the document
+        cursor = editor.textCursor()
+        cursor.select(QTextCursor.SelectionType.Document)  # Select entire document
+        cursor.setCharFormat(QTextCharFormat())  # Clear previous formatting
 
-                            # Create a cursor for the fragment
-                            fragment_cursor = QTextCursor(editor.document())
-                            fragment_cursor.setPosition(start_pos)
-                            fragment_cursor.setPosition(end_pos, QTextCursor.MoveMode.KeepAnchor)
+        # Iterate through each block in the document
+        block = cursor.block()
+        while block.isValid():
+            # Obtain a new cursor for each block's start
+            block_cursor = QTextCursor(block)
+            
+            # Get the text of the block and check each word for spelling
+            text = block.text()
+            if text.strip():  # Skip empty blocks
+                self.check_text_fragment(block_cursor, text)
 
-                            # Remove existing spell check underlines from this fragment
-                            format = QTextCharFormat()
-                            format.setUnderlineStyle(QTextCharFormat.UnderlineStyle.NoUnderline)
-                            fragment_cursor.mergeCharFormat(format)
+            # Move to the next block
+            block = block.next()
 
-                            # Get the text of the fragment
-                            text = fragment.text()
-                            if text:
-                                self.check_text_fragment(fragment_cursor, text)
-                    it += 1
-                block = block.next()
-            cursor.endEditBlock()
+
      
     def check_text_fragment(self, cursor, text):
-        """Check a text fragment for spelling errors and apply underlines."""
+        """Check a text fragment for spelling errors and apply underlines, skipping non-text content."""
         # Tokenize the text into words using regular expressions
         words = re.finditer(r'\b\w+\b', text)
+
+        # Iterate through each word match in the fragment
         for word_match in words:
             word = word_match.group()
             start_offset = word_match.start()
             end_offset = word_match.end()
 
-            # Calculate the absolute positions
+            # Calculate the absolute positions for the word within the document
             start = cursor.selectionStart() + start_offset
             end = cursor.selectionStart() + end_offset
 
+            # Set up a new cursor for the specific word position
             word_cursor = QTextCursor(cursor.document())
             word_cursor.setPosition(start)
             word_cursor.setPosition(end, QTextCursor.MoveMode.KeepAnchor)
 
-            if word not in spell:
-                # Apply spell check underline
+            # Only apply spell check underline to text, skipping images and other formats
+            char_format = word_cursor.charFormat()
+            if not char_format.isImageFormat() and word not in spell:
+                # Apply spell check underline if the word is misspelled
                 misspelled_format = QTextCharFormat()
                 misspelled_format.setUnderlineStyle(QTextCharFormat.UnderlineStyle.SpellCheckUnderline)
                 misspelled_format.setUnderlineColor(Qt.GlobalColor.red)
                 word_cursor.mergeCharFormat(misspelled_format)
+
 
     """----------Custom Context Menu for Spell Check Suggestions----------"""
     def setup_custom_context_menu(self):
@@ -2017,7 +2015,7 @@ class MainWindow(QMainWindow):
             return  # Exit if there's no active editor
 
         # Initialize the context menu with a gray color scheme
-        context_menu = QMenu(self)
+        context_menu = QMenu(editor)
         context_menu.setStyleSheet("""
             QMenu {
                 background-color: #2b2b2b;  /* Dark gray background */
@@ -2041,44 +2039,47 @@ class MainWindow(QMainWindow):
         """)
 
         # Basic editing actions
-        cut_action = QAction("Cut", self)
+        cut_action = QAction("Cut", editor)
         cut_action.setShortcut("Ctrl+X")
         cut_action.triggered.connect(editor.cut)
         context_menu.addAction(cut_action)
 
-        copy_action = QAction("Copy", self)
+        copy_action = QAction("Copy", editor)
         copy_action.setShortcut("Ctrl+C")
         copy_action.triggered.connect(editor.copy)
         context_menu.addAction(copy_action)
 
-        paste_action = QAction("Paste", self)
+        paste_action = QAction("Paste", editor)
         paste_action.setShortcut("Ctrl+V")
         paste_action.triggered.connect(editor.paste)
         context_menu.addAction(paste_action)
 
-        delete_action = QAction("Delete", self)
+        delete_action = QAction("Delete", editor)
         delete_action.triggered.connect(lambda: editor.textCursor().removeSelectedText())
         context_menu.addAction(delete_action)
 
         context_menu.addSeparator()
 
-        # Spell-check suggestions
-        cursor = editor.textCursor()
+        # Get the cursor at the position where the context menu was requested
+        cursor = editor.cursorForPosition(pos)
         cursor.select(QTextCursor.SelectionType.WordUnderCursor)
         word = cursor.selectedText()
+        start_pos = cursor.selectionStart()
+        end_pos = cursor.selectionEnd()
+
         if word and word not in spell:
-            spell_menu = QMenu("Spelling Suggestions", self)
+            spell_menu = QMenu("Spelling Suggestions", editor)
             spell_menu.setStyleSheet(context_menu.styleSheet())  # Apply gray color scheme
 
-            # Get suggestions, with a check in case no suggestions are available
+            # Get suggestions
             suggestions = spell.candidates(word)
             if suggestions:
                 for suggestion in suggestions:
-                    action = QAction(suggestion, self)
-                    action.triggered.connect(lambda _, sug=suggestion: self.replace_word(cursor, sug))
+                    action = QAction(suggestion, editor)
+                    action.triggered.connect(lambda _, sug=suggestion, s=start_pos, e=end_pos: self.replace_word(editor, s, e, sug))
                     spell_menu.addAction(action)
-            
-            add_to_dict_action = QAction("Add to Dictionary", self)
+
+            add_to_dict_action = QAction("Add to Dictionary", editor)
             add_to_dict_action.triggered.connect(lambda _, w=word: self.add_word_to_dictionary(w))
             spell_menu.addAction(add_to_dict_action)
 
@@ -2087,41 +2088,41 @@ class MainWindow(QMainWindow):
         context_menu.addSeparator()
 
         # Text formatting options
-        bold_action = QAction("Bold", self)
+        bold_action = QAction("Bold", editor)
         bold_action.setCheckable(True)
         bold_action.setChecked(editor.fontWeight() == QFont.Weight.Bold)
         bold_action.triggered.connect(lambda: self.toggle_text_format("bold", bold_action.isChecked()))
         context_menu.addAction(bold_action)
 
-        italic_action = QAction("Italic", self)
+        italic_action = QAction("Italic", editor)
         italic_action.setCheckable(True)
         italic_action.setChecked(editor.fontItalic())
         italic_action.triggered.connect(lambda: self.toggle_text_format("italic", italic_action.isChecked()))
         context_menu.addAction(italic_action)
 
-        underline_action = QAction("Underline", self)
+        underline_action = QAction("Underline", editor)
         underline_action.setCheckable(True)
         underline_action.setChecked(editor.fontUnderline())
         underline_action.triggered.connect(lambda: self.toggle_text_format("underline", underline_action.isChecked()))
         context_menu.addAction(underline_action)
 
-        strikethrough_action = QAction("Strikethrough", self)
+        strikethrough_action = QAction("Strikethrough", editor)
         strikethrough_action.setCheckable(True)
         strikethrough_action.triggered.connect(lambda: self.toggle_text_format("strikethrough", strikethrough_action.isChecked()))
         context_menu.addAction(strikethrough_action)
 
         # Highlight options (with a submenu for color selection)
-        highlight_action = QMenu("Highlight", self)
-        highlight_action.setStyleSheet(context_menu.styleSheet())  # Apply gray color scheme
+        highlight_menu = QMenu("Highlight", editor)
+        highlight_menu.setStyleSheet(context_menu.styleSheet())  # Apply gray color scheme
         for name, colors in HIGHLIGHT_STYLES.items():
-            color_action = QAction(name, self)
+            color_action = QAction(name, editor)
             color_action.triggered.connect(lambda _, col=colors: self.apply_highlight_style(col))
-            highlight_action.addAction(color_action)
-        context_menu.addMenu(highlight_action)
+            highlight_menu.addAction(color_action)
+        context_menu.addMenu(highlight_menu)
 
-        # Show the context menu at the cursor position
-        context_menu.exec(self.mapToGlobal(pos))
-        
+        # Show the context menu at the global position
+        context_menu.exec(editor.viewport().mapToGlobal(pos))
+            
     def populate_spell_check_menu(self, word, cursor, spell_check_menu):
         suggestions = spell.candidates(word)
         for suggestion in suggestions:
@@ -2134,18 +2135,25 @@ class MainWindow(QMainWindow):
         spell_check_menu.addAction(add_to_dict_action)
 
     """----------Dictionary Management Methods----------"""
-    def replace_word(self, cursor, replacement):
-        """Replace the selected word with the provided replacement."""
+    def replace_word(self, editor, start_pos, end_pos, replacement):
+        """Replace the word at the given position with the provided replacement."""
+        cursor = QTextCursor(editor.document())
+        cursor.setPosition(start_pos)
+        cursor.setPosition(end_pos, QTextCursor.MoveMode.KeepAnchor)
         cursor.beginEditBlock()
         cursor.removeSelectedText()
         cursor.insertText(replacement)
         cursor.endEditBlock()
+        # Re-run spell check to update underlines
+        self.perform_real_time_spell_check()
 
     def add_word_to_dictionary(self, word):
         """Add a word to the custom dictionary."""
         spell.word_frequency.add(word)
         self.save_custom_dictionary()
         QMessageBox.information(self, "Word Added", f"'{word}' has been added to the dictionary.")
+        # Re-run spell check to update underlines
+        self.perform_real_time_spell_check()
 
     def save_custom_dictionary(self):
         with open(CUSTOM_DICT_PATH, 'w') as f:
