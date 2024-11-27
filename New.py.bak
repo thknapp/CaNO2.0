@@ -531,7 +531,7 @@ class MainWindow(QMainWindow):
         """
         # Create and configure the alignment toolbar
         align_toolbar = QToolBar("Align")
-        align_toolbar.setIconSize(QSize(20, 20))  # Set icon size for toolbar buttons
+        align_toolbar.setIconSize(QSize(30, 30))  # Set icon size for toolbar buttons
         self.addToolBar(align_toolbar)
 
         # Left alignment action
@@ -607,7 +607,7 @@ class MainWindow(QMainWindow):
         """
         # Create and configure the Edit toolbar
         edit_toolbar = QToolBar("Edit")
-        edit_toolbar.setIconSize(QSize(20, 20))  # Set smaller icon size for compact toolbar
+        edit_toolbar.setIconSize(QSize(15, 15))  # Set smaller icon size for compact toolbar
         self.addToolBar(edit_toolbar)
 
         # Undo action
@@ -715,7 +715,7 @@ class MainWindow(QMainWindow):
         """
         # Create and configure the Font toolbar
         toolbar = QToolBar("Font")
-        toolbar.setIconSize(QSize(20, 20))  # Set smaller icon size for toolbar
+        toolbar.setIconSize(QSize(10, 10))  # Set smaller icon size for toolbar
         self.addToolBar(toolbar)
 
         # Font ComboBox for selecting font family
@@ -743,7 +743,7 @@ class MainWindow(QMainWindow):
         """
         # Create and configure the Format toolbar
         self.format_toolbar = QToolBar("Format")
-        self.format_toolbar.setIconSize(QSize(20, 20))
+        self.format_toolbar.setIconSize(QSize(30, 30))
         self.addToolBar(self.format_toolbar)
 
         # Bold action
@@ -816,7 +816,7 @@ class MainWindow(QMainWindow):
         """
         # Create and configure the List toolbar
         list_toolbar = QToolBar("Lists")
-        list_toolbar.setIconSize(QSize(20, 20))  # Set icon size
+        list_toolbar.setIconSize(QSize(30, 30))  # Set icon size
         self.addToolBar(list_toolbar)
 
         # Bullet List action
