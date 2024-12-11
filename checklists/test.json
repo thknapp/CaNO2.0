@@ -1,0 +1,21 @@
+{
+    "checklists": [
+        {
+            "MainTitle": "title",
+            "items": [
+                {
+                    "ChecklistNote": "task"
+                },
+                {
+                    "ChecklistItem": "task"
+                },
+                {
+                    "ChecklistItem": "task"
+                },
+                {
+                    "ChecklistItem": "task"
+                }
+            ]
+        }
+    ]
+}

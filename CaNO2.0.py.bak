@@ -24,18 +24,18 @@ from spellchecker import SpellChecker
 
 # PyQt6 Imports
 from PyQt6.QtCore import (
-    QByteArray, QBuffer, QDateTime, QEvent, QIODevice, QPoint, QRect, QTimer, QUrl, Qt, QSize, pyqtSignal
+    QByteArray, QBuffer, QDateTime, QEvent, QIODevice, QStringListModel, QPoint, QRect, QTimer, QUrl, Qt, QSize, pyqtSignal
 )
 from PyQt6.QtGui import (
     QAction, QActionGroup, QColor, QFont, QGuiApplication, QIcon, QPainter, QPen, QPixmap,
     QBitmap, QTextCharFormat, QTextCursor, QTextDocument, QTextFormat, QTextImageFormat, QTextListFormat
 )
 from PyQt6.QtWidgets import (
-    QApplication, QComboBox, QCheckBox, QDialog, QDialogButtonBox, QFileDialog,
-    QFontComboBox, QHBoxLayout, QLabel, QLineEdit, QListWidget, QListWidgetItem, 
-    QInputDialog, QMainWindow, QMessageBox, QPushButton, QSizePolicy, QSplitter, 
-    QSplitterHandle, QTabWidget, QTextEdit, QToolBar, QVBoxLayout, QWidget, 
-    QWidgetAction, QMenu, QAbstractItemView  
+    QApplication, QComboBox, QCheckBox, QCompleter, QDialog, QDialogButtonBox, 
+    QFileDialog, QFontComboBox, QHBoxLayout, QLabel, QLineEdit, QListWidget, 
+    QListWidgetItem, QInputDialog, QMainWindow, QMessageBox, QPushButton,
+    QScrollArea, QSizePolicy, QSplitter, QSplitterHandle, QTabWidget, QTextEdit, 
+    QToolBar, QVBoxLayout, QWidget, QWidgetAction, QMenu, QAbstractItemView  
 )
 
 
@@ -115,6 +115,8 @@ DEFAULT_SETTINGS = {
     "auto_space_image_lines": 1,
     "window_size": DEFAULT_WINDOW_SIZE,
     "window_position": DEFAULT_WINDOW_POSITION,
+    "panel_visible": True,
+    "panel_collapsed": False
 }
 
 def load_app_settings():
@@ -200,24 +202,24 @@ def save_file_metadata(metadata):
 
 """--------Minimize Console--------"""
 
-# def minimize_console():
-    # """Minimize the console window."""
-    # hwnd = ctypes.windll.kernel32.GetConsoleWindow()
-    # if hwnd != 0:
-        # win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
+def minimize_console():
+    """Minimize the console window."""
+    hwnd = ctypes.windll.kernel32.GetConsoleWindow()
+    if hwnd != 0:
+        win32gui.ShowWindow(hwnd, win32con.SW_MINIMIZE)
 
-# def relaunch_minimized():
-    # """Relaunch the script in minimized mode."""
-    # if sys.platform == "win32" and "--minimized" not in sys.argv:
-        # subprocess.Popen(["python", __file__, "--minimized"], creationflags=win32con.SW_HIDE)
-        # sys.exit()
+def relaunch_minimized():
+    """Relaunch the script in minimized mode."""
+    if sys.platform == "win32" and "--minimized" not in sys.argv:
+        subprocess.Popen(["python", __file__, "--minimized"], creationflags=win32con.SW_HIDE)
+        sys.exit()
 
-# # Minimize console on launch if applicable
-# if "--minimized" not in sys.argv:
-    # relaunch_minimized()
-# else:
-    # sys.argv.remove("--minimized")
-    # minimize_console()
+# Minimize console on launch if applicable
+if "--minimized" not in sys.argv:
+    relaunch_minimized()
+else:
+    sys.argv.remove("--minimized")
+    minimize_console()
 
 """--------Logging Setup--------"""
 
@@ -341,7 +343,26 @@ class MainWindow(QMainWindow):
 
         """------------------------ Final Adjustments ------------------------"""
         self.repaint()
-        self.update()
+        self.update()      
+        self.update_checklist_completer()
+        self.checklist_completer.popup().setVisible(True)
+
+        """------------------------- Set Cursor Focus -----------------------""" 
+        self.editor.setFocus()
+
+        saved_size = app_settings.get("window_size", DEFAULT_WINDOW_SIZE)
+        saved_position = app_settings.get("window_position", DEFAULT_WINDOW_POSITION)
+        self.resize(saved_size[0], saved_size[1])
+        self.move(saved_position[0], saved_position[1])
+
+        # Apply saved panel visibility
+        panel_collapsed = app_settings.get("panel_collapsed", False)
+        if panel_collapsed:
+            # If collapsed, set the sizes to collapse the panel
+            self.splitter.setSizes([0, 1])
+        else:
+            # If not collapsed, set a default size for the panel
+            self.splitter.setSizes([200, 1])  
 
     """------------------------ Initialization and Setup ------------------------"""
 
@@ -873,30 +894,40 @@ class MainWindow(QMainWindow):
 
     def init_checklist_toolbar(self):
         """
-        Initialize the Checklist toolbar with a dropdown for checklist selection.
+        Initialize the Checklist toolbar with a search bar for launching checklists.
 
         - Creates a toolbar for managing checklists.
-        - Adds a dropdown menu for displaying available checklists.
-        - Populates the dropdown menu with checklist options.
+        - Adds a search bar with autocomplete functionality for checklists.
         """
         # Create and configure the Checklist toolbar
         checklist_toolbar = QToolBar("Checklist Toolbar")
         checklist_toolbar.setIconSize(QSize(20, 20))  # Set icon size for toolbar buttons
         self.addToolBar(Qt.ToolBarArea.TopToolBarArea, checklist_toolbar)  # Add to the top toolbar area
 
-        # Create a dropdown for selecting checklists
-        self.checklist_dropdown = QComboBox(self)
-        self.checklist_dropdown.addItem("Loading...")  # Placeholder text
-        self.checklist_dropdown.currentIndexChanged.connect(self.open_selected_checklist)  # Connect to handler
-        checklist_toolbar.addWidget(self.checklist_dropdown)
+        # Create a search bar for entering checklist names
+        self.checklist_search_bar = QLineEdit(self)
+        self.checklist_search_bar.setPlaceholderText("Search for a checklist...")  # Placeholder text
+        self.checklist_search_bar.returnPressed.connect(self.search_and_launch_checklist)  # Connect to search handler
+
+        # Prevent the search bar from auto-focusing at startup
+        self.checklist_search_bar.setFocusPolicy(Qt.FocusPolicy.ClickFocus)
+
+        checklist_toolbar.addWidget(self.checklist_search_bar)
+
+        # Set up autocomplete for the search bar
+        self.checklist_completer = QCompleter(self)
+        self.checklist_completer.setCaseSensitivity(Qt.CaseSensitivity.CaseInsensitive)
+        self.checklist_search_bar.setCompleter(self.checklist_completer)
 
         # Add a spacer to align elements properly
         spacer = QWidget()
         spacer.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Preferred)
         checklist_toolbar.addWidget(spacer)
 
-        # Load available checklists into the dropdown menu
-        self.load_checklists_to_dropdown()
+        # Load available checklists into the completer
+        self.update_checklist_completer()
+        
+        print("Completer attached:", self.checklist_search_bar.completer() is not None)
 
     def setup_tab_widget(self):
         """
@@ -927,7 +958,7 @@ class MainWindow(QMainWindow):
         - Auto-saves modified documents if auto-save is enabled.
         - Removes empty auto-saved files from the persistent folder.
         - Saves file metadata and updates saved files panel.
-        - Saves window size and position to application settings.
+        - Saves window size, position, and panel visibility to application settings.
         """
         for index in reversed(range(self.tab_widget.count())):
             editor = self.tab_widget.widget(index)
@@ -967,10 +998,24 @@ class MainWindow(QMainWindow):
             # Close the tab
             self.close_tab(index)
 
-        # Save application settings (e.g., window size and position) before exit
+        # Save application settings (e.g., window size, position, and panel visibility) before exit
         app_settings["window_size"] = [self.size().width(), self.size().height()]
         app_settings["window_position"] = [self.pos().x(), self.pos().y()]
-        save_settings(app_settings)
+
+        # Determine panel visibility from your toggle or panel itself
+        # Assuming you have a toggle action for the panel
+        panel_visible = self.toggle_panel_action.isChecked()
+        app_settings["panel_visible"] = panel_visible
+        
+        panel_collapsed = app_settings.get("panel_collapsed", False)
+        if panel_collapsed:
+            # If collapsed, set the sizes to collapse the panel
+            self.splitter.setSizes([0, 1])
+        else:
+            # If not collapsed, you can set a default size
+            self.splitter.setSizes([200, 1])  # Or whatever default you want
+
+        save_app_settings(app_settings)
 
         # Log application close and persist settings
         logger.info("Application closed. Settings and metadata saved.")
@@ -1100,6 +1145,10 @@ class MainWindow(QMainWindow):
         if index in self.paths:
             del self.paths[index]  # Remove the path from tracking
         logger.info(f"Tab at index {index} closed.")
+        
+        # If this was the last tab, create a new one immediately
+        if self.tab_widget.count() == 0:
+            self.add_new_tab()        
 
     def close_all_tabs(self):
         """
@@ -1185,9 +1234,12 @@ class MainWindow(QMainWindow):
         """
         if self.toggle_panel_action.isChecked():
             self.saved_files_panel.show()
+            app_settings["panel_visible"] = True
             self.saved_files_panel.collapse_button.setText("◀")  # Icon to collapse
         else:
             self.saved_files_panel.hide()
+            app_settings["panel_visible"] = False
+        save_app_settings(app_settings)
 
     def toggle_panel_visibility(self):
         """
@@ -2397,78 +2449,49 @@ class MainWindow(QMainWindow):
 
     """------------------------ Checklists ------------------------"""
 
-    def load_checklists_to_dropdown(self):
+    def search_and_launch_checklist(self):
         """
-        Load checklists into the dropdown menu.
+        Search for a checklist by name and launch it if found.
 
-        - Ensures the dropdown is initialized before performing operations.
-        - Clears existing items and adds a placeholder ("Select Checklist") as the first item.
-        - Searches for `.json` files in the checklists folder and populates the dropdown.
-        - Disables the dropdown and provides user feedback if no checklists are found.
+        - Retrieves the checklist name entered in the search bar.
+        - Validates the checklist name and loads the corresponding checklist.
         """
-        # Check if the dropdown is initialized
-        if not hasattr(self, 'checklist_dropdown') or not self.checklist_dropdown:
-            logger.error("Checklist dropdown is not initialized. Operation skipped.")
-            return
+        search_term = self.checklist_search_bar.text().strip()  # Get the entered text
+        logger.debug(f"Search term entered: {search_term}")
 
-        # Clear the dropdown and add a placeholder item
-        self.checklist_dropdown.clear()
-        self.checklist_dropdown.addItem("Select Checklist")  # Placeholder for unselected state
-
-        # Ensure the checklists folder exists
-        os.makedirs(CHECKLISTS_FOLDER, exist_ok=True)
-
-        # Find all checklist files in the folder
-        checklists = [f[:-5] for f in os.listdir(CHECKLISTS_FOLDER) if f.endswith(".json")]
-
-        if not checklists:
-            # No checklists found, disable the dropdown and notify the user
-            logger.warning("No checklists found. Disabling dropdown.")
-            self.checklist_dropdown.setEnabled(False)
-            QMessageBox.information(self, "No Checklists", "No checklists found. Create a new checklist to begin.")
-        else:
-            # Enable the dropdown and populate it with checklist names
-            self.checklist_dropdown.setEnabled(True)
-            for checklist_name in checklists:
-                logger.info(f"Adding checklist to dropdown: {checklist_name}")
-                self.checklist_dropdown.addItem(checklist_name)
-
-    def open_selected_checklist(self, index):
-        """
-        Dynamically render and display the selected checklist based on the JSON structure.
-
-        - Supports Main Title, Title, Description, Task, Checklist Items, and Notes.
-        - Handles an arbitrary order of elements as defined in the JSON file.
-        - Validates the JSON file and ensures proper formatting.
-
-        Args:
-            index (int): The index of the selected item in the dropdown menu.
-        """
-        # Skip operation if the placeholder is selected
-        if index == 0:
-            logger.warning("No checklist selected. Skipping operation.")
-            QMessageBox.warning(self, "No Checklist Selected", "Please select a valid checklist from the dropdown.")
-            return
-
-        # Get the selected checklist name
-        checklist_name = self.checklist_dropdown.itemText(index).strip()
-
-        # Validate the checklist name
-        if not checklist_name:
-            logger.error("Invalid checklist name: null or empty.")
-            QMessageBox.critical(self, "Error", "Invalid checklist name. Please select a valid checklist.")
-            return
-
-        # Construct the file path for the selected checklist
-        checklist_path = os.path.join(CHECKLISTS_FOLDER, f"{checklist_name}.json")
-
-        # Ensure the checklist file exists
-        if not os.path.exists(checklist_path):
-            logger.error(f"Checklist file '{checklist_path}' does not exist.")
-            QMessageBox.critical(self, "Error", f"Checklist '{checklist_name}' not found.")
+        if not search_term:
+            QMessageBox.warning(self, "Invalid Input", "Please enter a checklist name.")
             return
 
         try:
+            # Check if the entered checklist exists
+            checklist_path = os.path.join(CHECKLISTS_FOLDER, f"{search_term}.json")
+            logger.debug(f"Checklist path: {checklist_path}")
+
+            if os.path.exists(checklist_path):
+                self.open_checklist(checklist_path)
+            else:
+                QMessageBox.warning(self, "Checklist Not Found", f"No checklist found with the name '{search_term}'.")
+                logger.warning(f"Checklist '{search_term}' not found.")
+        except Exception as e:
+            QMessageBox.critical(self, "Error", f"Failed to load checklist: {e}")
+            logger.error(f"Error loading checklist '{search_term}': {e}")
+
+    def open_checklist(self, checklist_name_or_path):
+        """
+        Load and display a checklist in a dialog with controlled resizing to prevent content stretching.
+        """
+        try:
+            # Determine if the input is a name or a full path
+            if os.path.isfile(checklist_name_or_path):
+                checklist_path = checklist_name_or_path
+            else:
+                checklist_path = os.path.join(CHECKLISTS_FOLDER, f"{checklist_name_or_path}.json")
+
+            # Ensure the checklist file exists
+            if not os.path.exists(checklist_path):
+                raise FileNotFoundError(f"Checklist file '{checklist_path}' does not exist.")
+
             # Load the JSON file
             with open(checklist_path, "r", encoding="utf-8") as f:
                 checklist_data = json.load(f)
@@ -2478,66 +2501,94 @@ class MainWindow(QMainWindow):
 
             for checklist in checklist_data["checklists"]:
                 dialog = QDialog(self)
-                dialog.setWindowTitle(checklist.get("main_title", "Checklist"))
-                dialog.setGeometry(300, 300, 600, 800)
+                dialog.setWindowTitle(checklist.get("MainTitle", "Checklist"))
 
-                layout = QVBoxLayout(dialog)
+                # Create a scroll area
+                scroll_area = QScrollArea(dialog)
+                scroll_area.setWidgetResizable(True)
+
+                # Create a container widget for the scrollable content
+                content_widget = QWidget()
+                content_layout = QVBoxLayout(content_widget)
+                content_layout.setSpacing(0)
+                content_layout.setContentsMargins(10, 10, 10, 10)
 
                 # Add Main Title
-                if "main_title" in checklist:
-                    main_title_label = QLabel(f"<b style='font-size:20px'>{checklist['main_title']}</b>")
+                if "MainTitle" in checklist:
+                    main_title_label = QLabel(checklist["MainTitle"])
                     main_title_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-                    layout.addWidget(main_title_label)
+                    main_title_label.setStyleSheet("font-size: 18px; font-weight: bold; margin-bottom: 5px; padding: 0;")
+                    main_title_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)  # Fixed height
+                    content_layout.addWidget(main_title_label)
 
                 # Process each item dynamically
                 for item in checklist.get("items", []):
-                    item_type = item.get("type")
-                    content = item.get("content", "")
+                    item_type, content = next(iter(item.items()))
+                    if item_type == "SubTitle":
+                        subtitle_label = QLabel(content)
+                        subtitle_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+                        subtitle_label.setStyleSheet("font-size: 16px; font-weight: bold; margin-bottom: 5px; padding: 0;")
+                        subtitle_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+                        content_layout.addWidget(subtitle_label)
 
-                    if item_type == "title":
-                        title_label = QLabel(f"<b style='font-size:18px'>{content}</b>")
-                        title_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-                        layout.addWidget(title_label)
-
-                    elif item_type == "description":
-                        description_label = QLabel(f"<div style='font-size:14px; margin-left:20px'>{content}</div>")
+                    elif item_type == "Description":
+                        description_label = QLabel(content)
                         description_label.setWordWrap(True)
-                        layout.addWidget(description_label)
+                        description_label.setStyleSheet("font-size: 14px; margin-bottom: 5px; padding: 0;")
+                        description_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+                        content_layout.addWidget(description_label)
 
-                    elif item_type == "task":
-                        task_label = QLabel(f"<div style='font-size:16px; margin-left:20px;'><li>{content}</li></div>")
+                    elif item_type == "Task":
+                        task_label = QLabel(f"• {content}")
                         task_label.setWordWrap(True)
-                        layout.addWidget(task_label)
+                        task_label.setStyleSheet("font-size: 14px; margin-bottom: 5px; padding: 0;")
+                        task_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+                        content_layout.addWidget(task_label)
 
-                        # Add task details if available
-                        if "details" in item:
-                            details_label = QLabel(f"<div style='font-size:14px; margin-left:40px'>{item['details']}</div>")
-                            details_label.setWordWrap(True)
-                            layout.addWidget(details_label)
+                    elif item_type == "ChecklistItem":
+                        checklist_checkbox = QCheckBox(content)
+                        checklist_checkbox.setStyleSheet("margin-left: 20px; margin-bottom: 5px; padding: 0;")
+                        checklist_checkbox.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+                        content_layout.addWidget(checklist_checkbox)
 
-                        # Add checklist items if available
-                        if "checklist" in item and isinstance(item["checklist"], list):
-                            for checklist_item in item["checklist"]:
-                                checklist_checkbox = QCheckBox(f"{checklist_item}")
-                                checklist_checkbox.setStyleSheet("margin-left: 60px;")
-                                layout.addWidget(checklist_checkbox)
-
-                    elif item_type == "note":
-                        note_label = QLabel(f"<i style='font-size:14px; margin-left:20px'>{content}</i>")
+                    elif item_type == "ChecklistNote":
+                        note_label = QLabel(f"Note: {content}")
                         note_label.setWordWrap(True)
-                        layout.addWidget(note_label)
+                        note_label.setStyleSheet(
+                            "font-size: 12px; font-style: italic; color: gray; margin-bottom: 5px; padding: 0;"
+                        )
+                        note_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+                        content_layout.addWidget(note_label)
 
                 # Add Close Button
                 close_button = QPushButton("Close", dialog)
                 close_button.clicked.connect(dialog.close)
-                layout.addWidget(close_button)
+                close_button.setStyleSheet("margin-top: 10px; padding: 5px;")
+                close_button.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
+                content_layout.addWidget(close_button)
 
-                dialog.setLayout(layout)
+                # Set the content widget in the scroll area
+                scroll_area.setWidget(content_widget)
+
+                # Dynamically resize dialog based on content
+                content_height = content_widget.sizeHint().height()
+                max_height = 600  # Finite maximum height
+                dialog_height = min(content_height + 20, max_height)
+                dialog_width = 600  # Fixed width
+                dialog.resize(dialog_width, dialog_height)
+
+                # Add the scroll area to the dialog layout
+                dialog_layout = QVBoxLayout(dialog)
+                dialog_layout.addWidget(scroll_area)
+                dialog.setLayout(dialog_layout)
+
                 dialog.exec()
 
+            logger.info(f"Checklist '{checklist_name_or_path}' loaded successfully.")
+
         except Exception as e:
-            logger.error(f"Failed to open checklist '{checklist_name}': {e}")
-            QMessageBox.critical(self, "Error", f"Could not open checklist '{checklist_name}'.\n\nError: {str(e)}")
+            logger.error(f"Failed to open checklist '{checklist_name_or_path}': {e}")
+            QMessageBox.critical(self, "Error", f"Could not open checklist '{checklist_name_or_path}'.\n\n{e}")
 
     def display_checklist(self, checklist_name, items):
         """
@@ -3283,6 +3334,35 @@ class MainWindow(QMainWindow):
             self.capture()
             self.capture_in_progress = False  # Reset the progress flag
 
+    def update_checklist_completer(self):
+        """
+        Update the checklist completer with the list of available checklists.
+
+        - Scans the checklist directory for available JSON files.
+        - Updates the autocomplete model for the search bar.
+        """
+        try:
+            if not os.path.exists(CHECKLISTS_FOLDER):
+                os.makedirs(CHECKLISTS_FOLDER)
+                logger.info(f"Created missing checklist folder: {CHECKLISTS_FOLDER}")
+
+            checklist_files = [
+                os.path.splitext(f)[0]
+                for f in os.listdir(CHECKLISTS_FOLDER)
+                if f.endswith(".json")
+            ]
+            logger.debug(f"Checklist files found: {checklist_files}")
+
+            if not checklist_files:
+                logger.warning("No checklists found in the folder.")
+                checklist_files = []
+
+            checklist_model = QStringListModel(checklist_files, self)
+            self.checklist_completer.setModel(checklist_model)
+            logger.info(f"Autocomplete updated with {len(checklist_files)} checklists.")
+        except Exception as e:
+            logger.error(f"Failed to update checklist completer: {e}")
+
 class ClickableTextEdit(QTextEdit):
     def __init__(self, parent=None):
         """
@@ -3838,10 +3918,23 @@ class SavedFilesPanel(QWidget):
         self.main_window.toggle_panel_action.setChecked(not is_visible)
 
     def collapse_panel(self):
-        """Collapse the splitter panel containing this widget."""
-        splitter = self.main_window.splitter  # Access the main splitter
-        splitter.setSizes([0, 1])  # Collapse the left panel (self)
+        """Toggle the collapsed state of the panel."""
+        splitter = self.main_window.splitter
+        
+        # Check current state from settings
+        currently_collapsed = app_settings.get("panel_collapsed", False)
+        if currently_collapsed:
+            # Uncollapse the panel by setting a default size
+            splitter.setSizes([200, 1])  # Adjust as needed for your default panel width
+            app_settings["panel_collapsed"] = False
+        else:
+            # Collapse the panel
+            splitter.setSizes([0, 1])
+            app_settings["panel_collapsed"] = True
 
+        save_app_settings(app_settings)
+
+        
     def toggle_sort_order(self):
         """Toggle the sort order between ascending and descending with an arrow button."""
         self.sort_ascending = not self.sort_ascending
@@ -3971,6 +4064,10 @@ class ChecklistManager(QDialog):
         self.setWindowTitle("Checklist Manager")
         self.setGeometry(300, 300, 500, 400)
 
+        # Position the window near the main window
+        if parent:
+            main_window_position = parent.pos()
+            self.move(main_window_position.x() + 50, main_window_position.y() + 50)  # Offset
         # Layout setup
         self.layout = QVBoxLayout(self)
         self.checklist_dir = CHECKLISTS_FOLDER
@@ -4051,6 +4148,11 @@ class UnifiedChecklistEditor(QDialog):
         super().__init__(parent)
         self.setWindowTitle(f"Edit Checklist: {checklist_name}")
         self.setGeometry(400, 400, 800, 600)
+
+        # Position the window near the main window
+        if parent:
+            main_window_position = parent.pos()
+            self.move(main_window_position.x() + 50, main_window_position.y() + 50)  # Offset
 
         self.checklist_name = checklist_name
         self.checklist_path = os.path.join(CHECKLISTS_FOLDER, f"{checklist_name}.json")
@@ -4141,8 +4243,15 @@ class UnifiedChecklistEditor(QDialog):
     def populate_editor_area(self):
         """Populate the editor area with formatted checklist items."""
         self.editor_area.clear()
-        for item in self.data.get("checklists", []):
-            self.add_item_to_display(item)
+        for section in self.data.get("checklists", []):
+            # Add the MainTitle
+            if "MainTitle" in section:
+                self.add_item_to_display({"type": "MainTitle", "text": section["MainTitle"]})
+
+            # Add each item in the section
+            for item in section.get("items", []):
+                for item_type, text in item.items():
+                    self.add_item_to_display({"type": item_type, "text": text})
 
     def add_item(self, item_type):
         """Add a new item of the specified type."""
@@ -4154,39 +4263,62 @@ class UnifiedChecklistEditor(QDialog):
 
     def add_item_to_display(self, item):
         """Add an item to the display with formatting."""
-        formatted_item = QListWidgetItem(item["text"])
+        raw_text = item.get("text", "").strip()  # Always use raw text
         font = QFont(DEFAULT_FONT_FAMILY)
 
-        # Set formatting based on type
+        # Apply formatting based on item type
         if item["type"] == "MainTitle":
             font.setPointSize(18)
             font.setBold(True)
+            display_text = raw_text
         elif item["type"] == "SubTitle":
             font.setPointSize(16)
             font.setBold(True)
+            display_text = f"  {raw_text}"  # Indent
         elif item["type"] == "Description":
             font.setPointSize(12)
-            formatted_item.setText(f"    {item['text']}")
+            display_text = f"    {raw_text}"  # Indent
         elif item["type"] == "Task":
             font.setPointSize(14)
-            formatted_item.setText(f"    • {item['text']}")
+            display_text = f"    • {raw_text}"  # Bullet point
         elif item["type"] == "ChecklistItem":
             font.setPointSize(12)
-            formatted_item.setText(f"        ☐ {item['text']}")
+            display_text = f"        ☐ {raw_text}"  # Checkbox
         elif item["type"] == "ChecklistNote":
             font.setPointSize(12)
-            formatted_item.setText(f"Note: {item['text']}")
-            formatted_item.setForeground(Qt.GlobalColor.gray)
+            font.setItalic(True)
+            display_text = f"Note: {raw_text}"
 
+        formatted_item = QListWidgetItem(display_text)
         formatted_item.setFont(font)
         self.editor_area.addItem(formatted_item)
 
     def remove_selected(self):
         """Remove the selected item."""
         selected_index = self.editor_area.currentRow()
-        if selected_index >= 0:
-            self.data["checklists"].pop(selected_index)
-            self.editor_area.takeItem(selected_index)
+        if selected_index < 0:  # No selection
+            QMessageBox.warning(self, "Error", "No item selected.")
+            return
+
+        # Get the selected item text
+        selected_item = self.editor_area.item(selected_index)
+        item_text = selected_item.text().strip()
+
+        # Determine whether the selected item is a MainTitle or part of a section
+        for section in self.data["checklists"]:
+            if section["MainTitle"] == item_text:
+                # Remove the entire section
+                self.data["checklists"].remove(section)
+                break
+            for item in section.get("items", []):
+                item_type, text = next(iter(item.items()))
+                if text.strip() == item_text:
+                    # Remove the specific item
+                    section["items"].remove(item)
+                    break
+
+        # Remove the item from the editor area
+        self.editor_area.takeItem(selected_index)
 
     def show_context_menu(self, pos):
         """Show context menu to change the type of the selected item."""
@@ -4228,49 +4360,46 @@ class UnifiedChecklistEditor(QDialog):
         for i in range(self.editor_area.count()):
             item_widget = self.editor_area.item(i)
 
-            # Retrieve item data
-            item_data = item_widget.data(Qt.ItemDataRole.UserRole)
-            if not item_data:
+            # Retrieve raw text and type
+            item_text = item_widget.text().strip()
+            item_type = None
+
+            # Infer the type based on font size and formatting
+            font = item_widget.font()
+            if font.pointSize() == 18 and font.bold():
+                item_type = "MainTitle"
+            elif font.pointSize() == 16 and font.bold():
+                item_type = "SubTitle"
+                item_text = item_text.lstrip()  # Remove display indentation
+            elif font.pointSize() == 12 and not font.bold():
+                if item_text.startswith("☐"):
+                    item_type = "ChecklistItem"
+                    item_text = item_text.replace("☐", "").strip()  # Remove checkbox
+                elif item_text.startswith("Note:"):
+                    item_type = "ChecklistNote"
+                    item_text = item_text.replace("Note:", "").strip()  # Remove "Note:"
+                else:
+                    item_type = "Description"
+                    item_text = item_text.lstrip()  # Remove display indentation
+            elif font.pointSize() == 14:
+                item_type = "Task"
+                item_text = item_text.replace("•", "").strip()  # Remove bullet
+
+            if not item_type:
+                logger.warning(f"Unable to infer type for item: {item_text}")
                 continue
 
-            item_type = item_data.get("type")
-            item_text = item_data.get("text")
-
             if item_type == "MainTitle":
-                # Create a new section for a MainTitle
+                # Create a new section for MainTitle
                 current_section = {"MainTitle": item_text, "items": []}
                 structured_data["checklists"].append(current_section)
+            else:
+                # Add other types to the current section
+                if current_section is None:
+                    current_section = {"MainTitle": "Untitled Section", "items": []}
+                    structured_data["checklists"].append(current_section)
 
-            elif item_type == "SubTitle":
-                # Add SubTitle to the current section
-                if current_section is not None:
-                    current_section.setdefault("items", []).append({"SubTitle": item_text})
-
-            elif item_type == "Description":
-                # Add Description to the current section
-                if current_section is not None:
-                    current_section.setdefault("items", []).append({"Description": item_text})
-
-            elif item_type == "Task":
-                # Add Task to the current section
-                if current_section is not None:
-                    current_section.setdefault("items", []).append({"Task": item_text})
-
-            elif item_type == "Checklist":
-                # Add Checklist to the current section
-                if current_section is not None:
-                    checklist_items = item_data.get("checklist", [])
-                    current_section.setdefault("items", []).append({"Checklist": checklist_items})
-
-            elif item_type == "Note":
-                # Add Note to the current section
-                if current_section is not None:
-                    current_section.setdefault("items", []).append({"Note": item_text})
-
-            elif item_type == "ChecklistNote":
-                # Add ChecklistNote to the current section
-                if current_section is not None:
-                    current_section.setdefault("items", []).append({"ChecklistNote": item_text})
+                current_section["items"].append({item_type: item_text})
 
         # Write the structured data to the JSON file
         try:
