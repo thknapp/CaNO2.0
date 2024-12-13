@@ -14,6 +14,7 @@ import win32con
 import win32gui
 from datetime import datetime
 from io import BytesIO
+from multiprocessing import Process
 from uuid import uuid4
 
 # Third-Party Package Imports
@@ -290,6 +291,9 @@ class MainWindow(QMainWindow):
         self.paths = {} 
         self.thumbnail_image_map = {}
         self.full_image_map = {}
+        
+        # Initialize file metadata manager
+        self.file_metadata_manager = FileMetadataManager()
 
         # Editor widget and its image map
         self.editor = ClickableTextEdit(self)
@@ -339,6 +343,35 @@ class MainWindow(QMainWindow):
         self.splitter.addWidget(self.tab_widget)
 
         """------------------------ Tab Management ------------------------"""
+       
+        # Adding the "+" button to the tab bar directly
+        self.new_tab_button = QPushButton("  +  ", self.tab_widget)
+        self.new_tab_button.setFixedSize(25, 20)  # Adjust size as needed
+        self.new_tab_button.setToolTip("New Tab")
+        self.new_tab_button.clicked.connect(self.add_new_tab)
+
+        # Set font size and make it bold
+        font = self.new_tab_button.font()
+        font.setPointSize(16)  # Set the desired font size
+        font.setBold(True)      # Make the font bold
+        self.new_tab_button.setFont(font)
+
+        self.new_tab_button.setStyleSheet("""
+            QPushButton {
+                background-color: transparent;
+                border: none;
+                padding: 0px;
+                margin-left: 5px;
+            }
+            QPushButton:hover {
+                background-color: rgba(211, 211, 211, 0.0);  /* Light gray with 30% opacity */
+                border-radius: 4px;
+            }
+            """)
+        
+        # Add the button to the right end of the tab bar
+        self.tab_widget.setCornerWidget(self.new_tab_button, Qt.Corner.TopRightCorner)
+
         self.add_new_tab()  # Add an initial tab
 
         """------------------------ Final Adjustments ------------------------"""
@@ -467,10 +500,18 @@ class MainWindow(QMainWindow):
         # Add Theme Selection submenu
         self.theme_menu = QMenu("Theme", self)
         self.settings_menu.addMenu(self.theme_menu)
+
+        # Create an action group for exclusive theme selection
+        theme_action_group = QActionGroup(self)
+        theme_action_group.setExclusive(True)  # Ensure only one theme can be selected at a time
+
         for theme_name in THEMES.keys():
             theme_action = QAction(theme_name, self, checkable=True)
             theme_action.setChecked(theme_name == self.current_theme)  # Check the current theme
             theme_action.triggered.connect(lambda _, t=theme_name: self.apply_theme(t))
+
+            # Add the action to the group and the theme menu
+            theme_action_group.addAction(theme_action)
             self.theme_menu.addAction(theme_action)
 
         # Add Dictionary Management action
@@ -1216,7 +1257,24 @@ class MainWindow(QMainWindow):
             int: The index of the active tab, or -1 if no tabs are open.
         """
         return self.tab_widget.currentIndex() if self.tab_widget.count() > 0 else -1
+        
+    def get_tab_content(self, index):
+        """
+        Retrieve the content of the editor in the specified tab.
 
+        Args:
+            index (int): The index of the tab to retrieve content from.
+
+        Returns:
+            str: The content of the editor in the tab.
+        """
+        editor = self.tab_widget.widget(index)  # Retrieve the editor widget at the specified tab index
+        if hasattr(editor, "toPlainText"):  # Check if the editor supports retrieving plain text
+            return editor.toPlainText()
+        else:
+            logger.warning(f"No editor found in tab index {index}.")
+            return ""
+       
     def sync_toggle_buttons(self):
         """
         Sync the visibility of the saved files panel with the state of the View menu toggle action.
@@ -2443,12 +2501,9 @@ class MainWindow(QMainWindow):
 
     def search_and_launch_checklist(self):
         """
-        Search for a checklist by name and launch it if found.
-
-        - Retrieves the checklist name entered in the search bar.
-        - Validates the checklist name and loads the corresponding checklist.
+        Search for a checklist by name and launch it if found in a new process.
         """
-        search_term = self.checklist_search_bar.text().strip()  # Get the entered text
+        search_term = self.checklist_search_bar.text().strip()
         logger.debug(f"Search term entered: {search_term}")
 
         if not search_term:
@@ -2456,25 +2511,44 @@ class MainWindow(QMainWindow):
             return
 
         try:
-            # Check if the entered checklist exists
+            # Construct the path to the checklist
             checklist_path = os.path.join(CHECKLISTS_FOLDER, f"{search_term}.json")
             logger.debug(f"Checklist path: {checklist_path}")
 
             if os.path.exists(checklist_path):
-                self.open_checklist(checklist_path)
+                # Load checklist items from the JSON file
+                with open(checklist_path, "r", encoding="utf-8") as f:
+                    checklist_data = json.load(f)
+
+                if "checklists" not in checklist_data or not isinstance(checklist_data["checklists"], list):
+                    raise ValueError("Checklist JSON structure is invalid or missing 'checklists' key.")
+
+                checklist_items = [item.get("MainTitle", "Untitled Checklist") for item in checklist_data["checklists"]]
+
+                # Launch the checklist in a new process
+                checklist_process = Process(target=run_checklist_app, args=(search_term, checklist_items))
+                checklist_process.start()
+
             else:
                 QMessageBox.warning(self, "Checklist Not Found", f"No checklist found with the name '{search_term}'.")
                 logger.warning(f"Checklist '{search_term}' not found.")
+
         except Exception as e:
             QMessageBox.critical(self, "Error", f"Failed to load checklist: {e}")
             logger.error(f"Error loading checklist '{search_term}': {e}")
 
     def open_checklist(self, checklist_name_or_path):
         """
-        Load and display a checklist in a dialog with controlled resizing to prevent content stretching.
+        Open a checklist in a new process.
+
+        - Validates the checklist file or name.
+        - Spawns a new process to display the checklist independently.
+
+        Args:
+            checklist_name_or_path (str): The name or full path of the checklist.
         """
         try:
-            # Determine if the input is a name or a full path
+            # Determine the path to the checklist
             if os.path.isfile(checklist_name_or_path):
                 checklist_path = checklist_name_or_path
             else:
@@ -2484,103 +2558,113 @@ class MainWindow(QMainWindow):
             if not os.path.exists(checklist_path):
                 raise FileNotFoundError(f"Checklist file '{checklist_path}' does not exist.")
 
-            # Load the JSON file
+            # Load checklist data from JSON file
             with open(checklist_path, "r", encoding="utf-8") as f:
                 checklist_data = json.load(f)
 
             if "checklists" not in checklist_data or not isinstance(checklist_data["checklists"], list):
                 raise ValueError("Checklist JSON structure is invalid or missing 'checklists' key.")
 
-            for checklist in checklist_data["checklists"]:
-                dialog = QDialog(self)
-                dialog.setWindowTitle(checklist.get("MainTitle", "Checklist"))
+            # Pass the checklist data to the multiprocessing target
+            checklist_items = checklist_data["checklists"]
 
-                # Create a scroll area
-                scroll_area = QScrollArea(dialog)
-                scroll_area.setWidgetResizable(True)
+            # Launch the checklist in a new process
+            checklist_process = Process(target=self.run_checklist_app, args=(os.path.basename(checklist_path), checklist_items))
+            checklist_process.start()
 
-                # Create a container widget for the scrollable content
-                content_widget = QWidget()
-                content_layout = QVBoxLayout(content_widget)
-                content_layout.setSpacing(0)
-                content_layout.setContentsMargins(10, 10, 10, 10)
-
-                # Add Main Title
-                if "MainTitle" in checklist:
-                    main_title_label = QLabel(checklist["MainTitle"])
-                    main_title_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-                    main_title_label.setStyleSheet("font-size: 18px; font-weight: bold; margin-bottom: 5px; padding: 0;")
-                    main_title_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)  # Fixed height
-                    content_layout.addWidget(main_title_label)
-
-                # Process each item dynamically
-                for item in checklist.get("items", []):
-                    item_type, content = next(iter(item.items()))
-                    if item_type == "SubTitle":
-                        subtitle_label = QLabel(content)
-                        subtitle_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
-                        subtitle_label.setStyleSheet("font-size: 16px; font-weight: bold; margin-bottom: 5px; padding: 0;")
-                        subtitle_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-                        content_layout.addWidget(subtitle_label)
-
-                    elif item_type == "Description":
-                        description_label = QLabel(content)
-                        description_label.setWordWrap(True)
-                        description_label.setStyleSheet("font-size: 14px; margin-bottom: 5px; padding: 0;")
-                        description_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-                        content_layout.addWidget(description_label)
-
-                    elif item_type == "Task":
-                        task_label = QLabel(f"• {content}")
-                        task_label.setWordWrap(True)
-                        task_label.setStyleSheet("font-size: 14px; margin-bottom: 5px; padding: 0;")
-                        task_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-                        content_layout.addWidget(task_label)
-
-                    elif item_type == "ChecklistItem":
-                        checklist_checkbox = QCheckBox(content)
-                        checklist_checkbox.setStyleSheet("margin-left: 20px; margin-bottom: 5px; padding: 0;")
-                        checklist_checkbox.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-                        content_layout.addWidget(checklist_checkbox)
-
-                    elif item_type == "ChecklistNote":
-                        note_label = QLabel(f"Note: {content}")
-                        note_label.setWordWrap(True)
-                        note_label.setStyleSheet(
-                            "font-size: 12px; font-style: italic; color: gray; margin-bottom: 5px; padding: 0;"
-                        )
-                        note_label.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-                        content_layout.addWidget(note_label)
-
-                # Add Close Button
-                close_button = QPushButton("Close", dialog)
-                close_button.clicked.connect(dialog.close)
-                close_button.setStyleSheet("margin-top: 10px; padding: 5px;")
-                close_button.setSizePolicy(QSizePolicy.Policy.Preferred, QSizePolicy.Policy.Fixed)
-                content_layout.addWidget(close_button)
-
-                # Set the content widget in the scroll area
-                scroll_area.setWidget(content_widget)
-
-                # Dynamically resize dialog based on content
-                content_height = content_widget.sizeHint().height()
-                max_height = 600  # Finite maximum height
-                dialog_height = min(content_height + 20, max_height)
-                dialog_width = 600  # Fixed width
-                dialog.resize(dialog_width, dialog_height)
-
-                # Add the scroll area to the dialog layout
-                dialog_layout = QVBoxLayout(dialog)
-                dialog_layout.addWidget(scroll_area)
-                dialog.setLayout(dialog_layout)
-
-                dialog.exec()
-
-            logger.info(f"Checklist '{checklist_name_or_path}' loaded successfully.")
+            logger.info(f"Checklist '{checklist_name_or_path}' launched successfully.")
 
         except Exception as e:
             logger.error(f"Failed to open checklist '{checklist_name_or_path}': {e}")
             QMessageBox.critical(self, "Error", f"Could not open checklist '{checklist_name_or_path}'.\n\n{e}")
+
+
+    def run_checklist_app(self, checklist_name, checklist_items):
+        """
+        Standalone checklist application process.
+
+        - Dynamically renders checklist items in a separate process.
+
+        Args:
+            checklist_name (str): The name of the checklist.
+            checklist_items (list): A list of checklist item dictionaries.
+        """
+        app = QApplication(sys.argv)
+        window = QMainWindow()
+        window.setWindowTitle(f"Checklist: {checklist_name}")
+
+        # Create a scroll area for the checklist
+        scroll_area = QScrollArea(window)
+        scroll_area.setWidgetResizable(True)
+
+        # Create a container widget for the scrollable content
+        content_widget = QWidget()
+        content_layout = QVBoxLayout(content_widget)
+        content_layout.setSpacing(0)
+        content_layout.setContentsMargins(10, 10, 10, 10)
+
+        # Render checklist items
+        for checklist in checklist_items:
+            if "MainTitle" in checklist:
+                main_title_label = QLabel(checklist["MainTitle"])
+                main_title_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+                main_title_label.setStyleSheet("font-size: 18px; font-weight: bold; margin-bottom: 5px; padding: 0;")
+                content_layout.addWidget(main_title_label)
+
+            for item in checklist.get("items", []):
+                item_type, content = next(iter(item.items()))
+                if item_type == "SubTitle":
+                    subtitle_label = QLabel(content)
+                    subtitle_label.setAlignment(Qt.AlignmentFlag.AlignLeft)
+                    subtitle_label.setStyleSheet("font-size: 16px; font-weight: bold; margin-bottom: 5px; padding: 0;")
+                    content_layout.addWidget(subtitle_label)
+
+                elif item_type == "Description":
+                    description_label = QLabel(content)
+                    description_label.setWordWrap(True)
+                    description_label.setStyleSheet("font-size: 14px; margin-bottom: 5px; padding: 0;")
+                    content_layout.addWidget(description_label)
+
+                elif item_type == "Task":
+                    task_label = QLabel(f"• {content}")
+                    task_label.setWordWrap(True)
+                    task_label.setStyleSheet("font-size: 14px; margin-bottom: 5px; padding: 0;")
+                    content_layout.addWidget(task_label)
+
+                elif item_type == "ChecklistItem":
+                    checklist_checkbox = QCheckBox(content)
+                    checklist_checkbox.setStyleSheet("margin-left: 20px; margin-bottom: 5px; padding: 0;")
+                    content_layout.addWidget(checklist_checkbox)
+
+                elif item_type == "ChecklistNote":
+                    note_label = QLabel(f"Note: {content}")
+                    note_label.setWordWrap(True)
+                    note_label.setStyleSheet(
+                        "font-size: 12px; font-style: italic; color: gray; margin-bottom: 5px; padding: 0;"
+                    )
+                    content_layout.addWidget(note_label)
+
+        # Set the content widget in the scroll area
+        scroll_area.setWidget(content_widget)
+
+        # Configure the main window layout
+        main_layout = QVBoxLayout()
+        main_layout.addWidget(scroll_area)
+
+        # Add a close button
+        close_button = QPushButton("Close")
+        close_button.clicked.connect(app.quit)
+        main_layout.addWidget(close_button)
+
+        # Create a central widget and set the layout
+        central_widget = QWidget()
+        central_widget.setLayout(main_layout)
+        window.setCentralWidget(central_widget)
+
+        # Show the window and run the application
+        window.resize(600, 600)
+        window.show()
+        sys.exit(app.exec())
 
     def display_checklist(self, checklist_name, items):
         """
@@ -4132,6 +4216,27 @@ class ChecklistManager(QDialog):
         if confirm == QMessageBox.StandardButton.Yes:
             os.remove(path)
             self.load_checklists()
+
+class ChecklistWindow(QMainWindow):
+    def __init__(self, checklist_name, items):
+        super(ChecklistWindow, self).__init__()
+        self.setWindowTitle(f"Checklist: {checklist_name}")
+
+        # Main widget setup
+        central_widget = QWidget(self)
+        layout = QVBoxLayout(central_widget)
+
+        # Checklist display
+        self.list_widget = QListWidget()
+        self.list_widget.addItems(items)
+        layout.addWidget(self.list_widget)
+        self.setCentralWidget(central_widget)
+
+    def closeEvent(self, event):
+        """
+        Override close event to clean up if needed.
+        """
+        super().closeEvent(event)
 
 class UnifiedChecklistEditor(QDialog):
     """Unified editor for managing checklists with structured sections and items."""

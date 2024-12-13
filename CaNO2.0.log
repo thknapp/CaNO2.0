@@ -374,3 +374,462 @@
 2024-12-11 12:33:28,738 - INFO - Tab at index 0 closed.
 2024-12-11 12:33:28,750 - INFO - Application settings saved.
 2024-12-11 12:33:28,753 - INFO - Application closed. Settings and metadata saved.
+2024-12-11 12:59:11,183 - INFO - Starting application...
+2024-12-11 12:59:12,124 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-11 12:59:12,394 - DEBUG - Checklist files found: ['test']
+2024-12-11 12:59:12,396 - INFO - Autocomplete updated with 1 checklists.
+2024-12-11 12:59:12,474 - INFO - Settings saved.
+2024-12-11 12:59:12,479 - INFO - Applied and saved theme: Forest Green Theme
+2024-12-11 12:59:13,320 - DEBUG - Checklist files found: ['test']
+2024-12-11 12:59:13,320 - INFO - Autocomplete updated with 1 checklists.
+2024-12-11 12:59:13,678 - INFO - Main window initialized and displayed successfully.
+2024-12-11 12:59:17,865 - INFO - Application settings saved.
+2024-12-11 12:59:24,398 - DEBUG - Search term entered: test
+2024-12-11 12:59:24,399 - DEBUG - Checklist path: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\checklists\test.json
+2024-12-11 12:59:52,585 - ERROR - Error loading checklist 'test': name 'run_checklist_app' is not defined
+2024-12-11 12:59:54,216 - INFO - Tab at index 0 closed.
+2024-12-11 12:59:54,220 - INFO - Application settings saved.
+2024-12-11 12:59:54,220 - INFO - Application closed. Settings and metadata saved.
+2024-12-11 13:00:09,292 - INFO - Starting application...
+2024-12-11 13:00:09,395 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-11 13:00:09,680 - DEBUG - Checklist files found: ['test']
+2024-12-11 13:00:09,683 - INFO - Autocomplete updated with 1 checklists.
+2024-12-11 13:00:09,844 - INFO - Settings saved.
+2024-12-11 13:00:09,846 - INFO - Applied and saved theme: Forest Green Theme
+2024-12-11 13:00:10,689 - DEBUG - Checklist files found: ['test']
+2024-12-11 13:00:10,689 - INFO - Autocomplete updated with 1 checklists.
+2024-12-11 13:00:11,088 - INFO - Main window initialized and displayed successfully.
+2024-12-11 14:41:21,568 - INFO - Application settings saved.
+2024-12-11 14:41:30,658 - DEBUG - Search term entered: test
+2024-12-11 14:41:30,659 - DEBUG - Checklist path: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\checklists\test.json
+2024-12-11 14:41:36,103 - ERROR - Error loading checklist 'test': name 'run_checklist_app' is not defined
+2024-12-11 14:41:37,989 - INFO - Tab at index 0 closed.
+2024-12-11 14:41:37,996 - INFO - Application settings saved.
+2024-12-11 14:41:37,996 - INFO - Application closed. Settings and metadata saved.
+2024-12-11 14:42:26,870 - INFO - Starting application...
+2024-12-11 14:42:27,117 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-11 14:42:27,408 - DEBUG - Checklist files found: ['test']
+2024-12-11 14:42:27,409 - INFO - Autocomplete updated with 1 checklists.
+2024-12-11 14:42:27,452 - INFO - Settings saved.
+2024-12-11 14:42:27,453 - INFO - Applied and saved theme: Forest Green Theme
+2024-12-11 14:42:28,270 - DEBUG - Checklist files found: ['test']
+2024-12-11 14:42:28,271 - INFO - Autocomplete updated with 1 checklists.
+2024-12-11 14:42:28,587 - INFO - Main window initialized and displayed successfully.
+2024-12-11 14:42:49,830 - DEBUG - Search term entered: test
+2024-12-11 14:42:49,831 - DEBUG - Checklist path: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\checklists\test.json
+2024-12-11 14:42:52,710 - ERROR - Error loading checklist 'test': name 'run_checklist_app' is not defined
+2024-12-11 14:42:54,703 - INFO - Tab at index 0 closed.
+2024-12-11 14:42:54,706 - INFO - Application settings saved.
+2024-12-11 14:42:54,706 - INFO - Application closed. Settings and metadata saved.
+2024-12-13 10:07:20,742 - INFO - Starting application...
+2024-12-13 10:07:21,401 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 10:07:21,646 - DEBUG - Checklist files found: ['test']
+2024-12-13 10:07:21,648 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 10:07:21,695 - INFO - Settings saved.
+2024-12-13 10:07:21,696 - INFO - Applied and saved theme: Forest Green Theme
+2024-12-13 10:07:22,343 - DEBUG - Checklist files found: ['test']
+2024-12-13 10:07:22,344 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 10:07:22,537 - INFO - Main window initialized and displayed successfully.
+2024-12-13 10:07:30,209 - INFO - Application settings saved.
+2024-12-13 10:07:46,342 - INFO - Tab at index 0 closed.
+2024-12-13 10:07:46,346 - INFO - Application settings saved.
+2024-12-13 10:07:46,346 - INFO - Application closed. Settings and metadata saved.
+2024-12-13 10:12:48,091 - INFO - Starting application...
+2024-12-13 10:12:48,157 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 10:12:48,323 - DEBUG - Checklist files found: ['test']
+2024-12-13 10:12:48,324 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 10:12:48,369 - INFO - Settings saved.
+2024-12-13 10:12:48,370 - INFO - Applied and saved theme: Forest Green Theme
+2024-12-13 10:12:48,639 - DEBUG - Checklist files found: ['test']
+2024-12-13 10:12:48,640 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 10:12:48,816 - INFO - Main window initialized and displayed successfully.
+2024-12-13 10:12:57,960 - INFO - Tab at index 2 closed.
+2024-12-13 10:13:00,620 - INFO - Tab at index 0 closed.
+2024-12-13 10:13:01,278 - INFO - Tab at index 0 closed.
+2024-12-13 10:13:10,349 - INFO - Tab at index 0 closed.
+2024-12-13 10:13:10,354 - INFO - Application settings saved.
+2024-12-13 10:13:10,354 - INFO - Application closed. Settings and metadata saved.
+2024-12-13 10:55:40,083 - INFO - Starting application...
+2024-12-13 10:55:40,636 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 10:55:40,831 - DEBUG - Checklist files found: ['test']
+2024-12-13 10:55:40,833 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 10:55:40,882 - INFO - Settings saved.
+2024-12-13 10:55:40,883 - INFO - Applied and saved theme: Forest Green Theme
+2024-12-13 10:55:41,378 - DEBUG - Checklist files found: ['test']
+2024-12-13 10:55:41,379 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 10:55:41,565 - INFO - Main window initialized and displayed successfully.
+2024-12-13 10:55:53,399 - INFO - Tab at index 3 closed.
+2024-12-13 10:55:54,245 - INFO - Tab at index 2 closed.
+2024-12-13 10:55:54,954 - INFO - Tab at index 1 closed.
+2024-12-13 10:55:55,944 - INFO - Tab at index 0 closed.
+2024-12-13 10:55:56,770 - INFO - Tab at index 0 closed.
+2024-12-13 10:56:00,305 - INFO - Tab at index 5 closed.
+2024-12-13 10:56:00,306 - INFO - Tab at index 4 closed.
+2024-12-13 10:56:00,306 - INFO - Tab at index 3 closed.
+2024-12-13 10:56:00,307 - INFO - Tab at index 2 closed.
+2024-12-13 10:56:00,307 - INFO - Tab at index 1 closed.
+2024-12-13 10:56:00,308 - INFO - Tab at index 0 closed.
+2024-12-13 10:56:00,311 - INFO - Application settings saved.
+2024-12-13 10:56:00,312 - INFO - Application closed. Settings and metadata saved.
+2024-12-13 10:57:10,198 - INFO - Starting application...
+2024-12-13 10:57:10,274 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 10:57:10,433 - DEBUG - Checklist files found: ['test']
+2024-12-13 10:57:10,433 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 10:57:10,479 - INFO - Settings saved.
+2024-12-13 10:57:10,480 - INFO - Applied and saved theme: Forest Green Theme
+2024-12-13 10:57:10,757 - DEBUG - Checklist files found: ['test']
+2024-12-13 10:57:10,757 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 10:57:10,897 - INFO - Main window initialized and displayed successfully.
+2024-12-13 10:57:18,072 - INFO - Tab at index 0 closed.
+2024-12-13 10:57:18,259 - INFO - Tab at index 0 closed.
+2024-12-13 10:57:18,437 - INFO - Tab at index 0 closed.
+2024-12-13 10:57:18,630 - INFO - Tab at index 0 closed.
+2024-12-13 10:57:19,188 - INFO - Tab at index 0 closed.
+2024-12-13 10:58:12,362 - INFO - Application settings saved.
+2024-12-13 11:07:43,698 - INFO - Settings saved.
+2024-12-13 11:07:43,720 - INFO - Applied and saved theme: Deep Space Theme
+2024-12-13 11:07:57,878 - INFO - Settings saved.
+2024-12-13 11:07:57,890 - INFO - Applied and saved theme: Tuscan Brown Theme
+2024-12-13 11:10:25,463 - INFO - Snipping tool initialized on all screens.
+2024-12-13 11:10:30,190 - INFO - Capture area set to: PyQt6.QtCore.QRect(2705, 87, 2181, 1242)
+2024-12-13 11:32:30,047 - INFO - Tab at index 0 closed.
+2024-12-13 11:32:30,054 - INFO - Application settings saved.
+2024-12-13 11:32:30,054 - INFO - Application closed. Settings and metadata saved.
+2024-12-13 11:38:00,184 - INFO - Starting application...
+2024-12-13 11:38:00,271 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 11:38:00,451 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:38:00,452 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:38:00,499 - INFO - Settings saved.
+2024-12-13 11:38:00,500 - INFO - Applied and saved theme: Tuscan Brown Theme
+2024-12-13 11:38:01,037 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:38:01,038 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:38:01,199 - INFO - Main window initialized and displayed successfully.
+2024-12-13 11:38:05,296 - INFO - Application settings saved.
+2024-12-13 11:38:23,984 - INFO - Tab at index 1 closed.
+2024-12-13 11:38:24,488 - INFO - Tab at index 1 closed.
+2024-12-13 11:38:35,750 - INFO - Settings saved.
+2024-12-13 11:38:35,764 - INFO - Applied and saved theme: Light Theme
+2024-12-13 11:38:42,542 - INFO - Settings saved.
+2024-12-13 11:38:42,553 - INFO - Applied and saved theme: Peach Blossom Theme
+2024-12-13 11:38:48,768 - INFO - Settings saved.
+2024-12-13 11:38:48,782 - INFO - Applied and saved theme: Plum Purple Theme
+2024-12-13 11:38:55,573 - INFO - Settings saved.
+2024-12-13 11:38:55,585 - INFO - Applied and saved theme: Ice Blue Theme
+2024-12-13 11:39:04,503 - INFO - Settings saved.
+2024-12-13 11:39:04,519 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 11:39:32,526 - DEBUG - Search term entered: test
+2024-12-13 11:39:32,528 - DEBUG - Checklist path: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\checklists\test.json
+2024-12-13 11:39:36,148 - ERROR - Error loading checklist 'test': name 'run_checklist_app' is not defined
+2024-12-13 11:39:50,368 - INFO - Auto-save timer started.
+2024-12-13 11:39:50,369 - INFO - Added 'Untitled-0' to saved files panel.
+2024-12-13 11:39:50,369 - INFO - Tab 'Untitled-0' added to saved files panel during initial auto-save setup.
+2024-12-13 11:39:50,369 - INFO - Settings saved.
+2024-12-13 11:39:50,370 - INFO - Auto Save setting updated to: enabled
+2024-12-13 11:39:55,375 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:40:00,367 - WARNING - No file path set for tab 0; auto-save skipped.
+2024-12-13 11:40:05,371 - WARNING - No file path set for tab 0; auto-save skipped.
+2024-12-13 11:40:05,834 - INFO - Snipping tool initialized on all screens.
+2024-12-13 11:40:07,479 - INFO - Capture area set to: PyQt6.QtCore.QRect(4656, 279, 388, 435)
+2024-12-13 11:40:07,539 - DEBUG - Generated unique_id for image: c557e60b-6e1c-4fd2-ba1d-c8eeaca165a0
+2024-12-13 11:40:07,540 - DEBUG - Thumbnail generated for image ID c557e60b-6e1c-4fd2-ba1d-c8eeaca165a0
+2024-12-13 11:40:07,597 - DEBUG - Base64 encoding complete for full image with ID c557e60b-6e1c-4fd2-ba1d-c8eeaca165a0, length: 379776
+2024-12-13 11:40:07,600 - DEBUG - Thumbnail image resource added to document for ID c557e60b-6e1c-4fd2-ba1d-c8eeaca165a0
+2024-12-13 11:40:07,610 - INFO - Full-size image and thumbnail stored for ID c557e60b-6e1c-4fd2-ba1d-c8eeaca165a0
+2024-12-13 11:40:10,379 - WARNING - No file path set for tab 0; auto-save skipped.
+2024-12-13 11:40:15,367 - WARNING - No file path set for tab 0; auto-save skipped.
+2024-12-13 11:40:15,460 - INFO - No existing save path. Calling 'Save As'.
+2024-12-13 11:40:20,383 - WARNING - No file path set for tab 0; auto-save skipped.
+2024-12-13 11:40:25,369 - WARNING - No file path set for tab 0; auto-save skipped.
+2024-12-13 11:40:30,369 - WARNING - No file path set for tab 0; auto-save skipped.
+2024-12-13 11:40:34,798 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html and index: 0
+2024-12-13 11:40:34,799 - DEBUG - Original HTML content retrieved from editor.
+2024-12-13 11:40:34,800 - INFO - Starting embed_images_in_html_with_js
+2024-12-13 11:40:34,801 - DEBUG - Found <img> tag with src (unique_id): c557e60b-6e1c-4fd2-ba1d-c8eeaca165a0
+2024-12-13 11:40:34,804 - INFO - Embedding Base64 images directly for ID c557e60b-6e1c-4fd2-ba1d-c8eeaca165a0
+2024-12-13 11:40:34,804 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-12-13 11:40:34,805 - INFO - Completed embed_images_in_html_with_js
+2024-12-13 11:40:34,810 - DEBUG - HTML content after embedding images.
+2024-12-13 11:40:34,812 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-12-13 11:40:34,813 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/a.html
+2024-12-13 11:40:35,367 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:40:40,374 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:40:45,366 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:40:50,370 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:40:55,376 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:00,379 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:05,382 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:10,368 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:11,174 - INFO - Auto-save timer stopped.
+2024-12-13 11:41:11,175 - INFO - Settings saved.
+2024-12-13 11:41:11,176 - INFO - Auto Save setting updated to: disabled
+2024-12-13 11:41:11,759 - INFO - Auto-save timer started.
+2024-12-13 11:41:11,761 - INFO - Settings saved.
+2024-12-13 11:41:11,762 - INFO - Auto Save setting updated to: enabled
+2024-12-13 11:41:16,772 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:21,763 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:26,758 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:31,760 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:36,758 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:41,760 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:46,765 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:51,757 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:41:56,758 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:42:51,934 - INFO - Starting application...
+2024-12-13 11:42:52,007 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 11:42:52,203 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:42:52,205 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:42:52,264 - INFO - Settings saved.
+2024-12-13 11:42:52,264 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 11:42:52,569 - CRITICAL - An unexpected error occurred during application execution.
+Traceback (most recent call last):
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 4776, in <module>
+    window = MainWindow()
+             ^^^^^^^^^^^^
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 343, in __init__
+    self.add_new_tab()  # Add an initial tab
+    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 1132, in add_new_tab
+    self.file_metadata_manager.update_file_metadata(untitled_name, persistent_path, persistent_path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'file_metadata_manager'
+2024-12-13 11:46:54,967 - INFO - Starting application...
+2024-12-13 11:46:55,029 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 11:46:55,173 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:46:55,174 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:46:55,232 - INFO - Settings saved.
+2024-12-13 11:46:55,233 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 11:46:55,522 - CRITICAL - An unexpected error occurred during application execution.
+Traceback (most recent call last):
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 4777, in <module>
+    window = MainWindow()
+             ^^^^^^^^^^^^
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 372, in __init__
+    self.add_new_tab()  # Add an initial tab
+    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 1133, in add_new_tab
+    self.file_metadata_manager.update_file_metadata(untitled_name, persistent_path, persistent_path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'file_metadata_manager'
+2024-12-13 11:47:44,049 - INFO - Starting application...
+2024-12-13 11:47:44,106 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 11:47:44,255 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:47:44,256 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:47:44,307 - INFO - Settings saved.
+2024-12-13 11:47:44,307 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 11:47:44,598 - CRITICAL - An unexpected error occurred during application execution.
+Traceback (most recent call last):
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 4749, in <module>
+    window = MainWindow()
+             ^^^^^^^^^^^^
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 344, in __init__
+    self.add_new_tab()  # Add an initial tab
+    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 1105, in add_new_tab
+    self.file_metadata_manager.update_file_metadata(untitled_name, persistent_path, persistent_path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'file_metadata_manager'
+2024-12-13 11:49:16,531 - INFO - Starting application...
+2024-12-13 11:49:16,588 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 11:49:16,772 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:49:16,774 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:49:16,817 - INFO - Settings saved.
+2024-12-13 11:49:16,818 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 11:49:17,102 - CRITICAL - An unexpected error occurred during application execution.
+Traceback (most recent call last):
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 4777, in <module>
+    window = MainWindow()
+             ^^^^^^^^^^^^
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 372, in __init__
+    self.add_new_tab()  # Add an initial tab
+    ^^^^^^^^^^^^^^^^^^
+  File "C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\CaNO2.0.py", line 1133, in add_new_tab
+    self.file_metadata_manager.update_file_metadata(untitled_name, persistent_path, persistent_path)
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'MainWindow' object has no attribute 'file_metadata_manager'
+2024-12-13 11:51:12,199 - INFO - Starting application...
+2024-12-13 11:51:12,265 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 11:51:12,441 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:51:12,443 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:51:12,490 - INFO - Settings saved.
+2024-12-13 11:51:12,491 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 11:51:12,856 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:51:12,856 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:51:13,032 - INFO - Main window initialized and displayed successfully.
+2024-12-13 11:51:18,750 - INFO - Auto-save timer started.
+2024-12-13 11:51:18,751 - INFO - Added 'Untitled-0' to saved files panel.
+2024-12-13 11:51:18,751 - INFO - Tab 'Untitled-0' added to saved files panel during initial auto-save setup.
+2024-12-13 11:51:18,752 - INFO - Settings saved.
+2024-12-13 11:51:18,753 - INFO - Auto Save setting updated to: enabled
+2024-12-13 11:51:21,473 - INFO - Tab at index 0 closed.
+2024-12-13 11:54:46,729 - INFO - Starting application...
+2024-12-13 11:54:46,803 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 11:54:47,053 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:54:47,054 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:54:47,093 - INFO - Settings saved.
+2024-12-13 11:54:47,094 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 11:54:47,444 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_7.txt
+2024-12-13 11:54:47,444 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:54:47,445 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:54:47,628 - INFO - Main window initialized and displayed successfully.
+2024-12-13 11:54:58,521 - INFO - Auto-save timer stopped.
+2024-12-13 11:54:58,523 - INFO - Settings saved.
+2024-12-13 11:54:58,523 - INFO - Auto Save setting updated to: disabled
+2024-12-13 11:54:59,396 - INFO - Auto-save timer started.
+2024-12-13 11:54:59,397 - INFO - Added 'Untitled-0' to saved files panel.
+2024-12-13 11:54:59,397 - INFO - Tab 'Untitled-0' added to saved files panel during initial auto-save setup.
+2024-12-13 11:54:59,398 - INFO - Settings saved.
+2024-12-13 11:54:59,399 - INFO - Auto Save setting updated to: enabled
+2024-12-13 11:55:04,384 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:55:09,392 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:55:14,386 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:55:15,518 - INFO - File 'Untitled_1.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:55:19,343 - INFO - File 'Untitled_2.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:55:19,382 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:55:22,706 - INFO - File 'Untitled_4.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:55:24,382 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:55:25,928 - INFO - File 'Untitled_6.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:55:29,388 - INFO - Tab 0 not modified; auto-save skipped.
+2024-12-13 11:55:29,469 - INFO - File 'Untitled_3.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:55:33,213 - INFO - File 'Untitled_7.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:55:34,393 - WARNING - No editor found for tab -1; auto-save skipped.
+2024-12-13 11:55:37,171 - INFO - File 'Untitled_5.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:55:39,383 - WARNING - No editor found for tab -1; auto-save skipped.
+2024-12-13 11:55:40,330 - INFO - Snipping tool initialized on all screens.
+2024-12-13 11:55:41,720 - INFO - Capture area set to: PyQt6.QtCore.QRect(4150, 206, 274, 239)
+2024-12-13 11:55:41,778 - DEBUG - Generated unique_id for image: d7b77104-c5cd-4331-ba7d-8040230da1f4
+2024-12-13 11:55:41,779 - DEBUG - Thumbnail generated for image ID d7b77104-c5cd-4331-ba7d-8040230da1f4
+2024-12-13 11:55:41,802 - DEBUG - Base64 encoding complete for full image with ID d7b77104-c5cd-4331-ba7d-8040230da1f4, length: 148916
+2024-12-13 11:56:12,236 - INFO - Starting application...
+2024-12-13 11:56:12,293 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 11:56:12,444 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:56:12,445 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:56:12,499 - INFO - Settings saved.
+2024-12-13 11:56:12,499 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 11:56:12,850 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 11:56:12,851 - DEBUG - Checklist files found: ['test']
+2024-12-13 11:56:12,851 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 11:56:13,041 - INFO - Main window initialized and displayed successfully.
+2024-12-13 11:56:35,385 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-12-13 11:56:37,794 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-12-13 11:56:37,796 - INFO - Tab at index 1 closed.
+2024-12-13 11:56:40,351 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-12-13 11:56:41,072 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_3.txt
+2024-12-13 11:57:11,462 - INFO - Starting save_as_html_with_js for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/test.html and index: 0
+2024-12-13 11:57:11,463 - DEBUG - Original HTML content retrieved from editor.
+2024-12-13 11:57:11,463 - INFO - Starting embed_images_in_html_with_js
+2024-12-13 11:57:11,464 - INFO - Adding JavaScript and overlay HTML for full-size image viewing.
+2024-12-13 11:57:11,465 - INFO - Completed embed_images_in_html_with_js
+2024-12-13 11:57:11,466 - DEBUG - HTML content after embedding images.
+2024-12-13 11:57:11,466 - INFO - Embedded HTML content with JavaScript saved to C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/test.html
+2024-12-13 11:57:11,468 - INFO - Document saved and UI updated for path: C:/Users/ted.knapp/OneDrive - LogRhythm, Inc/Desktop/test.html
+2024-12-13 11:57:21,522 - INFO - Tab at index 0 closed.
+2024-12-13 11:57:22,783 - INFO - Tab at index 0 closed.
+2024-12-13 11:57:23,592 - INFO - Tab at index 0 closed.
+2024-12-13 11:57:23,598 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_4.txt
+2024-12-13 11:57:25,520 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_4.txt
+2024-12-13 11:57:25,524 - INFO - Tab at index 0 closed.
+2024-12-13 11:57:25,531 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_4.txt
+2024-12-13 11:57:26,840 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_4.txt
+2024-12-13 11:57:26,843 - INFO - Tab at index 0 closed.
+2024-12-13 11:57:26,847 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_4.txt
+2024-12-13 11:57:31,257 - INFO - File 'Untitled_4.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:57:35,045 - INFO - File 'Untitled_3.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:57:38,765 - INFO - File 'Untitled_2.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:57:42,525 - INFO - File 'Untitled_1.txt' deleted from saved files and any open tab closed.
+2024-12-13 11:57:43,896 - INFO - Application settings saved.
+2024-12-13 11:57:43,896 - INFO - Application closed. Settings and metadata saved.
+2024-12-13 12:52:16,579 - INFO - Starting application...
+2024-12-13 12:52:17,146 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 12:52:17,317 - DEBUG - Checklist files found: ['test']
+2024-12-13 12:52:17,318 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 12:52:17,367 - INFO - Settings saved.
+2024-12-13 12:52:17,368 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 12:52:17,866 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 12:52:17,867 - DEBUG - Checklist files found: ['test']
+2024-12-13 12:52:17,867 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 12:52:18,053 - INFO - Main window initialized and displayed successfully.
+2024-12-13 12:52:21,772 - INFO - Application settings saved.
+2024-12-13 12:52:23,888 - INFO - Empty auto-saved file removed on exit: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 12:52:35,053 - INFO - Starting application...
+2024-12-13 12:52:35,119 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 12:52:35,281 - DEBUG - Checklist files found: ['test']
+2024-12-13 12:52:35,283 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 12:52:35,325 - INFO - Settings saved.
+2024-12-13 12:52:35,326 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 12:52:35,615 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 12:52:35,616 - DEBUG - Checklist files found: ['test']
+2024-12-13 12:52:35,616 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 12:52:35,817 - INFO - Main window initialized and displayed successfully.
+2024-12-13 13:43:38,276 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:43:38,285 - INFO - Tab at index 0 closed.
+2024-12-13 13:43:38,292 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:43:40,300 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:43:40,302 - INFO - Tab at index 0 closed.
+2024-12-13 13:43:40,310 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:43:41,482 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:43:41,483 - INFO - Tab at index 0 closed.
+2024-12-13 13:43:41,488 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:43:42,279 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:43:42,280 - INFO - Tab at index 0 closed.
+2024-12-13 13:43:42,289 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:43:55,540 - INFO - Empty auto-saved file removed on exit: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:58:59,784 - INFO - Starting application...
+2024-12-13 13:58:59,864 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 13:59:00,056 - DEBUG - Checklist files found: ['test']
+2024-12-13 13:59:00,059 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 13:59:00,137 - INFO - Settings saved.
+2024-12-13 13:59:00,137 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 13:59:00,706 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:59:00,707 - DEBUG - Checklist files found: ['test']
+2024-12-13 13:59:00,707 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 13:59:01,003 - INFO - Main window initialized and displayed successfully.
+2024-12-13 13:59:11,066 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:59:11,067 - INFO - Tab at index 0 closed.
+2024-12-13 13:59:11,072 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:59:14,367 - INFO - Empty auto-saved file removed on exit: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:59:14,372 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:59:14,373 - INFO - Tab at index 0 closed.
+2024-12-13 13:59:14,377 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 13:59:14,380 - INFO - Application settings saved.
+2024-12-13 13:59:14,380 - INFO - Application closed. Settings and metadata saved.
+2024-12-13 13:59:21,835 - INFO - Starting application...
+2024-12-13 13:59:21,906 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 13:59:22,068 - DEBUG - Checklist files found: ['test']
+2024-12-13 13:59:22,070 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 13:59:22,126 - INFO - Settings saved.
+2024-12-13 13:59:22,126 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 13:59:22,596 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-12-13 13:59:22,600 - DEBUG - Checklist files found: ['test']
+2024-12-13 13:59:22,600 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 13:59:22,750 - INFO - Main window initialized and displayed successfully.
+2024-12-13 14:00:15,628 - INFO - Empty auto-saved file removed on exit: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-12-13 14:00:15,632 - INFO - Empty auto-saved file removed: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-12-13 14:00:15,633 - INFO - Tab at index 0 closed.
+2024-12-13 14:00:15,637 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_2.txt
+2024-12-13 14:00:15,638 - INFO - Application settings saved.
+2024-12-13 14:00:15,639 - INFO - Application closed. Settings and metadata saved.
+2024-12-13 14:00:22,215 - INFO - Starting application...
+2024-12-13 14:00:22,273 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 14:00:22,409 - DEBUG - Checklist files found: ['test']
+2024-12-13 14:00:22,410 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 14:00:22,452 - INFO - Settings saved.
+2024-12-13 14:00:22,453 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 14:00:22,749 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_3.txt
+2024-12-13 14:00:22,750 - DEBUG - Checklist files found: ['test']
+2024-12-13 14:00:22,751 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 14:00:22,950 - INFO - Main window initialized and displayed successfully.
+2024-12-13 14:00:36,963 - INFO - File 'Untitled_3.txt' deleted from saved files and any open tab closed.
+2024-12-13 14:00:41,569 - INFO - File 'Untitled_2.txt' deleted from saved files and any open tab closed.
+2024-12-13 14:00:47,269 - INFO - File 'Untitled_1.txt' deleted from saved files and any open tab closed.
+2024-12-13 14:00:51,388 - INFO - Application settings saved.
+2024-12-13 14:00:51,388 - INFO - Application closed. Settings and metadata saved.
+2024-12-13 14:00:59,759 - INFO - Starting application...
+2024-12-13 14:00:59,830 - INFO - Application icon set from: C:\Users\ted.knapp\OneDrive - LogRhythm, Inc\Documents\Scripts\CaNO2.0\images\cano.ico
+2024-12-13 14:00:59,971 - DEBUG - Checklist files found: ['test']
+2024-12-13 14:00:59,972 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 14:01:00,025 - INFO - Settings saved.
+2024-12-13 14:01:00,026 - INFO - Applied and saved theme: Pine Forest Theme
+2024-12-13 14:01:00,369 - INFO - Auto-saved initial content to persistent path: C:\Users\ted.knapp\AppData\Roaming\CaNO2.0\saved_files\Untitled_1.txt
+2024-12-13 14:01:00,370 - DEBUG - Checklist files found: ['test']
+2024-12-13 14:01:00,370 - INFO - Autocomplete updated with 1 checklists.
+2024-12-13 14:01:00,587 - INFO - Main window initialized and displayed successfully.
